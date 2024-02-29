@@ -1,4 +1,6 @@
+import 'package:delevary/app/thems/ColorSchemes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DarkThemeData {
   // 2d1e42
@@ -8,16 +10,31 @@ class DarkThemeData {
   //422c61
   static ThemeData them() {
     return ThemeData(
+      colorScheme: darkColorScheme,
       useMaterial3: true,
-      scaffoldBackgroundColor: Color(0xff140f1f),
-      brightness: Brightness.dark,
-      cardTheme: CardTheme(
-        elevation: 4,
-        color: Color(0xff040007),
+      fontFamily: "app",
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: darkColorScheme.onPrimary,
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: darkColorScheme.error),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15.sp),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: darkColorScheme.onBackground),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15.sp),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: darkColorScheme.error),
+          borderRadius: BorderRadius.all(
+            Radius.circular(15.sp),
+          ),
+        ),
       ),
-      textTheme: TextTheme(
-
-      )
     );
   }
 }

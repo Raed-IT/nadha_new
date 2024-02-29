@@ -1,9 +1,12 @@
 import 'package:delevary/app/data/MainController.dart';
 import 'package:delevary/app/route/GetPages.dart';
+import 'package:delevary/app/thems/AppColots.dart';
 import 'package:delevary/app/thems/DarckThem.dart';
+import 'package:delevary/app/thems/ColorSchemes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:helper/helper.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'app/route/routs.dart';
@@ -11,9 +14,9 @@ import 'app/thems/LightThem.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Helper.initial(appName: "tasawoqe", local: "ar");
   Get.put(MainController(), permanent: true);
   await OneSignal.shared.setAppId("0c4508b7-d21e-4c75-8dad-e4e6d543981a");
-
   runApp(const MyApp());
 }
 
@@ -31,6 +34,8 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return Obx(
           () => GetMaterialApp(
+            theme: LightThemeData.them(),
+            darkTheme: DarkThemeData.them(),
             title: "تسوقي",
             initialRoute: AppRoutes.splashScreen,
             getPages: [
@@ -39,8 +44,6 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             locale: const Locale('ar'),
             fallbackLocale: const Locale('ar'),
-            theme: LightThemeData.them(),
-            darkTheme: DarkThemeData.them(),
             themeMode: Get.find<MainController>().themeMode.value,
           ),
         );

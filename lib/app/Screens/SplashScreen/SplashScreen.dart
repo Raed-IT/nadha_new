@@ -12,18 +12,21 @@ class SplashScreen extends GetView<SplashScreenController> {
     return Scaffold(
         body: Stack(
       children: [
-        Container(
-          height: Get.height,
-          width: Get.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              opacity: 0.07,
-              filterQuality: FilterQuality.high,
-              image: AssetImage('assets/images/bg.png'),
-              repeat: ImageRepeat.repeat,
+        Hero(
+          tag: "logo",
+          child: Container(
+            height: Get.height,
+            width: Get.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                opacity: 0.07,
+                filterQuality: FilterQuality.high,
+                image: AssetImage('assets/images/bg.png'),
+                repeat: ImageRepeat.repeat,
+              ),
             ),
-          ),
-        ).animate().blur(begin: Offset(20, 20), duration: Duration(seconds: 2)),
+          ).animate().blur(begin: Offset(20, 20), duration: Duration(seconds: 2)),
+        ),
         Positioned(
           top: -100.sp,
           right: -100.sp,
@@ -31,7 +34,7 @@ class SplashScreen extends GetView<SplashScreenController> {
             height: 250.sp,
             width: 250.sp,
             decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(1000)),
           ).animate().scale(
                 begin: Offset(0, 0),
@@ -56,7 +59,7 @@ class SplashScreen extends GetView<SplashScreenController> {
             height: 450.sp,
             width: 450.sp,
             decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(1000)),
           ).animate().scale(
                 begin: Offset(0, 0),
