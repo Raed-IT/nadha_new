@@ -6,6 +6,7 @@ import 'package:delevary/app/thems/ColorSchemes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:helper/data/models/dio_config_model.dart';
 import 'package:helper/helper.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -14,7 +15,8 @@ import 'app/thems/LightThem.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Helper.initial(appName: "tasawoqe", local: "ar");
+  Helper.initial(
+      appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.printResponse());
   Get.put(MainController(), permanent: true);
   await OneSignal.shared.setAppId("0c4508b7-d21e-4c75-8dad-e4e6d543981a");
   runApp(const MyApp());
