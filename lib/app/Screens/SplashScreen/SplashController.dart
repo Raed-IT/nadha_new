@@ -1,24 +1,17 @@
 import 'package:delevary/app/data/ApiRoute.dart';
-import 'package:delevary/app/data/MainController.dart';
 import 'package:delevary/app/data/Models/CityModel.dart';
 import 'package:delevary/app/data/Models/SettingModel.dart';
 import 'package:delevary/app/route/Routs.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
-import 'package:helper/utility/api_exceptions.dart';
-import 'package:logger/logger.dart';
+
+import '../../Data/MainController.dart';
 
 class SplashScreenController extends GetxController with ApiHelperMixin {
   @override
   void onReady() {
-    // urls = [
-    //   UrlModel(url: ApiRoute.settings, type: 'settings'),
-    // ];
     getSingleData(url: UrlModel(url: ApiRoute.settings, type: "settings"));
-    //
-    // Future.delayed(
-    //     Duration(seconds: 3), () => Get.offNamed(AppRoutes.mainAuthScreen));
     super.onReady();
   }
 
@@ -31,5 +24,6 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
       cities.add(CityModel.fromJson(city));
     }
     Get.find<MainController>().cities.value = cities;
+    Get.offAllNamed(AppRoutes.homeScreen);
   }
 }

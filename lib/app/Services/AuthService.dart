@@ -1,7 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthService {
+class AuthBySocialService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> signin(

@@ -1,11 +1,12 @@
-class CityModel {
-  int? id;
+import 'package:delevary/app/Data/Models/BaseModel.dart';
+
+class CityModel extends BaseModel {
   String? name;
-  int? status;
+  bool? status;
   String? createdAt;
   String? updatedAt;
 
-  CityModel({this.id, this.name, this.status, this.createdAt, this.updatedAt});
+  CityModel({this.name, this.status, this.createdAt, this.updatedAt});
 
   CityModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -23,5 +24,10 @@ class CityModel {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;
+  }
+
+  @override
+  String? getTitle() {
+    return name;
   }
 }

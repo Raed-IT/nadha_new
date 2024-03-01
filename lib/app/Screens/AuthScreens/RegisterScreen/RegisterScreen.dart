@@ -1,13 +1,11 @@
-import 'package:delevary/app/Extiontions/isEmail.dart';
-import 'package:delevary/app/Screens/AuthScreens/LoginScreen/LoginScreenController.dart';
+import 'package:delevary/app/Screens/AuthScreens/RegisterScreen/Components/OptionsComponent.dart';
+import 'package:delevary/app/Screens/AuthScreens/RegisterScreen/Components/UserInfoComponent.dart';
 import 'package:delevary/app/Screens/AuthScreens/RegisterScreen/RegisterScreenController.dart';
-import 'package:delevary/app/components/TextFieldComponent.dart';
 import 'package:delevary/app/components/SafeAreaComponent.dart';
 import 'package:delevary/app/route/Routs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../Components/AppBarAuthComponent.dart';
 
@@ -75,105 +73,31 @@ class RegisterScreen extends GetView<RegisterScreenController> {
                     padding: EdgeInsets.all(10.sp),
                     child: Form(
                       key: controller.formKey,
-                      child: Column(
-                        children: [
-                          TextFieldComponent(
-                            isRequired: true,
-                            controller: controller.nameTextController,
-                            hint: "اسم المستخدم",
-                            // label: "اسم المستخدم",
-                            validator: (data) {
-                              if (data!.isEmpty || data.length < 3) {
-                                return "اكتب الاسم بشكل صحيح يجب ان يكون اكثر من 3 احرف";
-                              }
-                              return null;
-                            },
-                          ),
-                          15.verticalSpace,
-                          TextFieldComponent(
-                            isRequired: true,
-                            controller: controller.emailTextController,
-                            hint: "ادخل إيميلك",
-                            // label: "اسم المستخدم",
-                            validator: (data) {
-                              if (data!.isEmpty || data.length < 3) {
-                                return "اكتب الاسم بشكل صحيح يجب ان يكون اكثر من 3 احرف";
-                              } else if (!data.isValidEmail()) {
-                                return "الرجاء ادخال إيميل ";
-                              }
-                              return null;
-                            },
-                          ),
-                          TextFieldComponent(
-                            isPassword: true,
-                            isRequired: true,
-                            controller: controller.passwordTextController,
-                            hint: "كلمة السر",
-                            // label: "كلمة السر ",
-                            validator: (data) {
-                              if (data!.isEmpty || data.length < 3) {
-                                return "اقل عدد احرف لكلمة السر 8";
-                              }
-                              return null;
-                            },
-                          ),
-                          15.verticalSpace,
-                          SizedBox(
-                            width: Get.width,
-                            height: 60.h,
-                            child: FilledButton.tonal(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Theme.of(context).colorScheme.primary),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(15.sp),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              onPressed: () => controller.register(),
-                              child: Text("انشاء حساب "),
+                      child: Obx(() {
+                        Widget currentWidget =
+                            const RegisterUserInfoComponent();
+                        if (controller.currentWidget.value == 0) {
+                          currentWidget = const RegisterUserInfoComponent();
+                        } else {
+                          currentWidget = const RegisterOptionsComponent();
+                        }
+                        return AnimatedSwitcher(
+                          transitionBuilder:
+                              (Widget child, Animation<double> animation) =>
+                                  SlideTransition(
+                            position: Tween<Offset>(
+                                    begin: const Offset(-1, 0),
+                                    end: Offset.zero)
+                                .animate(animation),
+                            child: FadeTransition(
+                              opacity: animation,
+                              child: child,
                             ),
                           ),
-                          if (!controller.keyboardVisible.value)
-                            25.verticalSpace,
-                          if (!controller.keyboardVisible.value)
-                            SizedBox(
-                              width: Get.width,
-                              height: 60.h,
-                              child: FilledButton.tonal(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Theme.of(context).colorScheme.primary),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(15.sp),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () => controller.loginWithGoogle(),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(FontAwesomeIcons.google),
-                                    Text(" انشاء حساب باستخدام غوغل")
-                                  ],
-                                ),
-                              ).animate().elevation(
-                                    delay: Duration(milliseconds: 500),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(15.sp)),
-                                    duration: Duration(milliseconds: 500),
-                                  ),
-                            ),
-                        ],
-                      ),
+                          duration: const Duration(milliseconds: 100),
+                          child: currentWidget,
+                        );
+                      }),
                     ),
                   ),
                 ).animate().slideY(

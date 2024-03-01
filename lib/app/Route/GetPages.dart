@@ -1,6 +1,7 @@
 import 'package:delevary/app/Screens/AuthScreens/LoginScreen/LoginPage.dart';
 import 'package:delevary/app/Screens/AuthScreens/MainAuthScreen/MainAuthPage.dart';
 import 'package:delevary/app/Screens/AuthScreens/RegisterScreen/RegisterPage.dart';
+import 'package:delevary/app/Screens/HomeScreen/HomePage.dart';
 import 'package:get/get.dart';
 
 import '../Screens/SplashScreen/SplashPage.dart';
@@ -10,6 +11,7 @@ class GetPagesProvider {
     SplashPage(),
     MainAuthPage(),
     LoginPage(),
-    RegisterPage()
+    RegisterPage(),
+    HomePage()
   ];
 }
