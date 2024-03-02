@@ -51,6 +51,7 @@ dependencies:
   toastification: ^1.2.1
   flutter_overlay_loader: ^2.0.0
   get_storage: ^2.1.1
+  card_loading: ^0.3.2
 
   helper:
     git:

@@ -20,7 +20,11 @@ class LightThemeData {
           ),
         ),
       ),
-      cardTheme: CardTheme(elevation: 3, shadowColor:lightColorScheme.onBackground,color: AppColors.cardColor),
+      cardTheme: CardTheme(
+          elevation: 3,
+          shadowColor: lightColorScheme.onBackground,
+          surfaceTintColor: lightColorScheme.primary,
+          color: lightColorScheme.primaryContainer),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: lightColorScheme.onPrimary,

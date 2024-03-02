@@ -42,7 +42,6 @@ class RegisterScreenController extends GetxController with ApiHelperMixin {
           "name": nameTextController.text,
           "email": emailTextController.text,
           "password": passwordTextController.text,
-          "city_id": 1,
         },
         onSuccess: (res, ty) {
           if (res.data['status'] == "SUCCESS") {

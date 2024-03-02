@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:helper/data/constant.dart';
 import 'package:helper/data/models/dio_config_model.dart';
 import 'package:helper/helper.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -18,6 +19,7 @@ void main() async {
   await GetStorage.init(AppRoutes.appName);
   Helper.initial(
       appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.activeAll());
+
   Get.put(MainController(), permanent: true);
   await LocaleStorageService.getUserData();
   await OneSignal.shared.setAppId("0c4508b7-d21e-4c75-8dad-e4e6d543981a");

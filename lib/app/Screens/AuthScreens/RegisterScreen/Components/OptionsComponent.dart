@@ -48,7 +48,9 @@ class RegisterOptionsComponent extends GetView<RegisterScreenController> {
                                 height: 150.h,
                                 width: Get.width,
                                 child: Card(
-                                  elevation: 0,
+                                  elevation:  controller.gender.value == e
+                                      ? 7
+                                      : null,
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.sp),
@@ -120,7 +122,7 @@ class RegisterOptionsComponent extends GetView<RegisterScreenController> {
                               height: 50.h,
                               child: Card(
                                 elevation: controller.maritalStatus.value == e
-                                    ? 10
+                                    ? 5
                                     : null,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.sp),
