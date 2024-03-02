@@ -1,8 +1,14 @@
+import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
+import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:delevary/app/data/ApiRoute.dart';
  import 'package:flutter/cupertino.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
 
+import '../../../Data/Models/UserModel.dart';
+import '../../../Route/Routs.dart';
+import '../../../Services/LocaleStorageService.dart';
 import '../../../services/AuthService.dart';
 
 class LoginScreenController extends GetxController with ApiHelperMixin {
@@ -19,14 +25,37 @@ class LoginScreenController extends GetxController with ApiHelperMixin {
     });
   }
 
-  Future<void> login() async {
+  Future<void> login({required BuildContext context}) async {
     if (formKey.currentState!.validate()) {
-      postData(
+      OverlayLoaderService.show(context);
+      await postData(
           url: ApiRoute.login,
-          data: {},
-          onSuccess: (res, t) {},
-          onError: (res, t) {
+          data: {
+            "email": emailTextController.text,
+            "password": passwordTextController.text,
+          },
+          onSuccess: (res, ty) {
+            if (res.data['status'] == "SUCCESS") {
+              ToastService.showSuccessToast(
+                  context: context, title: 'تم تـسجيل الدخول ');
+              LocaleStorageService.setUserData(
+                  user: UserModel.fromJson(res.data['data']['user']),
+                  token: res.data['data']['token']);
+              Get.offAllNamed(AppRoutes.homeScreen);
+            } else {
+              ToastService.showErrorToast(
+                  context: context,
+                  title: 'خطاء في تسجيل الدخول  ',
+                  description: res.data['data']['message']);
+            }
+          },
+          onError: (ex, t) {
+            ToastService.showErrorToast(
+                context: context,
+                title: 'خطاء في تسجيل الدخول  ',
+                description: "${ex.statusCode ?? ''}");
           });
+      Loader.hide();
     }
   }
 }

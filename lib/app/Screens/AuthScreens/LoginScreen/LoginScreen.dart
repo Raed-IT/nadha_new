@@ -84,7 +84,7 @@ class LoginScreen extends GetView<LoginScreenController> {
                             validator: (data) {
                               if (data!.isEmpty || data.length < 3) {
                                 return "اكتب الاسم بشكل صحيح يجب ان يكون اكثر من 3 احرف";
-                              }else if(!data.isValidEmail()){
+                              } else if (!data.isValidEmail()) {
                                 return "الرجاء ادخال إيميل ";
                               }
                               return null;
@@ -119,7 +119,8 @@ class LoginScreen extends GetView<LoginScreenController> {
                                   ),
                                 ),
                               ),
-                              onPressed: () => controller.login(),
+                              onPressed: () =>
+                                  controller.login(context: context),
                               child: Text("تسجيل الدخول"),
                             ),
                           ),
