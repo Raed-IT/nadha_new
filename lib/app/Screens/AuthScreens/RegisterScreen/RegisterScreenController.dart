@@ -15,6 +15,7 @@ import 'package:helper/mixin/api_mixing.dart';
 import 'package:logger/logger.dart';
 
 import '../../../Data/Enums/MaritalStatusEnum.dart';
+import '../../../Services/OneSignalService.dart';
 
 class RegisterScreenController extends GetxController with ApiHelperMixin {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -36,12 +37,14 @@ class RegisterScreenController extends GetxController with ApiHelperMixin {
       return;
     }
     OverlayLoaderService.show(context);
+    String? deviceToken = await OnSignalService.getDeviceNotificationToken();
     await postData(
         url: ApiRoute.register,
         data: {
           "name": nameTextController.text,
           "email": emailTextController.text,
           "password": passwordTextController.text,
+          if (deviceToken != null) "device_token": deviceToken
         },
         onSuccess: (res, ty) {
           if (res.data['status'] == "SUCCESS") {
