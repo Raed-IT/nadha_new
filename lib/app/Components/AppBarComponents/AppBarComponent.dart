@@ -20,11 +20,13 @@ class AppBarComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredSafeArea(
       child: SizedBox(
-        height: 70.h,
+        height: 60.h,
         width: Get.width,
         child: SizedBox(
           width: Get.width,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
@@ -40,7 +42,9 @@ class AppBarComponent extends StatelessWidget {
                             "${Get.find<MainController>().user.value?.image}",
                       ),
                     ),
-                  ).animate().slideX(begin: -1),
+                  )
+                      .animate()
+                      .slideX(begin: 1, duration: Duration(milliseconds: 400)),
                   const Spacer(),
                   if (title != null)
                     Text(
@@ -64,7 +68,9 @@ class AppBarComponent extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ).animate().slideX(begin: 1),
+                  )
+                      .animate()
+                      .slideX(begin: -1, duration: Duration(milliseconds: 400)),
                 ],
               ),
             ],

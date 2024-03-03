@@ -3,5 +3,8 @@ abstract class BaseModel {
 
   String? title;
 
+
+
   String? getTitle ();
+  String? getImage ();
 }

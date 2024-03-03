@@ -22,7 +22,6 @@ class MainController extends GetxController {
   @override
   void onInit() {
     token.listen((p0) {
-      Logger().w(p0);
       HelperConstant.globalHeader['Authorization'] = 'Bearer $p0';
     });
     LocaleStorageService.getThemMode();

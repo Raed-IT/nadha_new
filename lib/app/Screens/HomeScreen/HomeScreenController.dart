@@ -28,7 +28,6 @@ class HomeScreenController extends GetxController with ApiHelperMixin {
       for (var slid in json['data']['sliders']) {
         sliders.add(SliderModel.fromJson(slid));
       }
-      Logger().w(sliders);
     } else {
       Fluttertoast.showToast(msg: json['data']?['message']);
     }

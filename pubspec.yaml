@@ -56,6 +56,7 @@ dependencies:
   auto_size_text: ^3.0.0
   nopsuite_carousel_slider: ^0.0.3
   babstrap_settings_screen: ^0.1.6
+  url_launcher: ^6.2.4
 
   helper:
     git:

@@ -30,4 +30,9 @@ class CityModel extends BaseModel {
   String? getTitle() {
     return name;
   }
+
+  @override
+  String? getImage() {
+    throw UnimplementedError();
+  }
 }

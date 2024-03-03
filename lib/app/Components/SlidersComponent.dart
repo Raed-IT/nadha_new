@@ -3,8 +3,10 @@ import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:nopsuite_carousel_slider/effects/worm_effect.dart';
 import 'package:nopsuite_carousel_slider/nopsuite_carousel_slider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Data/Models/SliderModel.dart';
 
@@ -12,7 +14,7 @@ class SliderComponent extends StatelessWidget {
   final List<SliderModel> sliders;
   final PageController controller;
   final RxBool isLoad;
-  final double height = 150.h;
+  final double height = 180.h;
 
   SliderComponent(
       {super.key,
@@ -25,29 +27,41 @@ class SliderComponent extends StatelessWidget {
     return Obx(
       () => (isLoad.value)
           ? CardLoadingComponent(
-              height: height + 20.h,
+              height: height + 0.h,
             )
-          : NopSuiteCarouselSlider(
-              height: height,
-              controller: controller,
-              count: sliders.length,
-              itemBuilder: sliders
-                  .map(
-                    (e) => ImageCacheComponent(
-                        height: height,
-                        image:
-                            "https://www.gstatic.com/webp/gallery3/1.sm.png"),
-                  )
-                  .toList(),
-              effect: WormEffect(
-                dotHeight: 8.sp,
-                dotWidth: 16.sp,
-                radius: 4.sp,
-                dotColor: Colors.black26,
-                activeDotColor: Colors.black,
-                type: WormType.normal,
-                strokeWidth: 5.sp,
-              ),
+          : Container(
+              margin: EdgeInsets.symmetric(horizontal: 5.sp),
+              child: (sliders.isEmpty)
+                  ? Container()
+                  : NopSuiteCarouselSlider(
+                      height: height,
+                      controller: controller,
+                      count: sliders.length,
+                      itemBuilder: sliders
+                          .map(
+                            (e) => GestureDetector(
+                              onTap: () {
+                                launchUrl(Uri.parse("${e.url}"));
+                              },
+                              child: Card(
+                                child: ImageCacheComponent(
+                                    borderRadius: BorderRadius.circular(10.sp),
+                                    height: height,
+                                    image: "${e.image}"),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      effect: WormEffect(
+                        dotHeight: 4.sp,
+                        dotWidth: 16.sp,
+                        radius: 4.sp,
+                        dotColor: Theme.of(context).colorScheme.onBackground,
+                        activeDotColor: Theme.of(context).colorScheme.primary,
+                        type: WormType.normal,
+                        strokeWidth: 5.sp,
+                      ),
+                    ),
             ),
     );
   }

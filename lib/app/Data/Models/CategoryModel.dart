@@ -1,4 +1,6 @@
-class CategoryModel {
+import 'package:delevary/app/Data/Models/BaseModel.dart';
+
+class CategoryModel extends BaseModel {
   int? id;
   String? name;
   int? order;
@@ -6,19 +8,21 @@ class CategoryModel {
   bool? status;
   String? createdAt;
   bool? hasChildren;
+  String? image;
 
   CategoryModel(
       {this.id,
-        this.name,
-        this.order,
-        this.parentId,
-        this.status,
-        this.createdAt,
-        this.hasChildren});
+      this.name,
+      this.order,
+      this.parentId,
+      this.status,
+      this.createdAt,
+      this.hasChildren});
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    image = json['image'];
     order = json['order'];
     parentId = json['parent_id'];
     status = json['status'];
@@ -36,5 +40,15 @@ class CategoryModel {
     data['created_at'] = this.createdAt;
     data['has_children'] = this.hasChildren;
     return data;
+  }
+
+  @override
+  String? getTitle() {
+    return name;
+  }
+
+  @override
+  String? getImage() {
+    return image;
   }
 }
