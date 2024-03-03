@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-class AppBarComponent extends StatelessWidget {
-  const AppBarComponent({super.key});
+class SupAppBarComponent extends StatelessWidget {
+  const SupAppBarComponent({super.key});
 
   @override
   Widget build(BuildContext context) {

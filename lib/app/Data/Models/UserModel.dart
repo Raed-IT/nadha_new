@@ -5,6 +5,7 @@ import 'package:delevary/app/Data/Models/CityModel.dart';
 class UserModel {
   int? id;
   String? name;
+  String? image;
   MaritalStatusEnum? martialStatus;
   GenderTypeEnum? gender;
   String? email;
@@ -13,18 +14,19 @@ class UserModel {
   int? age;
   CityModel? city;
 
-  UserModel(this.id, this.name, this.martialStatus, this.gender, this.email,
-      this.bio, this.phone, this.age);
+  UserModel(this.id, this.image, this.name, this.martialStatus, this.gender,
+      this.email, this.bio, this.phone, this.age);
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    image = json['image'];
     email = json['email'];
     bio = json['bio'];
     phone = json['phone'];
     age = json['age'];
-    if (json['city']!=null){
-    city = CityModel.fromJson(json['city']);
+    if (json['city'] != null) {
+      city = CityModel.fromJson(json['city']);
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:delevary/app/data/Models/SettingModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/constant.dart';
+import 'package:logger/logger.dart';
 
 class MainController extends GetxController {
   // @override
@@ -16,13 +17,15 @@ class MainController extends GetxController {
   Rxn<UserModel> user = Rxn(null);
   Rxn<SettingModel> setting = Rxn<SettingModel>();
   RxList<CityModel> cities = RxList<CityModel>();
-  Rx<ThemeMode> themeMode = Rx(ThemeMode.light);
+  Rx<ThemeMode> themeMode = Rx(ThemeMode.dark);
 
   @override
   void onInit() {
-    HelperConstant.globalHeader = {
-      'Authorization': 'Bearer ${token.value}',
-    };
+    token.listen((p0) {
+      Logger().w(p0);
+      HelperConstant.globalHeader['Authorization'] = 'Bearer $p0';
+    });
+    LocaleStorageService.getThemMode();
     super.onInit();
   }
 }

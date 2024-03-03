@@ -52,6 +52,10 @@ dependencies:
   flutter_overlay_loader: ^2.0.0
   get_storage: ^2.1.1
   card_loading: ^0.3.2
+  cached_network_image: ^3.2.3
+  auto_size_text: ^3.0.0
+  nopsuite_carousel_slider: ^0.0.3
+  babstrap_settings_screen: ^0.1.6
 
   helper:
     git:

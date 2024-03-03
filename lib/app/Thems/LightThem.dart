@@ -1,4 +1,3 @@
-import 'package:delevary/app/thems/AppColots.dart';
 import 'package:delevary/app/thems/ColorSchemes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,11 +19,12 @@ class LightThemeData {
           ),
         ),
       ),
+      cardColor:Colors.white ,
       cardTheme: CardTheme(
           elevation: 3,
-          shadowColor: lightColorScheme.onBackground,
-          surfaceTintColor: lightColorScheme.primary,
-          color: lightColorScheme.primaryContainer),
+          shadowColor: lightColorScheme.primaryContainer,
+          surfaceTintColor: Colors.white,
+          color: Colors.white),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: lightColorScheme.onPrimary,

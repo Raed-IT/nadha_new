@@ -17,7 +17,7 @@ class SplashScreen extends GetView<SplashScreenController> {
           child: Container(
             height: Get.height,
             width: Get.width,
-            decoration: BoxDecoration(
+            decoration:const BoxDecoration(
               image: DecorationImage(
                 opacity: 0.07,
                 filterQuality: FilterQuality.high,
@@ -25,7 +25,9 @@ class SplashScreen extends GetView<SplashScreenController> {
                 repeat: ImageRepeat.repeat,
               ),
             ),
-          ).animate().blur(begin: Offset(20, 20), duration: Duration(seconds: 2)),
+          )
+              .animate()
+              .blur(begin: Offset(20, 20), duration: Duration(seconds: 2)),
         ),
         Positioned(
           top: -100.sp,
@@ -37,16 +39,28 @@ class SplashScreen extends GetView<SplashScreenController> {
                 color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(1000)),
           ).animate().scale(
-                begin: Offset(0, 0),
+                begin:const Offset(0, 0),
                 duration: const Duration(milliseconds: 300),
               ),
         ),
         Align(
           alignment: Alignment.center,
-          child: Image.asset(
-            "assets/images/logo.png",
-            width: 450.w,
-            height: 250.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/images/logo.png",
+                width: 450.w,
+              ),
+              SizedBox(
+                width: 250.w,
+                child: LinearProgressIndicator(
+                  minHeight: 7.sp,
+                  borderRadius: BorderRadius.circular(10.sp),
+                ),
+              ),
+            ],
           ),
         ).animate().slideY(
               begin: 1,

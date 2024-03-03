@@ -12,17 +12,30 @@ class HorizontalListLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 3,
-      padding: EdgeInsets.zero,
-      childAspectRatio: 1 / 1.1,
-      crossAxisSpacing: 00,
-      mainAxisSpacing: 0,
+    return Column(
       children: List.generate(
-        generateCount ?? 20,
-        (index) => CardLoadingComponent(
-          cardMargin: EdgeInsets.all(5.sp),
-          borderRadius: BorderRadius.circular(10),
+        20,
+        (index) => Row(
+          children: [
+            Expanded(
+              child: CardLoadingComponent(
+                height: height,
+                borderRadius: BorderRadius.circular(10.sp),
+              ),
+            ),
+            Expanded(
+              child: CardLoadingComponent(
+                height: height,
+                borderRadius: BorderRadius.circular(10.sp),
+              ),
+            ),
+            Expanded(
+              child: CardLoadingComponent(
+                height: height,
+                borderRadius: BorderRadius.circular(10.sp),
+              ),
+            ),
+          ],
         ),
       ),
     );
