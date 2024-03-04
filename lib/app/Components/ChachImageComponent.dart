@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 class ImageCacheComponent extends StatelessWidget {
   final String image;
   final Color? imageColor;
-  final BorderRadiusGeometry? borderRadius;
+  final BorderRadius? borderRadius;
   final double? height;
   final double? width;
 
@@ -17,7 +17,8 @@ class ImageCacheComponent extends StatelessWidget {
       super.key,
       this.height,
       this.width,
-      this.borderRadius, this.imageColor});
+      this.borderRadius,
+      this.imageColor});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +48,10 @@ class ImageCacheComponent extends StatelessWidget {
                               .primary
                               .withOpacity(0.1),
                           colorTwo: Colors.black26),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.sp),
-                      ),
+                      borderRadius: borderRadius ??
+                          BorderRadius.all(
+                            Radius.circular(10.sp),
+                          ),
                     ),
                   ),
                   Column(

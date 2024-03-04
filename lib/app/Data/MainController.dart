@@ -5,7 +5,6 @@ import 'package:delevary/app/data/Models/SettingModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/constant.dart';
-import 'package:logger/logger.dart';
 
 class MainController extends GetxController {
   // @override

@@ -7,4 +7,6 @@ class AppRoutes {
   static const String registerScreen = "/register_screen";
   static const String profileScreen = "/profile";
   static const String setting = "/setting";
+  static const String categories = "/categories";
+  static const String categoryProducts = "/categoryProducts";
 }

@@ -1,8 +1,7 @@
 import 'package:delevary/app/Data/Models/BaseModel.dart';
 
 class CategoryModel extends BaseModel {
-  int? id;
-  String? name;
+   String? name;
   int? order;
   int? parentId;
   bool? status;
@@ -11,7 +10,7 @@ class CategoryModel extends BaseModel {
   String? image;
 
   CategoryModel(
-      {this.id,
+      { id,
       this.name,
       this.order,
       this.parentId,

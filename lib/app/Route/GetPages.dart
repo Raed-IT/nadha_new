@@ -6,6 +6,8 @@ import 'package:delevary/app/Screens/ProfileScreen/ProfilePage.dart';
 import 'package:delevary/app/Screens/SettingScreen/SettingPage.dart';
 import 'package:get/get.dart';
 
+import '../Screens/CategoriesScreen/CategoriesPage.dart';
+import '../Screens/CategoryProductsScreen/CategoryProductsPage.dart';
 import '../Screens/SplashScreen/SplashPage.dart';
 
 class GetPagesProvider {
@@ -16,6 +18,8 @@ class GetPagesProvider {
     RegisterPage(),
     HomePage(),
     ProfilePage(),
-    SettingPage()
+    SettingPage(),
+    CategoriesPage(),
+    CategoryProductsPage()
   ];
 }

@@ -18,11 +18,12 @@ class AppBarComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredSafeArea(
+    return SafeArea(
       child: SizedBox(
         height: 60.h,
         width: Get.width,
-        child: SizedBox(
+        child: Container(
+          color: Colors.transparent,
           width: Get.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +32,7 @@ class AppBarComponent extends StatelessWidget {
               Row(
                 children: [
                   GestureDetector(
-                    onTap: () => Get.toNamed(AppRoutes.profileScreen),
+                    onTap: () => Get.toNamed(AppRoutes.profileScreen,),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5.sp),
                       child: ImageCacheComponent(
