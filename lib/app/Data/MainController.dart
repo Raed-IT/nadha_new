@@ -16,7 +16,7 @@ class MainController extends GetxController {
   Rxn<UserModel> user = Rxn(null);
   Rxn<SettingModel> setting = Rxn<SettingModel>();
   RxList<CityModel> cities = RxList<CityModel>();
-  Rx<ThemeMode> themeMode = Rx(ThemeMode.dark);
+  Rx<ThemeMode> themeMode = Rx(ThemeMode.light);
 
   @override
   void onInit() {

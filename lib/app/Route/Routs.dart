@@ -8,5 +8,7 @@ class AppRoutes {
   static const String profileScreen = "/profile";
   static const String setting = "/setting";
   static const String categories = "/categories";
-  static const String categoryProducts = "/categoryProducts";
+  static const String categoryProducts = "/category_products";
+  static const String searchScreen = "/search_screen";
+  static const String showProduct = "/show_product";
 }

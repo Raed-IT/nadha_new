@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Data/Models/BaseModel.dart';
@@ -15,6 +17,8 @@ class GridListComponent<T extends BaseModel> extends StatelessWidget {
   final RxBool isLoad;
   final ScrollController? scrollController;
   final Function(T item) onTap;
+
+  ///[prifexHero] you can type any prifix and recive it for giv uniq hero tag
   final String? prifexHero;
 
   const GridListComponent(
@@ -29,21 +33,26 @@ class GridListComponent<T extends BaseModel> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => isLoad.value
-          ? GridListLoading()
-          : GridView.count(
+          ? const GridListLoading()
+          : GridView.builder(
+              scrollDirection: Axis.vertical,
               controller: scrollController,
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
-              crossAxisCount: 3,
-              mainAxisSpacing: 30.h,
-              childAspectRatio: 1 / 1.15,
-              children: items
-                  .map((item) => buildCard(
-                        item,
-                        context,
-                        (item) => onTap(item),
-                      ))
-                  .toList(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                mainAxisSpacing: 40.h,
+                crossAxisSpacing: 5.sp,
+                childAspectRatio: 1 / 0.85,
+              ),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return buildCard(
+                  items[index],
+                  context,
+                  (item) => onTap(item),
+                );
+              },
             ),
     );
   }
@@ -60,38 +69,43 @@ class GridListComponent<T extends BaseModel> extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               Positioned(
-                top: -30.h,
-                right: 5.sp,
-                left: 5.sp,
+                top: -45.h,
+                right: -5.sp,
+                left: -5.sp,
                 child: Hero(
                   tag: "${prifexHero ?? ''}${item.id}",
                   child: Card(
+                    elevation: 3,
+                    shadowColor: Theme.of(context).colorScheme.primary,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.sp)),
+                      borderRadius: BorderRadius.circular(10.sp),
+                    ),
                     child: ImageCacheComponent(
                         borderRadius: BorderRadius.circular(10.sp),
-                        height: (Get.width / 3) - 20.w,
+                        height: (Get.width / 3) - 50.w,
                         width: (Get.width / 3) - 20.w,
                         image: "${item.getImage()}"),
                   ),
-                ).animate().slideY(begin: 0.2),
+                ).animate().slideY(
+                      begin: 0.2,
+                      duration:
+                          Duration(milliseconds: Random().nextInt(400) + 100),
+                    ),
               ),
               Positioned(
-                bottom: 0,
+                bottom: 2.h,
+                left: 1,
+                right: 1,
                 child: SizedBox(
-                  height: 50.h,
-                  width: (Get.width / 3) - 20.w,
-                  child: Padding(
-                    padding: EdgeInsets.all(5.sp),
-                    child: Center(
-                      child: AutoSizeText(
-                        "${item.getTitle()}",
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primaryContainer,
-                            overflow: TextOverflow.ellipsis,
-                            fontWeight: FontWeight.bold),
+                  height: 30.h,
+                  child: Center(
+                    child: AutoSizeText(
+                      "${item.getTitle()}  ",
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                       ),
                     ),
                   ),

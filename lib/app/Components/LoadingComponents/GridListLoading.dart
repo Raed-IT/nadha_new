@@ -13,9 +13,9 @@ class GridListLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-       shrinkWrap: true,
+      shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
-      crossAxisCount: 3,
+      crossAxisCount: 4,
       childAspectRatio: 1 / 1.15,
       children: List.generate(
           20,

@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 
 import '../Screens/CategoriesScreen/CategoriesPage.dart';
 import '../Screens/CategoryProductsScreen/CategoryProductsPage.dart';
+import '../Screens/SearchScreen/SearchScreenPage.dart';
+import '../Screens/ShowProductScreen/ShowProductPage.dart';
 import '../Screens/SplashScreen/SplashPage.dart';
 
 class GetPagesProvider {
@@ -20,6 +22,8 @@ class GetPagesProvider {
     ProfilePage(),
     SettingPage(),
     CategoriesPage(),
-    CategoryProductsPage()
+    CategoryProductsPage(),
+    SearchPage(),
+    ShowProductPage()
   ];
 }
