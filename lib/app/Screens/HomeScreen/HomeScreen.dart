@@ -6,6 +6,7 @@ import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreenController.dart';
+import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,26 +65,6 @@ class HomeScreen extends GetView<HomeScreenController> {
                           controller: PageController(),
                           isLoad: controller.isLoad,
                         ),
-                        // 20.verticalSpace,
-                        // Container(
-                        //   decoration: BoxDecoration(
-                        //       color: Theme.of(context)
-                        //           .colorScheme
-                        //           .primary
-                        //           .withOpacity(0.8),
-                        //       borderRadius: BorderRadius.circular(10.sp)),
-                        //   margin: EdgeInsets.symmetric(
-                        //     horizontal: 10.sp,
-                        //   ),
-                        //   height: 80.h,
-                        //   child: Center(
-                        //     child: Image.asset(
-                        //       "assets/images/logo.png",
-                        //       width: Get.width,
-                        //       color: Colors.white,
-                        //     ),
-                        //   ),
-                        // ),
                         10.verticalSpace,
                         buildTitleSection(
                             title: "الفئات الرئيسية", context: context),
@@ -118,7 +99,12 @@ class HomeScreen extends GetView<HomeScreenController> {
                         ProductListComponent(
                           products: controller.products,
                           onProductTap: (ProductModel product) {
-                            Logger().w(product.unit);
+                            Logger().w(product);
+                            Get.toNamed(AppRoutes.showProduct,
+                                preventDuplicates: true,
+                                arguments: {"product": product});
+                            Get.put(ShowProductScreenController(),
+                                tag: "${product.id}");
                           },
                           isLoad: controller.isLoad,
                         )

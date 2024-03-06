@@ -1,8 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
-import 'package:delevary/app/Components/clippath/discount_canvas.dart';
+import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,18 +43,21 @@ class ProductCardComponent extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Card(
-                            margin: EdgeInsets.zero,
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  imageRadius ?? BorderRadius.circular(10.sp),
-                            ),
-                            child: ImageCacheComponent(
-                              height: 130.h,
-                              borderRadius:
-                                  imageRadius ?? BorderRadius.circular(10.sp),
-                              image: "${product.image}",
+                          child: Hero(
+                            tag: "product_image_${product.id}",
+                            child: Card(
+                              margin: EdgeInsets.zero,
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    imageRadius ?? BorderRadius.circular(10.sp),
+                              ),
+                              child: ImageCacheComponent(
+                                height: 130.h,
+                                borderRadius:
+                                    imageRadius ?? BorderRadius.circular(10.sp),
+                                image: "${product.image}",
+                              ),
                             ),
                           ),
                         ),
@@ -133,32 +135,8 @@ class ProductCardComponent extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 1,
-                        child: Row(
-                          children: [
-                            if (product.isDiscount ?? false)
-                              CustomPaint(
-                                painter: DiscountPainter(context),
-                                child: Text(
-                                  "${product.price}",
-                                  style: TextStyle(
-                                    color: Theme.of(context).colorScheme.error,
-                                  ),
-                                ),
-                              ),
-                            10.horizontalSpace,
-                            Text(
-                              "${product.getPrice}",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                            Text(
-                              "${product.getUnitName}",
-                              style: TextStyle(
-                                fontSize: 10.sp,
-                              ),
-                            ),
-                          ],
+                        child: BuildPriceProductComponent(
+                          product: Rx(product),
                         ),
                       ),
                     ],

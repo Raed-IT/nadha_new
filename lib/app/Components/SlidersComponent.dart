@@ -14,36 +14,43 @@ class SliderComponent extends StatelessWidget {
   final List<SliderModel> sliders;
   final PageController controller;
   final RxBool isLoad;
-  final double height = 180.h;
+  final double? height;
+
+  final EdgeInsetsGeometry? margin;
 
   SliderComponent(
       {super.key,
       required this.sliders,
       required this.controller,
-      required this.isLoad});
+      required this.isLoad,
+      this.margin,
+      this.height});
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => (isLoad.value)
           ? CardLoadingComponent(
-              height: height + 0.h,
+              height: height,
             )
           : Container(
-              margin: EdgeInsets.symmetric(horizontal: 5.sp),
+              margin: margin ?? EdgeInsets.symmetric(horizontal: 5.sp),
               child: (sliders.isEmpty)
                   ? Container()
                   : NopSuiteCarouselSlider(
-                      height: height,
+                      height: height ?? 180.h,
                       controller: controller,
                       count: sliders.length,
                       itemBuilder: sliders
                           .map(
                             (e) => GestureDetector(
                               onTap: () {
-                                launchUrl(Uri.parse("${e.url}"));
+                                if (e.url != null) {
+                                  launchUrl(Uri.parse("${e.url}"));
+                                }
                               },
                               child: Card(
+                                margin: margin != null ? EdgeInsets.zero : null,
                                 child: ImageCacheComponent(
                                     borderRadius: BorderRadius.circular(10.sp),
                                     height: height,

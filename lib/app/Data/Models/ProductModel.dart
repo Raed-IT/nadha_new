@@ -1,5 +1,6 @@
 import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
+import 'package:delevary/app/Data/Models/MediaModel.dart';
 import 'package:delevary/app/Data/Models/StoreModel.dart';
 
 class ProductModel {
@@ -14,6 +15,7 @@ class ProductModel {
   String? image;
   CategoryModel? category;
   StoreModel? store;
+  List<MediaModel>? images;
 
   double? get getPrice {
     if (isDiscount ?? false) {
@@ -37,6 +39,15 @@ class ProductModel {
       this.currency});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
+    images = [];
+
+    if (json['images'].length > 0) {
+      json['images'].keys!.forEach((key) {
+        int id = int.parse("$key");
+        String image = json['images'][key];
+        images!.add(MediaModel(id, image));
+      });
+    }
     id = json['id'];
     image = json['image'];
     name = json['name'];
@@ -46,6 +57,7 @@ class ProductModel {
     price = double.tryParse("${json['price']}");
     discount = double.tryParse("${json['discount']}");
     currency = json['currency'];
+    category = CategoryModel.fromJson(json['category']);
     store = StoreModel.fronJson(json['store']);
   }
 

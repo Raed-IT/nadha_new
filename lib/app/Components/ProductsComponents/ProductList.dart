@@ -40,7 +40,7 @@ class ProductListComponent extends StatelessWidget {
                   )
                   .toList(),
             )
-          : ProductLoadingList()),
+          : const ProductLoadingList()),
     );
   }
 }

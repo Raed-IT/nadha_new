@@ -11,14 +11,14 @@ class ImageCacheComponent extends StatelessWidget {
   final BorderRadius? borderRadius;
   final double? height;
   final double? width;
-
+  final BoxFit? fit;
   const ImageCacheComponent(
       {required this.image,
       super.key,
       this.height,
       this.width,
       this.borderRadius,
-      this.imageColor});
+      this.imageColor, this.fit});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ImageCacheComponent extends StatelessWidget {
         borderRadius: borderRadius ?? BorderRadius.zero,
         child: CachedNetworkImage(
           color: imageColor,
-          fit: BoxFit.cover,
+          fit:fit?? BoxFit.cover,
           height: height,
           width: width,
           alignment: Alignment.center,
