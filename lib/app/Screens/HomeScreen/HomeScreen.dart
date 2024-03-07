@@ -101,10 +101,10 @@ class HomeScreen extends GetView<HomeScreenController> {
                           onProductTap: (ProductModel product) {
                             Logger().w(product);
                             Get.toNamed(AppRoutes.showProduct,
-                                preventDuplicates: true,
+                                preventDuplicates: false,
                                 arguments: {"product": product});
                             Get.put(ShowProductScreenController(),
-                                tag: "${product.id}");
+                                tag: "show_product${product.id}");
                           },
                           isLoad: controller.isLoad,
                         )

@@ -5,7 +5,7 @@ import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
 
 class ShowProductScreenController extends GetxController with ApiHelperMixin {
-  Rx<ProductModel> product = Rx(Get.arguments['product']);
+  Rxn<ProductModel> product = Rxn(Get.arguments?['product']);
   RxList<ProductModel> products = RxList([]);
 
   @override
@@ -15,7 +15,7 @@ class ShowProductScreenController extends GetxController with ApiHelperMixin {
         url: ApiRoute.products,
         type: "products",
         parameter: {
-          "category_id": product.value.category?.id,
+          "category_id": product.value?.category?.id,
         },
       ),
     );

@@ -6,13 +6,11 @@ import 'package:delevary/app/Components/GridCardComponent.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/CategoriesScreen/CategoriesScreenController.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});

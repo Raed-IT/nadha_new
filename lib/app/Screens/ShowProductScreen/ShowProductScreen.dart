@@ -2,11 +2,14 @@ import 'dart:ui';
 
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
+import 'package:delevary/app/Components/SlidersComponent.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Data/Models/SliderModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/Components/BottomSheet.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -20,24 +23,23 @@ class ShowProductScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: GetBuilder<ShowProductScreenController>(
-        tag: "${Get.arguments?['product']?.id}",
+        tag: "show_product${Get.arguments?['product']?.id}",
         builder: (controller) => Builder(builder: (context) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) {
               showProductDetailsBottomSheet(
                 productList: ProductListComponent(
                   onProductTap: (ProductModel product) {
-                    Logger().w(product);
                     Get.toNamed(AppRoutes.showProduct,
                         arguments: {"product": product},
-                        preventDuplicates: true);
+                        preventDuplicates: false);
                     Get.put(ShowProductScreenController(),
                         tag: "show_product${product.id}");
                   },
                   products: controller.products,
                   isLoad: controller.isLoad,
                 ),
-                product: controller.product,
+                product: Rx(controller.product.value!),
                 context: context,
               );
             },
@@ -53,7 +55,7 @@ class ShowProductScreen extends StatelessWidget {
                       child: PageView(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        children: controller.product.value.images!
+                        children: controller.product.value!.images!
                             .map((e) => SizedBox(
                                   height: Get.height,
                                   width: Get.width,
@@ -84,15 +86,17 @@ class ShowProductScreen extends StatelessWidget {
                                                           EdgeInsets.all(10.sp),
                                                       child: Hero(
                                                         tag:
-                                                            "product_image_${controller.product.value.id}",
+                                                            "product_image_${controller.product.value!.id}",
                                                         child:
                                                             ImageCacheComponent(
+                                                          height:
+                                                              Get.height * 0.34,
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
                                                                       15.sp),
                                                           width: Get.width,
-                                                          fit: BoxFit.fitHeight,
+                                                          fit: BoxFit.cover,
                                                           image: "${e.url}",
                                                         ),
                                                       ),

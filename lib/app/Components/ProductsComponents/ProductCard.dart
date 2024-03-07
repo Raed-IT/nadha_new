@@ -20,19 +20,19 @@ class ProductCardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.sp),
-        border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.sp),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          ),
         ),
-      ),
-      child: BlurryContainer(
-        blur: 10,
-        borderRadius: BorderRadius.circular(10.sp),
-        padding: EdgeInsets.zero,
-        child: GestureDetector(
-          onTap: () => onTap(),
+        child: BlurryContainer(
+          blur: 10,
+          borderRadius: BorderRadius.circular(10.sp),
+          padding: EdgeInsets.zero,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

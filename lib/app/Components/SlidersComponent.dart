@@ -37,38 +37,40 @@ class SliderComponent extends StatelessWidget {
               margin: margin ?? EdgeInsets.symmetric(horizontal: 5.sp),
               child: (sliders.isEmpty)
                   ? Container()
-                  : NopSuiteCarouselSlider(
-                      height: height ?? 180.h,
-                      controller: controller,
-                      count: sliders.length,
-                      itemBuilder: sliders
-                          .map(
-                            (e) => GestureDetector(
-                              onTap: () {
-                                if (e.url != null) {
-                                  launchUrl(Uri.parse("${e.url}"));
-                                }
-                              },
-                              child: Card(
-                                margin: margin != null ? EdgeInsets.zero : null,
-                                child: ImageCacheComponent(
-                                    borderRadius: BorderRadius.circular(10.sp),
-                                    height: height,
-                                    image: "${e.image}"),
+                  : SingleChildScrollView(
+                    child: NopSuiteCarouselSlider(
+                        height: height ?? 180.h,
+                        controller: controller,
+                        count: sliders.length,
+                        itemBuilder: sliders
+                            .map(
+                              (e) => GestureDetector(
+                                onTap: () {
+                                  if (e.url != null) {
+                                    launchUrl(Uri.parse("${e.url}"));
+                                  }
+                                },
+                                child: Card(
+                                  margin: margin != null ? EdgeInsets.zero : null,
+                                  child: ImageCacheComponent(
+                                      borderRadius: BorderRadius.circular(10.sp),
+                                      height: height,
+                                      image: "${e.image}"),
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                      effect: WormEffect(
-                        dotHeight: 4.sp,
-                        dotWidth: 16.sp,
-                        radius: 4.sp,
-                        dotColor: Theme.of(context).colorScheme.onBackground,
-                        activeDotColor: Theme.of(context).colorScheme.primary,
-                        type: WormType.normal,
-                        strokeWidth: 5.sp,
+                            )
+                            .toList(),
+                        effect: WormEffect(
+                          dotHeight: 4.sp,
+                          dotWidth: 16.sp,
+                          radius: 4.sp,
+                          dotColor: Theme.of(context).colorScheme.onBackground,
+                          activeDotColor: Theme.of(context).colorScheme.primary,
+                          type: WormType.normal,
+                          strokeWidth: 5.sp,
+                        ),
                       ),
-                    ),
+                  ),
             ),
     );
   }
