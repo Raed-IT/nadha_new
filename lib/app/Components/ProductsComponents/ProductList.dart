@@ -10,13 +10,15 @@ class ProductListComponent extends StatelessWidget {
   final Function(ProductModel product) onProductTap;
   final RxBool isLoad;
   final EdgeInsets? padding;
+  final String? heroTagPrefix;
 
   const ProductListComponent(
       {super.key,
       required this.onProductTap,
       required this.products,
       required this.isLoad,
-      this.padding});
+      this.padding,
+      this.heroTagPrefix});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class ProductListComponent extends StatelessWidget {
               children: products
                   .map(
                     (product) => ProductCardComponent(
+                      heroTagPrefix: heroTagPrefix,
                       product: product,
                       onTap: () => onProductTap(product),
                     ),

@@ -3,7 +3,9 @@ import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/CategoryProductsScreen/CategoryProductsScreenController.dart';
+import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +33,13 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 5.sp),
                             child: ProductListComponent(
-                              onProductTap: (ProductModel product) {},
+                              onProductTap: (ProductModel product) {
+                                Get.toNamed(AppRoutes.showProduct,
+                                    preventDuplicates: false,
+                                    arguments: {"product": product});
+                                Get.put(ShowProductScreenController(),
+                                    tag: "show_product${product.id}");
+                              },
                               products: controller.products,
                               isLoad: controller.isLoad,
                             ),

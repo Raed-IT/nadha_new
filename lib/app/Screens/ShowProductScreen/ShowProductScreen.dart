@@ -9,10 +9,8 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/Components/BottomSheet.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import '../../Components/AppBarComponents/BackAppBar.dart';
 
 class ShowProductScreen extends StatelessWidget {
@@ -25,25 +23,7 @@ class ShowProductScreen extends StatelessWidget {
       body: GetBuilder<ShowProductScreenController>(
         tag: "show_product${Get.arguments?['product']?.id}",
         builder: (controller) => Builder(builder: (context) {
-          WidgetsBinding.instance.addPostFrameCallback(
-            (_) {
-              showProductDetailsBottomSheet(
-                productList: ProductListComponent(
-                  onProductTap: (ProductModel product) {
-                    Get.toNamed(AppRoutes.showProduct,
-                        arguments: {"product": product},
-                        preventDuplicates: false);
-                    Get.put(ShowProductScreenController(),
-                        tag: "show_product${product.id}");
-                  },
-                  products: controller.products,
-                  isLoad: controller.isLoad,
-                ),
-                product: Rx(controller.product.value!),
-                context: context,
-              );
-            },
-          );
+          showBottomSheetFunction(controller, context);
           return Stack(
             children: [
               SizedBox(
@@ -122,6 +102,28 @@ class ShowProductScreen extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+
+  showBottomSheetFunction(
+      ShowProductScreenController controller, BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        showProductDetailsBottomSheet(
+          productList: ProductListComponent(
+            onProductTap: (ProductModel product) {
+              Get.toNamed(AppRoutes.showProduct,
+                  arguments: {"product": product}, preventDuplicates: false);
+              Get.put(ShowProductScreenController(),
+                  tag: "show_product${product.id}");
+            },
+            products: controller.products,
+            isLoad: controller.isLoad,
+          ),
+          product: Rx(controller.product.value!),
+          context: context,
+        );
+      },
     );
   }
 }

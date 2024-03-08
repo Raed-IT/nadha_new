@@ -2,6 +2,7 @@ import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
 import 'package:delevary/app/Components/GridCardComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
+import 'package:delevary/app/Components/TitleSectionComponent.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
@@ -66,8 +67,10 @@ class HomeScreen extends GetView<HomeScreenController> {
                           isLoad: controller.isLoad,
                         ),
                         10.verticalSpace,
-                        buildTitleSection(
-                            title: "الفئات الرئيسية", context: context),
+                        BuildTitleSectionComponent(
+                          title: "الفئات الرئيسية",
+                          isLoad: controller.isLoad,
+                        ),
                         20.verticalSpace,
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 5.sp),
@@ -93,13 +96,14 @@ class HomeScreen extends GetView<HomeScreenController> {
                           ),
                         ),
                         10.verticalSpace,
-                        buildTitleSection(
-                            title: "المنتجات الاكثر طلب", context: context),
+                        BuildTitleSectionComponent(
+                          title: "المنتجات الاكثر طلب",
+                          isLoad: controller.isLoad,
+                        ),
                         5.verticalSpace,
                         ProductListComponent(
                           products: controller.products,
                           onProductTap: (ProductModel product) {
-                            Logger().w(product);
                             Get.toNamed(AppRoutes.showProduct,
                                 preventDuplicates: false,
                                 arguments: {"product": product});
@@ -117,47 +121,6 @@ class HomeScreen extends GetView<HomeScreenController> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildTitleSection(
-      {required String title, required BuildContext context}) {
-    return Obx(
-      () => controller.isLoad.value
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CardLoadingComponent(
-                  borderRadius: BorderRadius.circular(10.sp),
-                  width: 200.w,
-                  height: 35.h,
-                ),
-              ],
-            )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.sp),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(10.sp),
-                  ),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.sp),
-                  ),
-                ),
-              ],
-            ),
     );
   }
 }

@@ -28,6 +28,8 @@ class ProductModel {
     return " / ${unit!.toProductUnit()}";
   }
 
+
+
   ProductModel(
       {this.id,
       this.name,

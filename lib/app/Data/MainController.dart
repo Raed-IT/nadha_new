@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/constant.dart';
 
+import 'Models/CartItemModel.dart';
+
 class MainController extends GetxController {
   // @override
   // void onReady() {
@@ -15,7 +17,8 @@ class MainController extends GetxController {
   Rxn<String> token = Rxn(null);
   Rxn<UserModel> user = Rxn(null);
   Rxn<SettingModel> setting = Rxn<SettingModel>();
-  RxList<CityModel> cities = RxList<CityModel>();
+  RxList<CityModel> cities = RxList<CityModel>([]);
+  RxList<CartItemModel> cart = RxList<CartItemModel>([]);
   Rx<ThemeMode> themeMode = Rx(ThemeMode.light);
 
   @override

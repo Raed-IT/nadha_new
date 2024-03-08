@@ -11,12 +11,14 @@ class ProductCardComponent extends StatelessWidget {
   final ProductModel product;
   final Function() onTap;
   final BorderRadius? imageRadius;
+  final String? heroTagPrefix;
 
   const ProductCardComponent(
       {super.key,
       required this.product,
       required this.onTap,
-      this.imageRadius});
+      this.imageRadius,
+      this.heroTagPrefix});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,8 @@ class ProductCardComponent extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Hero(
-                            tag: "product_image_${product.id}",
+                            tag:
+                                "${heroTagPrefix ?? ''}product_image_${product.id}",
                             child: Card(
                               margin: EdgeInsets.zero,
                               elevation: 5,

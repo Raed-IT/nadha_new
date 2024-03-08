@@ -1,9 +1,13 @@
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Screens/ShowProductScreen/Components/AddToCartComponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
+import '../../../Components/TitleSectionComponent.dart';
 
 Future<void> showProductDetailsBottomSheet(
     {required Rx<ProductModel> product,
@@ -44,14 +48,25 @@ Future<void> showProductDetailsBottomSheet(
                     ),
                     softWrap: true,
                   ),
+                  20.verticalSpace,
                   Row(
                     children: [
                       BuildPriceProductComponent(
                         size: 18.sp,
                         product: product,
                       ),
+                      const Spacer(),
+                      AddToCardComponent(
+                        product: product.value,
+                      )
                     ],
                   ),
+                  40.verticalSpace,
+                  BuildTitleSectionComponent(
+                    isLoad: RxBool(false),
+                    title: "منتجات ذات صلة",
+                  ),
+                  20.verticalSpace,
                   productList
                 ],
               ),
