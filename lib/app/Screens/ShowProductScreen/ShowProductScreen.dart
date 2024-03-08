@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Data/MainController.dart';
@@ -7,9 +8,9 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/Components/BottomSheet.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class ShowProductScreen extends StatelessWidget {
   const ShowProductScreen({super.key});
@@ -20,21 +21,32 @@ class ShowProductScreen extends StatelessWidget {
       tag: "show_product${Get.arguments?['product']?.id}",
       builder: (controller) => Builder(
         builder: (context) {
-          return Get.find<MainController>().buildScaffold(
+          GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
+          GlobalKey productKey = GlobalKey();
+          Future.delayed(
+            10.ms,
+            () => cartKey.currentState!
+                .runCartAnimation('${Get.find<MainController>().cart.length}'),
+          );
+          return controller.buildScaffold(
+            cartKey: cartKey,
             scaffold: Scaffold(
               backgroundColor: Colors.transparent,
               bottomSheet: ShowProductBottomSheet(
+                cartKey: cartKey,
+                controller: controller,
                 onAddProduct: (product) {
-                  Get.find<MainController>()
-                      .addToCartAnimation(controller.productKey);
+                  controller.addToCartAnimation(
+                      cartKey: cartKey, widgetKey: productKey);
                 },
-                productKey: controller.productKey,
-                product: controller.product,
                 productList: ProductListComponent(
-                  heroTagPrefix: "showProducts",
+                  heroTagPrefix: "show${controller.product.value.id}Products",
                   onProductTap: (ProductModel product, key) {
                     Get.toNamed(AppRoutes.showProduct,
-                        arguments: {"product": product, "hero": "showProducts"},
+                        arguments: {
+                          "product": product,
+                          "hero": "show${controller.product.value.id}Products",
+                        },
                         preventDuplicates: false);
                     Get.put(ShowProductScreenController(),
                         tag: "show_product${product.id}");
@@ -85,8 +97,7 @@ class ShowProductScreen extends StatelessWidget {
                                                       tag:
                                                           "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
                                                       child: Container(
-                                                        key: controller
-                                                            .productKey,
+                                                        key: productKey,
                                                         child:
                                                             ImageCacheComponent(
                                                           height:

@@ -11,13 +11,12 @@ import 'package:logger/logger.dart';
 import '../Mixins/AddToCartMixin.dart';
 import 'Models/CartItemModel.dart';
 
-class MainController extends GetxController with AddToCartMixin {
+class MainController extends GetxController  {
   // @override
   // void onReady() {
   //   LocaleStorageService.logOut();
   //   super.onReady();
   // }
-  GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
 
   Rxn<String> token = Rxn(null);
   Rxn<UserModel> user = Rxn(null);
@@ -28,12 +27,7 @@ class MainController extends GetxController with AddToCartMixin {
 
   @override
   void onInit() {
-    cart.listen((p0) {
-      Get.find<MainController>()
-          .cartKey
-          .currentState!
-          .runCartAnimation("${Get.find<MainController>().cart.length}");
-    });
+
     token.listen((p0) {
       HelperConstant.globalHeader['Authorization'] = 'Bearer $p0';
     });

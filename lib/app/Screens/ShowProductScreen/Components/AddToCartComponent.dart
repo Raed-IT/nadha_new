@@ -8,9 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class AddToCardComponent extends StatefulWidget {
   final ProductModel product;
   final Function(ProductModel product)? onAddProduct;
+  final Function()? onSetState;
 
   const AddToCardComponent(
-      {super.key, required this.product, this.onAddProduct});
+      {super.key, required this.product, this.onAddProduct, this.onSetState});
 
   @override
   State<AddToCardComponent> createState() => _AddToCardComponentState();
@@ -27,6 +28,9 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
               GestureDetector(
                 onTap: () {
                   cartService.increaseProductQty(product: widget.product);
+                  if (widget.onSetState != null) {
+                    widget.onSetState!();
+                  }
                   setState(() {});
                 },
                 child: SizedBox(
@@ -57,6 +61,10 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
               GestureDetector(
                 onTap: () {
                   cartService.decreaseProductQty(product: widget.product);
+                  if (widget.onSetState != null) {
+                    widget.onSetState!();
+                  }
+
                   setState(() {});
                 },
                 child: SizedBox(
@@ -83,6 +91,10 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
               if (widget.onAddProduct != null) {
                 widget.onAddProduct!(widget.product);
               }
+              if (widget.onSetState != null) {
+                widget.onSetState!();
+              }
+
               setState(() {});
             },
             child: Card(

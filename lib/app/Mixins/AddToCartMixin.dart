@@ -1,31 +1,37 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:delevary/app/Data/MainController.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 mixin AddToCartMixin {
   late Function(GlobalKey) _runAddToCartAnimation;
 
-  void addToCartAnimation(GlobalKey widgetKey) async {
-    await _runAddToCartAnimation(widgetKey);
-    await Get.find<MainController>()
-        .cartKey
-        .currentState!
-        .runCartAnimation("${Get.find<MainController>().cart.length}");
+  void addToCartAnimation(
+      {required GlobalKey widgetKey,
+      required GlobalKey<CartIconKey> cartKey}) async {
+    try {
+      await _runAddToCartAnimation(widgetKey);
+      await cartKey.currentState!
+          .runCartAnimation("${Get.find<MainController>().cart.length}");
+    } catch (e, s) {
+      Logger().e("$e   \n  $s");
+    }
   }
 
-  Widget buildScaffold({required Widget scaffold}) {
+  Widget buildScaffold(
+      {required Widget scaffold, required GlobalKey<CartIconKey> cartKey}) {
     return AddToCartAnimation(
-      cartKey: Get.find<MainController>().cartKey,
+      cartKey: cartKey,
       dragAnimation: const DragToCartAnimationOptions(
-        rotation: false,
+        rotation: true,
       ),
-      height: 30.sp,
-      width: 30.sp,
-      opacity: 0.5,
+      height: 20.sp,
+      width: 20.sp,
+      opacity: 0.9,
+      jumpAnimation: const JumpAnimationOptions(),
       createAddToCartAnimation: (runAddToCartAnimation) {
-        // You can run the animation by addToCartAnimationMethod, just pass trough the the global key of  the image as parameter
         _runAddToCartAnimation = runAddToCartAnimation;
       },
       child: scaffold,

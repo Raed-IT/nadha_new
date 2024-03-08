@@ -1,3 +1,4 @@
+import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Mixins/AddToCartMixin.dart';
@@ -6,11 +7,12 @@ import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
 
-class ShowProductScreenController extends GetxController with ApiHelperMixin {
+class ShowProductScreenController extends GetxController
+    with ApiHelperMixin, AddToCartMixin {
   String? heroPrefix = Get.arguments?["hero"];
   Rx<ProductModel> product = Rx(Get.arguments?['product']);
   RxList<ProductModel> products = RxList([]);
-  GlobalKey productKey = GlobalKey();
+
 
   @override
   void onInit() {
