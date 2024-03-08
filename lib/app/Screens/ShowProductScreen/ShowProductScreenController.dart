@@ -1,12 +1,16 @@
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Mixins/AddToCartMixin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
 
 class ShowProductScreenController extends GetxController with ApiHelperMixin {
-  Rxn<ProductModel> product = Rxn(Get.arguments?['product']);
+  String? heroPrefix = Get.arguments?["hero"];
+  Rx<ProductModel> product = Rx(Get.arguments?['product']);
   RxList<ProductModel> products = RxList([]);
+  GlobalKey productKey = GlobalKey();
 
   @override
   void onInit() {
@@ -15,7 +19,7 @@ class ShowProductScreenController extends GetxController with ApiHelperMixin {
         url: ApiRoute.products,
         type: "products",
         parameter: {
-          "category_id": product.value?.category?.id,
+          "category_id": product.value.category?.id,
         },
       ),
     );

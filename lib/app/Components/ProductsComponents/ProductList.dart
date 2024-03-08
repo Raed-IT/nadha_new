@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class ProductListComponent extends StatelessWidget {
   final List<ProductModel> products;
-  final Function(ProductModel product) onProductTap;
+  final Function(ProductModel product, GlobalKey key) onProductTap;
   final RxBool isLoad;
   final EdgeInsets? padding;
   final String? heroTagPrefix;
@@ -22,28 +22,30 @@ class ProductListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: padding ?? EdgeInsets.all(10.sp),
-      child: Obx(() => (!isLoad.value)
-          ? GridView.count(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              crossAxisCount: 2,
-              childAspectRatio: 1 / 1.25,
-              crossAxisSpacing: 10.sp,
-              mainAxisSpacing: 10.h,
-              children: products
-                  .map(
-                    (product) => ProductCardComponent(
-                      heroTagPrefix: heroTagPrefix,
-                      product: product,
-                      onTap: () => onProductTap(product),
-                    ),
-                  )
-                  .toList(),
-            )
-          : const ProductLoadingList()),
+      child: Obx(
+        () => (!isLoad.value)
+            ? GridView.count(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                crossAxisCount: 2,
+                childAspectRatio: 1 / 1.25,
+                crossAxisSpacing: 10.sp,
+                mainAxisSpacing: 10.h,
+                children: products
+                    .map(
+                      (product) => ProductCardComponent(
+                        heroTagPrefix: heroTagPrefix,
+                        product: product,
+                        onTap: (kye) => onProductTap(product, kye),
+                      ),
+                    )
+                    .toList(),
+              )
+            : const ProductLoadingList(),
+      ),
     );
   }
 }

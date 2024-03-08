@@ -4,6 +4,7 @@ import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class DrawerComponent extends StatelessWidget {
@@ -24,10 +25,13 @@ class DrawerComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ImageCacheComponent(
-                  image: "${Get.find<MainController>().user.value?.image}",
-                  imageColor: Theme.of(context).colorScheme.background,
-                  width: 100.w,
+                SizedBox(
+                  height: 130.h,
+                  child: ImageCacheComponent(
+                    image: "${Get.find<MainController>().user.value?.image}",
+                    imageColor: Theme.of(context).colorScheme.background,
+                    width: 130.w,
+                  ),
                 ),
                 AutoSizeText(
                   "${Get.find<MainController>().user.value?.name}",
@@ -50,10 +54,18 @@ class DrawerComponent extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
+                20.verticalSpace,
                 buildItem(
+                  context: context,
                   title: "الإعدادات",
                   icon: Icons.settings,
                   onTap: () => Get.toNamed(AppRoutes.setting),
+                ),
+                buildItem(
+                  context: context,
+                  title: "عناويني ",
+                  icon: FontAwesomeIcons.mapLocationDot,
+                  onTap: () => Get.toNamed(AppRoutes.addresses),
                 )
               ],
             ),
@@ -66,7 +78,8 @@ class DrawerComponent extends StatelessWidget {
   Widget buildItem(
       {required String title,
       required IconData icon,
-      required Function onTap}) {
+      required Function onTap,
+      required BuildContext context}) {
     return GestureDetector(
       onTap: () {
         Get.back();
@@ -80,9 +93,13 @@ class DrawerComponent extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10.sp),
             child: Row(
               children: [
-                Icon(icon),
+                Icon(icon,
+                    size: 20.sp, color: Theme.of(context).colorScheme.primary),
                 10.horizontalSpace,
-                Text(title),
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 15.sp),
+                ),
               ],
             ),
           ),

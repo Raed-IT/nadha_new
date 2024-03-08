@@ -33,7 +33,7 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 5.sp),
                             child: ProductListComponent(
-                              onProductTap: (ProductModel product) {
+                              onProductTap: (ProductModel product,k) {
                                 Get.toNamed(AppRoutes.showProduct,
                                     preventDuplicates: false,
                                     arguments: {"product": product});

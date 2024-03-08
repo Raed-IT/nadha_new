@@ -1,6 +1,5 @@
 import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
 import 'package:delevary/app/Components/GridCardComponent.dart';
-import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Components/TitleSectionComponent.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
@@ -12,14 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
 import '../CategoriesScreen/CategoriesScreenController.dart';
 
 class HomeScreen extends GetView<HomeScreenController> {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -102,11 +99,15 @@ class HomeScreen extends GetView<HomeScreenController> {
                         ),
                         5.verticalSpace,
                         ProductListComponent(
+                          heroTagPrefix: "homeProducts",
                           products: controller.products,
-                          onProductTap: (ProductModel product) {
+                          onProductTap: (ProductModel product, k) {
                             Get.toNamed(AppRoutes.showProduct,
                                 preventDuplicates: false,
-                                arguments: {"product": product});
+                                arguments: {
+                                  "product": product,
+                                  "hero": "homeProducts"
+                                });
                             Get.put(ShowProductScreenController(),
                                 tag: "show_product${product.id}");
                           },

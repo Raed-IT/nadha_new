@@ -33,6 +33,6 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
           UserModel.fromJson(json['data']['user']);
     }
     Get.find<MainController>().cities.value = cities;
-    Get.offAllNamed(AppRoutes.homeScreen);
+    Get.offAllNamed(AppRoutes.mainScaffoldScreen);
   }
 }

@@ -45,7 +45,7 @@ class LoginScreenController extends GetxController with ApiHelperMixin {
               LocaleStorageService.setUserData(
                   user: UserModel.fromJson(res.data['data']['user']),
                   token: res.data['data']['token']);
-              Get.offAllNamed(AppRoutes.homeScreen);
+              Get.offAllNamed(AppRoutes.mainScaffoldScreen);
             } else {
               ToastService.showErrorToast(
                   context: context,

@@ -62,6 +62,10 @@ dependencies:
 #  for pick image color
   palette_generator: ^0.3.3+3
 #
+  animated_bottom_navigation_bar: ^1.3.3
+  flutter_svg: ^2.0.10+1
+  add_to_cart_animation: ^2.0.3
+
   helper:
     git:
       url: https://github.com/Raed-IT/helper-package.git
@@ -95,6 +99,7 @@ flutter:
   assets:
     - assets/images/
     - assets/json/
+    - assets/svg/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

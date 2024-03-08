@@ -8,6 +8,9 @@ class LightThemeData {
       colorScheme: lightColorScheme,
       useMaterial3: true,
       fontFamily: "app",
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: Colors.transparent,
+      ),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
           shape: MaterialStateProperty.all(

@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 class ProductCardComponent extends StatelessWidget {
   final ProductModel product;
-  final Function() onTap;
+  final Function(GlobalKey kye) onTap;
   final BorderRadius? imageRadius;
   final String? heroTagPrefix;
 
@@ -22,8 +22,9 @@ class ProductCardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey productCardKye = GlobalKey();
     return GestureDetector(
-      onTap: () => onTap(),
+      onTap: () => onTap(productCardKye),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.sp),
@@ -47,7 +48,7 @@ class ProductCardComponent extends StatelessWidget {
                         Expanded(
                           child: Hero(
                             tag:
-                                "${heroTagPrefix ?? ''}product_image_${product.id}",
+                                "${heroTagPrefix ?? 'product_image_'}${product.id}",
                             child: Card(
                               margin: EdgeInsets.zero,
                               elevation: 5,
@@ -55,11 +56,14 @@ class ProductCardComponent extends StatelessWidget {
                                 borderRadius:
                                     imageRadius ?? BorderRadius.circular(10.sp),
                               ),
-                              child: ImageCacheComponent(
-                                height: 130.h,
-                                borderRadius:
-                                    imageRadius ?? BorderRadius.circular(10.sp),
-                                image: "${product.image}",
+                              child: Container(
+                                key: productCardKye,
+                                child: ImageCacheComponent(
+                                  height: 130.h,
+                                  borderRadius: imageRadius ??
+                                      BorderRadius.circular(10.sp),
+                                  image: "${product.image}",
+                                ),
                               ),
                             ),
                           ),
