@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class ShowProductScreen extends StatelessWidget {
   const ShowProductScreen({super.key});
@@ -43,19 +44,22 @@ class ShowProductScreen extends StatelessWidget {
                   heroTagPrefix: "show${controller.product.value.id}Products",
                   onProductTap: (ProductModel product, key) {
                     Get.toNamed(AppRoutes.showProduct,
-                        arguments: {
-                          "product": product,
-                          "hero": "show${controller.product.value.id}Products",
-                        },
-                        preventDuplicates: false);
+                            arguments: {
+                              "product": product,
+                              "hero":
+                                  "show${controller.product.value.id}Products",
+                            },
+                            preventDuplicates: false)
+                        ?.then(
+                      (value) => cartKey.currentState!.runCartAnimation(
+                          "${Get.find<MainController>().cart.length}"),
+                    );
                     Get.put(ShowProductScreenController(),
                         tag: "show_product${product.id}");
                   },
                   products: controller.products,
                   isLoad: controller.isLoad,
-                  onTapAddProduct: (ProductModel product, GlobalKey key) {
-
-                  },
+                  onTapAddProduct: (ProductModel product, GlobalKey key) {},
                 ),
               ),
               body: SizedBox(

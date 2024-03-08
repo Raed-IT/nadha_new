@@ -4,7 +4,7 @@ import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
 
-class CartService with ApiHelperMixin  {
+class CartService with ApiHelperMixin {
   bool inCart({required ProductModel product}) {
     bool inCart = false;
     Get.find<MainController>().cart.forEach((cartItem) {
@@ -52,8 +52,12 @@ class CartService with ApiHelperMixin  {
   }
 
   void addToCard({required ProductModel product}) {
-    Get.find<MainController>().cart.add(CartItemModel(
-        product: product, qty: RxInt(1), price: product.getPrice!));
+    if (!inCart(product: product)) {
+      Get.find<MainController>().cart.add(CartItemModel(
+          product: product, qty: RxInt(1), price: product.getPrice!));
+    } else {
+      increaseProductQty(product: product);
+    }
   }
 
   void removeFromCart({required ProductModel product}) {

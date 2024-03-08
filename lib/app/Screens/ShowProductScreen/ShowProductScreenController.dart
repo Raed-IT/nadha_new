@@ -1,5 +1,6 @@
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:delevary/app/Data/ApiRoute.dart';
+import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Mixins/AddToCartMixin.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +13,6 @@ class ShowProductScreenController extends GetxController
   String? heroPrefix = Get.arguments?["hero"];
   Rx<ProductModel> product = Rx(Get.arguments?['product']);
   RxList<ProductModel> products = RxList([]);
-
 
   @override
   void onInit() {
