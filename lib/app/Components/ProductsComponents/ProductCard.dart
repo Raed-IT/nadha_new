@@ -12,13 +12,16 @@ class ProductCardComponent extends StatelessWidget {
   final Function(GlobalKey kye) onTap;
   final BorderRadius? imageRadius;
   final String? heroTagPrefix;
+  final Function(ProductModel product, GlobalKey key) onTapAddProduct;
+  final GlobalKey productKey = GlobalKey();
 
-  const ProductCardComponent(
+    ProductCardComponent(
       {super.key,
       required this.product,
       required this.onTap,
       this.imageRadius,
-      this.heroTagPrefix});
+      this.heroTagPrefix,
+      required this.onTapAddProduct});
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +95,31 @@ class ProductCardComponent extends StatelessWidget {
                               color: Theme.of(context)
                                   .colorScheme
                                   .primaryContainer,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          onTapAddProduct(
+                            product,productCardKye
+                          );
+                        },
+                        child: SizedBox(
+                          height: 35.sp,
+                          width: 35.sp,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.sp),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.add,
+                                size: 20.sp,
+                              ),
                             ),
                           ),
                         ),

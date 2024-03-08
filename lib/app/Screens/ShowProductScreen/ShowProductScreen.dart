@@ -53,6 +53,9 @@ class ShowProductScreen extends StatelessWidget {
                   },
                   products: controller.products,
                   isLoad: controller.isLoad,
+                  onTapAddProduct: (ProductModel product, GlobalKey key) {
+
+                  },
                 ),
               ),
               body: SizedBox(

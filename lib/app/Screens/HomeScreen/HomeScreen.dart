@@ -112,6 +112,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                 tag: "show_product${product.id}");
                           },
                           isLoad: controller.isLoad,
+                          onTapAddProduct: controller.addToCart,
                         )
                       ],
                     ),

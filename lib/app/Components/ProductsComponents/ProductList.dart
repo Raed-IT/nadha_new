@@ -10,6 +10,7 @@ class ProductListComponent extends StatelessWidget {
   final Function(ProductModel product, GlobalKey key) onProductTap;
   final RxBool isLoad;
   final EdgeInsets? padding;
+  final Function(ProductModel product, GlobalKey key) onTapAddProduct;
   final String? heroTagPrefix;
 
   const ProductListComponent(
@@ -18,7 +19,8 @@ class ProductListComponent extends StatelessWidget {
       required this.products,
       required this.isLoad,
       this.padding,
-      this.heroTagPrefix});
+      this.heroTagPrefix,
+      required this.onTapAddProduct});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class ProductListComponent extends StatelessWidget {
                         heroTagPrefix: heroTagPrefix,
                         product: product,
                         onTap: (kye) => onProductTap(product, kye),
+                        onTapAddProduct: onTapAddProduct,
                       ),
                     )
                     .toList(),

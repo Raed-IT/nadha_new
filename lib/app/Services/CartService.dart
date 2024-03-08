@@ -1,8 +1,6 @@
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
-import 'package:delevary/app/Mixins/AddToCartMixin.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
 

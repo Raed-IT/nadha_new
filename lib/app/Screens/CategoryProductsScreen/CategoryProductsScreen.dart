@@ -33,7 +33,7 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 5.sp),
                             child: ProductListComponent(
-                              onProductTap: (ProductModel product,k) {
+                              onProductTap: (ProductModel product, k) {
                                 Get.toNamed(AppRoutes.showProduct,
                                     preventDuplicates: false,
                                     arguments: {"product": product});
@@ -42,6 +42,8 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                               },
                               products: controller.products,
                               isLoad: controller.isLoad,
+                              onTapAddProduct: (ProductModel product,
+                                  GlobalKey key) {},
                             ),
                           ),
                         ],
