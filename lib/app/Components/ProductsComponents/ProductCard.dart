@@ -15,7 +15,7 @@ class ProductCardComponent extends StatelessWidget {
   final Function(ProductModel product, GlobalKey key) onTapAddProduct;
   final GlobalKey productKey = GlobalKey();
 
-    ProductCardComponent(
+  ProductCardComponent(
       {super.key,
       required this.product,
       required this.onTap,
@@ -104,9 +104,7 @@ class ProductCardComponent extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          onTapAddProduct(
-                            product,productCardKye
-                          );
+                          onTapAddProduct(product, productCardKye);
                         },
                         child: SizedBox(
                           height: 35.sp,

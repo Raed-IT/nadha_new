@@ -21,19 +21,23 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
               key: controller.cartKey,
               badgeOptions: BadgeOptions(
                   active: Get.find<MainController>().cart.isNotEmpty),
-              icon: FloatingActionButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(1000.sp),
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    "assets/svg/cart.svg",
-                    width: 30.w,
+              icon: SizedBox(
+                height: 50.sp,
+                width: 50.sp,
+                child: FloatingActionButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(1000.sp),
                   ),
-                ),
-                onPressed: () =>Get.toNamed(AppRoutes.cartScreen),
-                //params
-              ).animate().slideY(begin: 1, duration: 700.ms),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      "assets/svg/cart.svg",
+                      width: 30.w,
+                    ),
+                  ),
+                  onPressed: () => Get.toNamed(AppRoutes.cartScreen),
+                  //params
+                ).animate().slideY(begin: 1, duration: 700.ms),
+              ),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.endDocked,
@@ -49,10 +53,10 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
               // activeColor: Colors.red,
               // splashRadius: 20,
               // height: 60.h,
-              backgroundColor: Theme.of(context).colorScheme.surface,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               blurEffect: true,
               // leftCornerRadius: 15.sp,
-              borderColor: Theme.of(context).colorScheme.secondary,
+              // borderColor: Theme.of(context).colorScheme.secondary,
               rightCornerRadius: 0,
               itemCount: controller.icons.length,
               tabBuilder: (int index, bool isActive) {
@@ -63,8 +67,9 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
                 final Widget icon = Icon(
                   icons[index],
                   size: 25.sp,
-                  color:
-                      isActive ? Theme.of(context).colorScheme.primary : null,
+                  color: isActive
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.background,
                 );
                 return isActive
                     ? Container(

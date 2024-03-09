@@ -5,6 +5,14 @@ import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
 
 class CartService with ApiHelperMixin {
+  double getTotal() {
+    double total = 0;
+    Get.find<MainController>().cart.forEach((cartItem) {
+      total += cartItem.product.getPrice! * cartItem.qty.value;
+    });
+    return total;
+  }
+
   bool inCart({required ProductModel product}) {
     bool inCart = false;
     Get.find<MainController>().cart.forEach((cartItem) {

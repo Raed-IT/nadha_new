@@ -8,6 +8,7 @@ import 'package:delevary/app/Screens/ProfileScreen/ProfilePage.dart';
 import 'package:delevary/app/Screens/SettingScreen/SettingPage.dart';
 import 'package:get/get.dart';
 
+import '../Screens/AddressesScreens/AddAddressScreen/AddAddressPage.dart';
 import '../Screens/AddressesScreens/AddressesScreen/AddressesPage.dart';
 import '../Screens/CategoriesScreen/CategoriesPage.dart';
 import '../Screens/CategoryProductsScreen/CategoryProductsPage.dart';
@@ -30,6 +31,7 @@ class GetPagesProvider {
     ShowProductPage(),
     AddressesPage(),
     MainScaffoldPage(),
-    CartPage()
+    CartPage(),
+    AddAddressPage()
   ];
 }

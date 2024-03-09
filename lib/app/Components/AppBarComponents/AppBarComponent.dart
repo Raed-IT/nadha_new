@@ -38,30 +38,37 @@ class AppBarComponent extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  (showLogo)
+                      ? Image.asset(
+                          fit: BoxFit.contain,
+                          height: 60.h,
+                          width: 150.w,
+                          "assets/images/artboard.png",
+                        )
+                      : GestureDetector(
+                          onTap: () => Get.toNamed(
+                            AppRoutes.profileScreen,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.sp),
+                            child: ImageCacheComponent(
+                              borderRadius: BorderRadius.circular(10.sp),
+                              height: 40.sp,
+                              width: 40.sp,
+                              image:
+                                  "${Get.find<MainController>().user.value?.image}",
+                            ),
+                          ),
+                        ).animate().slideX(
+                          begin: 1,
+                          duration: const Duration(milliseconds: 400)),
+                  const Spacer(),
                   if (title != null)
                     Text(
                       title!,
                       style: TextStyle(
                           fontSize: 15.sp, fontWeight: FontWeight.bold),
                     ),
-                  GestureDetector(
-                    onTap: () => openDrawer(),
-                    child: SizedBox(
-                      height: 50.sp,
-                      width: 50.sp,
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          child: Icon(
-                            FontAwesomeIcons.bars,
-                            size: 20.sp,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                      .animate()
-                      .slideX(begin: -1, duration: Duration(milliseconds: 400)),
                   if (title != null) const Spacer(),
                   if (showSearch != null && showSearch!)
                     GestureDetector(
@@ -85,31 +92,25 @@ class AppBarComponent extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ).animate().scale(begin: Offset(1, 1)),
-                  const Spacer(),
-                  (showLogo)
-                      ? Image.asset(
-                          fit: BoxFit.contain,
-                          height: 60.h,
-                          width: 150.w,
-                          "assets/images/artboard.png",
-                        )
-                      : GestureDetector(
-                          onTap: () => Get.toNamed(
-                            AppRoutes.profileScreen,
+                    ).animate().scale(begin: const Offset(1, 1)),
+                  GestureDetector(
+                    onTap: () => openDrawer(),
+                    child: SizedBox(
+                      height: 50.sp,
+                      width: 50.sp,
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                          child: Icon(
+                            FontAwesomeIcons.bars,
+                            size: 20.sp,
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.sp),
-                            child: ImageCacheComponent(
-                              borderRadius: BorderRadius.circular(10.sp),
-                              height: 40.sp,
-                              width: 40.sp,
-                              image:
-                                  "${Get.find<MainController>().user.value?.image}",
-                            ),
-                          ),
-                        ).animate().slideX(
-                          begin: 1, duration: Duration(milliseconds: 400)),
+                        ),
+                      ),
+                    ),
+                  )
+                      .animate()
+                      .slideX(begin: -1, duration: Duration(milliseconds: 400)),
                 ],
               ),
             ],

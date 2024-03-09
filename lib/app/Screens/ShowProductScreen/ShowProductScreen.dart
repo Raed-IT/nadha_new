@@ -59,82 +59,89 @@ class ShowProductScreen extends StatelessWidget {
                   },
                   products: controller.products,
                   isLoad: controller.isLoad,
-                  onTapAddProduct: (ProductModel product, GlobalKey key) {},
+                  onTapAddProduct: (ProductModel product, GlobalKey key) {
+                    controller.addToCartAnimation(
+                        widgetKey: key, cartKey: cartKey);
+                    controller.cartService.addToCard(product: product);
+                  },
                 ),
               ),
-              body: SizedBox(
-                height: Get.height,
-                width: Get.width,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: PageView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        children: controller.product.value.images!
-                            .map(
-                              (e) => SizedBox(
-                                height: Get.height,
-                                width: Get.width,
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    ImageCacheComponent(
-                                      width: Get.width,
-                                      fit: BoxFit.cover,
-                                      image: "${e.url}",
-                                    ),
-                                    SizedBox(
-                                      child: ClipRRect(
-                                        // Clip it cleanly.
-                                        child: BackdropFilter(
-                                          filter: ImageFilter.blur(
-                                              sigmaX: 15, sigmaY: 15),
-                                          child: Container(
-                                            height: Get.height,
-                                            color: Colors.grey.withOpacity(0.1),
-                                            alignment: Alignment.center,
-                                            child: Column(
-                                              children: [
-                                                SafeArea(
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(10.sp),
-                                                    child: Hero(
-                                                      tag:
-                                                          "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
-                                                      child: Container(
-                                                        key: productKey,
-                                                        child:
-                                                            ImageCacheComponent(
-                                                          height:
-                                                              Get.height * 0.34,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15.sp),
-                                                          width: Get.width,
-                                                          fit: BoxFit.cover,
-                                                          image: "${e.url}",
+              body: GestureDetector(
+                child: SizedBox(
+                  height: Get.height,
+                  width: Get.width,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: PageView(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          children: controller.product.value.images!
+                              .map(
+                                (e) => SizedBox(
+                                  height: Get.height,
+                                  width: Get.width,
+                                  child: Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      ImageCacheComponent(
+                                        width: Get.width,
+                                        fit: BoxFit.cover,
+                                        image: "${e.url}",
+                                      ),
+                                      SizedBox(
+                                        child: ClipRRect(
+                                          // Clip it cleanly.
+                                          child: BackdropFilter(
+                                            filter: ImageFilter.blur(
+                                                sigmaX: 15, sigmaY: 15),
+                                            child: Container(
+                                              height: Get.height,
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
+                                              alignment: Alignment.center,
+                                              child: Column(
+                                                children: [
+                                                  SafeArea(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(10.sp),
+                                                      child: Hero(
+                                                        tag:
+                                                            "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
+                                                        child: Container(
+                                                          key: productKey,
+                                                          child:
+                                                              ImageCacheComponent(
+                                                            height: Get.height *
+                                                                0.34,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.sp),
+                                                            width: Get.width,
+                                                            fit: BoxFit.cover,
+                                                            image: "${e.url}",
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
-                            .toList(),
+                              )
+                              .toList(),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

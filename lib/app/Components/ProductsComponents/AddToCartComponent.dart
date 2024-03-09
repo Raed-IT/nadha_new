@@ -34,8 +34,8 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
                   setState(() {});
                 },
                 child: SizedBox(
-                  width: 50.sp,
-                  height: 50.sp,
+                  width: 40.sp,
+                  height: 40.sp,
                   child: Card(
                     child: Center(
                       child: Icon(
@@ -68,8 +68,8 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
                   setState(() {});
                 },
                 child: SizedBox(
-                  width: 50.sp,
-                  height: 50.sp,
+                  width: 40.sp,
+                  height: 40.sp,
                   child: Card(
                     child: Center(
                       child: Icon(

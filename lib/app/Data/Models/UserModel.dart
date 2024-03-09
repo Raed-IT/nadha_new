@@ -1,5 +1,6 @@
 import 'package:delevary/app/Data/Enums/GenderTypeEnum.dart';
 import 'package:delevary/app/Data/Enums/MaritalStatusEnum.dart';
+import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
 
 class UserModel {
@@ -13,6 +14,7 @@ class UserModel {
   String? phone;
   int? age;
   CityModel? city;
+  List<AddressModel>? addresses;
 
   UserModel(this.id, this.image, this.name, this.martialStatus, this.gender,
       this.email, this.bio, this.phone, this.age);
@@ -20,6 +22,12 @@ class UserModel {
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    if (json.containsKey("addresses")) {
+      addresses = [];
+      for (var address in json['addresses']) {
+        addresses!.add(AddressModel.fromJson(address));
+      }
+    }
     image = json['image'];
     email = json['email'];
     bio = json['bio'];

@@ -1,3 +1,4 @@
+import 'package:delevary/app/Middlewares/isLogin.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreen.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenBinding.dart';
@@ -9,5 +10,8 @@ class MainScaffoldPage extends GetPage {
           name: AppRoutes.mainScaffoldScreen,
           page: () => MainScaffoldScreen(),
           binding: MainScaffoldScreenBinding(),
+          middlewares: [
+            IsLoginMiddleware(),
+          ],
         );
 }

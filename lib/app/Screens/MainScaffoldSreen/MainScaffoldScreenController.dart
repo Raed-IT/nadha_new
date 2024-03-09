@@ -7,11 +7,12 @@ import 'package:get/get.dart';
 
 class MainScaffoldScreenController extends GetxController with AddToCartMixin {
   final GlobalKey<CartIconKey> cartKey = GlobalKey();
+  RxInt activePage = RxInt(Get.arguments?['index'] ?? 0);
 
   @override
   void onReady() {
     Get.find<MainController>().cart.listen((p0) {
-      cartKey.currentState!.runCartAnimation(p0.length.toString());
+      cartKey.currentState?.runCartAnimation(p0.length.toString());
     });
     super.onReady();
   }
@@ -27,7 +28,6 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
     Icons.point_of_sale,
     Icons.favorite,
   ];
-  RxInt activePage = RxInt(0);
 
   void onTap(int index) {
     activePage.value = index;
