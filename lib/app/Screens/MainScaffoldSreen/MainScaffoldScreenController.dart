@@ -1,13 +1,18 @@
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:delevary/app/Data/MainController.dart';
+import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Mixins/AddToCartMixin.dart';
+import 'package:delevary/app/Screens/FavoriteScreen/FavoriteScreen.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreen.dart';
+import 'package:delevary/app/Screens/SaleScreen/SaleScreen.dart';
+import 'package:delevary/app/Services/CartService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MainScaffoldScreenController extends GetxController with AddToCartMixin {
   final GlobalKey<CartIconKey> cartKey = GlobalKey();
   RxInt activePage = RxInt(Get.arguments?['index'] ?? 0);
+  final CartService cartService = CartService();
 
   @override
   void onReady() {
@@ -17,7 +22,7 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
     super.onReady();
   }
 
-  List<Widget> pages = [HomeScreen(), Container(), Container()];
+  List<Widget> pages = [HomeScreen(), SaleScreen(), FavoriteScreen()];
   List<IconData> icons = [
     Icons.home_outlined,
     Icons.point_of_sale,
@@ -31,5 +36,10 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
 
   void onTap(int index) {
     activePage.value = index;
+  }
+
+  addToCart(ProductModel product, GlobalKey key) {
+    cartService.addToCard(product: product);
+    addToCartAnimation(widgetKey: key, cartKey: cartKey);
   }
 }

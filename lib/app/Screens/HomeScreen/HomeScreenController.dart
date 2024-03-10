@@ -26,11 +26,6 @@ class HomeScreenController extends GetxController with ApiHelperMixin {
     super.onInit();
   }
 
-  addToCart(ProductModel product, GlobalKey key) {
-    cartService.addToCard(product: product);
-    Get.find<MainScaffoldScreenController>()
-        .addToCartAnimation(widgetKey: key, cartKey: cartKey);
-  }
 
   @override
   getDataFromJson({required Map<String, dynamic> json, String? type}) {

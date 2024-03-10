@@ -16,8 +16,9 @@ class CardLoadingComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: 0.5,
+      opacity: 0.3,
       child: CardLoading(
+        withChangeDuration: true,
         borderRadius: borderRadius,
         margin: cardMargin ?? EdgeInsets.all(10.sp),
         animationDuration: Duration(milliseconds: Random().nextInt(3000) + 100),

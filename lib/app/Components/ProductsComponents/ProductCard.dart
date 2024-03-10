@@ -3,17 +3,18 @@ import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Services/Api/FavoretService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class ProductCardComponent extends StatelessWidget {
+class ProductCardComponent extends StatefulWidget {
   final ProductModel product;
   final Function(GlobalKey kye) onTap;
   final BorderRadius? imageRadius;
   final String? heroTagPrefix;
   final Function(ProductModel product, GlobalKey key) onTapAddProduct;
-  final GlobalKey productKey = GlobalKey();
+  final Function(ProductModel product)? onRemoveProductFromFavorite;
 
   ProductCardComponent(
       {super.key,
@@ -21,13 +22,24 @@ class ProductCardComponent extends StatelessWidget {
       required this.onTap,
       this.imageRadius,
       this.heroTagPrefix,
-      required this.onTapAddProduct});
+      required this.onTapAddProduct,
+      this.onRemoveProductFromFavorite});
+
+  @override
+  State<ProductCardComponent> createState() => _ProductCardComponentState();
+}
+
+class _ProductCardComponentState extends State<ProductCardComponent> {
+  final GlobalKey productKey = GlobalKey();
+
+  final FavoriteService favoriteService = FavoriteService();
+  bool isTrregierFavorite = false;
 
   @override
   Widget build(BuildContext context) {
     final GlobalKey productCardKye = GlobalKey();
     return GestureDetector(
-      onTap: () => onTap(productCardKye),
+      onTap: () => widget.onTap(productCardKye),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.sp),
@@ -51,21 +63,21 @@ class ProductCardComponent extends StatelessWidget {
                         Expanded(
                           child: Hero(
                             tag:
-                                "${heroTagPrefix ?? 'product_image_'}${product.id}",
+                                "${widget.heroTagPrefix ?? 'product_image_'}${widget.product.id}",
                             child: Card(
                               margin: EdgeInsets.zero,
                               elevation: 5,
                               shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    imageRadius ?? BorderRadius.circular(10.sp),
+                                borderRadius: widget.imageRadius ??
+                                    BorderRadius.circular(10.sp),
                               ),
                               child: Container(
                                 key: productCardKye,
                                 child: ImageCacheComponent(
                                   height: 130.h,
-                                  borderRadius: imageRadius ??
+                                  borderRadius: widget.imageRadius ??
                                       BorderRadius.circular(10.sp),
-                                  image: "${product.image}",
+                                  image: "${widget.product.image}",
                                 ),
                               ),
                             ),
@@ -90,7 +102,7 @@ class ProductCardComponent extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            "${product.store?.name}",
+                            "${widget.product.store?.name}",
                             style: TextStyle(
                               color: Theme.of(context)
                                   .colorScheme
@@ -104,7 +116,8 @@ class ProductCardComponent extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          onTapAddProduct(product, productCardKye);
+                          widget.onTapAddProduct(
+                              widget.product, productCardKye);
                         },
                         child: SizedBox(
                           height: 35.sp,
@@ -119,6 +132,59 @@ class ProductCardComponent extends StatelessWidget {
                                 size: 20.sp,
                               ),
                             ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: GestureDetector(
+                        onTap: () async {
+                          setState(() {
+                            isTrregierFavorite = true;
+                          });
+                          bool status = await favoriteService.favoriteTrigger(
+                              product: widget.product, context: context);
+                          setState(() {
+                            if (status) {
+                              if (widget.product.isFavorite! &&
+                                  widget.onRemoveProductFromFavorite != null) {
+                                widget.onRemoveProductFromFavorite!(
+                                    widget.product);
+                              }
+                              widget.product.isFavorite =
+                                  !widget.product.isFavorite!;
+                            }
+                            isTrregierFavorite = false;
+                          });
+                        },
+                        child: SizedBox(
+                          height: 35.sp,
+                          width: 35.sp,
+                          child: Card(
+                            color: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.sp),
+                            ),
+                            child: !isTrregierFavorite
+                                ? Center(
+                                    child: Icon(
+                                      (widget.product.isFavorite!)
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  )
+                                : SizedBox(
+                                    height: 25.sp,
+                                    width: 25.sp,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(5.sp),
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 03.sp,
+                                      ),
+                                    )),
                           ),
                         ),
                       ),
@@ -140,7 +206,7 @@ class ProductCardComponent extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: AutoSizeText(
-                                  "${product.name} ",
+                                  "${widget.product.name} ",
                                   maxLines: 1,
                                   textAlign: TextAlign.start,
                                   overflow: TextOverflow.ellipsis,
@@ -151,7 +217,7 @@ class ProductCardComponent extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: AutoSizeText(
-                                  "${product.info}",
+                                  "${widget.product.info}",
                                   maxLines: 2,
                                   textAlign: TextAlign.start,
                                   overflow: TextOverflow.ellipsis,
@@ -169,7 +235,7 @@ class ProductCardComponent extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: BuildPriceProductComponent(
-                          product: Rx(product),
+                          product: Rx(widget.product),
                         ),
                       ),
                     ],

@@ -17,9 +17,10 @@ class MainController extends GetxController {
 
   Rxn<AddressModel> selectedAddress = Rxn();
 
-  bool isSelectedAddress ({ required AddressModel address}){
-    return selectedAddress.value?.id==address.id;
+  bool isSelectedAddress({required AddressModel address}) {
+    return selectedAddress.value?.id == address.id;
   }
+
   Rxn<String> token = Rxn(null);
   Rxn<UserModel> user = Rxn(null);
   Rxn<SettingModel> setting = Rxn<SettingModel>();

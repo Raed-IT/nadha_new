@@ -12,6 +12,7 @@ class ProductListComponent extends StatelessWidget {
   final EdgeInsets? padding;
   final Function(ProductModel product, GlobalKey key) onTapAddProduct;
   final String? heroTagPrefix;
+  final Function(ProductModel product)? onRemoveProductFromFavorite;
 
   const ProductListComponent(
       {super.key,
@@ -20,7 +21,8 @@ class ProductListComponent extends StatelessWidget {
       required this.isLoad,
       this.padding,
       this.heroTagPrefix,
-      required this.onTapAddProduct});
+      required this.onTapAddProduct,
+      this.onRemoveProductFromFavorite});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,8 @@ class ProductListComponent extends StatelessWidget {
                 children: products
                     .map(
                       (product) => ProductCardComponent(
+                        onRemoveProductFromFavorite:
+                            onRemoveProductFromFavorite,
                         heroTagPrefix: heroTagPrefix,
                         product: product,
                         onTap: (kye) => onProductTap(product, kye),

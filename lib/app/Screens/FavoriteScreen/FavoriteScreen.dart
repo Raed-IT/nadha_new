@@ -1,26 +1,21 @@
-import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
-import 'package:delevary/app/Components/GridCardComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
-import 'package:delevary/app/Components/TitleSectionComponent.dart';
-import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
-import 'package:delevary/app/Route/Routs.dart';
-import 'package:delevary/app/Screens/HomeScreen/HomeScreenController.dart';
+import 'package:delevary/app/Screens/FavoriteScreen/FavoriteScreenController.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
-import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../Components/AppBarComponents/AppBarComponent.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
-import '../../Components/SlidersComponent.dart';
-import '../CategoriesScreen/CategoriesScreenController.dart';
+import '../../Route/Routs.dart';
+import '../ShowProductScreen/ShowProductScreenController.dart';
 
-class HomeScreen extends GetView<HomeScreenController> {
-  const HomeScreen({super.key});
+class FavoriteScreen extends GetView<FavoriteScreenController> {
+  const FavoriteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.getDataFromApi();
     return Scaffold(
       drawerEnableOpenDragGesture: false,
       drawer: const DrawerComponent(),
@@ -59,48 +54,11 @@ class HomeScreen extends GetView<HomeScreenController> {
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
-                        SliderComponent(
-                          sliders: controller.sliders,
-                          controller: PageController(),
-                          isLoad: controller.isLoad,
-                        ),
-                        10.verticalSpace,
-                        BuildTitleSectionComponent(
-                          title: "الفئات الرئيسية",
-                          isLoad: controller.isLoad,
-                        ),
-                        20.verticalSpace,
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5.sp),
-                          child: GridListComponent<CategoryModel>(
-                            prifexHero: "categories",
-                            items: controller.categories,
-                            isLoad: controller.isLoad,
-                            onTap: (CategoryModel item) {
-                              if (item.hasChildren!) {
-                                Get.toNamed(
-                                  AppRoutes.categories,
-                                  arguments: {
-                                    "category": item,
-                                  },
-                                );
-                                Get.put(CategoriesScreenController(),
-                                    tag: "category${item.id}");
-                              } else {
-                                Get.toNamed(AppRoutes.categoryProducts,
-                                    arguments: {"category": item});
-                              }
-                            },
-                          ),
-                        ),
-                        10.verticalSpace,
-                        BuildTitleSectionComponent(
-                          title: "المنتجات الاكثر طلب",
-                          isLoad: controller.isLoad,
-                        ),
-                        5.verticalSpace,
                         ProductListComponent(
-                          heroTagPrefix: "homeProducts",
+                          onRemoveProductFromFavorite: (product) {
+                            controller.products.remove(product);
+                          },
+                          heroTagPrefix: "favoriteProducts",
                           products: controller.products,
                           onProductTap: (ProductModel product, k) {
                             Get.toNamed(AppRoutes.showProduct,

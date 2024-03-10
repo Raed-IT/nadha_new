@@ -1,10 +1,8 @@
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Route/Routs.dart';
-import 'package:delevary/app/Screens/AuthScreens/MainAuthScreen/MainAuthBindnig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 Future<void> showAddressesBottomSheet({required BuildContext context}) async {
   await Get.bottomSheet(
@@ -69,7 +67,10 @@ Future<void> showAddressesBottomSheet({required BuildContext context}) async {
                         )
                         .toList(),
                     ListTile(
-                      onTap: () => Get.toNamed(AppRoutes.addAddress),
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed(AppRoutes.addAddress);
+                      },
                       leading: Icon(Icons.add),
                       title: Text("إضافة عنوان جديد "),
                     )

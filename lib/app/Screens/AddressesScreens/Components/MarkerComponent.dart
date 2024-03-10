@@ -29,7 +29,7 @@ class MarkerComponent extends StatelessWidget {
           ),
           Text(
             "${Get.find<MainController>().user.value?.name}",
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           )
         ],
       ),

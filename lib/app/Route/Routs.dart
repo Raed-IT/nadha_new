@@ -15,4 +15,6 @@ class AppRoutes {
   static const String addresses = "/addresses";
   static const String cartScreen = "/cart_screen";
   static const String addAddress = "/add_address";
+  static const String favorites = "/favorites";
+  static const String sale = "/sale";
 }
