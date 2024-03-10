@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/ProductsComponents/ProductList.dart';
+import '../../Components/TitleSectionComponent.dart';
 import '../../Data/Models/ProductModel.dart';
 import '../../Route/Routs.dart';
 import '../MainScaffoldSreen/MainScaffoldScreenController.dart';
@@ -54,6 +55,10 @@ class SaleScreen extends GetView<SaleScreenController> {
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
+                        BuildTitleSectionComponent(
+                            isLoad: controller.isLoad,
+                            title: "منتجات عليها حسومات"),
+
                         ProductListComponent(
                           onRemoveProductFromFavorite: (product) {
                             controller.products.remove(product);

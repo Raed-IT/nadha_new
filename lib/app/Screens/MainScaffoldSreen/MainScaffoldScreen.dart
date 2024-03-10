@@ -20,19 +20,23 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
     return WillPopScope(
       onWillPop: () {
         DateTime now = DateTime.now();
-        if (ctime == null || now.difference(ctime) > Duration(seconds: 1)) {
-          //add duration of press gap
-          ctime = now;
-          Fluttertoast.showToast(
-              msg: "اضغط مره اخرى للخروج",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              fontSize: 16.0.sp);
-          return Future.value(false);
+        if (controller.activePage.value == 0) {
+          if (ctime == null || now.difference(ctime) > Duration(seconds: 1)) {
+            //add duration of press gap
+            ctime = now;
+            Fluttertoast.showToast(
+                msg: "اضغط مره اخرى للخروج",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                fontSize: 16.0.sp);
+            return Future.value(false);
+          }
+          return Future.value(true);
+        } else {
+          controller.activePage.value = 0;
+          return Future(() => false);
         }
-        SystemNavigator.pop();
-        return Future.value(true);
       },
       child: Obx(() => controller.buildScaffold(
             cartKey: controller.cartKey,

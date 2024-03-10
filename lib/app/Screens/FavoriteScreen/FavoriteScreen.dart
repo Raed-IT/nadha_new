@@ -1,4 +1,5 @@
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
+import 'package:delevary/app/Components/TitleSectionComponent.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Screens/FavoriteScreen/FavoriteScreenController.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
@@ -54,6 +55,9 @@ class FavoriteScreen extends GetView<FavoriteScreenController> {
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
+                        BuildTitleSectionComponent(
+                            isLoad: controller.isLoad,
+                            title: "المنتجات المفضلة لديك"),
                         ProductListComponent(
                           onRemoveProductFromFavorite: (product) {
                             controller.products.remove(product);

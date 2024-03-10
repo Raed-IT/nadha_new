@@ -1,3 +1,4 @@
+import 'package:delevary/app/Components/ProductsComponents/EmptyProductComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductCard.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductListLoading.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
@@ -30,27 +31,29 @@ class ProductListComponent extends StatelessWidget {
       padding: padding ?? EdgeInsets.all(10.sp),
       child: Obx(
         () => (!isLoad.value)
-            ? GridView.count(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                crossAxisCount: 2,
-                childAspectRatio: 1 / 1.25,
-                crossAxisSpacing: 10.sp,
-                mainAxisSpacing: 10.h,
-                children: products
-                    .map(
-                      (product) => ProductCardComponent(
-                        onRemoveProductFromFavorite:
-                            onRemoveProductFromFavorite,
-                        heroTagPrefix: heroTagPrefix,
-                        product: product,
-                        onTap: (kye) => onProductTap(product, kye),
-                        onTapAddProduct: onTapAddProduct,
-                      ),
-                    )
-                    .toList(),
-              )
+            ? (products.isNotEmpty)
+                ? GridView.count(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    crossAxisCount: 2,
+                    childAspectRatio: 1 / 1.25,
+                    crossAxisSpacing: 10.sp,
+                    mainAxisSpacing: 10.h,
+                    children: products
+                        .map(
+                          (product) => ProductCardComponent(
+                            onRemoveProductFromFavorite:
+                                onRemoveProductFromFavorite,
+                            heroTagPrefix: heroTagPrefix,
+                            product: product,
+                            onTap: (kye) => onProductTap(product, kye),
+                            onTapAddProduct: onTapAddProduct,
+                          ),
+                        )
+                        .toList(),
+                  )
+                : EmptyProductComponent()
             : const ProductLoadingList(),
       ),
     );
