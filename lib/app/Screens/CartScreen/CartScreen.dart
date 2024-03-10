@@ -8,6 +8,7 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/CartScreen/CartScreenController.dart';
 import 'package:delevary/app/Screens/CartScreen/Components/CartEmptyComponent.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
+import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -109,26 +110,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                     if (Get.find<MainController>().cart.isNotEmpty)
-                      if (Get.find<MainController>().cart.isNotEmpty)
-                        GestureDetector(
-                          onTap: () =>
-                              showAddressesBottomSheet(context: context),
-                          child: SizedBox(
-                            height: 70.h,
-                            width: Get.width,
-                            child: Card(
-                              color: Theme.of(context).colorScheme.primary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.sp),
-                              ),
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 10.w, vertical: 10.h),
-                              child: const Center(
-                                child: Text("التالي"),
-                              ),
-                            ),
-                          ),
-                        ),
+                      buildSubmeitCard(controller: controller)
                   ],
                 ),
               ],
@@ -136,6 +118,93 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildSubmeitCard({required CartScreenController controller}) {
+    return Obx(
+      () => (Get.find<MainController>().selectedAddress.value == null)
+          ? GestureDetector(
+              onTap: () => showAddressesBottomSheet(context: context),
+              child: SizedBox(
+                height: 70.h,
+                width: Get.width,
+                child: Card(
+                  color: Theme.of(context).colorScheme.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.sp),
+                  ),
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                  child: const Center(
+                    child: Text("أختيار موقع الطلب"),
+                  ),
+                ),
+              ),
+            )
+          : Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: GestureDetector(
+                    onTap: () => controller.createOrder(),
+                    child: SizedBox(
+                      height: 70.h,
+                      width: Get.width,
+                      child: Card(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary
+                            .withOpacity(0.8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.sp),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 10.h),
+                        child: Center(
+                          child: Text(
+                            " إطلب الى ${Get.find<MainController>().selectedAddress.value!.name}",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.background,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      await showAddressesBottomSheet(context: context);
+                      setState(() {});
+                    },
+                    child: SizedBox(
+                      height: 70.h,
+                      width: Get.width,
+                      child: Card(
+                        color: Theme.of(context).colorScheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.sp),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 10.h),
+                        child: Center(
+                          child: Text(
+                            "تبديل الموقع",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.background,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 

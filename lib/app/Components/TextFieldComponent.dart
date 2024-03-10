@@ -11,7 +11,7 @@ class TextFieldComponent extends StatelessWidget {
   final TextStyle? textStyle;
   final void Function(String)? onChange;
   final String? label;
-
+  final bool isMultiple;
   final bool autofocus;
   final bool isDisable;
   final bool isRequired;
@@ -28,7 +28,8 @@ class TextFieldComponent extends StatelessWidget {
       this.onChange,
       this.isDisable = true,
       super.key,
-      this.isRequired = false});
+      this.isRequired = false,
+      this.isMultiple = false});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,8 @@ class TextFieldComponent extends StatelessWidget {
               ),
             5.verticalSpace,
             TextFormField(
+              maxLines: isMultiple ? null : 1,
+              minLines: isMultiple ? 4 : null,
               enabled: isDisable,
               autofocus: autofocus,
               onChanged: onChange,
@@ -74,11 +77,10 @@ class TextFieldComponent extends StatelessWidget {
                       )
                     : const SizedBox(),
                 hintText: hint,
-
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 10.sp, vertical: 20.sp),
                 focusedBorder: OutlineInputBorder(
-                   borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide.none,

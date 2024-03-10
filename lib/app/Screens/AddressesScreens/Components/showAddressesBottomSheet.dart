@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-void showAddressesBottomSheet({required BuildContext context}) {
-  Get.bottomSheet(
+Future<void> showAddressesBottomSheet({required BuildContext context}) async {
+  await Get.bottomSheet(
     enableDrag: true,
     elevation: 7,
     isScrollControlled: true,
@@ -76,6 +76,29 @@ void showAddressesBottomSheet({required BuildContext context}) {
                   ],
                 ),
               ),
+              Row(
+                children: [
+                  const Spacer(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.sp),
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.sp)),
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        "تــم",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.background,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),

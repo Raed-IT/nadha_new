@@ -1,3 +1,4 @@
+import 'package:delevary/app/Services/Api/AuthService.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:delevary/app/data/ApiRoute.dart';
@@ -10,7 +11,6 @@ import '../../../Data/Models/UserModel.dart';
 import '../../../Route/Routs.dart';
 import '../../../Services/LocaleStorageService.dart';
 import '../../../Services/OneSignalService.dart';
-import '../../../services/AuthService.dart';
 
 class LoginScreenController extends GetxController with ApiHelperMixin {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();

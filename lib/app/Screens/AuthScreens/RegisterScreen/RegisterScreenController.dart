@@ -1,20 +1,18 @@
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/Enums/GenderTypeEnum.dart';
-import 'package:delevary/app/Data/MainController.dart';
-import 'package:delevary/app/Data/Models/UserModel.dart';
+ import 'package:delevary/app/Data/Models/UserModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Services/LocaleStorageService.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
-import 'package:delevary/app/services/AuthService.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
-import 'package:logger/logger.dart';
 
 import '../../../Data/Enums/MaritalStatusEnum.dart';
+import '../../../Services/Api/AuthService.dart';
 import '../../../Services/OneSignalService.dart';
 
 class RegisterScreenController extends GetxController with ApiHelperMixin {

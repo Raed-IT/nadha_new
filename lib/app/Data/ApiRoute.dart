@@ -7,4 +7,5 @@ class ApiRoute {
   static String home = "$host/home";
   static String categories = "$host/categories";
   static String products = "$host/products";
+  static String addresses = "$host/addresses";
 }
