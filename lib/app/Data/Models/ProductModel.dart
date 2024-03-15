@@ -12,6 +12,7 @@ class ProductModel {
   ProductUnitTypeEnum? unit;
   bool? isDiscount;
   double? price;
+  double? minQty;
   double? discount;
   String? currency;
   String? image;
@@ -43,7 +44,7 @@ class ProductModel {
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     images = [];
-
+    minQty = double.tryParse("${json['min_qty']}");
     if (json['images'].length > 0) {
       json['images'].keys!.forEach((key) {
         int id = int.parse("$key");

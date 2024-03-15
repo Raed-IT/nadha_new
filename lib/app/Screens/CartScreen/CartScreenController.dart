@@ -5,6 +5,6 @@ class CartScreenController extends GetxController {
   CartService cartService = CartService();
 
   void createOrder() {
-
+    
   }
 }

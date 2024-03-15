@@ -8,15 +8,13 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../../Components/TextFieldComponent.dart';
-import '../../../Services/UI/OverlayLoaderService.dart';
 
 class AddAddressScreen extends GetView<AddAddressScreenController> {
   const AddAddressScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-Loader.hide();
+    Loader.hide();
     return Scaffold(
       bottomSheet: Stack(
         children: [
@@ -26,19 +24,22 @@ Loader.hide();
               color: Theme.of(context).colorScheme.background,
               child: Stack(
                 children: [
-                  Obx(() => GoogleMap(
-                        markers: controller.marker.toSet(),
-                        onMapCreated: (cont) {
-                          controller.mapController = cont;
-                        },
-                        onLongPress: (latLong) {
-                          controller.addMarker(latLong);
-                        },
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(37.42796133580664, -122.085749655962),
-                          zoom: 15,
-                        ),
-                      )),
+                  Obx(
+                    () => GoogleMap(
+                      markers: controller.marker.toSet(),
+                      onMapCreated: (cont) {
+                        controller.mapController = cont;
+                      },
+                      mapType: MapType.satellite,
+                      onLongPress: (latLong) {
+                        controller.addMarker(latLong);
+                      },
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(36.002632, 36.667849),
+                        zoom: 14,
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: 50.sp, horizontal: 10.sp),
@@ -116,8 +117,8 @@ Loader.hide();
                                 TextFieldComponent(
                                   controller: controller.addressNameController,
                                   hint: 'اسم العنوان',
-                                  validator: (data){
-                                    if (data!.isEmpty){
+                                  validator: (data) {
+                                    if (data!.isEmpty) {
                                       return "اسم العنوان مطلوب";
                                     }
                                     return null;
@@ -127,8 +128,8 @@ Loader.hide();
                                   controller: controller.addressInfoController,
                                   isMultiple: true,
                                   hint: 'وصف العنوان ',
-                                  validator: (data){
-                                    if (data!.isEmpty){
+                                  validator: (data) {
+                                    if (data!.isEmpty) {
                                       return "وصف العنوان مطلوب";
                                     }
                                     return null;

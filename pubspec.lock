@@ -452,8 +452,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: f316e01e701fe6b00359f7ea9d703cadd972a4e6
-      resolved-ref: f316e01e701fe6b00359f7ea9d703cadd972a4e6
+      ref: "8b760ced733ecd9bdaed357a36fed2f60b8e3524"
+      resolved-ref: "8b760ced733ecd9bdaed357a36fed2f60b8e3524"
       url: "https://github.com/Raed-IT/helper-package.git"
     source: git
     version: "0.0.1"
@@ -761,6 +761,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  refresh_loadmore:
+    dependency: "direct main"
+    description:
+      name: refresh_loadmore
+      sha256: "938c40a612de2517143c08412170286b583f1319857479b9bdeb8a2db458b513"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   rxdart:
     dependency: transitive
     description:
