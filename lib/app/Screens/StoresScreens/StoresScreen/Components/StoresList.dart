@@ -3,8 +3,8 @@ import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
 import 'package:delevary/app/Data/Models/StoreModel.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/StoresScreens/StoresScreen/StoresScreenController.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,49 +34,52 @@ class StoresListComponent extends GetView<StoresScreenController> {
   }
 
   Widget buildStoreCard(StoreModel store, BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
-      decoration: BoxDecoration(
+    return GestureDetector(
+      onTap: () => Get.toNamed(AppRoutes.showStore, arguments: {"store": store}),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.sp),
+            border: Border.all(color: Theme.of(context).colorScheme.primary)),
+        child: BlurryContainer(
+          blur: 10,
           borderRadius: BorderRadius.circular(10.sp),
-          border: Border.all(color: Theme.of(context).colorScheme.primary)),
-      child: BlurryContainer(
-        blur: 10,
-        borderRadius: BorderRadius.circular(10.sp),
-        child: Row(
-          children: [
-            ImageCacheComponent(
-              image: "${store.image}",
-              width: 100.sp,
-              height: 100.sp,
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(10.sp),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AutoSizeText(
-                      "${store.name}",
-                      maxLines: 1,
-                      style: TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.bold,
+          child: Row(
+            children: [
+              ImageCacheComponent(
+                image: "${store.image}",
+                width: 100.sp,
+                height: 100.sp,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(10.sp),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AutoSizeText(
+                        "${store.name}",
+                        maxLines: 1,
+                        style: TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    10.verticalSpace,
-                    AutoSizeText(
-                      "${store.info}",
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        overflow: TextOverflow.ellipsis,
+                      10.verticalSpace,
+                      AutoSizeText(
+                        "${store.info}",
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:helper/mixin/pagination_mixing.dart';
 
 class StoresScreenController extends GetxController
     with PaginationMixin<StoreModel> {
+
   @override
   void onInit() {
     super.onInit();

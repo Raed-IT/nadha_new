@@ -10,8 +10,9 @@ import 'package:helper/mixin/pagination_mixing.dart';
 import '../../Services/CartService.dart';
 
 class CategoryProductsScreenController extends GetxController
-    with PaginationMixin<ProductModel> , AddToCartMixin{
+    with PaginationMixin<ProductModel>, AddToCartMixin {
   CategoryModel category = Get.arguments['category'];
+  int? storeId = Get.arguments['store_id'];
   CartService cartService = CartService();
 
   Future getFreshData() async {
@@ -26,6 +27,9 @@ class CategoryProductsScreenController extends GetxController
   void onInit() {
     paginationUrl = ApiRoute.products;
     paginationParameter = {"category_id": category.id};
+    if (storeId != null) {
+      paginationParameter['store_id'] = storeId;
+    }
     getFreshData();
     super.onInit();
   }
