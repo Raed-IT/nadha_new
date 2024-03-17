@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 
 class CartItemModel {
   ProductModel product;
-  RxInt qty;
+  RxDouble qty;
   double price;
 
-  double get total {
-    return product.getPrice! * qty.value;
+  String get total {
+    return (double.parse(product.getPrice!) * qty.value).toStringAsFixed(1);
   }
 
   CartItemModel({

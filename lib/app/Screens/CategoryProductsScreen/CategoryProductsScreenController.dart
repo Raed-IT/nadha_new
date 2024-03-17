@@ -1,14 +1,18 @@
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Mixins/AddToCartMixin.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
 
+import '../../Services/CartService.dart';
+
 class CategoryProductsScreenController extends GetxController
-    with PaginationMixin<ProductModel> {
+    with PaginationMixin<ProductModel> , AddToCartMixin{
   CategoryModel category = Get.arguments['category'];
+  CartService cartService = CartService();
 
   Future getFreshData() async {
     getPaginationData(isRefresh: true);

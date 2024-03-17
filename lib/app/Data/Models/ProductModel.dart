@@ -1,9 +1,11 @@
 import 'dart:ffi';
 
 import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
+import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/MediaModel.dart';
 import 'package:delevary/app/Data/Models/StoreModel.dart';
+import 'package:get/get.dart';
 
 class ProductModel {
   int? id;
@@ -21,16 +23,27 @@ class ProductModel {
   List<MediaModel>? images;
   bool? isFavorite;
 
-  double? get getPrice {
+  String? get getPrice {
+    double? pr = 0;
     if (isDiscount ?? false) {
-      return discount;
+      pr = discount;
     }
-    return price;
+    pr = price;
+    if (currency == "USD") {
+      return (pr! *
+              double.tryParse(
+                  "${Get.find<MainController>().setting.value!.exchange}")!)
+          .toStringAsFixed(1);
+    } else {
+      return pr!.toStringAsFixed(1);
+    }
   }
 
   String? get getUnitName {
     return " / ${unit!.toProductUnit()}";
   }
+
+  bool get isShowCounter => unit == ProductUnitTypeEnum.piece;
 
   ProductModel(
       {this.id,

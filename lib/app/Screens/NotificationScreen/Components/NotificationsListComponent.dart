@@ -61,7 +61,7 @@ class NotificationsListComponent extends GetView<NotificationScreenController> {
                         ),
                         child: ListTile(
                           title: Text("${element.title}"),
-                          subtitle: Text("${element.body}"),
+                          subtitle: Text("${element.body} "),
                           leading: Icon(
                             Icons.notifications_active_outlined,
                             size: 20.sp,

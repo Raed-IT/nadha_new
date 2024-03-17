@@ -2,6 +2,7 @@ class SettingModel {
   int? id;
   String? address;
   bool? isClose;
+  double? exchange;
   int? longitude;
   double? latitude;
   String? email;
@@ -21,6 +22,7 @@ class SettingModel {
   SettingModel(
       {this.id,
       this.address,
+        this.exchange,
       this.isClose,
       this.longitude,
       this.latitude,
@@ -43,6 +45,7 @@ class SettingModel {
     address = json['address'];
     isClose = json['is_close'];
     longitude = json['longitude'];
+    exchange = double.tryParse("${json['exchange']}");
     latitude = json['latitude'];
     email = json['email'];
     img = json['img'];
@@ -55,6 +58,7 @@ class SettingModel {
     youtube = json['youtube'];
     linkedin = json['linkedin'];
     privacy = json['privacy'];
+
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

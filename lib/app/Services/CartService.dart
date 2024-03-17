@@ -8,7 +8,7 @@ class CartService with ApiHelperMixin {
   double getTotal() {
     double total = 0;
     Get.find<MainController>().cart.forEach((cartItem) {
-      total += cartItem.product.getPrice! * cartItem.qty.value;
+      total += double.parse(cartItem.product.getPrice!) * cartItem.qty.value;
     });
     return total;
   }
@@ -24,33 +24,38 @@ class CartService with ApiHelperMixin {
   }
 
 //mor
-  void increaseProductQty({required ProductModel product}) {
+  double? increaseProductQty({required ProductModel product}) {
     int index = Get.find<MainController>()
         .cart
         .indexWhere((cartItem) => cartItem.product.id == product.id);
     if (index != -1) {
-      int qty = Get.find<MainController>().cart[index].qty.value;
-      Get.find<MainController>().cart[index].qty.value = qty + 1;
+      double qty = Get.find<MainController>().cart[index].qty.value;
+      Get.find<MainController>().cart[index].qty.value = qty + product.minQty!;
+      return qty + product.minQty!;
     }
+    return null;
   }
 
   //min
-  void decreaseProductQty({required ProductModel product}) {
+  double? decreaseProductQty({required ProductModel product}) {
     int index = Get.find<MainController>()
         .cart
         .indexWhere((cartItem) => cartItem.product.id == product.id);
     if (index != -1) {
-      int qty = Get.find<MainController>().cart[index].qty.value;
-      if (qty >= 2) {
-        Get.find<MainController>().cart[index].qty.value = qty - 1;
+      double qty = Get.find<MainController>().cart[index].qty.value;
+      if (qty >= (product.minQty! * 2)) {
+        Get.find<MainController>().cart[index].qty.value =
+            qty - product.minQty!;
+        return qty - product.minQty!;
       } else {
         removeFromCart(product: product);
+        return null;
       }
     }
   }
 
-  int getQty({required ProductModel product}) {
-    int qty = 0;
+  double getQty({required ProductModel product}) {
+    double qty = 0;
     Get.find<MainController>().cart.forEach((cartItem) {
       if (product.id == cartItem.product.id) {
         qty = cartItem.qty.value;
@@ -62,7 +67,9 @@ class CartService with ApiHelperMixin {
   void addToCard({required ProductModel product}) {
     if (!inCart(product: product)) {
       Get.find<MainController>().cart.add(CartItemModel(
-          product: product, qty: RxInt(1), price: product.getPrice!));
+          product: product,
+          qty: RxDouble(1),
+          price: double.parse(product.getPrice!)));
     } else {
       increaseProductQty(product: product);
     }
@@ -75,6 +82,13 @@ class CartService with ApiHelperMixin {
     if (index != -1) {
       Get.find<MainController>().cart.removeAt(index);
     }
+  }
+
+  addCustomQty({required double qty, required ProductModel product}) {
+    int index = Get.find<MainController>()
+        .cart
+        .indexWhere((cartItem) => cartItem.product.id == product.id);
+    Get.find<MainController>().cart[index].qty.value = qty;
   }
 
   void deleteCart() {}

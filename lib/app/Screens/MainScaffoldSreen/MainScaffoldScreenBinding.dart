@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class MainScaffoldScreenBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(MainScaffoldScreenController());
+    Get.put(MainScaffoldScreenController(),permanent: true);
     Get.lazyPut(() => HomeScreenController());
     Get.lazyPut(() => FavoriteScreenController());
     Get.lazyPut(() => SaleScreenController());

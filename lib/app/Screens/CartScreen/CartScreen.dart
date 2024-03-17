@@ -217,10 +217,7 @@ class _CartScreenState extends State<CartScreen> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5.sp),
         child: Card(
-          // blur: 1,
           elevation: 5,
-          // color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-          // margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.sp),
           child: Column(
             children: [
               Padding(
@@ -273,7 +270,7 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                     ),
-                    Text("${cartItem.total}")
+                    Text(cartItem.total)
                   ],
                 ),
               ),
@@ -294,7 +291,9 @@ class _CartScreenState extends State<CartScreen> {
                               product: cartItem.product,
                               onSetState: () => setState(() {}),
                             ),
-                            const Spacer(),
+                            if (!cartItem.product.isShowCounter)
+                              20.horizontalSpace,
+                            if (cartItem.product.isShowCounter) Spacer(),
                             GestureDetector(
                               onTap: () {
                                 controller.cartService
@@ -322,7 +321,7 @@ class _CartScreenState extends State<CartScreen> {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
