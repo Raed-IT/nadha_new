@@ -19,6 +19,7 @@ import '../Screens/OrdersSecreens/OrdersSecreen/OrdersPage.dart';
 import '../Screens/SearchScreen/SearchScreenPage.dart';
 import '../Screens/ShowProductScreen/ShowProductPage.dart';
 import '../Screens/SplashScreen/SplashPage.dart';
+import '../Screens/StoresScreens/StoresScreen/StoresPage.dart';
 
 class GetPagesProvider {
   static List<GetPage> getPages = [
@@ -41,5 +42,6 @@ class GetPagesProvider {
     SalePage(),
     NotificationPage(),
     OrdersPage(),
+    StoresPage(),
   ];
 }

@@ -4,6 +4,7 @@ class StoreModel {
   int? id;
   String? name;
   String? address;
+  String? image;
   String? info;
   double? lat;
   double? long;
@@ -19,6 +20,7 @@ class StoreModel {
     info = json['info'];
     lat = json['lat'];
     long = json['long'];
+    image = json['image'];
     city = CityModel.fromJson(json['city']);
   }
 }

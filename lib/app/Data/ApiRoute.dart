@@ -11,4 +11,5 @@ class ApiRoute {
   static String favorites = "$host/favorites";
   static String notifications = "$host/notifications";
   static String orders = "$host/orders";
+  static String stores = "$host/stores";
 }

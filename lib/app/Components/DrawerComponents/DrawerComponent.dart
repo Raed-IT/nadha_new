@@ -78,6 +78,12 @@ class DrawerComponent extends StatelessWidget {
                   title: "طلباتي",
                   icon: FontAwesomeIcons.firstOrderAlt,
                   onTap: () => Get.toNamed(AppRoutes.orders),
+                ),
+                buildItem(
+                  context: context,
+                  title: "المتاجر",
+                  icon: FontAwesomeIcons.store,
+                  onTap: () => Get.toNamed(AppRoutes.stores),
                 )
               ],
             ),
@@ -98,9 +104,10 @@ class DrawerComponent extends StatelessWidget {
         onTap();
       },
       child: SizedBox(
-        height: 50.h,
+        height: 60.h,
         width: Get.width,
         child: Card(
+          margin: EdgeInsets.symmetric(vertical: 7.sp, horizontal: 5.sp),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.sp),
             child: Row(

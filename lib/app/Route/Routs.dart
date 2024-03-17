@@ -19,4 +19,5 @@ class AppRoutes {
   static const String sale = "/sale";
   static const String notifications = "/notifications";
   static const String orders = "/orders";
+  static const String stores = "/stores";
 }
