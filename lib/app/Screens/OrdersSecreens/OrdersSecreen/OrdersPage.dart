@@ -7,7 +7,7 @@ class OrdersPage extends GetPage {
   OrdersPage()
       : super(
           name: AppRoutes.orders,
-          page: () => OrdersSecreen(),
+          page: () => OrdersScreen(),
           binding: OrdersSecreenBinding(),
         );
 }

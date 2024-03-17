@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
 import '../CategoriesScreen/CategoriesScreenController.dart';
@@ -26,42 +25,41 @@ class HomeScreen extends GetView<HomeScreenController> {
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
-    return SizedBox(
-      child: Scaffold(
-        drawerEnableOpenDragGesture: false,
-        drawer: const DrawerComponent(),
-        body: Builder(
-          builder: (context) => Container(
-            height: Get.height,
-            color: Theme.of(context).colorScheme.background,
-            child: Stack(
-              children: [
-                Container(
-                  height: Get.height,
-                  width: Get.width,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      opacity: 0.1,
-                      repeat: ImageRepeat.repeat,
-                      image: AssetImage('assets/images/bg.png'),
-                    ),
+    return Scaffold(
+      drawerEnableOpenDragGesture: false,
+      drawer: const DrawerComponent(),
+      body: Builder(
+        builder: (context) => Container(
+          height: Get.height,
+          color: Theme.of(context).colorScheme.background,
+          child: Stack(
+            children: [
+              Container(
+                height: Get.height,
+                width: Get.width,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    opacity: 0.1,
+                    repeat: ImageRepeat.repeat,
+                    image: AssetImage('assets/images/bg.png'),
                   ),
-                ).animate().blur(
-                      delay: const Duration(milliseconds: 500),
-                      begin: const Offset(20, 20),
-                      duration: const Duration(seconds: 2),
-                    ),
-                Column(
-                  children: [
-                    AppBarComponent(
-                      showLogo: true,
-                      showSearch: true,
-                      openDrawer: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    ),
-                    Expanded(
-                        child: ListView(
+                ),
+              ).animate().blur(
+                    delay: const Duration(milliseconds: 500),
+                    begin: const Offset(20, 20),
+                    duration: const Duration(seconds: 2),
+                  ),
+              Column(
+                children: [
+                  AppBarComponent(
+                    showLogo: true,
+                    showSearch: true,
+                    openDrawer: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
+                  Expanded(
+                    child: ListView(
                       controller: scrollController,
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
@@ -110,7 +108,6 @@ class HomeScreen extends GetView<HomeScreenController> {
                           heroTagPrefix: "homeProducts",
                           products: controller.paginationData,
                           onProductTap: (ProductModel product, k) {
-                            Logger().w(product.id);
                             Get.toNamed(AppRoutes.showProduct,
                                 preventDuplicates: false,
                                 arguments: {
@@ -130,22 +127,22 @@ class HomeScreen extends GetView<HomeScreenController> {
                           isLoad: controller.isLoadMore,
                         )
                       ],
-                    ).loadMoreAble(
+                    )
+                        .loadMoreAble(
                       scrollController: scrollController,
                       onLoadMore: () async {
-                       await controller.loadMore();
-                       },
+                        await controller.loadMore();
+                      },
                     )
-                            .refreshAbel(
-                          onRefresh: () async {
-                            await controller.getFreshData();
-                          },
-                        ),
-                        ),
-                  ],
-                ),
-              ],
-            ),
+                        .refreshAbel(
+                      onRefresh: () async {
+                        await controller.getFreshData();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

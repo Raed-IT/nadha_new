@@ -7,6 +7,7 @@ import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/CartScreen/CartScreenController.dart';
 import 'package:delevary/app/Screens/CartScreen/Components/CartEmptyComponent.dart';
+import 'package:delevary/app/Screens/CartScreen/Components/ShowConfiermCartDialog.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/material.dart';
@@ -147,7 +148,10 @@ class _CartScreenState extends State<CartScreen> {
                 Expanded(
                   flex: 2,
                   child: GestureDetector(
-                    onTap: () => controller.createOrder(),
+                    onTap: () => showConfirmCartDialog(context, () {
+                      Get.back();
+                      controller.createOrder(context);
+                    }, controller),
                     child: SizedBox(
                       height: 70.h,
                       width: Get.width,
@@ -234,13 +238,13 @@ class _CartScreenState extends State<CartScreen> {
                           },
                         );
                         Get.put(ShowProductScreenController(),
-                            tag: "show_product${cartItem.product.id}");
+                            tag: "show_product${cartItem.product!.id}");
                       },
                       child: Hero(
-                        tag: "cart${cartItem.product.id}",
+                        tag: "cart${cartItem.product!.id}",
                         child: ImageCacheComponent(
                           borderRadius: BorderRadius.circular(10.sp),
-                          image: "${cartItem.product.image}",
+                          image: "${cartItem.product!.image}",
                           width: 85.sp,
                           height: 85.sp,
                         ),
@@ -253,14 +257,14 @@ class _CartScreenState extends State<CartScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${cartItem.product.name}",
+                              "${cartItem.product!.name}",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             AutoSizeText(
-                              "${cartItem.product.info}",
+                              "${cartItem.product!.info}",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(),
                               maxLines: 2,
@@ -281,23 +285,23 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       Expanded(
                         child: BuildPriceProductComponent(
-                          product: Rx(cartItem.product),
+                          product: Rx(cartItem.product!),
                         ),
                       ),
                       Expanded(
                         child: Row(
                           children: [
                             AddToCardComponent(
-                              product: cartItem.product,
+                              product: cartItem.product!,
                               onSetState: () => setState(() {}),
                             ),
-                            if (!cartItem.product.isShowCounter)
+                            if (!cartItem.product!.isShowCounter)
                               20.horizontalSpace,
-                            if (cartItem.product.isShowCounter) Spacer(),
+                            if (cartItem.product!.isShowCounter) Spacer(),
                             GestureDetector(
                               onTap: () {
                                 controller.cartService
-                                    .removeFromCart(product: cartItem.product);
+                                    .removeFromCart(product: cartItem.product!);
                                 setState(() {});
                               },
                               child: SizedBox(

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
@@ -25,10 +23,11 @@ class ProductModel {
 
   String? get getPrice {
     double? pr = 0;
-    if (isDiscount ?? false) {
+    if (isDiscount!) {
       pr = discount;
+    } else {
+      pr = price;
     }
-    pr = price;
     if (currency == "USD") {
       return (pr! *
               double.tryParse(
@@ -71,7 +70,7 @@ class ProductModel {
     info = json['info'];
     isFavorite = json['is_favorite'] as bool;
     unit = "${json['unit']}".toProductUnitTyp();
-    isDiscount = json['is_discount'];
+    isDiscount = json['is_discount'] as bool;
     price = double.tryParse("${json['price']}");
     discount = double.tryParse("${json['discount']}");
     currency = json['currency'];

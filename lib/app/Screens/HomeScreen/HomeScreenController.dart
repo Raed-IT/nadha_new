@@ -31,7 +31,8 @@ class HomeScreenController extends GetxController
   Future getFreshData() async {
     getPaginationData(isRefresh: true);
     await getSingleDataWithSync(
-        url: UrlModel(url: ApiRoute.home, type: "home"));
+      url: UrlModel(url: ApiRoute.home, type: "home"),
+    );
     paginationUrl = ApiRoute.products;
   }
 

@@ -2,8 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
+import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Services/Api/FavoretService.dart';
+import 'package:delevary/app/Services/CartService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,9 +36,13 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
 
   final FavoriteService favoriteService = FavoriteService();
   bool isTrregierFavorite = false;
+  final CartService _cartService = CartService();
 
   @override
   Widget build(BuildContext context) {
+    Get.find<MainController>().cart.listen((p0) {
+      if (mounted) setState(() {});
+    });
     final GlobalKey productCardKye = GlobalKey();
     return GestureDetector(
       onTap: () => widget.onTap(productCardKye),
@@ -44,7 +50,10 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.sp),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            width: _cartService.inCart(product: widget.product) ? 3.sp : 2.sp,
+            color: _cartService.inCart(product: widget.product)
+                ? Theme.of(context).colorScheme.secondary
+                : Theme.of(context).colorScheme.primary.withOpacity(0.2),
           ),
         ),
         child: BlurryContainer(
