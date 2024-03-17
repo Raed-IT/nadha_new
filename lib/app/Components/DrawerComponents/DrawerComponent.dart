@@ -66,6 +66,18 @@ class DrawerComponent extends StatelessWidget {
                   title: "عناويني ",
                   icon: FontAwesomeIcons.mapLocationDot,
                   onTap: () => Get.toNamed(AppRoutes.addresses),
+                ),
+                buildItem(
+                  context: context,
+                  title: "الإشعارات",
+                  icon: Icons.notifications_active_outlined,
+                  onTap: () => Get.toNamed(AppRoutes.notifications),
+                ),
+                buildItem(
+                  context: context,
+                  title: "طلباتي",
+                  icon: FontAwesomeIcons.firstOrderAlt,
+                  onTap: () => Get.toNamed(AppRoutes.orders),
                 )
               ],
             ),

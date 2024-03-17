@@ -15,6 +15,7 @@ import '../Screens/AddressesScreens/AddressesScreen/AddressesPage.dart';
 import '../Screens/CategoriesScreen/CategoriesPage.dart';
 import '../Screens/CategoryProductsScreen/CategoryProductsPage.dart';
 import '../Screens/NotificationScreen/NotificationPage.dart';
+import '../Screens/OrdersSecreens/OrdersSecreen/OrdersPage.dart';
 import '../Screens/SearchScreen/SearchScreenPage.dart';
 import '../Screens/ShowProductScreen/ShowProductPage.dart';
 import '../Screens/SplashScreen/SplashPage.dart';
@@ -39,5 +40,6 @@ class GetPagesProvider {
     FavoritePage(),
     SalePage(),
     NotificationPage(),
+    OrdersPage(),
   ];
 }

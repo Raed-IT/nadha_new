@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
 import '../CategoriesScreen/CategoriesScreenController.dart';
@@ -60,88 +61,88 @@ class HomeScreen extends GetView<HomeScreenController> {
                       },
                     ),
                     Expanded(
-                      child: ListView(
-                        controller: scrollController,
-                        padding: const EdgeInsets.all(0),
-                        physics: const BouncingScrollPhysics(),
-                        children: [
-                          SliderComponent(
-                            sliders: controller.sliders,
-                            controller: PageController(),
+                        child: ListView(
+                      controller: scrollController,
+                      padding: const EdgeInsets.all(0),
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        SliderComponent(
+                          sliders: controller.sliders,
+                          controller: PageController(),
+                          isLoad: controller.isLoad,
+                        ),
+                        10.verticalSpace,
+                        BuildTitleSectionComponent(
+                          title: "الفئات الرئيسية",
+                          isLoad: controller.isLoad,
+                        ),
+                        20.verticalSpace,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.sp),
+                          child: GridListComponent<CategoryModel>(
+                            prifexHero: "categories",
+                            items: controller.categories,
                             isLoad: controller.isLoad,
-                          ),
-                          10.verticalSpace,
-                          BuildTitleSectionComponent(
-                            title: "الفئات الرئيسية",
-                            isLoad: controller.isLoad,
-                          ),
-                          20.verticalSpace,
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.sp),
-                            child: GridListComponent<CategoryModel>(
-                              prifexHero: "categories",
-                              items: controller.categories,
-                              isLoad: controller.isLoad,
-                              onTap: (CategoryModel item) {
-                                if (item.hasChildren!) {
-                                  Get.toNamed(
-                                    AppRoutes.categories,
-                                    arguments: {
-                                      "category": item,
-                                    },
-                                  );
-                                  Get.put(CategoriesScreenController(),
-                                      tag: "category${item.id}");
-                                } else {
-                                  Get.toNamed(AppRoutes.categoryProducts,
-                                      arguments: {"category": item});
-                                }
-                              },
-                            ),
-                          ),
-                          10.verticalSpace,
-                          BuildTitleSectionComponent(
-                            title: "المنتجات الاكثر طلب",
-                            isLoad: controller.isLoad,
-                          ),
-                          5.verticalSpace,
-                          ProductListComponent(
-                            heroTagPrefix: "homeProducts",
-                            products: controller.paginationData,
-                            onProductTap: (ProductModel product, k) {
-                              Get.toNamed(AppRoutes.showProduct,
-                                  preventDuplicates: false,
+                            onTap: (CategoryModel item) {
+                              if (item.hasChildren!) {
+                                Get.toNamed(
+                                  AppRoutes.categories,
                                   arguments: {
-                                    "product": product,
-                                    "hero": "homeProducts"
-                                  });
-                              Get.put(ShowProductScreenController(),
-                                  tag: "show_product${product.id}");
+                                    "category": item,
+                                  },
+                                );
+                                Get.put(CategoriesScreenController(),
+                                    tag: "category${item.id}");
+                              } else {
+                                Get.toNamed(AppRoutes.categoryProducts,
+                                    arguments: {"category": item});
+                              }
                             },
-                            isLoad: controller.isLoadPaginationData,
-                            onTapAddProduct:
-                                Get.find<MainScaffoldScreenController>()
-                                    .addToCart,
                           ),
-                          LoadMoreComponent(
-                            isFinished: controller.isFinish,
-                            isLoad: controller.isLoadMore,
-                          )
-                        ],
-                      )
-                          .loadMoreAble(
-                        scrollController: scrollController,
-                        onLoadMore: () async {
-                          controller.loadMore();
-                          await Future.delayed(3000.ms);
-                        },
-                      )
-                          .refreshAbel(
-                        onRefresh: () async{
-                          await controller.getFreshData();
-                        },
-                      ),
-                    ),
+                        ),
+                        10.verticalSpace,
+                        BuildTitleSectionComponent(
+                          title: "المنتجات الاكثر طلب",
+                          isLoad: controller.isLoad,
+                        ),
+                        5.verticalSpace,
+                        ProductListComponent(
+                          heroTagPrefix: "homeProducts",
+                          products: controller.paginationData,
+                          onProductTap: (ProductModel product, k) {
+                            Logger().w(product.id);
+                            Get.toNamed(AppRoutes.showProduct,
+                                preventDuplicates: false,
+                                arguments: {
+                                  "product": product,
+                                  "hero": "homeProducts"
+                                });
+                            Get.put(ShowProductScreenController(),
+                                tag: "show_product${product.id}");
+                          },
+                          isLoad: controller.isLoadPaginationData,
+                          onTapAddProduct:
+                              Get.find<MainScaffoldScreenController>()
+                                  .addToCart,
+                        ),
+                        LoadMoreComponent(
+                          isFinished: controller.isFinish,
+                          isLoad: controller.isLoadMore,
+                        )
+                      ],
+                    ).loadMoreAble(
+                      scrollController: scrollController,
+                      onLoadMore: () async {
+                        controller.loadMore();
+                        await Future.delayed(3000.ms);
+                      },
+                    )
+                            .refreshAbel(
+                          onRefresh: () async {
+                            await controller.getFreshData();
+                          },
+                        ),
+                        ),
                   ],
                 ),
               ],

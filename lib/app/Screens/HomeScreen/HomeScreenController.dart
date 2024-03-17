@@ -23,15 +23,16 @@ class HomeScreenController extends GetxController
 
   @override
   void onInit() {
+    paginationUrl = ApiRoute.products;
     getFreshData();
     super.onInit();
   }
 
   Future getFreshData() async {
+    getPaginationData(isRefresh: true);
     await getSingleDataWithSync(
         url: UrlModel(url: ApiRoute.home, type: "home"));
     paginationUrl = ApiRoute.products;
-    getPaginationData(isRefresh: true);
   }
 
   loadMore() {
@@ -50,15 +51,6 @@ class HomeScreenController extends GetxController
         for (var slid in json['data']['sliders']) {
           sliders.add(SliderModel.fromJson(slid));
         }
-        // products.value = [];
-        // for (var slid in json['data']['products']) {
-        //   products.add(ProductModel.fromJson(slid));
-        // }
-        // } else if (type == "loadmore") {
-        //   for (var slid in json['data']['products']) {
-        //     products.add(ProductModel.fromJson(slid));
-        //   }
-        // }
       }
     } else {
       Fluttertoast.showToast(msg: json['data']?['message']);
