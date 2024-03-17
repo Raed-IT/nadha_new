@@ -452,8 +452,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "8b760ced733ecd9bdaed357a36fed2f60b8e3524"
-      resolved-ref: "8b760ced733ecd9bdaed357a36fed2f60b8e3524"
+      ref: "94774ba775fe425f534e0ddae4aee1945eb990cd"
+      resolved-ref: "94774ba775fe425f534e0ddae4aee1945eb990cd"
       url: "https://github.com/Raed-IT/helper-package.git"
     source: git
     version: "0.0.1"

@@ -87,9 +87,8 @@ class NotificationsListComponent extends GetView<NotificationScreenController> {
               .loadMoreAble(
             scrollController: scrollController,
             onLoadMore: () async {
-              controller.loadMore();
-              await Future.delayed(3000.ms);
-            },
+             await controller.loadMore();
+             },
           )
               .refreshAbel(
             onRefresh: () async {

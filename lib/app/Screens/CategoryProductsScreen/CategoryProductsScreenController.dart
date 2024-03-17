@@ -4,28 +4,40 @@ import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
+import 'package:helper/mixin/pagination_mixing.dart';
 
 class CategoryProductsScreenController extends GetxController
-    with ApiHelperMixin {
+    with PaginationMixin<ProductModel> {
   CategoryModel category = Get.arguments['category'];
-  RxList<ProductModel> products = RxList([]);
+
+  Future getFreshData() async {
+    getPaginationData(isRefresh: true);
+  }
+
+  Future loadMore() async {
+    await getPaginationData(isRefresh: false);
+  }
 
   @override
   void onInit() {
-    getSingleData(
-        url: UrlModel(
-            url: ApiRoute.products,
-            type: "products",
-            parameter: {"category_id": category.id}));
+    paginationUrl = ApiRoute.products;
+    paginationParameter = {"category_id": category.id};
+    getFreshData();
     super.onInit();
   }
 
   @override
-  getDataFromJson({required Map<String, dynamic> json, String? type}) {
-    if (type == "products") {
-      for (var product in json['data']['products']) {
-        products.add(ProductModel.fromJson(product));
-      }
+  List<ProductModel> getModelFromPaginationJsonUsing(
+      Map<String, dynamic> json) {
+    List<ProductModel> products = [];
+    for (var product in json['data']['products']) {
+      products.add(ProductModel.fromJson(product));
     }
+    return products;
+  }
+
+  @override
+  String? getNextPageUrlFrom(Map<String, dynamic> json) {
+    return json['data']['pagination']["next_page_url"];
   }
 }
