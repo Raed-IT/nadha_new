@@ -74,7 +74,7 @@ class FavoriteScreen extends GetView<FavoriteScreenController> {
                                 preventDuplicates: false,
                                 arguments: {
                                   "product": product,
-                                  "hero": "homeProducts"
+                                  "hero": "favoriteProducts"
                                 });
                             Get.put(ShowProductScreenController(),
                                 tag: "show_product${product.id}");
