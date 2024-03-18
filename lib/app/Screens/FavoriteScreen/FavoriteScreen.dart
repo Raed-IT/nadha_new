@@ -1,6 +1,9 @@
+import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Components/TitleSectionComponent.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
+import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Screens/FavoriteScreen/FavoriteScreenController.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +19,7 @@ class FavoriteScreen extends GetView<FavoriteScreenController> {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController scrollController = ScrollController();
     controller.getDataFromApi();
     return Scaffold(
       drawerEnableOpenDragGesture: false,
@@ -52,18 +56,19 @@ class FavoriteScreen extends GetView<FavoriteScreenController> {
                   ),
                   Expanded(
                     child: ListView(
+                      controller: scrollController,
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
                         BuildTitleSectionComponent(
-                            isLoad: controller.isLoad,
+                            isLoad: controller.isLoadPaginationData,
                             title: "المنتجات المفضلة لديك"),
                         ProductListComponent(
                           onRemoveProductFromFavorite: (product) {
-                            controller.products.remove(product);
+                            controller.paginationParameter.remove(product);
                           },
                           heroTagPrefix: "favoriteProducts",
-                          products: controller.products,
+                          products: controller.paginationData,
                           onProductTap: (ProductModel product, k) {
                             Get.toNamed(AppRoutes.showProduct,
                                 preventDuplicates: false,
@@ -74,13 +79,23 @@ class FavoriteScreen extends GetView<FavoriteScreenController> {
                             Get.put(ShowProductScreenController(),
                                 tag: "show_product${product.id}");
                           },
-                          isLoad: controller.isLoad,
+                          isLoad: controller.isLoadPaginationData,
                           onTapAddProduct:
                               Get.find<MainScaffoldScreenController>()
                                   .addToCart,
+                        ),
+                        LoadMoreComponent(
+                          isFinished: controller.isFinish,
+                          isLoad: controller.isLoadMore,
                         )
                       ],
-                    ),
+                    ).refreshAbel(onRefresh: () async {
+                      await controller.getDataFromApi();
+                    }).loadMoreAble(
+                        scrollController: scrollController,
+                        onLoadMore: () async {
+                          await controller.loadMore();
+                        }),
                   ),
                 ],
               ),
