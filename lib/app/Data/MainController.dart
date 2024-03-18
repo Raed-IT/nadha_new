@@ -1,7 +1,7 @@
 import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Data/Models/UserModel.dart';
 import 'package:delevary/app/Services/LocaleStorageService.dart';
-import 'package:delevary/app/data/Models/CityModel.dart';
+import 'package:delevary/app/Data/Models/CityModel.dart';
 import 'package:delevary/app/data/Models/SettingModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -12,13 +12,15 @@ class ImageCacheComponent extends StatelessWidget {
   final double? height;
   final double? width;
   final BoxFit? fit;
+
   const ImageCacheComponent(
       {required this.image,
       super.key,
       this.height,
       this.width,
       this.borderRadius,
-      this.imageColor, this.fit});
+      this.imageColor,
+      this.fit});
 
   @override
   Widget build(BuildContext context) {
@@ -28,50 +30,55 @@ class ImageCacheComponent extends StatelessWidget {
         borderRadius: borderRadius ?? BorderRadius.zero,
         child: CachedNetworkImage(
           color: imageColor,
-          fit:fit?? BoxFit.cover,
+          fit: fit ?? BoxFit.cover,
           height: height,
           width: width,
           alignment: Alignment.center,
           progressIndicatorBuilder: (context, string, progress) {
-            return SizedBox(
-              width: width,
-              height: height,
-              child: Stack(
-                children: [
-                  Opacity(
-                    opacity: 0.3,
-                    child: CardLoading(
-                      height: height ?? Get.height,
-                      cardLoadingTheme: CardLoadingTheme(
-                          colorOne: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.1),
-                          colorTwo: Colors.black26),
-                      borderRadius: borderRadius ??
-                          BorderRadius.all(
-                            Radius.circular(10.sp),
-                          ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: Padding(
-                          padding: EdgeInsets.all(20.sp),
-                          child: Image.asset("assets/images/loader.png"),
-                        ),
+            return Material(
+              child: SizedBox(
+                width: width,
+                height: height,
+                child: Stack(
+                  children: [
+                    Opacity(
+                      opacity: 0.3,
+                      child: CardLoading(
+                        height: height ?? Get.height,
+                        cardLoadingTheme: CardLoadingTheme(
+                            colorOne: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.1),
+                            colorTwo: Colors.black26),
+                        borderRadius: borderRadius ??
+                            BorderRadius.all(
+                              Radius.circular(10.sp),
+                            ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: AutoSizeText(
-                            maxLines: 1,
-                            "${((progress.progress ?? 0) * 100).toStringAsFixed(2)} %"),
-                      )
-                    ],
-                  ),
-                ],
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: Padding(
+                              padding: EdgeInsets.all(20.sp),
+                              child: Image.asset("assets/images/loader.png"),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: AutoSizeText(
+                                maxLines: 1,
+                                "${((progress.progress ?? 0) * 100).toStringAsFixed(2)} %"),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

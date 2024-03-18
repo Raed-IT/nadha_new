@@ -22,15 +22,13 @@ class LightThemeData {
           ),
         ),
       ),
-      cardColor:Colors.white ,
+      cardColor: Colors.white,
       cardTheme: CardTheme(
           elevation: 3,
           shadowColor: lightColorScheme.primaryContainer,
           surfaceTintColor: Colors.white,
           color: Colors.white),
       inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: lightColorScheme.onPrimary,
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: lightColorScheme.error),
           borderRadius: BorderRadius.all(
@@ -38,10 +36,7 @@ class LightThemeData {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: lightColorScheme.onBackground),
-          borderRadius: BorderRadius.all(
-            Radius.circular(15.sp),
-          ),
+          borderSide: BorderSide(color: Colors.transparent),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: lightColorScheme.error),

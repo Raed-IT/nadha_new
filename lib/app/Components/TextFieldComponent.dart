@@ -63,6 +63,8 @@ class TextFieldComponent extends StatelessWidget {
                   const TextStyle(fontSize: 15.0, color: Colors.black),
               obscureText: isPassword ? isShowPass.value : RxBool(false).value,
               decoration: InputDecoration(
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.onPrimary,
                 suffixIcon: isPassword
                     ? SizedBox(
                         width: 30.w,
@@ -81,6 +83,8 @@ class TextFieldComponent extends StatelessWidget {
                     EdgeInsets.symmetric(horizontal: 10.sp, vertical: 20.sp),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.onBackground),
+
                 ),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide.none,

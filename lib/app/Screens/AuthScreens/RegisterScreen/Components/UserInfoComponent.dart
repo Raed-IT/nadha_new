@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import '../../../../Components/DropDwon.dart';
 import '../../../../Data/MainController.dart';
 import '../../../../components/TextFieldComponent.dart';
-import '../../../../data/Models/CityModel.dart';
+import 'package:delevary/app/Data/Models/CityModel.dart';
 
 class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
   const RegisterUserInfoComponent({super.key});
@@ -18,7 +18,7 @@ class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
           TextFieldComponent(
@@ -35,10 +35,9 @@ class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
           ),
           15.verticalSpace,
           DropDownComponent<CityModel>(
-            overLayPadding: 10.sp,
+            hintText: "اختر المدينة",
             items: Get.find<MainController>().cities,
             onSelected: (item) {},
-            title: 'اختر المدينة',
           ),
           TextFieldComponent(
             isRequired: true,
@@ -116,7 +115,7 @@ class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
                   ),
                 ),
                 onPressed: () => controller.loginWithGoogle(),
-                child: Row(
+                child: const Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -125,9 +124,9 @@ class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
                   ],
                 ),
               ).animate().elevation(
-                    delay: Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 500),
                     borderRadius: BorderRadius.all(Radius.circular(15.sp)),
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                   ),
             ),
         ],

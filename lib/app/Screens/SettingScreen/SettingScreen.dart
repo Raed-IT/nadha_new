@@ -26,95 +26,94 @@ class SettingScreen extends GetView<SettingScreenController> {
               title: "الإعدادات",
             ),
             Expanded(
-              child: Column(
-                children: [
-                  BigUserCard(
-                    userName: "${Get.find<MainController>().user.value?.name}",
-                    userProfilePic: CachedNetworkImageProvider(
-                        "${Get.find<MainController>().user.value?.image}"),
-                    cardActionWidget: SettingsItem(
-                      icons: Icons.edit,
-                      iconStyle: IconStyle(
-                        withBackground: true,
-                        borderRadius: 50.sp,
-                        backgroundColor: Theme.of(context).colorScheme.primary,
+              child: Padding(
+                padding: EdgeInsets.all(10.sp),
+                child: Column(
+                  children: [
+                    BigUserCard(
+                      userName:
+                          "${Get.find<MainController>().user.value?.name}",
+                      userProfilePic: CachedNetworkImageProvider(
+                          "${Get.find<MainController>().user.value?.image}"),
+                      cardActionWidget: SettingsItem(
+                        icons: Icons.edit,
+                        iconStyle: IconStyle(
+                          withBackground: true,
+                          borderRadius: 50.sp,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                        ),
+                        title: "تعديل بياناتي",
+                        subtitle: "يمكنك الضغط لتعديل بياناتك",
+                        titleStyle: TextStyle(fontSize: 15.sp),
+                        subtitleStyle: TextStyle(fontSize: 10.sp),
+                        onTap: () => Get.toNamed(AppRoutes.profileScreen),
                       ),
-                      title: "تعديل بياناتي",
-                      subtitle: "يمكنك الضغط لتعديل بياناتك",
-                      titleStyle: TextStyle(fontSize: 15.sp),
-                      subtitleStyle: TextStyle(fontSize: 10.sp),
-                      onTap: () => Get.toNamed(AppRoutes.profileScreen),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                     ),
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                  ),
-                  SettingsGroup(
-                    iconItemSize: 35.sp,
-                    items: [
-                      SettingsItem(
-                        onTap: () => controller.treggerDarkMode(),
-                        icons: Icons.dark_mode_rounded,
-                        iconStyle: IconStyle(
-                          iconsColor: Colors.white,
-                          withBackground: true,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                        ),
-                        title: 'الوضع المظلم',
-                        subtitle: "اختر الوضع يدويا ",
-                        trailing: Obx(
-                          () => Switch.adaptive(
-                            value: Get.find<MainController>().themeMode.value ==
-                                ThemeMode.dark,
-                            onChanged: (value) => controller.treggerDarkMode(),
+                    SettingsGroup(
+                      iconItemSize: 35.sp,
+                      items: [
+                        SettingsItem(
+                          onTap: () => controller.treggerDarkMode(),
+                          icons: Icons.dark_mode_rounded,
+                          iconStyle: IconStyle(
+                            iconsColor: Colors.white,
+                            withBackground: true,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                          ),
+                          title: 'الوضع المظلم',
+                          subtitle: "اختر الوضع يدويا ",
+                          trailing: Obx(
+                            () => Switch.adaptive(
+                              value:
+                                  Get.find<MainController>().themeMode.value ==
+                                      ThemeMode.dark,
+                              onChanged: (value) =>
+                                  controller.treggerDarkMode(),
+                            ),
                           ),
                         ),
-                      ),
-                      SettingsItem(
-                        onTap: () => controller.changeDarkModeToSystem(),
-                        icons: Icons.dark_mode_rounded,
-                        iconStyle: IconStyle(
-                          iconsColor: Colors.white,
-                          withBackground: true,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                        ),
-                        title: 'وضع النظام',
-                        subtitle: "سيتم اختيار الوضع المظلم من نظام التشغيل ",
-                        trailing: Obx(
-                          () => Switch.adaptive(
-                            value: Get.find<MainController>().themeMode.value ==
-                                ThemeMode.system,
-                            onChanged: (value) {
-                              if (value) {
-                                Get.find<MainController>().themeMode.value =
-                                    ThemeMode.system;
-                              }
-                            },
+                        SettingsItem(
+                          onTap: () => controller.changeDarkModeToSystem(),
+                          icons: Icons.dark_mode_rounded,
+                          iconStyle: IconStyle(
+                            iconsColor: Colors.white,
+                            withBackground: true,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                          ),
+                          title: 'وضع النظام',
+                          subtitle: "سيتم اختيار الوضع المظلم من نظام التشغيل ",
+                          trailing: Obx(
+                            () => Switch.adaptive(
+                              value:
+                                  Get.find<MainController>().themeMode.value ==
+                                      ThemeMode.system,
+                              onChanged: (value) {
+                                if (value) {
+                                  Get.find<MainController>().themeMode.value =
+                                      ThemeMode.system;
+                                }
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SettingsGroup(
-                    settingsGroupTitle: "    الحساب",
-                    items: [
-                      SettingsItem(
-                        onTap: () {},
-                        icons: Icons.exit_to_app_rounded,
-                        title: "تسجيل الخروج ",
-                      ),
-                      SettingsItem(
-                        onTap: () => LocaleStorageService.logOut(),
-                        icons: CupertinoIcons.delete_solid,
-                        title: "Delete account",
-                        titleStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.error,
-                          fontWeight: FontWeight.bold,
+                      ],
+                    ),
+                    SettingsGroup(
+                      settingsGroupTitle: "    الحساب",
+                      items: [
+                        SettingsItem(
+                          onTap: () => LocaleStorageService.logOut(),
+                          icons: Icons.exit_to_app_rounded,
+                          title: "تسجيل الخروج ",
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             )
           ],
