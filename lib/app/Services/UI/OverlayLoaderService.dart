@@ -13,6 +13,10 @@ class OverlayLoaderService {
       progressIndicator: const LoaderComponent(),
     );
   }
+
+  static hide() {
+    Loader.hide();
+  }
 }
 
 class LoaderComponent extends StatefulWidget {

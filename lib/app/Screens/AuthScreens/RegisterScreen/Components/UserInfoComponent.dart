@@ -35,9 +35,10 @@ class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
           ),
           15.verticalSpace,
           DropDownComponent<CityModel>(
+            initVal: controller.currentCity,
             hintText: "اختر المدينة",
             items: Get.find<MainController>().cities,
-            onSelected: (item) {},
+            onSelected: (city) => controller.currentCity = city,
           ),
           TextFieldComponent(
             isRequired: true,

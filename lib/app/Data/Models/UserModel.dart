@@ -31,7 +31,7 @@ class UserModel {
         addresses!.add(AddressModel.fromJson(address));
       }
     }
-    if (json.containsKey("store")) {
+    if (json.containsKey("store") && json['store'] != null) {
       store = StoreModel.fronJson(json['store']);
     }
     image = json['image'];

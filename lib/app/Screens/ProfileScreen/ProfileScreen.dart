@@ -1,8 +1,8 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Data/MainController.dart';
-import 'package:delevary/app/Screens/ProfileScreen/Componsnts/StoreProfileFieldComponent.dart';
 import 'package:delevary/app/Screens/ProfileScreen/Componsnts/UserProfileFieldComponent.dart';
+import 'package:delevary/app/Screens/ProfileScreen/Componsnts/StoreProfileFieldComponent.dart';
 import 'package:delevary/app/Screens/ProfileScreen/ProfileScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -113,13 +113,13 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                                     SizedBox(
                                       width: (Get.width / 2) - 30,
                                       child: Center(
-                                        child: Text("بيانتات المتجر"),
+                                        child: Text("بيانات المستخدم"),
                                       ),
                                     ),
                                     SizedBox(
                                       width: (Get.width / 2) - 30,
                                       child: Center(
-                                        child: Text("بيانات المستخدم"),
+                                        child: Text("بيانتات المتجر"),
                                       ),
                                     ),
                                   ],
@@ -131,8 +131,8 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                           () => AnimatedSwitcher(
                             duration: 500.ms,
                             child: (controller.selectedIndex.value == 0)
-                                ? const StoreProfileFieldsComponent()
-                                : const UserProfileFieldsComponent(),
+                                ? const UserProfileFieldsComponent()
+                                :const StoreProfileFieldsComponent() ,
                           ),
                         )
                       ],

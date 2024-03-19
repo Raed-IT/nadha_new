@@ -8,11 +8,12 @@ import '../../../Components/DropDwon.dart';
 import '../../../Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
 
-class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
-  const UserProfileFieldsComponent({super.key});
+class StoreProfileFieldsComponent extends GetView<ProfileScreenController> {
+  const StoreProfileFieldsComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // OverlayLoaderService.hide();
     return Container(
       margin: EdgeInsets.all(10.sp),
       decoration: BoxDecoration(
@@ -21,45 +22,54 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
       ),
       child: BlurryContainer(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFieldComponent(
-              controller: controller.nameTextController,
-              hint: "اسم المستخدم",
-              label: "اسم المستخدم",
+              controller: controller.storeNameTextController,
+              hint: "اسم المتجر",
+              label: "اسم المتجر",
             ),
             TextFieldComponent(
-              controller: controller.emailTextController,
-              hint: "الإيميل",
-              label: "الإيميل",
+              controller: controller.storeInfoTextController,
+              hint: "اكتب عن متجرك",
+              label: "اكتب عن متجرك",
+              isMultiple: true,
             ),
             TextFieldComponent(
-              controller: controller.phoneTextController,
-              hint: "رقم الهاتف",
-              label: "رقم الهاتف",
+              controller: controller.storeAddressTextController,
+              hint: "عنوان متجرك",
+              label: "عنوان متجرك لتسهيل الوصول اليك",
+              isMultiple: true,
+            ),
+            20.verticalSpace,
+            Text(
+              "اخترا المدينة",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             DropDownComponent<CityModel>(
               hintText: "اختر المدينة",
               items: Get.find<MainController>().cities,
-              initVal: controller.city!,
+              initVal: Get.find<MainController>().user.value?.store?.city,
               onSelected: (item) {
-                if (item != null) {
-                  controller.city = item;
-                }
+                controller.storeCity = item;
               },
             ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 20.h),
-              height: 40.h,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(15.sp),
-              ),
-              child: Center(
-                child: Text(
-                  "حفظ بيانات المستخدم",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.background,
-                    fontWeight: FontWeight.bold,
+            GestureDetector(
+              onTap: () => controller.updateStoreProfiled(context),
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20.h),
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(15.sp),
+                ),
+                child: Center(
+                  child: Text(
+                    "حفظ بيانات المتجر",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.background,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

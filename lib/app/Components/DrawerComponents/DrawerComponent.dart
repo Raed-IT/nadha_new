@@ -25,12 +25,15 @@ class DrawerComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  height: 130.h,
-                  child: ImageCacheComponent(
-                    image: "${Get.find<MainController>().user.value?.image}",
-                    imageColor: Theme.of(context).colorScheme.background,
-                    width: 130.w,
+                GestureDetector(
+                  onTap: () => Get.toNamed(AppRoutes.profileScreen),
+                  child: SizedBox(
+                    height: 130.h,
+                    child: ImageCacheComponent(
+                      image: "${Get.find<MainController>().user.value?.image}",
+                      imageColor: Theme.of(context).colorScheme.background,
+                      width: 130.w,
+                    ),
                   ),
                 ),
                 AutoSizeText(
