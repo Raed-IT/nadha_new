@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class AppBarComponent extends StatelessWidget {
   final Function openDrawer;
@@ -85,10 +86,8 @@ class AppBarComponent extends StatelessWidget {
                         child: Card(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            child: Icon(
-                              CupertinoIcons.search,
-                              size: 25.sp,
-                            ),
+                            child: Lottie.asset("assets/json/search.json",
+                                width: 40.w,repeat: false),
                           ),
                         ),
                       ),

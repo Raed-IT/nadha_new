@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
   MainScaffoldScreen({super.key});
@@ -53,9 +54,10 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
                       borderRadius: BorderRadius.circular(1000.sp),
                     ),
                     child: Center(
-                      child: SvgPicture.asset(
-                        "assets/svg/cart.svg",
+                      child: Lottie.asset(
+                        "assets/json/cart.json",
                         width: 30.w,
+                        reverse: true,
                       ),
                     ),
                     onPressed: () => Get.toNamed(AppRoutes.cartScreen),

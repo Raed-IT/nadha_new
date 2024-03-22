@@ -15,6 +15,8 @@ class TextFieldComponent extends StatelessWidget {
   final bool autofocus;
   final bool isDisable;
   final bool isRequired;
+  final bool hasSpaseUp;
+  final InputDecoration? inputDecoration;
 
   const TextFieldComponent(
       {required this.controller,
@@ -29,7 +31,8 @@ class TextFieldComponent extends StatelessWidget {
       this.isDisable = true,
       super.key,
       this.isRequired = false,
-      this.isMultiple = false});
+      this.isMultiple = false,
+      this.hasSpaseUp=true, this.inputDecoration});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,8 @@ class TextFieldComponent extends StatelessWidget {
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            20.verticalSpace,
+            if(hasSpaseUp)
+            10.verticalSpace,
             if (label != null)
               Padding(
                 padding: EdgeInsets.all(10.h),
@@ -49,7 +53,7 @@ class TextFieldComponent extends StatelessWidget {
                       TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
                 ),
               ),
-            5.verticalSpace,
+            // 5.verticalSpace,
             TextFormField(
               maxLines: isMultiple ? null : 1,
               minLines: isMultiple ? 4 : null,
@@ -62,7 +66,7 @@ class TextFieldComponent extends StatelessWidget {
               style: textStyle ??
                   const TextStyle(fontSize: 15.0, color: Colors.black),
               obscureText: isPassword ? isShowPass.value : RxBool(false).value,
-              decoration: InputDecoration(
+              decoration: inputDecoration??InputDecoration(
                 filled: true,
                 fillColor: Theme.of(context).colorScheme.onPrimary,
                 suffixIcon: isPassword

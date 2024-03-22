@@ -73,7 +73,7 @@ class CartService with ApiHelperMixin {
     if (!inCart(product: product)) {
       Get.find<MainController>().cart.add(CartItemModel(
           product: product,
-          qty: RxDouble(1),
+          qty: RxDouble(product.minQty ?? 1),
           price: double.parse(product.getPrice!)));
     } else {
       increaseProductQty(product: product);

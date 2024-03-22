@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Screens/ProfileScreen/Componsnts/UserProfileFieldComponent.dart';
@@ -71,6 +73,9 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                               radius: 70.sp,
                               foregroundColor: Colors.red,
                               child: ImageCacheComponent(
+                                width: 130.sp,
+                                height: 130.sp,
+                                borderRadius: BorderRadius.circular(100.sp),
                                 image:
                                     '${Get.find<MainController>().user.value?.image}',
                               ),
@@ -100,31 +105,44 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                         20.verticalSpace,
                         if (Get.find<MainController>().user.value?.store !=
                             null)
-                          Obx(
-                            () => Center(
-                              child: Card(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
+                          Center(
+                            child: CustomSlidingSegmentedControl<int>(
+                              initialValue: controller.selectedIndex.value,
+                              children: const {
+                                0: AutoSizeText(
+                                  'بيانات المستخدم',
+                                  maxLines: 1,
                                 ),
-                                child: ToggleButtons(
-                                  isSelected: controller.selectedButton,
-                                  onPressed: controller.onSelectedButton,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: (Get.width / 2) - 30,
-                                      child: Center(
-                                        child: Text("بيانات المستخدم"),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: (Get.width / 2) - 30,
-                                      child: Center(
-                                        child: Text("بيانتات المتجر"),
-                                      ),
-                                    ),
-                                  ],
+                                1: AutoSizeText(
+                                  'بيانات المتجر',
+                                  maxLines: 1,
                                 ),
+                              },
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                borderRadius: BorderRadius.circular(8.sp),
                               ),
+                              thumbDecoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
+                                borderRadius: BorderRadius.circular(6),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(.1),
+                                    blurRadius: 2.0.sp,
+                                    spreadRadius: 1.0.sp,
+                                    offset: Offset(
+                                      0.0,
+                                      2.0.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInToLinear,
+                              onValueChanged: (v) {
+                                controller.selectedIndex.value = v;
+                              },
                             ),
                           ),
                         Obx(
@@ -132,7 +150,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                             duration: 500.ms,
                             child: (controller.selectedIndex.value == 0)
                                 ? const UserProfileFieldsComponent()
-                                :const StoreProfileFieldsComponent() ,
+                                : const StoreProfileFieldsComponent(),
                           ),
                         )
                       ],

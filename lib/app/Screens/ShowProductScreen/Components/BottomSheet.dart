@@ -1,5 +1,6 @@
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:add_to_cart_animation/badge_options.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:flutter/material.dart';
 import 'package:image_preview/image_preview.dart';
 
@@ -14,6 +15,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../Components/TitleSectionComponent.dart';
 import '../../../Data/MainController.dart';
@@ -101,28 +103,31 @@ class _ShowProductBottomSheetState extends State<ShowProductBottomSheet> {
                             ),
                             const Spacer(),
                             Obx(
-                              () => Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(500.sp),
-                                ),
-                                child: SizedBox(
-                                  height: 60.sp,
-                                  width: 60.sp,
-                                  child: AddToCartIcon(
-                                    key: widget.cartKey,
-                                    icon: Center(
-                                      child: SvgPicture.asset(
-                                        "assets/svg/cart.svg",
-                                        width: 30.w,
+                              () => GestureDetector(
+                                onTap: () => Get.toNamed(AppRoutes.cartScreen),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(500.sp),
+                                  ),
+                                  child: SizedBox(
+                                    height: 60.sp,
+                                    width: 60.sp,
+                                    child: AddToCartIcon(
+                                      key: widget.cartKey,
+                                      icon: Center(
+                                        child: Lottie.asset(
+                                            "assets/json/cart.json",
+                                            width: 30.w,
+                                            repeat: false),
                                       ),
-                                    ),
-                                    badgeOptions: BadgeOptions(
-                                      active: Get.find<MainController>()
-                                          .cart
-                                          .isNotEmpty,
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
+                                      badgeOptions: BadgeOptions(
+                                        active: Get.find<MainController>()
+                                            .cart
+                                            .isNotEmpty,
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      ),
                                     ),
                                   ),
                                 ),

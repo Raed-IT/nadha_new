@@ -1,0 +1,1 @@
+enum SearchTypeEnum { products, stores }

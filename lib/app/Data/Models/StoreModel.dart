@@ -17,7 +17,7 @@ class StoreModel {
     id = json['id'];
     name = json['name'];
     address = json['address'];
-    info = json['info'];
+    info = json['info'] ?? '';
     lat = json['lat'];
     long = json['long'];
     image = json['image'];

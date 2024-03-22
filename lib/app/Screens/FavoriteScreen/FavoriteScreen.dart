@@ -65,7 +65,7 @@ class FavoriteScreen extends GetView<FavoriteScreenController> {
                             title: "المنتجات المفضلة لديك"),
                         ProductListComponent(
                           onRemoveProductFromFavorite: (product) {
-                            controller.paginationParameter.remove(product);
+                            controller.paginationData.remove(product);
                           },
                           heroTagPrefix: "favoriteProducts",
                           products: controller.paginationData,

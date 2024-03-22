@@ -19,6 +19,8 @@ class CartScreenController extends GetxController with ApiHelperMixin {
     List<CartItemModel> cart = Get.find<MainController>().cart;
     dio.FormData data = dio.FormData.fromMap({});
     for (int i = 0; i < cart.length; i++) {
+      data.fields.add(
+          MapEntry("items[$i][store_id]", "${cart[i].product!.store!.id}"));
       data.fields
           .add(MapEntry("items[$i][product_id]", "${cart[i].product!.id!}"));
       data.fields.add(MapEntry("items[$i][quantity]", "${cart[i].qty!.value}"));

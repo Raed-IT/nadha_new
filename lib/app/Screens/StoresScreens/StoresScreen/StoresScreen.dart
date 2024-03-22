@@ -1,6 +1,6 @@
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
-import 'package:delevary/app/Screens/StoresScreens/StoresScreen/Components/StoresList.dart';
+import 'package:delevary/app/Components/StoresList.dart';
 import 'package:delevary/app/Screens/StoresScreens/StoresScreen/StoresScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -51,7 +51,13 @@ class StoresScreen extends GetView<StoresScreenController> {
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
-                        StoresListComponent(),
+                        StoresListComponent(
+                          getFreshData: () {
+                            controller.getFreshData();
+                          },
+                          stores: controller.paginationData,
+                          isLoad: controller.isLoadPaginationData,
+                        ),
                       ],
                     )
                         .loadMoreAble(

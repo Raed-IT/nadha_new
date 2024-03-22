@@ -37,8 +37,8 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
     //store
     storeCity = user.store?.city;
     storeNameTextController.text = user.store?.name ?? '';
-    storeAddressTextController.text = user.store!.address ?? '';
-    storeInfoTextController.text = user.store!.info ?? '';
+    storeAddressTextController.text = user.store?.address ?? '';
+    storeInfoTextController.text = user.store?.info ?? '';
   }
 
   void onSelectedButton(int index) {
@@ -56,7 +56,7 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
     OverlayLoaderService.show(context);
     await postData(
         url:
-            "${ApiRoute.stores}/${Get.find<MainController>().user.value!.store!.id}",
+            "${ApiRoute.stores}/${Get.find<MainController>().user.value?.store?.id}",
         data: {
           "_method": "PUT",
           "name": storeNameTextController.text,

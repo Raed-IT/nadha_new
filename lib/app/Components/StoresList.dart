@@ -10,17 +10,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class StoresListComponent extends GetView<StoresScreenController> {
+class StoresListComponent extends StatelessWidget {
+  final List<StoreModel> stores;
+  final RxBool isLoad;
+  final Function? getFreshData;
+
+  const StoresListComponent(
+      {super.key,
+      required this.stores,
+      required this.isLoad,
+      this.getFreshData});
+
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Column(
-        children: (!controller.isLoadPaginationData.value)
-            ? (controller.paginationData.isNotEmpty)
-                ? controller.paginationData
-                    .map((store) => buildStoreCard(store, context))
-                    .toList()
-                : [noStoresWidget(context)]
+        children: (!isLoad.value)
+            ? (stores.isNotEmpty)
+                ? stores.map((store) => buildStoreCard(store, context)).toList()
+                : [noStoresWidget(context, getFreshData)]
             : List.generate(20, (index) => index)
                 .map(
                   (e) => CardLoadingComponent(
@@ -35,7 +43,8 @@ class StoresListComponent extends GetView<StoresScreenController> {
 
   Widget buildStoreCard(StoreModel store, BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(AppRoutes.showStore, arguments: {"store": store}),
+      onTap: () =>
+          Get.toNamed(AppRoutes.showStore, arguments: {"store": store}),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
         decoration: BoxDecoration(
@@ -50,6 +59,7 @@ class StoresListComponent extends GetView<StoresScreenController> {
                 image: "${store.image}",
                 width: 100.sp,
                 height: 100.sp,
+                borderRadius: BorderRadius.circular(10.sp),
               ),
               Expanded(
                 child: Padding(
@@ -60,7 +70,7 @@ class StoresListComponent extends GetView<StoresScreenController> {
                       AutoSizeText(
                         "${store.name}",
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.bold,
                         ),
@@ -85,9 +95,9 @@ class StoresListComponent extends GetView<StoresScreenController> {
     );
   }
 
-  Widget noStoresWidget(BuildContext context) {
+  Widget noStoresWidget(BuildContext context, Function? getFreshData) {
     return GestureDetector(
-      onTap: () => controller.getFreshData(),
+      onTap: () => getFreshData?.call(),
       child: Column(
         children: [
           Lottie.asset(
