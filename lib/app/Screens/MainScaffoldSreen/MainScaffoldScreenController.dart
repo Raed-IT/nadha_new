@@ -6,6 +6,7 @@ import 'package:delevary/app/Screens/FavoriteScreen/FavoriteScreen.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreen.dart';
 import 'package:delevary/app/Screens/SaleScreen/SaleScreen.dart';
 import 'package:delevary/app/Services/CartService.dart';
+import 'package:delevary/app/Services/deepLinkService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +14,11 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
   final GlobalKey<CartIconKey> cartKey = GlobalKey();
   RxInt activePage = RxInt(Get.arguments?['index'] ?? 0);
   final CartService cartService = CartService();
-
+@override
+  void onInit() {
+    super.onInit();
+    DeepLinksService.init();
+  }
   @override
   void onReady() {
     Get.find<MainController>().cart.listen((p0) {

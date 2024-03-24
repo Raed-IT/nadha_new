@@ -79,7 +79,7 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
                 // activeColor: Colors.red,
                 // splashRadius: 20,
                 // height: 60.h,
-                backgroundColor: Theme.of(context).colorScheme.primary,
+                backgroundColor: Theme.of(context).colorScheme.background,
                 blurEffect: true,
                 // leftCornerRadius: 15.sp,
                 // borderColor: Theme.of(context).colorScheme.secondary,
@@ -95,7 +95,7 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
                     size: 25.sp,
                     color: isActive
                         ? Theme.of(context).colorScheme.secondary
-                        : Theme.of(context).colorScheme.background,
+                        : Theme.of(context).colorScheme.onBackground,
                   );
                   return isActive
                       ? Container(

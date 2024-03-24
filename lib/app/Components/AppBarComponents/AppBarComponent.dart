@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -37,80 +38,83 @@ class AppBarComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                children: [
-                  (showLogo)
-                      ? Image.asset(
-                          fit: BoxFit.contain,
-                          height: 60.h,
-                          width: 150.w,
-                          "assets/images/artboard.png",
-                        )
-                      : GestureDetector(
-                          onTap: () => Get.toNamed(
-                            AppRoutes.profileScreen,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.sp),
-                            child: ImageCacheComponent(
-                              borderRadius: BorderRadius.circular(10.sp),
-                              height: 40.sp,
-                              width: 40.sp,
-                              image:
-                                  "${Get.find<MainController>().user.value?.image}",
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.sp),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    (showLogo)
+                        ? SvgPicture.asset(
+                            fit: BoxFit.contain,
+                            height: 43.h,
+                            "assets/svg/logo.svg",
+                          )
+                        : GestureDetector(
+                            onTap: () => Get.toNamed(
+                              AppRoutes.profileScreen,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.sp),
+                              child: ImageCacheComponent(
+                                borderRadius: BorderRadius.circular(10.sp),
+                                height: 40.sp,
+                                width: 40.sp,
+                                image:
+                                    "${Get.find<MainController>().user.value?.image}",
+                              ),
+                            ),
+                          ).animate().slideX(
+                            begin: 1,
+                            duration: const Duration(milliseconds: 400)),
+                    const Spacer(),
+                    if (title != null)
+                      Text(
+                        title!,
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.bold),
+                      ),
+                    if (title != null) const Spacer(),
+                    if (showSearch != null && showSearch!)
+                      GestureDetector(
+                        onTap: () {
+                          if (onSearch != null) {
+                            onSearch!();
+                          } else {
+                            Get.toNamed(AppRoutes.searchScreen);
+                          }
+                        },
+                        child: SizedBox(
+                          height: 50.sp,
+                          width: 50.sp,
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.w),
+                              child: Lottie.asset("assets/json/search.json",
+                                  width: 40.w, repeat: false),
                             ),
                           ),
-                        ).animate().slideX(
-                          begin: 1,
-                          duration: const Duration(milliseconds: 400)),
-                  const Spacer(),
-                  if (title != null)
-                    Text(
-                      title!,
-                      style: TextStyle(
-                          fontSize: 15.sp, fontWeight: FontWeight.bold),
-                    ),
-                  if (title != null) const Spacer(),
-                  if (showSearch != null && showSearch!)
+                        ),
+                      ).animate().scale(begin: const Offset(1, 1)),
                     GestureDetector(
-                      onTap: () {
-                        if (onSearch != null) {
-                          onSearch!();
-                        } else {
-                          Get.toNamed(AppRoutes.searchScreen);
-                        }
-                      },
+                      onTap: () => openDrawer(),
                       child: SizedBox(
                         height: 50.sp,
                         width: 50.sp,
                         child: Card(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            child: Lottie.asset("assets/json/search.json",
-                                width: 40.w,repeat: false),
+                            child: Icon(
+                              FontAwesomeIcons.bars,
+                              size: 20.sp,
+                            ),
                           ),
                         ),
                       ),
-                    ).animate().scale(begin: const Offset(1, 1)),
-                  GestureDetector(
-                    onTap: () => openDrawer(),
-                    child: SizedBox(
-                      height: 50.sp,
-                      width: 50.sp,
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          child: Icon(
-                            FontAwesomeIcons.bars,
-                            size: 20.sp,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                      .animate()
-                      .slideX(begin: -1, duration: Duration(milliseconds: 400)),
-                ],
+                    ).animate().slideX(
+                        begin: -1, duration: Duration(milliseconds: 400)),
+                  ],
+                ),
               ),
             ],
           ),

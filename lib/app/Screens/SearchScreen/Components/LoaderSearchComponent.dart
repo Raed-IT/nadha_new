@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class LoaderSearchComponent extends GetView<SearchScreenController> {
+  class LoaderSearchComponent extends GetView<SearchScreenController> {
   const LoaderSearchComponent({super.key});
 
   @override

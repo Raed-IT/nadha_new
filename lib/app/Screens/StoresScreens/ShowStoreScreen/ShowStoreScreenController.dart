@@ -5,34 +5,51 @@ import 'package:delevary/app/Data/Models/SliderModel.dart';
 import 'package:delevary/app/Data/Models/StoreModel.dart';
 import 'package:delevary/app/Mixins/AddToCartMixin.dart';
 import 'package:delevary/app/Services/CartService.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
+import 'package:logger/logger.dart';
 
 class ShowStoreScreenController extends GetxController
     with ApiHelperMixin, PaginationMixin<ProductModel>, AddToCartMixin {
-  StoreModel store = Get.arguments['store'];
+  Rxn<StoreModel> store = Rxn(Get.arguments['store']);
   RxList<CategoryModel> categories = RxList([]);
   RxList<SliderModel> sliders = RxList([]);
-CartService cartService =CartService();
+  CartService cartService = CartService();
+  String? storeId =  "${Get.arguments['store_id']}";
+
   @override
   void onInit() {
     super.onInit();
+    if (storeId != null) {
+      Logger().w(storeId);
+      getSingleData(
+          url: UrlModel(
+              url: "${ApiRoute.stores}/show/$storeId", type: "getStore"));
+    }
+    if (store.value != null) {
+      initData();
+    }
+  }
+
+  void initData() {
     paginationUrl = ApiRoute.products;
     paginationParameter = {
-      "store_id": store.id,
+      "store_id": store.value!.id,
     };
     getSingleData(
         url: UrlModel(
-            url: "${ApiRoute.stores}/${store.id}", type: "store_show"));
+            url: "${ApiRoute.stores}/${store.value!.id}", type: "store_show"));
     getFreshData();
   }
 
   Future getFreshData() async {
     getSingleData(
         url: UrlModel(
-            url: "${ApiRoute.stores}/${store.id}", type: "store_show"));
+            url: "${ApiRoute.stores}/${store.value!.id}", type: "store_show"));
     await getPaginationData(isRefresh: true);
   }
 
@@ -42,13 +59,18 @@ CartService cartService =CartService();
 
   @override
   getDataFromJson({required Map<String, dynamic> json, String? type}) {
-    categories.clear();
-    sliders.clear();
-    for (var slider in json['data']['sliders']) {
-      sliders.add(SliderModel.fromJson(slider));
-    }
-    for (var category in json['data']['categories']) {
-      categories.add(CategoryModel.fromJson(category));
+    if (type != "getStore") {
+      categories.clear();
+      sliders.clear();
+      for (var slider in json['data']['sliders']) {
+        sliders.add(SliderModel.fromJson(slider));
+      }
+      for (var category in json['data']['categories']) {
+        categories.add(CategoryModel.fromJson(category));
+      }
+    } else {
+      store.value = StoreModel.fronJson(json['data']['store']);
+      initData();
     }
   }
 
