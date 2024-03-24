@@ -74,14 +74,25 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
               ),
               30.verticalSpace,
               Column(
-                children: order.orderItems!
-                    .map(
-                      (cartItem) => buildProductCard(
-                        cartItem: cartItem,
-                        context: context,
-                      ),
-                    )
-                    .toList(),
+                children: [
+                  ...order.orderItems!
+                      .map(
+                        (cartItem) => buildProductCard(
+                          cartItem: cartItem,
+                          context: context,
+                        ),
+                      )
+                      .toList(),
+                  Row(
+                    children: [
+                      Text("العنوان : ${order.address?.name}",style: TextStyle(
+                        fontSize: 12.sp,fontWeight: FontWeight.bold
+                      ),),
+                      Spacer(),
+                      OutlinedButton(onPressed: (){}, child: Text("طلب مرة أخرى"))
+                    ],
+                  )
+                ],
               )
             ],
           ),
@@ -111,13 +122,48 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
               Get.put(ShowProductScreenController(),
                   tag: "show_product${cartItem.product!.id}");
             },
-            child: Hero(
-              tag: "order_${cartItem.product!.id}",
-              child: ImageCacheComponent(
-                borderRadius: BorderRadius.circular(10.sp),
-                image: "${cartItem.product!.image}",
-                height: 100.sp,
-                width: 100.sp,
+            child: SizedBox(
+              height: 100.h,
+              child: Stack(
+                children: [
+                  Hero(
+                    tag: "order_${cartItem.product!.id}",
+                    child: ImageCacheComponent(
+                      borderRadius: BorderRadius.circular(10.sp),
+                      image: "${cartItem.product!.image}",
+                      height: 100.sp,
+                      width: 100.sp,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 30.h,
+                      width: 100.sp,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(10.sp),
+                          bottomLeft: Radius.circular(10.sp),
+                        ),
+                        gradient: const LinearGradient(
+                            end: Alignment.topCenter,
+                            begin: Alignment.bottomCenter,
+                            colors: [Colors.black, Colors.transparent]),
+                      ),
+                      child: Center(
+                        child: AutoSizeText(
+                          "${cartItem.product?.store?.name}",
+                          maxLines: 2,
+                          style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -156,7 +202,7 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                                 color: Theme.of(context).colorScheme.primary),
                           ),
                           Text(
-                            "${double.parse(cartItem.quantity) * cartItem.price!}",
+                            "${double.parse(cartItem.total)}",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.sp,

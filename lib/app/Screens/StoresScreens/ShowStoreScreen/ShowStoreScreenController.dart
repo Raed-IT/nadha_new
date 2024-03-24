@@ -6,6 +6,7 @@ import 'package:delevary/app/Data/Models/StoreModel.dart';
 import 'package:delevary/app/Mixins/AddToCartMixin.dart';
 import 'package:delevary/app/Services/CartService.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:helper/data/models/url_model.dart';
@@ -19,7 +20,7 @@ class ShowStoreScreenController extends GetxController
   RxList<CategoryModel> categories = RxList([]);
   RxList<SliderModel> sliders = RxList([]);
   CartService cartService = CartService();
-  String? storeId =  "${Get.arguments['store_id']}";
+  String? storeId = "${Get.arguments['store_id']}";
 
   @override
   void onInit() {
@@ -27,8 +28,9 @@ class ShowStoreScreenController extends GetxController
     if (storeId != null) {
       Logger().w(storeId);
       getSingleData(
-          url: UrlModel(
-              url: "${ApiRoute.stores}/show/$storeId", type: "getStore"));
+        url:
+            UrlModel(url: "${ApiRoute.stores}/show/$storeId", type: "getStore"),
+      );
     }
     if (store.value != null) {
       initData();
@@ -69,6 +71,11 @@ class ShowStoreScreenController extends GetxController
         categories.add(CategoryModel.fromJson(category));
       }
     } else {
+      if (json['status'] == "ERROR") {
+        Fluttertoast.showToast(msg: "خطأ لم يتم العثور على المتجر");
+        Get.back();
+        return;
+      }
       store.value = StoreModel.fronJson(json['data']['store']);
       initData();
     }

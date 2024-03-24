@@ -8,7 +8,7 @@ class CartService with ApiHelperMixin {
   double getTotal() {
     double total = 0;
     Get.find<MainController>().cart.forEach((cartItem) {
-      total += double.parse(cartItem.product!.getPrice!) * cartItem.qty!.value;
+      total += double.tryParse(cartItem.total)??0;
     });
     return total;
   }

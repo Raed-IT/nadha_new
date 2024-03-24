@@ -58,11 +58,19 @@ class DrawerComponent extends StatelessWidget {
             child: Column(
               children: [
                 20.verticalSpace,
-                buildItem(
-                  context: context,
-                  title: "الإعدادات",
-                  icon: Icons.settings,
-                  onTap: () => Get.toNamed(AppRoutes.setting),
+                Obx(
+                  () => Get.find<MainController>().user.value?.store != null
+                      ? buildItem(
+                          context: context,
+                          title: "عرض متجري",
+                          icon: FontAwesomeIcons.store,
+                          onTap: () => Get.toNamed(AppRoutes.showStore,
+                              arguments: {
+                                "store":
+                                    Get.find<MainController>().user.value?.store
+                              }),
+                        )
+                      : Container(),
                 ),
                 buildItem(
                   context: context,
@@ -85,9 +93,15 @@ class DrawerComponent extends StatelessWidget {
                 buildItem(
                   context: context,
                   title: "المتاجر",
-                  icon: FontAwesomeIcons.store,
+                  icon: Icons.storefront_outlined,
                   onTap: () => Get.toNamed(AppRoutes.stores),
-                )
+                ),
+                buildItem(
+                  context: context,
+                  title: "الإعدادات",
+                  icon: Icons.settings,
+                  onTap: () => Get.toNamed(AppRoutes.setting),
+                ),
               ],
             ),
           )

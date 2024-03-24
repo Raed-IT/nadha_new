@@ -8,7 +8,17 @@ class CartItemModel {
   double? price;
 
   String get total {
-    return (double.parse(product!.getPrice!) * qty!.value).toStringAsFixed(1);
+    double total = 0.0;
+    if (product?.unit == ProductUnitTypeEnum.kg ||
+        product?.unit == ProductUnitTypeEnum.piece) {
+      total = double.parse(product!.getPrice!) * qty!.value;
+    } else if (product?.unit == ProductUnitTypeEnum.amount) {
+      total = (double.parse(product!.getPrice!)*qty!.value) /1000 ;
+    } else {
+      total =  qty!.value;
+    }
+    //(double.parse(product!.getPrice!) * qty!.value).toStringAsFixed(1)
+    return total.toStringAsFixed(2);
   }
 
   String get quantity {

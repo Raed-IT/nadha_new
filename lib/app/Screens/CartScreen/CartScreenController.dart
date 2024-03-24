@@ -30,6 +30,7 @@ class CartScreenController extends GetxController with ApiHelperMixin {
     data.fields.add(MapEntry("note", noteTextController.text));
 
     OverlayLoaderService.show(context);
+
     await postData(
         url: ApiRoute.orders,
         data: data,

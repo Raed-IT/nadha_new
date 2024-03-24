@@ -240,13 +240,53 @@ class _CartScreenState extends State<CartScreen> {
                         Get.put(ShowProductScreenController(),
                             tag: "show_product${cartItem.product!.id}");
                       },
-                      child: Hero(
-                        tag: "cart${cartItem.product!.id}",
-                        child: ImageCacheComponent(
-                          borderRadius: BorderRadius.circular(10.sp),
-                          image: "${cartItem.product!.image}",
-                          width: 85.sp,
-                          height: 85.sp,
+                      child: SizedBox(
+                        width: 85.sp,
+                        height: 85.sp,
+                        child: Stack(
+                          children: [
+                            Hero(
+                              tag: "cart${cartItem.product!.id}",
+                              child: ImageCacheComponent(
+                                borderRadius: BorderRadius.circular(10.sp),
+                                image: "${cartItem.product!.image}",
+                                width: 85.sp,
+                                height: 85.sp,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                width: 85.sp,
+                                height: 30.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(10.sp),
+                                    bottomLeft: Radius.circular(10.sp),
+                                  ),
+                                  gradient: const LinearGradient(
+                                      end: Alignment.topCenter,
+                                      begin: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.black,
+                                        Colors.transparent
+                                      ]),
+                                ),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    "${cartItem.product?.store?.name}",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -274,7 +314,19 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                     ),
-                    Text(cartItem.total)
+                    Column(
+                      children: [
+                        Text(
+                          "الإجمالي",
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10.sp),
+                        ),
+                        10.verticalSpace,
+                        Text(cartItem.total)
+                      ],
+                    )
                   ],
                 ),
               ),
