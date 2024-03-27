@@ -1,5 +1,6 @@
 import 'package:delevary/app/Extiontions/isEmail.dart';
 import 'package:delevary/app/Screens/AuthScreens/LoginScreen/LoginScreenController.dart';
+import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:delevary/app/components/TextFieldComponent.dart';
 import 'package:delevary/app/components/SafeAreaComponent.dart';
 import 'package:delevary/app/route/Routs.dart';
@@ -15,6 +16,7 @@ class LoginScreen extends GetView<LoginScreenController> {
 
   @override
   Widget build(BuildContext context) {
+    // OverlayLoaderService.hide();
     controller.keyboardVisible.value =
         MediaQuery.of(context).viewInsets.bottom != 0;
     return ColoredSafeArea(

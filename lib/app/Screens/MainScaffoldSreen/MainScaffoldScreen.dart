@@ -54,6 +54,7 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
                   height: 50.sp,
                   width: 50.sp,
                   child: FloatingActionButton(
+                    backgroundColor: Theme.of(context).colorScheme.background,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(1000.sp),
                     ),
@@ -71,10 +72,10 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
               ),
             ),
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.endDocked,
+                FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: AnimatedBottomNavigationBar.builder(
               elevation: 5,
-              gapLocation: GapLocation.end,
+              gapLocation: GapLocation.center,
               activeIndex: controller.activePage.value,
               notchSmoothness: NotchSmoothness.smoothEdge,
               // blurEffect: true,
@@ -83,7 +84,7 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
               //other params
               // activeColor: Colors.red,
               // splashRadius: 20,
-              // height: 60.h,
+              height: 60.h,
               backgroundColor: Theme.of(context).colorScheme.background,
               blurEffect: true,
               // leftCornerRadius: 15.sp,
@@ -99,32 +100,29 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
                   icons[index],
                   size: 25.sp,
                   color: isActive
-                      ? Theme.of(context).colorScheme.secondary
+                      ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.onBackground,
                 );
                 return isActive
-                    ? Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            icon.animate().scale(
-                                end: Offset(1.5, 1.5),
-                                begin: Offset(1.1, 1.1),
-                                delay: 100.ms),
-                            8.verticalSpace,
-                            Container(
-                              width: 40.w,
-                              decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  borderRadius: BorderRadius.circular(500.sp)),
-                              height: 3.h,
-                            )
-                          ],
-                        ),
-                      )
+                    ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        icon.animate().scale(
+                            end: Offset(1.5, 1.5),
+                            begin: Offset(1.1, 1.1),
+                            delay: 100.ms),
+                        8.verticalSpace,
+                        Container(
+                          width: 40.w,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: BorderRadius.circular(500.sp)),
+                          height: 3.h,
+                        )
+                      ],
+                    )
                     : Container(child: icon);
               },
             ),

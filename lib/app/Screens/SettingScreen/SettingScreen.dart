@@ -106,7 +106,7 @@ class SettingScreen extends GetView<SettingScreenController> {
                       settingsGroupTitle: "    الحساب",
                       items: [
                         SettingsItem(
-                          onTap: () => LocaleStorageService.logOut(),
+                          onTap: () => controller.logout(context),
                           icons: Icons.exit_to_app_rounded,
                           title: "تسجيل الخروج ",
                         ),

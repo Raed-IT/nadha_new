@@ -90,8 +90,14 @@ class AppBarComponent extends StatelessWidget {
                           child: Card(
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.w),
-                              child: Lottie.asset("assets/json/search.json",
-                                  width: 40.w, repeat: false),
+                              // child: Lottie.asset("assets/json/search.json",
+                              //     width: 40.w, repeat: false),
+                              child: Icon(
+                                FontAwesomeIcons.search,
+                                size: 22.sp,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              ),
                             ),
                           ),
                         ),
@@ -105,8 +111,9 @@ class AppBarComponent extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
                             child: Icon(
-                              FontAwesomeIcons.bars,
-                              size: 20.sp,
+                              FontAwesomeIcons.barsStaggered,
+                              size: 22.sp,
+                              color: Theme.of(context).colorScheme.onBackground,
                             ),
                           ),
                         ),

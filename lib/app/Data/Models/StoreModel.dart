@@ -3,6 +3,7 @@ import 'package:delevary/app/Data/Models/CityModel.dart';
 class StoreModel {
   int? id;
   String? name;
+  String? uniqName;
   String? address;
   String? image;
   String? info;
@@ -15,6 +16,7 @@ class StoreModel {
 
   StoreModel.fronJson(Map<String, dynamic> json) {
     id = json['id'];
+    uniqName = json['uniq_name'];
     name = json['name'];
     address = json['address'];
     info = json['info'] ?? '';

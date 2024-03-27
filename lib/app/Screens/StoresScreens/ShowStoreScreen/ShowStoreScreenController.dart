@@ -25,14 +25,14 @@ class ShowStoreScreenController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    if (storeId != null) {
+    if (storeId != "null" && store.value == null) {
       Logger().w(storeId);
       getSingleData(
         url:
             UrlModel(url: "${ApiRoute.stores}/show/$storeId", type: "getStore"),
       );
     }
-    if (store.value != null) {
+    if (store.value != null && storeId == 'null') {
       initData();
     }
   }
@@ -42,10 +42,7 @@ class ShowStoreScreenController extends GetxController
     paginationParameter = {
       "store_id": store.value!.id,
     };
-    getSingleData(
-        url: UrlModel(
-            url: "${ApiRoute.stores}/${store.value!.id}", type: "store_show"));
-    getFreshData();
+   getFreshData();
   }
 
   Future getFreshData() async {

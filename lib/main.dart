@@ -28,6 +28,7 @@ void main() async {
   Get.put(MainController(), permanent: true);
   await LocaleStorageService.getUserData();
   await OneSignal.shared.setAppId("0c4508b7-d21e-4c75-8dad-e4e6d543981a");
+
   runApp(const MyApp());
 }
 
