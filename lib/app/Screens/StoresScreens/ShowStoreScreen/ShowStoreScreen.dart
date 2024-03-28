@@ -71,14 +71,11 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                   borderRadius: BorderRadius.circular(1000.sp),
                 ),
                 child: Center(
-                  child: SvgPicture.asset(
-                    "assets/svg/cart.svg",
-                    width: 30.w,
-                  ),
-                ),
+                    child: Lottie.asset("assets/json/cart.json",
+                        width: 30.w, repeat: false)),
                 onPressed: () => Get.toNamed(AppRoutes.cartScreen),
                 //params
-              ).animate().slideY(begin: 1, duration: 700.ms),
+              ),
             ),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -146,7 +143,8 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                                               AppRoutes.categoryProducts,
                                               arguments: {
                                                 "category": item,
-                                                "store_id": controller.store.value!.id
+                                                "store_id":
+                                                    controller.store.value!.id
                                               });
                                         },
                                       ),

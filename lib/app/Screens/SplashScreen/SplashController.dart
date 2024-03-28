@@ -1,4 +1,5 @@
 import 'package:delevary/app/Data/Models/UserModel.dart';
+import 'package:delevary/app/Services/deepLinkService.dart';
 import 'package:delevary/app/data/ApiRoute.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
 import 'package:delevary/app/data/Models/SettingModel.dart';
@@ -39,12 +40,14 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
 
     DateTime now = DateTime.now();
     if (now.difference(startTime) > 3.seconds) {
+      DeepLinksService.init();
       Get.find<MainController>().cities.value = cities;
       Get.offAllNamed(AppRoutes.mainScaffoldScreen);
     } else {
       Future.delayed(
         3.seconds - now.difference(startTime),
         () {
+          DeepLinksService.init();
           Get.find<MainController>().cities.value = cities;
           Get.offAllNamed(AppRoutes.mainScaffoldScreen);
         },

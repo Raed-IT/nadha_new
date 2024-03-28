@@ -3,7 +3,6 @@ import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:nopsuite_carousel_slider/effects/worm_effect.dart';
 import 'package:nopsuite_carousel_slider/nopsuite_carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,16 +14,17 @@ class SliderComponent extends StatelessWidget {
   final PageController controller;
   final RxBool isLoad;
   final double? height;
-
+  final Function(SliderModel item)? onTapItem;
   final EdgeInsetsGeometry? margin;
 
-  SliderComponent(
+  const SliderComponent(
       {super.key,
       required this.sliders,
       required this.controller,
       required this.isLoad,
       this.margin,
-      this.height});
+      this.height,
+      this.onTapItem});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class SliderComponent extends StatelessWidget {
               child: (sliders.isEmpty)
                   ? Container()
                   : SingleChildScrollView(
-                    child: NopSuiteCarouselSlider(
+                      child: NopSuiteCarouselSlider(
                         height: height ?? 180.h,
                         controller: controller,
                         count: sliders.length,
@@ -46,14 +46,19 @@ class SliderComponent extends StatelessWidget {
                             .map(
                               (e) => GestureDetector(
                                 onTap: () {
+                                  if(onTapItem!=null){
+                                    onTapItem!(e);
+                                  }
                                   if (e.url != null) {
                                     launchUrl(Uri.parse("${e.url}"));
                                   }
                                 },
                                 child: Card(
-                                  margin: margin != null ? EdgeInsets.zero : null,
+                                  margin:
+                                      margin != null ? EdgeInsets.zero : null,
                                   child: ImageCacheComponent(
-                                      borderRadius: BorderRadius.circular(10.sp),
+                                      borderRadius:
+                                          BorderRadius.circular(10.sp),
                                       height: height,
                                       image: "${e.image}"),
                                 ),
@@ -70,7 +75,7 @@ class SliderComponent extends StatelessWidget {
                           strokeWidth: 5.sp,
                         ),
                       ),
-                  ),
+                    ),
             ),
     );
   }

@@ -47,8 +47,11 @@ class ShowProductScreenController extends GetxController
   @override
   getDataFromJson({required Map<String, dynamic> json, String? type}) {
     if (type == "products") {
-      for (var product in json['data']['products']) {
-        products.add(ProductModel.fromJson(product));
+      for (var productJson in json['data']['products']) {
+        ProductModel productModel = ProductModel.fromJson(productJson);
+        if (productModel.id != product.value.id) {
+          products.add(productModel);
+        }
       }
     }
   }

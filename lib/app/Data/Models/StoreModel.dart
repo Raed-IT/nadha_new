@@ -20,8 +20,8 @@ class StoreModel {
     name = json['name'];
     address = json['address'];
     info = json['info'] ?? '';
-    lat = json['lat'];
-    long = json['long'];
+    lat = double.tryParse("${json['lat']}");
+    long = double.tryParse("${json['long']}");
     image = json['image'];
     city = CityModel.fromJson(json['city']);
   }

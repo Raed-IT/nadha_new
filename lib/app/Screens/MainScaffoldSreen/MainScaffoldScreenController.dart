@@ -20,12 +20,6 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
   final CartService cartService = CartService();
 
   @override
-  void onInit() {
-    super.onInit();
-    DeepLinksService.init();
-  }
-
-  @override
   void onReady() {
     Get.find<MainController>().cart.listen((p0) {
       cartKey.currentState?.runCartAnimation(p0.length.toString());
