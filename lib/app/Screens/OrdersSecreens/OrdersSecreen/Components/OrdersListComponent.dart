@@ -127,10 +127,10 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
               child: Stack(
                 children: [
                   Hero(
-                    tag: "order_${cartItem.product!.id}",
+                    tag: "order_${cartItem.product?.id}",
                     child: ImageCacheComponent(
                       borderRadius: BorderRadius.circular(10.sp),
-                      image: "${cartItem.product!.image}",
+                      image: "${cartItem.product?.image}",
                       height: 100.sp,
                       width: 100.sp,
                     ),
@@ -174,7 +174,7 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AutoSizeText(
-                    "${cartItem.product!.name}",
+                    "${cartItem.product?.name}",
                     maxLines: 1,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
@@ -182,20 +182,21 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                   ),
                   5.verticalSpace,
                   AutoSizeText(
-                    "${cartItem.product!.info}",
+                    "${cartItem.product?.info}",
                     maxLines: 1,
                     style: const TextStyle(overflow: TextOverflow.ellipsis),
                   ),
                   10.verticalSpace,
                   Row(
                     children: [
+                      (cartItem.product!=null)?
                       BuildPriceProductComponent(
-                          product: Rx(cartItem.product!), size: 10.sp),
+                          product: Rx(cartItem.product!), size: 10.sp):SizedBox(),
                       Spacer(),
                       Row(
                         children: [
                           Text(
-                            "${cartItem.quantity} / ",
+                            "${cartItem.quantity??''} / ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.sp,

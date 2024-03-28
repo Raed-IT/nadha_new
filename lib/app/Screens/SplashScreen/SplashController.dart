@@ -6,12 +6,15 @@ import 'package:delevary/app/route/Routs.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
+import 'package:logger/logger.dart';
 
 import '../../Data/MainController.dart';
 
 class SplashScreenController extends GetxController with ApiHelperMixin {
+  late DateTime startTime ;
   @override
   void onReady() {
+    startTime=DateTime.now();
     getSingleData(
         url: UrlModel(
             url: ApiRoute.settings,
@@ -32,7 +35,19 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
       Get.find<MainController>().user.value =
           UserModel.fromJson(json['data']['user']);
     }
-    Get.find<MainController>().cities.value = cities;
-    Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+
+    DateTime now = DateTime.now();
+    if (now.difference(startTime) > 3.seconds) {
+      Get.find<MainController>().cities.value = cities;
+      Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+    } else {
+      Future.delayed(
+        3.seconds - now.difference(startTime),
+        () {
+          Get.find<MainController>().cities.value = cities;
+          Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+        },
+      );
+    }
   }
 }

@@ -110,7 +110,7 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                       ),
                       width: Get.width,
                       height: 200.h,
-                      image: "${controller.category.image}",
+                      image: "${controller.category.images?[1].url}",
                     ),
                   ),
                   Positioned(

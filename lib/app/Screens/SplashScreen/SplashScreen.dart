@@ -2,7 +2,9 @@ import 'package:delevary/app/Screens/SplashScreen/SplashController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashScreen extends GetView<SplashScreenController> {
   const SplashScreen({super.key});
@@ -10,14 +12,12 @@ class SplashScreen extends GetView<SplashScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: [
-        Hero(
-          tag: "logo",
-          child: Container(
+      body: Stack(
+        children: [
+          Container(
             height: Get.height,
             width: Get.width,
-            decoration:const BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 opacity: 0.07,
                 filterQuality: FilterQuality.high,
@@ -25,62 +25,35 @@ class SplashScreen extends GetView<SplashScreenController> {
                 repeat: ImageRepeat.repeat,
               ),
             ),
-          )
-              .animate()
-              .blur(begin: Offset(20, 20), duration: Duration(seconds: 2)),
-        ),
-        Positioned(
-          top: -100.sp,
-          right: -100.sp,
-          child: Container(
-            height: 250.sp,
-            width: 250.sp,
-            decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(1000)),
-          ).animate().scale(
-                begin:const Offset(0, 0),
-                duration: const Duration(milliseconds: 300),
+          ).animate().blur(
+                begin: const Offset(20, 20),
+                duration: 750.ms,
               ),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/logo.png",
-                width: 450.w,
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: 200,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset("assets/json/delevary_motor.json",
+                        width: 280.w),
+                  )
+                      .animate()
+                      .slideX(duration: 2500.ms, curve: Curves.elasticOut),
+                  SvgPicture.asset(
+                    "assets/svg/logo.svg",
+                    width: 250.w,
+                    height: 100.h,
+                  ).animate().slideY(duration: 2100.ms, begin: 0.5),
+                ],
               ),
-              SizedBox(
-                width: 250.w,
-                child: LinearProgressIndicator(
-                  minHeight: 7.sp,
-                  borderRadius: BorderRadius.circular(10.sp),
-                ),
-              ),
-            ],
-          ),
-        ).animate().slideY(
-              begin: 1,
-              duration: const Duration(milliseconds: 500),
             ),
-        Positioned(
-          bottom: -200.sp,
-          left: -200.sp,
-          child: Container(
-            height: 450.sp,
-            width: 450.sp,
-            decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(1000)),
-          ).animate().scale(
-                begin: Offset(0, 0),
-                duration: const Duration(milliseconds: 500),
-              ),
-        )
-      ],
-    ));
+          ),
+        ],
+      ),
+    );
   }
 }

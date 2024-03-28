@@ -1,16 +1,18 @@
 import 'package:delevary/app/Data/Models/BaseModel.dart';
+import 'package:delevary/app/Data/Models/MediaModel.dart';
 
 class CategoryModel extends BaseModel {
-   String? name;
+  String? name;
   int? order;
   int? parentId;
   bool? status;
   String? createdAt;
   bool? hasChildren;
   String? image;
+  List<MediaModel>? images;
 
   CategoryModel(
-      { id,
+      {id,
       this.name,
       this.order,
       this.parentId,
@@ -19,6 +21,15 @@ class CategoryModel extends BaseModel {
       this.hasChildren});
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
+    images = [];
+    if (json['images'].length > 0) {
+      json['images'].keys!.forEach((key) {
+        int id = int.parse("$key");
+        String image = json['images'][key];
+        images!.add(MediaModel(id, image));
+      });
+    }
+
     id = json['id'];
     name = json['name'];
     image = json['image'];

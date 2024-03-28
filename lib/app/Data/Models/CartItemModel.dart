@@ -13,16 +13,16 @@ class CartItemModel {
         product?.unit == ProductUnitTypeEnum.piece) {
       total = double.parse(product!.getPrice!) * qty!.value;
     } else if (product?.unit == ProductUnitTypeEnum.amount) {
-      total = (double.parse(product!.getPrice!)*qty!.value) /1000 ;
+      total = (double.parse(product!.getPrice!) * qty!.value) / 1000;
     } else {
-      total =  qty!.value;
+      total = qty!.value;
     }
     //(double.parse(product!.getPrice!) * qty!.value).toStringAsFixed(1)
     return total.toStringAsFixed(2);
   }
 
   String get quantity {
-    if (product!.unit == ProductUnitTypeEnum.piece) {
+    if (product?.unit == ProductUnitTypeEnum.piece) {
       return "${qty!.value.toInt()}";
     } else {
       return qty!.value.toStringAsFixed(1);
@@ -36,7 +36,9 @@ class CartItemModel {
   });
 
   CartItemModel.fromJson(Map<String, dynamic> json) {
-    product = ProductModel.fromJson(json['product']);
+    if (json["product"] != null) {
+      product = ProductModel.fromJson(json['product']);
+    }
     qty = RxDouble(double.tryParse("${json['quantity']}") ?? 0);
     price = double.tryParse("${json['price']}");
   }
