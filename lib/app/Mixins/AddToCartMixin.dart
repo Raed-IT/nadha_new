@@ -1,6 +1,7 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -24,13 +25,17 @@ mixin AddToCartMixin {
       {required Widget scaffold, required GlobalKey<CartIconKey> cartKey}) {
     return AddToCartAnimation(
       cartKey: cartKey,
-      dragAnimation: const DragToCartAnimationOptions(
-        rotation: true,
+      dragAnimation:  DragToCartAnimationOptions(
+        rotation: false,
+        duration: 400.ms
       ),
       height: 20.sp,
       width: 20.sp,
       opacity: 0.9,
-      jumpAnimation: const JumpAnimationOptions(),
+      jumpAnimation:  JumpAnimationOptions(
+          duration: 500.ms
+
+      ),
       createAddToCartAnimation: (runAddToCartAnimation) {
         _runAddToCartAnimation = runAddToCartAnimation;
       },

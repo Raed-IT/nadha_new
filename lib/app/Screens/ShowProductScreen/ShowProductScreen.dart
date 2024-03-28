@@ -3,6 +3,7 @@ import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
+import 'package:delevary/app/Components/ProductsComponents/AddToCartComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Components/SlidersComponent.dart';
@@ -96,27 +97,54 @@ class ShowProductScreen extends StatelessWidget {
                             Hero(
                               tag:
                                   "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
-                              child: SliderComponent(
-                                onTapItem: (item) {
-                                  openImagesPage(
-                                    Navigator.of(context),
-                                    imgUrls: controller.product.value.images!
-                                        .map((e) => e.url!)
-                                        .toList(),
-                                    heroTags: List.generate(
-                                      controller.product.value.images!.length,
-                                      (index) =>
-                                          "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
-                                    ),
-                                  );
-                                },
-                                height: Get.width - 100.h,
-                                sliders: controller.product.value.images!
-                                    .map((e) => SliderModel(e.id, e.url, ""))
-                                    .toList(),
-                                controller: PageController(),
-                                isLoad: RxBool(false),
+                              child: Container(
+                                key: productKey,
+                                child: SliderComponent(
+                                  onTapItem: (item) {
+                                    openImagesPage(
+                                      Navigator.of(context),
+                                      imgUrls: controller.product.value.images!
+                                          .map((e) => e.url!)
+                                          .toList(),
+                                      heroTags: List.generate(
+                                        controller.product.value.images!.length,
+                                        (index) =>
+                                            "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
+                                      ),
+                                    );
+                                  },
+                                  height: Get.width - 100.h,
+                                  sliders: controller.product.value.images!
+                                      .map((e) => SliderModel(e.id, e.url, ""))
+                                      .toList(),
+                                  controller: PageController(),
+                                  isLoad: RxBool(false),
+                                ),
                               ),
+                            ),
+                            20.verticalSpace,
+                            Row(
+                              children: [
+                                10.horizontalSpace,
+                                SizedBox(
+                                  width: 170.w,
+                                  child: AddToCardComponent(
+                                    product: controller.product.value,
+                                    onAddProduct: (prod){
+                                      controller.addToCartAnimation(
+                                          cartKey: cartKey, widgetKey: productKey);
+                                    },
+                                    // onAddProduct: onAddProduct,
+                                    // onSetState: () {
+                                    //   if (widget.cartKey.currentState != null) {
+                                    //     widget.cartKey.currentState!.runCartAnimation(
+                                    //         "${Get.find<MainController>().cart.length}");
+                                    //   }
+                                    //   setState(() {});
+                                    // },
+                                  ),
+                                ),
+                              ],
                             ),
                             Container(
                               margin: EdgeInsets.all(10.sp),
