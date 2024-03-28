@@ -11,10 +11,11 @@ import 'package:logger/logger.dart';
 import '../../Data/MainController.dart';
 
 class SplashScreenController extends GetxController with ApiHelperMixin {
-  late DateTime startTime ;
+  late DateTime startTime;
+
   @override
   void onReady() {
-    startTime=DateTime.now();
+    startTime = DateTime.now();
     getSingleData(
         url: UrlModel(
             url: ApiRoute.settings,
@@ -38,14 +39,14 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
 
     DateTime now = DateTime.now();
     if (now.difference(startTime) > 3.seconds) {
-      Get.find<MainController>().cities.value = cities;
-      Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+      // Get.find<MainController>().cities.value = cities;
+      // Get.offAllNamed(AppRoutes.mainScaffoldScreen);
     } else {
       Future.delayed(
         3.seconds - now.difference(startTime),
         () {
-          Get.find<MainController>().cities.value = cities;
-          Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+          // Get.find<MainController>().cities.value = cities;
+          // Get.offAllNamed(AppRoutes.mainScaffoldScreen);
         },
       );
     }

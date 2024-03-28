@@ -32,22 +32,21 @@ class SplashScreen extends GetView<SplashScreenController> {
           Align(
             alignment: Alignment.center,
             child: Container(
-              height: 200,
+              height: 500.h,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Center(
                     child: Lottie.asset("assets/json/delevary_motor.json",
-                        width: 280.w),
+                        width: 200.w),
                   )
                       .animate()
                       .slideX(duration: 2500.ms, curve: Curves.elasticOut),
                   SvgPicture.asset(
                     "assets/svg/logo.svg",
-                    width: 250.w,
-                    height: 100.h,
-                  ).animate().slideY(duration: 2100.ms, begin: 0.5),
+                    height: 70.h,
+                  ).animate().slideY(duration: 500.ms, begin: 0.5),
                 ],
               ),
             ),
