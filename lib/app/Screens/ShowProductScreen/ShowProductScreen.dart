@@ -3,6 +3,7 @@ import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
+import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/AddToCartComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
@@ -44,6 +45,7 @@ class ShowProductScreen extends StatelessWidget {
           return controller.buildScaffold(
             cartKey: cartKey,
             scaffold: Scaffold(
+              drawer: DrawerComponent(),
               floatingActionButton: AddToCartIcon(
                 key: cartKey,
                 badgeOptions: BadgeOptions(
@@ -64,75 +66,78 @@ class ShowProductScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              body: Stack(
-                children: [
-                  Container(
-                    height: Get.height,
-                    width: Get.width,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        opacity: 0.1,
-                        repeat: ImageRepeat.repeat,
-                        image: AssetImage('assets/images/bg.png'),
+              body: Builder(builder: (context) {
+                return Stack(
+                  children: [
+                    Container(
+                      height: Get.height,
+                      width: Get.width,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          opacity: 0.1,
+                          repeat: ImageRepeat.repeat,
+                          image: AssetImage('assets/images/bg.png'),
+                        ),
                       ),
-                    ),
-                  ).animate().blur(
-                        delay: const Duration(milliseconds: 500),
-                        begin: const Offset(20, 20),
-                        duration: const Duration(seconds: 2),
-                      ),
-                  Column(
-                    children: [
-                      AppBarComponent(
-                        title: "عرض منتج",
-                        openDrawer: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                      Expanded(
-                        child: ListView(
-                          padding: const EdgeInsets.all(0),
-                          physics: const BouncingScrollPhysics(),
-                          children: [
-                            Hero(
-                              tag:
-                                  "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
-                              child: Container(
-                                key: productKey,
-                                child: SliderComponent(
-                                  onTapItem: (item) {
-                                    openImagesPage(
-                                      Navigator.of(context),
-                                      imgUrls: controller.product.value.images!
-                                          .map((e) => e.url!)
-                                          .toList(),
-                                      heroTags: List.generate(
-                                        controller.product.value.images!.length,
-                                        (index) =>
-                                            "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
-                                      ),
-                                    );
-                                  },
-                                  height: Get.width - 100.h,
-                                  sliders: controller.product.value.images!
-                                      .map((e) => SliderModel(e.id, e.url, ""))
-                                      .toList(),
-                                  controller: PageController(),
-                                  isLoad: RxBool(false),
+                    ).animate().blur(
+                          delay: const Duration(milliseconds: 500),
+                          begin: const Offset(20, 20),
+                          duration: const Duration(seconds: 2),
+                        ),
+                    Column(
+                      children: [
+                        AppBarComponent(
+                          title: "عرض منتج",
+                          openDrawer: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                        ),
+                        Expanded(
+                          child: ListView(
+                            padding: const EdgeInsets.all(0),
+                            physics: const BouncingScrollPhysics(),
+                            children: [
+                              Hero(
+                                tag:
+                                    "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
+                                child: Container(
+                                  key: productKey,
+                                  child: SliderComponent(
+                                    onTapItem: (item) {
+                                      openImagesPage(
+                                        Navigator.of(context),
+                                        imgUrls: controller
+                                            .product.value.images!
+                                            .map((e) => e.url!)
+                                            .toList(),
+                                        heroTags: List.generate(
+                                          controller
+                                              .product.value.images!.length,
+                                          (index) =>
+                                              "${controller.heroPrefix ?? 'product_image_'}${controller.product.value.id}",
+                                        ),
+                                      );
+                                    },
+                                    height: Get.width - 100.h,
+                                    sliders: controller.product.value.images!
+                                        .map(
+                                            (e) => SliderModel(e.id, e.url, ""))
+                                        .toList(),
+                                    controller: PageController(),
+                                    isLoad: RxBool(false),
+                                  ),
                                 ),
                               ),
-                            ),
-                            20.verticalSpace,
-                            Row(
-                              children: [
-                                10.horizontalSpace,
-                                SizedBox(
-                                  width: 170.w,
-                                  child: AddToCardComponent(
+                              20.verticalSpace,
+                              Row(
+                                children: [
+                                  10.horizontalSpace,
+                                  AddToCardComponent(
                                     product: controller.product.value,
-                                    onAddProduct: (prod){
+                                    onAddProduct: (prod) {
                                       controller.addToCartAnimation(
-                                          cartKey: cartKey, widgetKey: productKey);
+                                          cartKey: cartKey,
+                                          widgetKey: productKey);
                                     },
                                     // onAddProduct: onAddProduct,
                                     // onSetState: () {
@@ -143,88 +148,90 @@ class ShowProductScreen extends StatelessWidget {
                                     //   setState(() {});
                                     // },
                                   ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(10.sp),
-                              child: BlurryContainer(
-                                blur: 7,
-                                borderRadius: BorderRadius.circular(10.sp),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 0, vertical: 10.sp),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${controller.product.value.name}",
-                                        style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.sp,
+                                  Expanded(flex: 2, child: SizedBox()),
+                                ],
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(10.sp),
+                                child: BlurryContainer(
+                                  blur: 7,
+                                  borderRadius: BorderRadius.circular(10.sp),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 0, vertical: 10.sp),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${controller.product.value.name}",
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20.sp,
+                                          ),
+                                          softWrap: true,
                                         ),
-                                        softWrap: true,
-                                      ),
-                                      Text(
-                                        "${controller.product.value.info}",
-                                        style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onBackground,
+                                        Text(
+                                          "${controller.product.value.info}",
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onBackground,
+                                          ),
+                                          softWrap: true,
                                         ),
-                                        softWrap: true,
-                                      ),
-                                      20.verticalSpace,
-                                      BuildPriceProductComponent(
-                                        size: 18.sp,
-                                        product: controller.product,
-                                      ),
-                                    ],
+                                        20.verticalSpace,
+                                        BuildPriceProductComponent(
+                                          size: 18.sp,
+                                          product: controller.product,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            40.verticalSpace,
-                            BuildTitleSectionComponent(
-                              isLoad: RxBool(false),
-                              title: "منتجات ذات صلة",
-                            ),
-                            20.verticalSpace,
-                            ProductListComponent(
-                              heroTagPrefix: "showProduct",
-                              products: controller.products,
-                              onProductTap: (ProductModel product, k) {
-                                if (product.id != controller.product.value.id) {
-                                  Get.toNamed(AppRoutes.showProduct,
-                                      preventDuplicates: false,
-                                      arguments: {
-                                        "product": product,
-                                        "hero": "showProduct"
-                                      });
-                                  Get.put(ShowProductScreenController(),
-                                      tag: "show_product${product.id}");
-                                }
-                              },
-                              isLoad: controller.isLoad,
-                              onTapAddProduct:
-                                  (ProductModel product, GlobalKey key) {
-                                controller.addToCartAnimation(
-                                    widgetKey: key, cartKey: cartKey);
-                                controller.cartService
-                                    .addToCard(product: product);
-                              },
-                            ),
-                          ],
+                              40.verticalSpace,
+                              BuildTitleSectionComponent(
+                                isLoad: RxBool(false),
+                                title: "منتجات ذات صلة",
+                              ),
+                              20.verticalSpace,
+                              ProductListComponent(
+                                heroTagPrefix: "showProduct",
+                                products: controller.products,
+                                onProductTap: (ProductModel product, k) {
+                                  if (product.id !=
+                                      controller.product.value.id) {
+                                    Get.toNamed(AppRoutes.showProduct,
+                                        preventDuplicates: false,
+                                        arguments: {
+                                          "product": product,
+                                          "hero": "showProduct"
+                                        });
+                                    Get.put(ShowProductScreenController(),
+                                        tag: "show_product${product.id}");
+                                  }
+                                },
+                                isLoad: controller.isLoad,
+                                onTapAddProduct:
+                                    (ProductModel product, GlobalKey key) {
+                                  controller.addToCartAnimation(
+                                      widgetKey: key, cartKey: cartKey);
+                                  controller.cartService
+                                      .addToCard(product: product);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ),
           );
         },

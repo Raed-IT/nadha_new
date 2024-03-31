@@ -47,6 +47,30 @@ class SplashScreen extends GetView<SplashScreenController> {
                     "assets/svg/logo.svg",
                     height: 70.h,
                   ).animate().slideY(duration: 500.ms, begin: 0.5),
+                  40.verticalSpace,
+                  Obx(
+                    () => (controller.isLoad.value)
+                        ? SizedBox(
+                            height: 30.sp,
+                            width: 30.sp,
+                            child: CircularProgressIndicator(),
+                          )
+                        : (controller.hasError)
+                            ? GestureDetector(
+                                onTap: () => controller.getFreshData(),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.refresh),
+                                    Text("اعادة المحاولة")
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                height: 30.sp,
+                              ),
+                  )
                 ],
               ),
             ),

@@ -1,6 +1,7 @@
 class SettingModel {
   int? id;
   String? address;
+  String? currentVersion;
   bool? isClose;
   double? deliveryPrice;
   double? exchange;
@@ -50,6 +51,7 @@ class SettingModel {
     latitude = json['latitude'];
     email = json['email'];
     img = json['img'];
+    currentVersion = json['current_version'];
     deliveryPrice = double.tryParse("${json['delivery_price']}");
     subEmail = json['sub_email'];
     phone = json['phone'];

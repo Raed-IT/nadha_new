@@ -21,12 +21,13 @@ class LoginScreenController extends GetxController with ApiHelperMixin {
   TextEditingController emailTextController = TextEditingController();
   RxBool keyboardVisible = RxBool(false);
 
-  Future<void> loginWithGoogle() async {
+  Future<void> loginWithGoogle(BuildContext context) async {
     AuthBySocialService authService = AuthBySocialService();
-
-    authService.signin(onCompleted: (data) {
-      Get.snackbar("تم ", data?.email ?? '');
-    });
+    authService.signin(
+        onCompleted: () {
+          Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+        },
+        context: context);
   }
 
   Future<void> login({required BuildContext context}) async {

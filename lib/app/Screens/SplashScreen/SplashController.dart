@@ -13,16 +13,26 @@ import '../../Data/MainController.dart';
 
 class SplashScreenController extends GetxController with ApiHelperMixin {
   late DateTime startTime;
+  bool hasError = false;
 
   @override
   void onReady() {
+    getFreshData();
+    super.onReady();
+  }
+
+  getFreshData() {
+    hasError = false;
     startTime = DateTime.now();
     getSingleData(
-        url: UrlModel(
-            url: ApiRoute.settings,
-            type: "settings",
-            parameter: {"token": Get.find<MainController>().token.value}));
-    super.onReady();
+      url: UrlModel(
+          url: ApiRoute.settings,
+          type: "settings",
+          parameter: {"token": Get.find<MainController>().token.value}),
+      onError: () {
+        hasError = true;
+      },
+    );
   }
 
   @override

@@ -144,7 +144,7 @@ class LoginScreen extends GetView<LoginScreenController> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () => controller.loginWithGoogle(),
+                                onPressed: () => controller.loginWithGoogle(context),
                                 child: const Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment:

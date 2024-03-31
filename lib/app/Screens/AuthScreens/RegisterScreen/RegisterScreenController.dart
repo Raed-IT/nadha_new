@@ -92,10 +92,13 @@ class RegisterScreenController extends GetxController with ApiHelperMixin {
     Loader.hide();
   }
 
-  Future<void> loginWithGoogle() async {
+  Future<void> loginWithGoogle(BuildContext context) async {
     AuthBySocialService authService = AuthBySocialService();
-    authService.signin(onCompleted: (data) {
-      Get.snackbar("تم ", data?.email ?? '');
-    });
+    authService.signin(
+        onCompleted: () {
+          Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+          // Get.snackbar("تم ", data?.email ?? '');
+        },
+        context: context);
   }
 }

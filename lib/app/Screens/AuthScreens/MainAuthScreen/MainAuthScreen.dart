@@ -42,11 +42,11 @@ class MainAuthScreen extends GetView<MainAuthScreenController> {
                   "assets/svg/logo.svg",
                   height: 80.sp,
                 ),
-                Transform.translate(
-                  offset: Offset(30.w, -40.h),
+                Spacer(),
+                Center(
                   child: Lottie.asset("assets/json/delevary_motor.json",
-                      height: 50.sp),
-                ).animate().slideX(begin: -7, duration: 500.ms),
+                      height: 200.sp),
+                ).animate().slideX(duration: 2500.ms, curve: Curves.elasticOut),
                 Spacer(),
                 Center(
                   child: Text(
@@ -71,6 +71,7 @@ class MainAuthScreen extends GetView<MainAuthScreenController> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Spacer(),
                               Icon(
                                 FontAwesomeIcons.rightToBracket,
                                 size: 25.sp,
@@ -82,6 +83,7 @@ class MainAuthScreen extends GetView<MainAuthScreenController> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.sp),
                               ),
+                              Spacer(),
                             ],
                           ),
                         ),
@@ -97,17 +99,19 @@ class MainAuthScreen extends GetView<MainAuthScreenController> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Spacer(),
                               Icon(
                                 FontAwesomeIcons.idCard,
                                 size: 25.sp,
                               ),
                               20.horizontalSpace,
                               Text(
-                                "تسجيل مستخدم جديد ",
+                                " مستخدم جديد ",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.sp),
                               ),
+                              Spacer(),
                             ],
                           ),
                         ),
@@ -117,11 +121,12 @@ class MainAuthScreen extends GetView<MainAuthScreenController> {
                         height: 50.h,
                         width: Get.width,
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () => controller.loginWithGoogle(context),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Spacer(),
                               Icon(
                                 FontAwesomeIcons.google,
                                 size: 25.sp,
@@ -133,6 +138,7 @@ class MainAuthScreen extends GetView<MainAuthScreenController> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.sp),
                               ),
+                              Spacer(),
                             ],
                           ),
                         ),

@@ -115,7 +115,7 @@ class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
                     ),
                   ),
                 ),
-                onPressed: () => controller.loginWithGoogle(),
+                onPressed: () => controller.loginWithGoogle(context),
                 child: const Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
