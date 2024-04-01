@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:helper/data/constant.dart';
 import 'package:helper/data/models/dio_config_model.dart';
 import 'package:helper/helper.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';

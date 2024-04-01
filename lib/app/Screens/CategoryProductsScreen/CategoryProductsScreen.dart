@@ -18,6 +18,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../Components/AppBarComponents/AppBarComponent.dart';
 
@@ -36,26 +37,28 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
     return controller.buildScaffold(
       cartKey: cartKey,
       scaffold: Scaffold(
-        floatingActionButton: AddToCartIcon(
-          key: cartKey,
-          badgeOptions:
-              BadgeOptions(active: Get.find<MainController>().cart.isNotEmpty),
-          icon: SizedBox(
-            height: 50.sp,
-            width: 50.sp,
-            child: FloatingActionButton(
+        floatingActionButton: SizedBox(
+          width: 50.sp,
+          height: 50.sp,
+          child: AddToCartIcon(
+            key: cartKey,
+            badgeOptions:
+                BadgeOptions(active: Get.find<MainController>().cart.isNotEmpty),
+            icon: FloatingActionButton(
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(1000.sp),
               ),
               child: Center(
-                child: SvgPicture.asset(
-                  "assets/svg/cart.svg",
+                child: Lottie.asset(
+                  "assets/json/cart.json",
                   width: 30.w,
+                  reverse: true,
                 ),
               ),
               onPressed: () => Get.toNamed(AppRoutes.cartScreen),
               //params
-            ).animate().slideY(begin: 1, duration: 700.ms),
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

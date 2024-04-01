@@ -20,6 +20,7 @@ class SettingModel {
   String? privacy;
   String? createdAt;
   String? updatedAt;
+  bool? forcedUpdate;
 
   SettingModel(
       {this.id,
@@ -49,6 +50,7 @@ class SettingModel {
     longitude = json['longitude'];
     exchange = double.tryParse("${json['exchange']}");
     latitude = json['latitude'];
+    forcedUpdate =  bool.tryParse("${json['forced_update']}");
     email = json['email'];
     img = json['img'];
     currentVersion = json['current_version'];

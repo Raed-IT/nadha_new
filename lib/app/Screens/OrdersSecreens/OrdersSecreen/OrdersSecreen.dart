@@ -1,3 +1,4 @@
+import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Screens/OrdersSecreens/OrdersSecreen/Components/OrdersListComponent.dart';
@@ -54,6 +55,10 @@ class OrdersScreen extends GetView<OrdersScreenController> {
                       physics: const BouncingScrollPhysics(),
                       children: [
                         OrdersListComponent(),
+                        LoadMoreComponent(
+                          isFinished: controller.isFinish,
+                          isLoad: controller.isLoadMore,
+                        )
                       ],
                     )
                         .loadMoreAble(

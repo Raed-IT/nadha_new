@@ -66,24 +66,82 @@ class _CartScreenState extends State<CartScreen> {
                     BlurryContainer(
                       child: Container(
                         padding: EdgeInsets.all(10.sp),
-                        height: 50.h,
-                        child: Row(
+                        // height: 50.h,
+                        child: Column(
                           children: [
-                            Text(
-                              "اجمالي الطلبات",
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.bold),
+                            Row(
+                              children: [
+                                Text(
+                                  "اجمالي الطلبات",
+                                  style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  "${controller.cartService.getTotal()}",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                            const Spacer(),
-                            Text(
-                              "${controller.cartService.getTotal()}",
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.bold),
+                            10.verticalSpace,
+                            Row(
+                              children: [
+                                Text(
+                                  "اجور توصيل",
+                                  style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            10.verticalSpace,
+                            Row(
+                              children: [
+                                Text(
+                                  "اجمالي الفاتورة",
+                                  style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 17.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  ((Get.find<MainController>()
+                                                  .setting
+                                                  .value
+                                                  ?.deliveryPrice ??
+                                              0) +
+                                          controller.cartService.getTotal())
+                                      .toStringAsFixed(1),
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ],
                         ),
