@@ -1,5 +1,6 @@
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionService {
@@ -12,4 +13,5 @@ class PermissionService {
       Future.delayed(20.seconds, () => postNotificationPermission());
     }
   }
+
 }

@@ -1,10 +1,12 @@
 import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:delevary/app/Components/ImagePickerComponent.dart';
 import 'package:delevary/app/Components/TextFieldComponent.dart';
 import 'package:delevary/app/Screens/ProfileScreen/ProfileScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../Components/DropDwon.dart';
+import 'package:logger/logger.dart';
+ import '../../../Components/DropDwon.dart';
 import '../../../Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
 
@@ -24,6 +26,22 @@ class StoreProfileFieldsComponent extends GetView<ProfileScreenController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ImagePickerComponent(
+              onPicked: (files) {
+                if (files.isNotEmpty) {
+                  controller.storeImage = files.first;
+                } else {
+                  controller.storeImage = null;
+                }
+
+              },
+              image: Get.find<MainController>().user.value?.store?.image,
+              title: Text(
+                'صوره المتجر',
+                textAlign: TextAlign.start,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.sp),
+              ),
+            ),
             TextFieldComponent(
               controller: controller.storeNameTextController,
               hint: "اسم المتجر",

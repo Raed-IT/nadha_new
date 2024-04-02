@@ -52,14 +52,14 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
     if (now.difference(startTime) > 3.seconds) {
       DeepLinksService.init();
       Get.find<MainController>().cities.value = cities;
-      Get.offAllNamed(AppRoutes.homeScreen);
+      Get.offAllNamed(AppRoutes.mainScaffoldScreen);
     } else {
       Future.delayed(
         3.seconds - now.difference(startTime),
         () {
           DeepLinksService.init();
           Get.find<MainController>().cities.value = cities;
-          Get.offAllNamed(AppRoutes.homeScreen);
+          Get.offAllNamed(AppRoutes.mainScaffoldScreen);
         },
       );
     }

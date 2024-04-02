@@ -489,6 +489,38 @@ packages:
       url: "https://github.com/Raed-IT/helper-package.git"
     source: git
     version: "0.0.1"
+  hl_image_picker:
+    dependency: "direct main"
+    description:
+      name: hl_image_picker
+      sha256: "2b4fc719c1cb63fa974f3d6818085051a72531bf6599afb8ed89b59b930b8a08"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.13"
+  hl_image_picker_android:
+    dependency: transitive
+    description:
+      name: hl_image_picker_android
+      sha256: "39afe90896ca00f93af2e142de1304678392070ba880d6d70a20e953a3a67717"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.8"
+  hl_image_picker_ios:
+    dependency: transitive
+    description:
+      name: hl_image_picker_ios
+      sha256: bf6ed0413c16fb5a8ad152fe4fdddf7364ab302e9b948f1ea7712f13a6c2b4d9
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.9"
+  hl_image_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: hl_image_picker_platform_interface
+      sha256: "39ae56b92047aaec355dbd8caa824c73f1834ee0fc6e36b25e28b2f1ff8d9e7d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.3"
   html:
     dependency: transitive
     description:

@@ -1,4 +1,5 @@
 import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:delevary/app/Components/ImagePickerComponent.dart';
 import 'package:delevary/app/Components/TextFieldComponent.dart';
 import 'package:delevary/app/Screens/ProfileScreen/ProfileScreenController.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,21 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ImagePickerComponent(
+              onPicked: (files) {
+                if (files.isNotEmpty) {
+                  controller.userImage = files.first;
+                } else {
+                  controller.userImage = null;
+                }
+              },
+              image: Get.find<MainController>().user.value!.image!,
+              title: Text(
+                'صورة المستخدم',
+                textAlign: TextAlign.start,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
+              ),
+            ),
             TextFieldComponent(
               controller: controller.nameTextController,
               hint: "اسم المستخدم",

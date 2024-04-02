@@ -8,8 +8,9 @@ import '../../Middlewares/isLogin.dart';
 class HomePage extends GetPage {
   HomePage()
       : super(
-            name: AppRoutes.homeScreen,
-            page: () => HomeScreen(),
-            binding: HomeScreenBinding(),
-            middlewares: [IsLoginMiddleware()]);
+          name: AppRoutes.homeScreen,
+          page: () => HomeScreen(),
+          binding: HomeScreenBinding(),
+          middlewares: [IsLoginMiddleware()],
+        );
 }

@@ -57,52 +57,6 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                       physics: const BouncingScrollPhysics(),
                       children: [
                         20.verticalSpace,
-                        AvatarGlow(
-                          glowColor: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.5),
-                          repeat: false,
-                          glowCount: 1,
-                          child: Material(
-                            elevation: 9.0,
-                            shape: CircleBorder(),
-                            child: CircleAvatar(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.background,
-                              radius: 70.sp,
-                              foregroundColor: Colors.red,
-                              child: ImageCacheComponent(
-                                width: 130.sp,
-                                height: 130.sp,
-                                borderRadius: BorderRadius.circular(100.sp),
-                                image:
-                                    '${Get.find<MainController>().user.value?.image}',
-                              ),
-                            ),
-                          ).animate().scale(),
-                        ),
-                        10.verticalSpace,
-                        Center(
-                          child: Text(
-                            "${Get.find<MainController>().user.value?.name}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17.sp,
-                            ),
-                          ),
-                        ),
-                        10.verticalSpace,
-                        Center(
-                          child: Text(
-                            "${Get.find<MainController>().user.value?.email}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17.sp,
-                            ),
-                          ),
-                        ),
-                        20.verticalSpace,
                         if (Get.find<MainController>().user.value?.store !=
                             null)
                           Center(
