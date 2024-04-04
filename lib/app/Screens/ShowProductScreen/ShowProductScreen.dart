@@ -200,7 +200,7 @@ class ShowProductScreen extends StatelessWidget {
                               ),
                               20.verticalSpace,
                               ProductListComponent(
-                                heroTagPrefix: "showProduct",
+                                heroTagPrefix: "show${controller.product.value.id}Products",
                                 products: controller.products,
                                 onProductTap: (ProductModel product, k) {
                                   if (product.id !=
@@ -209,7 +209,8 @@ class ShowProductScreen extends StatelessWidget {
                                         preventDuplicates: false,
                                         arguments: {
                                           "product": product,
-                                          "hero": "showProduct"
+                                          "hero":
+                                          "show${controller.product.value.id}Products",
                                         });
                                     Get.put(ShowProductScreenController(),
                                         tag: "show_product${product.id}");

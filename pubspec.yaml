@@ -72,6 +72,7 @@ dependencies:
   permission_handler: ^10.4.5
   device_info_plus: ^9.1.0
   hl_image_picker: ^1.2.13
+  share_plus: ^7.2.2
 
   helper:
     git:
