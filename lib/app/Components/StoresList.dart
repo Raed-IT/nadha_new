@@ -24,21 +24,48 @@ class StoresListComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Column(
-        children: (!isLoad.value)
-            ? (stores.isNotEmpty)
-                ? stores.map((store) => buildStoreCard(store, context)).toList()
-                : [noStoresWidget(context, getFreshData)]
-            : List.generate(20, (index) => index)
-                .map(
-                  (e) => CardLoadingComponent(
-                    height: 100.h,
-                    borderRadius: BorderRadius.circular(10.sp),
-                  ),
-                )
-                .toList(),
-      ),
+      () => (isLoad.value)
+          ? Column(
+              children: List.generate(20, (index) => index)
+                  .map(
+                    (e) => CardLoadingComponent(
+                      height: 100.h,
+                      borderRadius: BorderRadius.circular(10.sp),
+                    ),
+                  )
+                  .toList(),
+            )
+          : (stores.isEmpty)
+              ? noStoresWidget(context, getFreshData)
+              : GridView.count(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.2,
+                  crossAxisSpacing: 0.sp,
+                  mainAxisSpacing: 10.h,
+                  children: stores
+                      .map((store) => buildStoreCard(store, context))
+                      .toList(),
+                ),
     );
+    // return Obx(
+    //   () => Column(
+    //     children: (!isLoad.value)
+    //         ? (stores.isNotEmpty)
+    //             ? stores.map((store) => buildStoreCard(store, context)).toList()
+    //             : [noStoresWidget(context, getFreshData)]
+    //         : List.generate(20, (index) => index)
+    //             .map(
+    //               (e) => CardLoadingComponent(
+    //                 height: 100.h,
+    //                 borderRadius: BorderRadius.circular(10.sp),
+    //               ),
+    //             )
+    //             .toList(),
+    //   ),
+    // );
   }
 
   Widget buildStoreCard(StoreModel store, BuildContext context) {
@@ -46,42 +73,52 @@ class StoresListComponent extends StatelessWidget {
       onTap: () =>
           Get.toNamed(AppRoutes.showStore, arguments: {"store": store}),
       child: Container(
+        padding: EdgeInsets.zero,
         margin: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.sp),
             border: Border.all(color: Theme.of(context).colorScheme.primary)),
         child: BlurryContainer(
           blur: 10,
+          padding: EdgeInsets.zero,
           borderRadius: BorderRadius.circular(10.sp),
-          child: Row(
+          child: Column(
             children: [
               ImageCacheComponent(
+                fit: BoxFit.cover,
                 image: "${store.image}",
-                width: 100.sp,
-                height: 100.sp,
+                width: Get.width,
+                height: 130.sp,
                 borderRadius: BorderRadius.circular(10.sp),
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.all(10.sp),
+                  padding: EdgeInsets.all(5.sp),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AutoSizeText(
-                        "${store.name}",
-                        maxLines: 1,
-                        style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold,
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: AutoSizeText(
+                          "${store.name}",
+                          maxLines: 2,
+                          style: const TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       10.verticalSpace,
-                      AutoSizeText(
-                        "${store.info}",
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
-                          overflow: TextOverflow.ellipsis,
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: AutoSizeText(
+                          "${store.info}",
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ],

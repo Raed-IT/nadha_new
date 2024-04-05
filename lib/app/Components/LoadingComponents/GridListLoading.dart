@@ -2,12 +2,12 @@ import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class GridListLoading extends StatelessWidget {
+class HorizontalListLoading extends StatelessWidget {
   final double? height;
   final BorderRadius? borderRadius;
   final int? generateCount;
 
-  const GridListLoading(
+  const HorizontalListLoading(
       {super.key, this.height, this.borderRadius, this.generateCount});
 
   @override

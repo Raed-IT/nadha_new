@@ -6,6 +6,7 @@ import 'package:delevary/app/Screens/FavoriteScreen/FavoriteScreen.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreen.dart';
 import 'package:delevary/app/Screens/ProfileScreen/ProfileScreen.dart';
 import 'package:delevary/app/Screens/SaleScreen/SaleScreen.dart';
+import 'package:delevary/app/Screens/StoresScreens/StoresScreen/StoresScreen.dart';
 import 'package:delevary/app/Services/CartService.dart';
 import 'package:delevary/app/Services/deepLinkService.dart';
 import 'package:flutter/material.dart';
@@ -33,19 +34,20 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
     HomeScreen(),
     SaleScreen(),
     FavoriteScreen(),
-    ProfileScreen()
+    // ProfileScreen()
+    StoresScreen()
   ];
   List<IconData> icons = [
     Icons.home_outlined,
     FontAwesomeIcons.fire,
     FontAwesomeIcons.heart,
-    FontAwesomeIcons.user,
+    FontAwesomeIcons.store,
   ];
   List<IconData> activeIcons = [
     Icons.home_outlined,
     FontAwesomeIcons.fire,
     FontAwesomeIcons.heart,
-    FontAwesomeIcons.user,
+    FontAwesomeIcons.store,
   ];
 
   void onTap(int index) {

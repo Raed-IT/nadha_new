@@ -5,6 +5,7 @@ import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Data/Models/BaseModel.dart';
 import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -33,26 +34,29 @@ class GridListComponent<T extends BaseModel> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => isLoad.value
-          ? const GridListLoading()
-          : GridView.builder(
-              scrollDirection: Axis.vertical,
-              controller: scrollController,
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 40.h,
-                crossAxisSpacing: 5.sp,
-                childAspectRatio: 1 / 0.85,
+          ? const HorizontalListLoading()
+          : Container(
+              margin: EdgeInsets.only(top: 30.h),
+              clipBehavior: Clip.none,
+              width: Get.width,
+              height: 80.h,
+              child: ListView(
+                clipBehavior: Clip.none,
+                // shrinkWrap: true,
+                // physics: const ClampingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
+                // itemCount: items.length,
+                scrollDirection: Axis.horizontal,
+                children: items
+                    .map(
+                      (item) => buildCard(
+                        item,
+                        context,
+                        (item) => onTap(item),
+                      ),
+                    )
+                    .toList().animate().slideX(),
               ),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return buildCard(
-                  items[index],
-                  context,
-                  (item) => onTap(item),
-                );
-              },
             ),
     );
   }
@@ -61,6 +65,8 @@ class GridListComponent<T extends BaseModel> extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(item),
       child: SizedBox(
+        height: 00.h,
+        width: 90.w,
         child: Card(
           color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
           shape:

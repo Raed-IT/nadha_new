@@ -176,11 +176,7 @@ class ShowProductScreen extends StatelessWidget {
                                         ),
                                         Text(
                                           "${controller.product.value.info}",
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onBackground,
-                                          ),
+
                                           softWrap: true,
                                         ),
                                         20.verticalSpace,
@@ -200,7 +196,8 @@ class ShowProductScreen extends StatelessWidget {
                               ),
                               20.verticalSpace,
                               ProductListComponent(
-                                heroTagPrefix: "show${controller.product.value.id}Products",
+                                heroTagPrefix:
+                                    "show${controller.product.value.id}Products",
                                 products: controller.products,
                                 onProductTap: (ProductModel product, k) {
                                   if (product.id !=
@@ -210,7 +207,7 @@ class ShowProductScreen extends StatelessWidget {
                                         arguments: {
                                           "product": product,
                                           "hero":
-                                          "show${controller.product.value.id}Products",
+                                              "show${controller.product.value.id}Products",
                                         });
                                     Get.put(ShowProductScreenController(),
                                         tag: "show_product${product.id}");

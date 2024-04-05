@@ -1,4 +1,5 @@
 import 'package:delevary/app/Data/Models/AddressModel.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/AddressesScreens/AddressesScreen/AddressesScreenController.dart';
 import 'package:delevary/app/Screens/AddressesScreens/Components/showAddressBottomSheet.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,18 @@ class _AddressesScreenState extends State<AddressesScreen> {
     return Scaffold(
       drawerEnableOpenDragGesture: false,
       drawer: const DrawerComponent(),
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(1000.sp),
+        ),
+        onPressed: () => Get.toNamed(AppRoutes.addAddress),
+        heroTag: null,
+        child: Icon(
+          FontAwesomeIcons.plus,
+          size: 18.sp,
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
+      ).animate().slideY(begin: 1, duration: 700.ms),
       body: Builder(
         builder: (context) => Container(
           height: Get.height,
