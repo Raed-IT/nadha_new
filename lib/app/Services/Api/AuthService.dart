@@ -10,6 +10,8 @@ import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -40,16 +42,30 @@ class AuthBySocialService with ApiHelperMixin {
       }
       CityModel? cityModel;
       await Get.defaultDialog(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         barrierDismissible: false,
         title: "اختر المدينة",
-        content: DropDownComponent<CityModel>(
-          hintText: "اختر المدينة",
-          items: Get.find<MainController>().cities,
-          initVal: Get.find<MainController>().user.value?.city,
-          onSelected: (item) {
-            cityModel = item;
-            Get.back();
-          },
+        content: Column(
+          children: [
+            DropDownComponent<CityModel>(
+              hintText: "اختر المدينة",
+              items: Get.find<MainController>().cities,
+              initVal: Get.find<MainController>().user.value?.city,
+              onSelected: (item) {
+                cityModel = item;
+              },
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Get.back(),
+                    child: Text("تسجيل الدخول"),
+                  ),
+                ),
+              ],
+            )
+          ],
         ),
       );
       String? deviceToken = await OnSignalService.getDeviceNotificationToken();

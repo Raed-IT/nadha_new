@@ -176,7 +176,6 @@ class ShowProductScreen extends StatelessWidget {
                                         ),
                                         Text(
                                           "${controller.product.value.info}",
-
                                           softWrap: true,
                                         ),
                                         20.verticalSpace,
@@ -205,6 +204,7 @@ class ShowProductScreen extends StatelessWidget {
                                     Get.toNamed(AppRoutes.showProduct,
                                         preventDuplicates: false,
                                         arguments: {
+                                          "store": controller.store,
                                           "product": product,
                                           "hero":
                                               "show${controller.product.value.id}Products",

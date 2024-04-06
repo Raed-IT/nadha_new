@@ -30,11 +30,11 @@ class AddAddressScreen extends GetView<AddAddressScreenController> {
                       onMapCreated: (cont) {
                         controller.mapController = cont;
                       },
-                      mapType: MapType.satellite,
+                      mapType: MapType.hybrid,
                       onLongPress: (latLong) {
                         controller.addMarker(latLong);
                       },
-                      initialCameraPosition: CameraPosition(
+                      initialCameraPosition: const CameraPosition(
                         target: LatLng(36.002632, 36.667849),
                         zoom: 14,
                       ),
@@ -76,96 +76,104 @@ class AddAddressScreen extends GetView<AddAddressScreenController> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: DraggableScrollableSheet(
-              controller: controller.draggableScrollableController,
-              snap: true,
-              initialChildSize: 0.1,
-              maxChildSize: 0.5,
-              minChildSize: .1,
-              builder: (context, scroll) {
-                return Form(
-                  key: controller.formKey,
-                  child: Card(
-                    child: SingleChildScrollView(
-                      controller: scroll,
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.all(10.sp),
-                              height: 5.h,
-                              width: 80.w,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary,
-                                borderRadius: BorderRadius.circular(1000),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => controller.treggerBottomSheet(),
-                            child: const Text(
-                              "بيانات العنوان",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(10.sp),
-                            child: Column(
-                              children: [
-                                TextFieldComponent(
-                                  controller: controller.addressNameController,
-                                  hint: 'اسم العنوان',
-                                  validator: (data) {
-                                    if (data!.isEmpty) {
-                                      return "اسم العنوان مطلوب";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                TextFieldComponent(
-                                  controller: controller.addressInfoController,
-                                  isMultiple: true,
-                                  hint: 'وصف العنوان ',
-                                  validator: (data) {
-                                    if (data!.isEmpty) {
-                                      return "وصف العنوان مطلوب";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                20.verticalSpace,
-                                SizedBox(
-                                  width: Get.width,
-                                  height: 45.h,
-                                  child: MaterialButton(
-                                    onPressed: () =>
-                                        controller.addAddress(context),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.sp),
-                                    ),
+            child: Column(
+              children: [
+                DraggableScrollableSheet(
+                  controller: controller.draggableScrollableController,
+                  snap: true,
+                  initialChildSize: 0.1,
+                  maxChildSize: 0.5,
+                  minChildSize: .1,
+                  builder: (context, scroll) {
+                    return Form(
+                      key: controller.formKey,
+                      child: Card(
+                        child: SingleChildScrollView(
+                          controller: scroll,
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Container(
+                                  margin: EdgeInsets.all(10.sp),
+                                  height: 5.h,
+                                  width: 80.w,
+                                  decoration: BoxDecoration(
                                     color:
                                         Theme.of(context).colorScheme.primary,
-                                    child: Text(
-                                      "إضافة  العنوان",
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .background),
-                                    ),
+                                    borderRadius: BorderRadius.circular(1000),
                                   ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () => controller.treggerBottomSheet(),
+                                child: const Text(
+                                  "بيانات العنوان",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(10.sp),
+                                child: Column(
+                                  children: [
+                                    TextFieldComponent(
+                                      controller:
+                                          controller.addressNameController,
+                                      hint: 'اسم العنوان',
+                                      validator: (data) {
+                                        if (data!.isEmpty) {
+                                          return "اسم العنوان مطلوب";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    TextFieldComponent(
+                                      controller:
+                                          controller.addressInfoController,
+                                      isMultiple: true,
+                                      hint: 'وصف العنوان ',
+                                      validator: (data) {
+                                        if (data!.isEmpty) {
+                                          return "وصف العنوان مطلوب";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    20.verticalSpace,
+                                    SizedBox(
+                                      width: Get.width,
+                                      height: 45.h,
+                                      child: MaterialButton(
+                                        onPressed: () =>
+                                            controller.addAddress(context),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.sp),
+                                        ),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        child: Text(
+                                          "إضافة  العنوان",
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .background),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ],

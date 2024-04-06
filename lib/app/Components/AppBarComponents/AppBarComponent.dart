@@ -101,7 +101,9 @@ class AppBarComponent extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ).animate().scale(begin: const Offset(1, 1)),
+                      ).animate().scale(
+                            begin: const Offset(1, 1),
+                          ),
                     GestureDetector(
                       onTap: () => openDrawer(),
                       child: SizedBox(
@@ -111,7 +113,7 @@ class AppBarComponent extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
                             child: Icon(
-                              FontAwesomeIcons.barsStaggered,
+                              FontAwesomeIcons.bars,
                               size: 22.sp,
                               color: Theme.of(context).colorScheme.onBackground,
                             ),
@@ -119,7 +121,7 @@ class AppBarComponent extends StatelessWidget {
                         ),
                       ),
                     ).animate().slideX(
-                        begin: -1, duration: Duration(milliseconds: 400)),
+                        begin: -1, duration: const Duration(milliseconds: 400)),
                   ],
                 ),
               ),

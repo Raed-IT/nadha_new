@@ -33,21 +33,24 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
   List<Widget> pages = [
     HomeScreen(),
     SaleScreen(),
-    FavoriteScreen(),
-    // ProfileScreen()
-    StoresScreen()
+    StoresScreen(),
+    // FavoriteScreen(),
+    ProfileScreen()
   ];
   List<IconData> icons = [
-    Icons.home_outlined,
+    // Icons.home_outlined,
+    FontAwesomeIcons.house,
     FontAwesomeIcons.fire,
-    FontAwesomeIcons.heart,
     FontAwesomeIcons.store,
+    FontAwesomeIcons.user,
   ];
   List<IconData> activeIcons = [
-    Icons.home_outlined,
+    // Icons.home_outlined,
+    FontAwesomeIcons.house,
+
     FontAwesomeIcons.fire,
-    FontAwesomeIcons.heart,
     FontAwesomeIcons.store,
+    FontAwesomeIcons.user,
   ];
 
   void onTap(int index) {

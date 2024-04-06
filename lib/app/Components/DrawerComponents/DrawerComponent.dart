@@ -101,6 +101,13 @@ class DrawerComponent extends StatelessWidget {
                 buildItem(
                   rout: AppRoutes.addresses,
                   context: context,
+                  title: "المفضلة",
+                  icon: FontAwesomeIcons.heart,
+                  onTap: () => Get.toNamed(AppRoutes.favorites),
+                ),
+                buildItem(
+                  rout: AppRoutes.addresses,
+                  context: context,
                   title: "عناويني ",
                   icon: FontAwesomeIcons.mapLocationDot,
                   onTap: () => Get.toNamed(AppRoutes.addresses),

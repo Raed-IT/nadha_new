@@ -185,6 +185,7 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                                         Get.toNamed(AppRoutes.showProduct,
                                             preventDuplicates: false,
                                             arguments: {
+                                              "store": controller.store.value,
                                               "product": product,
                                               "hero": "homeProducts"
                                             });

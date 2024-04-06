@@ -1,14 +1,14 @@
- import 'package:delevary/app/Data/Models/BaseModel.dart';
+import 'package:delevary/app/Data/Models/BaseModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
- import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
+import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
 
 class DropDownComponent<T extends BaseModel> extends StatelessWidget {
   final String? searchHintText;
   final String hintText;
   final List<T> items;
   final T? initVal;
-
+  final BorderRadius? borderRadius;
   final Function(T? item) onSelected;
 
   const DropDownComponent(
@@ -17,7 +17,8 @@ class DropDownComponent<T extends BaseModel> extends StatelessWidget {
       required this.items,
       required this.onSelected,
       this.initVal,
-      required this.hintText});
+      required this.hintText,
+      this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class DropDownComponent<T extends BaseModel> extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.sp),
-      decoration: BoxDecoration(color: Theme.of(context).colorScheme.onPrimary),
+      decoration: BoxDecoration(
+          borderRadius: borderRadius ?? BorderRadius.circular(15.sp),
+          color: Theme.of(context).colorScheme.onPrimary),
       child: SearchableDropdown<T>(
         controller: (initVal != null)
             ? SearchableDropdownController(
