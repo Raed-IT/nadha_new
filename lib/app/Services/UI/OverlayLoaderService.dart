@@ -1,8 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
+
+import 'package:lottie/lottie.dart';
 
 class OverlayLoaderService {
   static show(BuildContext context) {
@@ -43,16 +45,20 @@ class _LoaderComponentState extends State<LoaderComponent>
     return AnimatedBuilder(
       animation: controller,
       builder: (_, child) {
-        return Transform.rotate(
-          angle: controller.value * 2 * math.pi,
-          child: child,
+        return Transform.translate(
+          offset: Offset(-300.w, 0),
+          child: AnimatedOpacity(
+            opacity: controller.value,
+            duration: 500.ms,
+            child: Transform.translate(
+              // scale: controller.value,
+              offset: Offset(controller.value * 500, controller.value),
+              child: child,
+            ),
+          ),
         );
       },
-      child: Image.asset(
-        "assets/images/loader.png",
-        width: 100.sp,
-        height: 100.h,
-      ),
+      child: Lottie.asset("assets/json/delevary_motor.json", width: 150.w),
     );
   }
 }
