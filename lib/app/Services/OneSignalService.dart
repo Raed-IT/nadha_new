@@ -10,8 +10,8 @@ class OnSignalService {
       await OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
       final status = await OneSignal.shared.getDeviceState();
       osUserID = status?.userId;
-      await Future.delayed(const Duration(milliseconds: 200));
-      if (count == 5) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (count == 10) {
         break;
       }
     }
