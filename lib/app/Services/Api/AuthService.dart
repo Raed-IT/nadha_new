@@ -59,7 +59,15 @@ class AuthBySocialService with ApiHelperMixin {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Get.back(),
+                    onPressed: () {
+                      if (cityModel == null) {
+                        ToastService.showErrorToast(
+                            context: context,
+                            title: "الرجاء إختيار مدينة لمتابعة تسجيل الدخول");
+                        return;
+                      }
+                      Get.back();
+                    },
                     child: Text("تسجيل الدخول"),
                   ),
                 ),

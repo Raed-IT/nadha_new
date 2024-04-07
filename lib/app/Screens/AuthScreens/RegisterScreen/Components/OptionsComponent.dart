@@ -31,10 +31,7 @@ class RegisterOptionsComponent extends GetView<RegisterScreenController> {
                   )
                 ],
               ),
-              Text("اختر نوع ال ــــ",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 17.sp)),
-              70.verticalSpace,
+              80.verticalSpace,
               Row(
                 children: GenderTypeEnum.values
                     .map(
@@ -48,9 +45,8 @@ class RegisterOptionsComponent extends GetView<RegisterScreenController> {
                                 height: 150.h,
                                 width: Get.width,
                                 child: Card(
-                                  elevation:  controller.gender.value == e
-                                      ? 7
-                                      : null,
+                                  elevation:
+                                      controller.gender.value == e ? 7 : null,
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.sp),

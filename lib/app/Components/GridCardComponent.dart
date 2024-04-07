@@ -55,69 +55,74 @@ class GridListComponent<T extends BaseModel> extends StatelessWidget {
                         (item) => onTap(item),
                       ),
                     )
-                    .toList().animate().slideX(),
+                    .toList()
+                    .animate()
+                    .slideX(),
               ),
             ),
     );
   }
 
   Widget buildCard(T item, BuildContext context, Function(T item) onTap) {
-    return GestureDetector(
-      onTap: () => onTap(item),
-      child: SizedBox(
-        height: 00.h,
-        width: 90.w,
-        child: Card(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.sp)),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                top: -45.h,
-                right: -5.sp,
-                left: -5.sp,
-                child: Hero(
-                  tag: "${prifexHero ?? ''}${item.id}",
-                  child: Card(
-                    elevation: 3,
-                    shadowColor: Theme.of(context).colorScheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.sp),
-                    ),
-                    child: ImageCacheComponent(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 2.w),
+      child: GestureDetector(
+        onTap: () => onTap(item),
+        child: SizedBox(
+          width: 90.w,
+          child: Card(
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.sp),
+            ),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Positioned(
+                  top: -45.h,
+                  right: -5.sp,
+                  left: -5.sp,
+                  child: Hero(
+                    tag: "${prifexHero ?? ''}${item.id}",
+                    child: Card(
+                      elevation: 3,
+                      shadowColor: Theme.of(context).colorScheme.primary,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.sp),
-                        height: (Get.width / 3) - 50.w,
-                        width: (Get.width / 3) - 20.w,
-                        image: "${item.getImage()}"),
-                  ),
-                ).animate().slideY(
-                      begin: 0.2,
-                      duration:
-                          Duration(milliseconds: Random().nextInt(400) + 100),
+                      ),
+                      child: ImageCacheComponent(
+                          borderRadius: BorderRadius.circular(10.sp),
+                          height: (Get.width / 3) - 50.w,
+                          width: (Get.width / 3) - 20.w,
+                          image: "${item.getImage()}"),
                     ),
-              ),
-              Positioned(
-                bottom: 2.h,
-                left: 1,
-                right: 1,
-                child: SizedBox(
-                  height: 30.h,
-                  child: Center(
-                    child: AutoSizeText(
-                      "${item.getTitle()}  ",
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        color: Theme.of(context).colorScheme.primaryContainer,
+                  ).animate().slideY(
+                        begin: 0.2,
+                        duration:
+                            Duration(milliseconds: Random().nextInt(400) + 100),
+                      ),
+                ),
+                Positioned(
+                  bottom: 2.h,
+                  left: 1,
+                  right: 1,
+                  child: SizedBox(
+                    height: 30.h,
+                    child: Center(
+                      child: AutoSizeText(
+                        "${item.getTitle()}  ",
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
