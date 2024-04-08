@@ -20,8 +20,6 @@ class ShowProductScreenController extends GetxController
   RxBool showExtendedImage = RxBool(true);
   String? productSlug = Get.arguments?['product_slug'];
 
-
-
   @override
   void onInit() {
     getSingleData(
@@ -30,13 +28,12 @@ class ShowProductScreenController extends GetxController
         type: "products",
         parameter: {
           if (productSlug != "null" && productSlug != null)
-            "product_slug": productSlug,
+            "product_slug": "$productSlug",
           if (product.value != null) "category_id": product.value?.category?.id,
           if (store != null) "store_id": store?.id,
         },
       ),
     );
-
     super.onInit();
   }
 

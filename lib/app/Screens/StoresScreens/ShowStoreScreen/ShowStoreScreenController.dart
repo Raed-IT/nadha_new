@@ -70,7 +70,7 @@ class ShowStoreScreenController extends GetxController
     } else {
       if (json['status'] == "ERROR") {
         Fluttertoast.showToast(msg: "خطأ لم يتم العثور على المتجر");
-        Get.back();
+        // Get.back();
         return;
       }
       store.value = StoreModel.fronJson(json['data']['store']);

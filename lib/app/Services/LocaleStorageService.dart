@@ -12,6 +12,12 @@ class LocaleStorageService {
     StorageController.setData(key: "token", value: token);
   }
 
+  static void deleteUserData() {
+    Get.find<MainController>().token.value = null;
+    Get.find<MainController>().user.value = null;
+    StorageController.setData(key: "token", value: null);
+  }
+
   static void setThemMode({required ThemeMode theme}) {
     StorageController.setData(key: "them", value: theme.name);
   }

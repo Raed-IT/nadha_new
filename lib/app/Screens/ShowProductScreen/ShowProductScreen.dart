@@ -58,7 +58,7 @@ class ShowProductScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(1000.sp),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Icon(FontAwesomeIcons.shareNodes),
                     ),
                     onPressed: () {
@@ -133,114 +133,136 @@ class ShowProductScreen extends StatelessWidget {
                                               width: 250.w),
                                         ),
                                       )
-                                    : Column(
-                                        children: [
-                                          Hero(
-                                            tag:
-                                                "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
-                                            child: Container(
-                                              key: productKey,
-                                              child: SliderComponent(
-                                                onTapItem: (item) {
-                                                  openImagesPage(
-                                                    Navigator.of(context),
-                                                    imgUrls: controller
-                                                        .product.value!.images!
-                                                        .map((e) => e.url!)
-                                                        .toList(),
-                                                    heroTags: List.generate(
-                                                      controller.product.value!
-                                                          .images!.length,
-                                                      (index) =>
-                                                          "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
-                                                    ),
-                                                  );
-                                                },
-                                                height: Get.width - 100.h,
-                                                sliders: controller
-                                                    .product.value!.images!
-                                                    .map((e) => SliderModel(
-                                                        e.id, e.url, ""))
-                                                    .toList(),
-                                                controller: PageController(),
-                                                isLoad: RxBool(false),
-                                              ),
+                                    : (controller.product.value == null)
+                                        ? SizedBox(
+                                            height: 300.h,
+                                            width: Get.width,
+                                            child: Center(
+                                              child: Text(
+                                                  "لم يتم العثور على المنتج "),
                                             ),
-                                          ),
-                                          20.verticalSpace,
-                                          Row(
+                                          )
+                                        : Column(
                                             children: [
-                                              10.horizontalSpace,
-                                              AddToCardComponent(
-                                                product:
-                                                    controller.product.value!,
-                                                onAddProduct: (prod) {
-                                                  controller.addToCartAnimation(
-                                                      cartKey: cartKey,
-                                                      widgetKey: productKey);
-                                                },
-                                                // onAddProduct: onAddProduct,
-                                                // onSetState: () {
-                                                //   if (widget.cartKey.currentState != null) {
-                                                //     widget.cartKey.currentState!.runCartAnimation(
-                                                //         "${Get.find<MainController>().cart.length}");
-                                                //   }
-                                                //   setState(() {});
-                                                // },
-                                              ),
-                                              Expanded(
-                                                  flex: 2, child: SizedBox()),
-                                            ],
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.all(10.sp),
-                                            child: BlurryContainer(
-                                              blur: 7,
-                                              borderRadius:
-                                                  BorderRadius.circular(10.sp),
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 0,
-                                                    vertical: 10.sp),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "${controller.product.value?.name}",
-                                                      style: TextStyle(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .primary,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 20.sp,
-                                                      ),
-                                                      softWrap: true,
-                                                    ),
-                                                    Text(
-                                                      "${controller.product.value?.info}",
-                                                      softWrap: true,
-                                                    ),
-                                                    20.verticalSpace,
-                                                    BuildPriceProductComponent(
-                                                      size: 18.sp,
-                                                      product: Rx(controller
-                                                          .product.value!),
-                                                    ),
-                                                  ],
+                                              Hero(
+                                                tag:
+                                                    "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
+                                                child: Container(
+                                                  key: productKey,
+                                                  child: SliderComponent(
+                                                    onTapItem: (item) {
+                                                      openImagesPage(
+                                                        Navigator.of(context),
+                                                        imgUrls: controller
+                                                            .product
+                                                            .value!
+                                                            .images!
+                                                            .map((e) => e.url!)
+                                                            .toList(),
+                                                        heroTags: List.generate(
+                                                          controller
+                                                              .product
+                                                              .value!
+                                                              .images!
+                                                              .length,
+                                                          (index) =>
+                                                              "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
+                                                        ),
+                                                      );
+                                                    },
+                                                    height: Get.width - 100.h,
+                                                    sliders: controller
+                                                        .product.value!.images!
+                                                        .map((e) => SliderModel(
+                                                            e.id, e.url, ""))
+                                                        .toList(),
+                                                    controller:
+                                                        PageController(),
+                                                    isLoad: RxBool(false),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
+                                              20.verticalSpace,
+                                              Row(
+                                                children: [
+                                                  10.horizontalSpace,
+                                                  AddToCardComponent(
+                                                    product: controller
+                                                        .product.value!,
+                                                    onAddProduct: (prod) {
+                                                      controller
+                                                          .addToCartAnimation(
+                                                              cartKey: cartKey,
+                                                              widgetKey:
+                                                                  productKey);
+                                                    },
+                                                    // onAddProduct: onAddProduct,
+                                                    // onSetState: () {
+                                                    //   if (widget.cartKey.currentState != null) {
+                                                    //     widget.cartKey.currentState!.runCartAnimation(
+                                                    //         "${Get.find<MainController>().cart.length}");
+                                                    //   }
+                                                    //   setState(() {});
+                                                    // },
+                                                  ),
+                                                  Expanded(
+                                                      flex: 2,
+                                                      child: SizedBox()),
+                                                ],
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.all(10.sp),
+                                                child: BlurryContainer(
+                                                  blur: 7,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.sp),
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 0,
+                                                            vertical: 10.sp),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "${controller.product.value?.name}",
+                                                          style: TextStyle(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .primary,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 20.sp,
+                                                          ),
+                                                          softWrap: true,
+                                                        ),
+                                                        Text(
+                                                          "${controller.product.value?.info}",
+                                                          softWrap: true,
+                                                        ),
+                                                        20.verticalSpace,
+                                                        BuildPriceProductComponent(
+                                                          size: 18.sp,
+                                                          product: Rx(controller
+                                                              .product.value!),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              40.verticalSpace,
+                                              BuildTitleSectionComponent(
+                                                isLoad: RxBool(false),
+                                                title: "منتجات ذات صلة",
+                                              ),
+                                              20.verticalSpace,
+                                            ],
                                           ),
-                                          40.verticalSpace,
-                                          BuildTitleSectionComponent(
-                                            isLoad: RxBool(false),
-                                            title: "منتجات ذات صلة",
-                                          ),
-                                          20.verticalSpace,
-                                        ],
-                                      ),
                               ),
                               ProductListComponent(
                                 heroTagPrefix:
