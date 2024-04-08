@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 class ProductModel {
   int? id;
   String? name;
+  String? slug;
   String? info;
   ProductUnitTypeEnum? unit;
   bool? isDiscount;
@@ -66,6 +67,7 @@ class ProductModel {
     }
     id = json['id'];
     image = json['image'];
+    slug = json['slug'];
     name = json['name'];
     info = json['info'];
     isFavorite = json['is_favorite'] as bool;

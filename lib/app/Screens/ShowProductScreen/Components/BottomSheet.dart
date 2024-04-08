@@ -90,8 +90,9 @@ class _ShowProductBottomSheetState extends State<ShowProductBottomSheet> {
                         Row(
                           children: [
                             10.horizontalSpace,
+                            if(widget.controller.product.value!=null)
                             AddToCardComponent(
-                              product: widget.controller.product.value,
+                              product: widget.controller.product.value!,
                               onAddProduct: widget.onAddProduct,
                               onSetState: () {
                                 if (widget.cartKey.currentState != null) {
@@ -148,7 +149,7 @@ class _ShowProductBottomSheetState extends State<ShowProductBottomSheet> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${widget.controller.product.value.name}",
+                                    "${widget.controller.product.value?.name}",
                                     style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.primary,
@@ -158,7 +159,7 @@ class _ShowProductBottomSheetState extends State<ShowProductBottomSheet> {
                                     softWrap: true,
                                   ),
                                   Text(
-                                    "${widget.controller.product.value.info}",
+                                    "${widget.controller.product.value?.info}",
                                     style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -167,9 +168,10 @@ class _ShowProductBottomSheetState extends State<ShowProductBottomSheet> {
                                     softWrap: true,
                                   ),
                                   20.verticalSpace,
+                                  if(widget.controller.product.value!=null)
                                   BuildPriceProductComponent(
                                     size: 18.sp,
-                                    product: widget.controller.product,
+                                    product: Rx(widget.controller.product.value!),
                                   ),
                                 ],
                               ),
@@ -191,6 +193,7 @@ class _ShowProductBottomSheetState extends State<ShowProductBottomSheet> {
             ).animate().slideY(begin: 1, duration: 300.ms, delay: 0.ms),
           ),
         ),
+        if (widget.controller.product.value!=null)
         Obx(
           () => (widget.controller.showExtendedImage.value)
               ? Positioned(
@@ -198,12 +201,12 @@ class _ShowProductBottomSheetState extends State<ShowProductBottomSheet> {
                   child: GestureDetector(
                     onTap: () => openImagesPage(
                       heroTags: List.generate(
-                        widget.controller.product.value.images!.length,
+                        widget.controller.product.value!.images!.length,
                         (index) =>
-                            "${widget.controller.heroPrefix ?? 'product_image_'}${widget.controller.product.value.id}",
+                            "${widget.controller.heroPrefix ?? 'product_image_'}${widget.controller.product.value!.id}",
                       ),
                       Navigator.of(context),
-                      imgUrls: widget.controller.product.value.images!
+                      imgUrls: widget.controller.product.value!.images!
                           .map((e) => e.url!)
                           .toList(),
                     ),

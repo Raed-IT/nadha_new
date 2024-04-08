@@ -76,7 +76,7 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                 ),
                 onPressed: () {
                   Share.share(
-                      '${controller.store.value?.name}\n${ApiRoute.domin}/stores/${controller.store.value?.uniqName}');
+                      '${controller.store.value?.name}\n\n\n${ApiRoute.domin}/stores/${controller.store.value?.uniqName}');
                 },
               ),
               10.verticalSpace,

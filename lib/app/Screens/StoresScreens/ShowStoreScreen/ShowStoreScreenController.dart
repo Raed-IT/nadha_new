@@ -26,7 +26,7 @@ class ShowStoreScreenController extends GetxController
   void onInit() {
     super.onInit();
     if (storeId != "null" && store.value == null) {
-      Logger().w(storeId);
+      // Logger().w(storeId);
       getSingleData(
         url:
             UrlModel(url: "${ApiRoute.stores}/show/$storeId", type: "getStore"),
