@@ -42,7 +42,7 @@ class ShowStoreScreenController extends GetxController
     paginationParameter = {
       "store_id": store.value!.id,
     };
-   getFreshData();
+    getFreshData();
   }
 
   Future getFreshData() async {

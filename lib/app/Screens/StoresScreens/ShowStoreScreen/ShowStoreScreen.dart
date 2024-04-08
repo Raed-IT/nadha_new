@@ -231,27 +231,33 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                                 ],
                               )
                             : SizedBox(
-                                height: Get.height - 100.h,
+                                height: Get.height,
                                 width: Get.width,
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Lottie.asset(
-                                      "assets/json/stores.json",
-                                      width: 400.w,
-                                      height: 400.h,
-                                    ),
+                                    Lottie.asset("assets/json/stores.json",
+                                        width: 500.sp,
+                                        height: 400.sp,
+                                        alignment: Alignment.center,
+                                        fit: BoxFit.fill),
                                     Transform.translate(
                                       offset: Offset(0, -80.h),
-                                      child: Text(
-                                        'لم يتم العثور على المتجر',
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontWeight: FontWeight.bold),
+                                      child: GestureDetector(
+                                        onTap: () => Get.back(),
+                                        child: Text(
+                                          ' لم يتم العثور على المتجر\n انقر للعودة الى الصفحة الرئيسية',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     )
-                                  ],
+                                    ],
                                 ),
                               )
                         : Center(
