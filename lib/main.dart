@@ -20,6 +20,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   await GetStorage.init(AppRoutes.appName);
   Helper.initial(
       appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.activeAll());

@@ -11,6 +11,8 @@ class TextFieldComponent extends StatelessWidget {
   final TextStyle? textStyle;
   final void Function(String)? onChange;
   final String? label;
+  final int? maxLines;
+
   final bool isMultiple;
   final bool autofocus;
   final bool isDisable;
@@ -32,7 +34,9 @@ class TextFieldComponent extends StatelessWidget {
       super.key,
       this.isRequired = false,
       this.isMultiple = false,
-      this.hasSpaseUp=true, this.inputDecoration});
+      this.hasSpaseUp = true,
+      this.inputDecoration,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +46,7 @@ class TextFieldComponent extends StatelessWidget {
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if(hasSpaseUp)
-            10.verticalSpace,
+            if (hasSpaseUp) 10.verticalSpace,
             if (label != null)
               Padding(
                 padding: EdgeInsets.all(10.h),
@@ -55,7 +58,7 @@ class TextFieldComponent extends StatelessWidget {
               ),
             // 5.verticalSpace,
             TextFormField(
-              maxLines: isMultiple ? null : 1,
+              maxLines: isMultiple ? maxLines : 1,
               minLines: isMultiple ? 4 : null,
               enabled: isDisable,
               autofocus: autofocus,
@@ -66,35 +69,37 @@ class TextFieldComponent extends StatelessWidget {
               style: textStyle ??
                   const TextStyle(fontSize: 15.0, color: Colors.black),
               obscureText: isPassword ? isShowPass.value : RxBool(false).value,
-              decoration: inputDecoration??InputDecoration(
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.onPrimary,
-                suffixIcon: isPassword
-                    ? SizedBox(
-                        width: 30.w,
-                        child: IconButton(
-                          iconSize: 25.sp,
-                          padding: EdgeInsets.zero,
-                          onPressed: () => isShowPass.value = !isShowPass.value,
-                          icon: isShowPass.value
-                              ? const Icon(Icons.visibility)
-                              : const Icon(Icons.visibility_off_outlined),
-                        ),
-                      )
-                    : const SizedBox(),
-                hintText: hint,
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10.sp, vertical: 20.sp),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Theme.of(context).colorScheme.onBackground),
-
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
+              decoration: inputDecoration ??
+                  InputDecoration(
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.onPrimary,
+                    suffixIcon: isPassword
+                        ? SizedBox(
+                            width: 30.w,
+                            child: IconButton(
+                              iconSize: 25.sp,
+                              padding: EdgeInsets.zero,
+                              onPressed: () =>
+                                  isShowPass.value = !isShowPass.value,
+                              icon: isShowPass.value
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off_outlined),
+                            ),
+                          )
+                        : const SizedBox(),
+                    hintText: hint,
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10.sp, vertical: 20.sp),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onBackground),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
             ),
           ],
         ),

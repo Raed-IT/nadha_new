@@ -1,7 +1,9 @@
+import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class MarkerComponent extends StatelessWidget {
@@ -9,28 +11,26 @@ class MarkerComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.secondary,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(10.sp),
-          topLeft: Radius.circular(10.sp),
-          bottomRight: Radius.elliptical(150.sp, 300.h),
-          bottomLeft: Radius.elliptical(150.sp, 300.h),
-        ),
-      ),
-      child: Column(
+    return SizedBox(
+      height: 300.h,
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
         children: [
-          Image(
-            image:
-                NetworkImage("${Get.find<MainController>().user.value?.image}"),
-            height: 100.sp,
-            width: 100.sp,
+          Icon(
+            FontAwesomeIcons.locationPin,
+            size: 100.sp,
+            color: Theme.of(context).colorScheme.primary,
           ),
-          Text(
-            "${Get.find<MainController>().user.value?.name}",
-            style: const TextStyle(color: Colors.black),
-          )
+          Padding(
+            padding: EdgeInsets.only(bottom: 20.h),
+            child: ImageCacheComponent(
+              image: "${Get.find<MainController>().user.value?.image}",
+              width: 50.sp,
+              height: 50.sp,
+              borderRadius: BorderRadius.circular(10000.sp),
+            ),
+          ),
         ],
       ),
     );

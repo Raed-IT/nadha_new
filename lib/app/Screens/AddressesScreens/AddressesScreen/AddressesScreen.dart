@@ -1,6 +1,8 @@
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/AddressesScreens/AddressesScreen/AddressesScreenController.dart';
+import 'package:delevary/app/Screens/AddressesScreens/Components/MarkerComponent.dart';
 import 'package:delevary/app/Screens/AddressesScreens/Components/showAddressBottomSheet.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:widget_to_marker/widget_to_marker.dart';
 import '../../../Components/DrawerComponents/DrawerComponent.dart';
 import 'Component/DeleteAddressDialog.dart';
 
@@ -101,44 +105,87 @@ class _AddressesScreenState extends State<AddressesScreen> {
 
   Widget buildCardAddress(
       AddressModel address, BuildContext context, Function() onSetState) {
-    return Container(
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(10.sp),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${address.name}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      '${address.info}',
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary),
-                    ),
-                  ],
+    RxList<Marker> marker = RxList([]);
+    getMarkerWidget(address, (mar) {
+      marker.value = [mar];
+    });
+    return SizedBox(
+      height: 250.h,
+      width: Get.width,
+      child: Stack(
+        children: [
+          BlurryContainer(
+            width: Get.width,
+            child: Obx(
+              () => GoogleMap(
+                markers: marker.toSet(),
+                padding: EdgeInsets.zero,
+                zoomControlsEnabled: false,
+                initialCameraPosition: CameraPosition(
+                  zoom: 18,
+                  target: LatLng(
+                    double.parse("${address.lat}"),
+                    double.parse("${address.long}"),
+                  ),
                 ),
               ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () => showAddressBottomSheet(address: address),
-                    icon: const Icon(FontAwesomeIcons.mapMarker),
-                  ),
-                  IconButton(
-                    onPressed: () => showDeleteAddressDialog(
-                        address, context, controller, onSetState),
-                    icon: const Icon(Icons.delete),
-                  ),
-                ],
-              )
-            ],
+            ),
           ),
+          Positioned(
+            bottom: 0,
+            child: SizedBox(
+              height: 70.h,
+              width: Get.width,
+              child: Card(
+                child: Padding(
+                  padding: EdgeInsets.all(10.sp),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${address.name}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              '${address.info}',
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => showDeleteAddressDialog(
+                            address, context, controller, onSetState),
+                        icon: const Icon(Icons.delete),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> getMarkerWidget(
+      AddressModel address, Function(Marker) onCompleted) async {
+    BitmapDescriptor icon = await MarkerComponent().toBitmapDescriptor(
+        logicalSize: const Size(150, 150), imageSize: const Size(150, 150));
+
+    onCompleted(
+      Marker(
+        markerId: MarkerId("address${address.id}"),
+        position: LatLng(
+          double.parse("${address.lat}"),
+          double.parse("${address.long}"),
         ),
+        icon: icon,
       ),
     );
   }

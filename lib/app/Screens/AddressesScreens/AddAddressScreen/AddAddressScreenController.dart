@@ -5,12 +5,12 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/AddressesScreens/Components/MarkerComponent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:logger/logger.dart';
+import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 import '../../../Services/UI/OverlayLoaderService.dart';
 import '../../../Services/UI/ToastService.dart';
@@ -21,9 +21,7 @@ class AddAddressScreenController extends GetxController with ApiHelperMixin {
   TextEditingController addressInfoController = TextEditingController();
   late GoogleMapController mapController;
   RxList<Marker> marker = RxList([]);
-  DraggableScrollableController draggableScrollableController =
-      DraggableScrollableController();
-
+  PanelController panelController = PanelController();
   Future<void> addAddress(BuildContext context) async {
     if (marker.isEmpty) {
       ToastService.showErrorToast(
@@ -67,23 +65,6 @@ class AddAddressScreenController extends GetxController with ApiHelperMixin {
           logicalSize: const Size(150, 150), imageSize: const Size(150, 150)),
     );
     marker.add(currentMarker);
-    Logger().w(marker.length);
-  }
-
-  @override
-  void onReady() {
-    draggableScrollableController.animateTo(0.5,
-        duration: 400.ms, curve: Curves.linear);
-    super.onReady();
-  }
-
-  void treggerBottomSheet() {
-    if (draggableScrollableController.size > 0.3) {
-      draggableScrollableController.animateTo(.08,
-          duration: 500.ms, curve: Curves.linear);
-    } else {
-      draggableScrollableController.animateTo(.5,
-          duration: 500.ms, curve: Curves.linear);
-    }
+    panelController.open();
   }
 }
