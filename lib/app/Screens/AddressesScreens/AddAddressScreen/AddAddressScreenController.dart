@@ -3,12 +3,14 @@ import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/AddressesScreens/Components/MarkerComponent.dart';
+import 'package:delevary/app/Services/LocationService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:helper/mixin/api_mixing.dart';
+import 'package:location/location.dart';
 import 'package:logger/logger.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
@@ -22,6 +24,7 @@ class AddAddressScreenController extends GetxController with ApiHelperMixin {
   late GoogleMapController mapController;
   RxList<Marker> marker = RxList([]);
   PanelController panelController = PanelController();
+
   Future<void> addAddress(BuildContext context) async {
     if (marker.isEmpty) {
       ToastService.showErrorToast(
@@ -56,7 +59,7 @@ class AddAddressScreenController extends GetxController with ApiHelperMixin {
     }
   }
 
-  void addMarker(LatLng latLng) async {
+  void addMarker(LatLng latLng, {bool moveCamera = false}) async {
     marker.value = [];
     Marker currentMarker = Marker(
       markerId: MarkerId("user"),
@@ -65,6 +68,28 @@ class AddAddressScreenController extends GetxController with ApiHelperMixin {
           logicalSize: const Size(150, 150), imageSize: const Size(150, 150)),
     );
     marker.add(currentMarker);
+    if (moveCamera) {
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: latLng,
+            zoom: 14,
+          ),
+        ),
+      );
+    }
     panelController.open();
+  }
+
+  Future<void> myLocation(BuildContext context) async {
+    LocationService locationService = LocationService();
+    LocationData? location = await locationService.getLocation();
+    if (location != null) {
+      addMarker(LatLng(location.latitude!, location.longitude!),
+          moveCamera: true);
+    } else {
+      ToastService.showErrorToast(
+          context: context, title: "فشل في اختيار الموقع");
+    }
   }
 }

@@ -99,7 +99,7 @@ class DrawerComponent extends StatelessWidget {
                       : Container(),
                 ),
                 buildItem(
-                  rout: AppRoutes.addresses,
+                  rout: AppRoutes.favorites,
                   context: context,
                   title: "المفضلة",
                   icon: FontAwesomeIcons.heart,

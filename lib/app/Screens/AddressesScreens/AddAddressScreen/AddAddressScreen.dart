@@ -1,6 +1,8 @@
 import 'package:delevary/app/Screens/AddressesScreens/AddAddressScreen/AddAddressScreenController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
@@ -14,6 +16,8 @@ class AddAddressScreen extends GetView<AddAddressScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SlidingUpPanel(
+        borderRadius: BorderRadius.circular(15.sp),
+        margin: EdgeInsets.symmetric(horizontal: 5.sp, vertical: 15.sp),
         panelBuilder: () => Form(
           key: controller.formKey,
           child: SingleChildScrollView(
@@ -89,29 +93,75 @@ class AddAddressScreen extends GetView<AddAddressScreenController> {
             ),
           ),
         ),
-        body: SizedBox(
-          height: Get.height,
-          width: Get.width,
-          child: Obx(
-            () => GoogleMap(
-              initialCameraPosition: const CameraPosition(
-                target: LatLng(36.002632, 36.667849),
-                zoom: 14,
+        body: Stack(
+          children: [
+            SizedBox(
+              height: Get.height,
+              width: Get.width,
+              child: Obx(
+                () => GoogleMap(
+                  zoomControlsEnabled: false,
+                  initialCameraPosition: const CameraPosition(
+                    target: LatLng(36.002632, 36.667849),
+                    zoom: 14,
+                  ),
+                  markers: controller.marker.toSet(),
+                  onMapCreated: (GoogleMapController cont) {
+                    controller.mapController = cont;
+                  },
+                  onLongPress: (latLong) {
+                    controller.addMarker(latLong);
+                  },
+                ),
               ),
-              markers: controller.marker.toSet(),
-              onMapCreated: (GoogleMapController cont) {
-                controller.mapController = cont;
-              },
-              onLongPress: (latLong) {
-                controller.addMarker(latLong);
-              },
             ),
-          ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: SafeArea(
+                child: SizedBox(
+                  width: Get.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 50.h,
+                        width: 200.w,
+                        child: const Card(
+                          child: Center(
+                            child: Text("اضغط مطولا لاضافة عنوانك"),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => controller.myLocation(context),
+                        child: SizedBox(
+                          height: 50.h,
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              child: Row(
+                                children: [
+                                  Icon(FontAwesomeIcons.locationCrosshairs),
+                                  10.horizontalSpace,
+                                  Text("اختيار موقعي")
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).animate().slideY(),
+                ),
+              ),
+            )
+          ],
         ),
         minHeight: 60.h,
         parallaxEnabled: true,
         defaultPanelState: PanelState.CLOSED,
-        collapsed: Material(
+        collapsed: ClipRRect(
+          borderRadius: BorderRadius.circular(20.sp),
           child: GestureDetector(
             onTap: () => controller.panelController.open(),
             child: Container(
