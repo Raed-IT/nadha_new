@@ -1,6 +1,9 @@
+import 'package:device_info_plus/device_info_plus.dart';
+
 class SettingModel {
   int? id;
   String? address;
+  String? appUrl;
   String? currentVersion;
   bool? isClose;
   double? deliveryPrice;
@@ -22,26 +25,36 @@ class SettingModel {
   String? updatedAt;
   bool? forcedUpdate;
 
-  SettingModel(
-      {this.id,
-      this.address,
-      this.exchange,
-      this.isClose,
-      this.longitude,
-      this.latitude,
-      this.email,
-      this.img,
-      this.subEmail,
-      this.phone,
-      this.subPhone,
-      this.twitter,
-      this.face,
-      this.instagram,
-      this.youtube,
-      this.linkedin,
-      this.privacy,
-      this.createdAt,
-      this.updatedAt});
+  Future<bool> get isForcedUpdate async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    final deviceInfo = await deviceInfoPlugin.deviceInfo;
+    final allInfo = deviceInfo.data;
+
+    if (appUrl == "" ) {
+      return false;
+    }
+    return false;
+  }
+
+  SettingModel({this.id,
+    this.address,
+    this.exchange,
+    this.isClose,
+    this.longitude,
+    this.latitude,
+    this.email,
+    this.img,
+    this.subEmail,
+    this.phone,
+    this.subPhone,
+    this.twitter,
+    this.face,
+    this.instagram,
+    this.youtube,
+    this.linkedin,
+    this.privacy,
+    this.createdAt,
+    this.updatedAt});
 
   SettingModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -50,13 +63,14 @@ class SettingModel {
     longitude = json['longitude'];
     exchange = double.tryParse("${json['exchange']}");
     latitude = json['latitude'];
-    forcedUpdate =  bool.tryParse("${json['forced_update']}");
+    forcedUpdate = bool.tryParse("${json['forced_update']}");
     email = json['email'];
     img = json['img'];
     currentVersion = json['current_version'];
     deliveryPrice = double.tryParse("${json['delivery_price']}");
     subEmail = json['sub_email'];
     phone = json['phone'];
+    appUrl = json['app_url'];
     subPhone = json['sub_phone'];
     twitter = json['twitter'];
     face = json['face'];

@@ -46,6 +46,15 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return Obx(
           () => GetMaterialApp(
+            builder: (context, widget) {
+              final MediaQueryData data = MediaQuery.of(context);
+              return MediaQuery(
+                data: data.copyWith(
+                  textScaleFactor: 1,
+                ),
+                child: widget!,
+              );
+            },
             theme: LightThemeData.them(),
             darkTheme: DarkThemeData.them(),
             title: "تسوقي",

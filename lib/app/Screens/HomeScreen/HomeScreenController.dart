@@ -1,18 +1,20 @@
+// import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Data/Models/SliderModel.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
+import 'package:logger/logger.dart';
 import '../../Services/CartService.dart';
-
-class HomeScreenController extends GetxController
+ class HomeScreenController extends GetxController
     with ApiHelperMixin, PaginationMixin<ProductModel> {
   RxList<CategoryModel> categories = RxList([]);
   RxList<SliderModel> sliders = RxList([]);
@@ -23,9 +25,19 @@ class HomeScreenController extends GetxController
 
   @override
   void onInit() {
+
     paginationUrl = ApiRoute.products;
     getFreshData();
     super.onInit();
+  }
+
+
+  test() async {
+
+    // PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    // String version = packageInfo.version;
+    // String buildNumber = packageInfo.buildNumber;
+    // Logger().w("version=>$version  buildNumber=>$buildNumber");
   }
 
   Future getFreshData() async {
