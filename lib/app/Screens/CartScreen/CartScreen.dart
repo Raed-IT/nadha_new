@@ -31,49 +31,41 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartScreenController>(
-      builder: (controller) =>
-          Scaffold(
-            drawerEnableOpenDragGesture: false,
-            drawer: const DrawerComponent(),
-            body: Builder(
-              builder: (context) =>
-                  Container(
-                    height: Get.height,
-                    color: Theme
-                        .of(context)
-                        .colorScheme
-                        .background,
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: Get.height,
-                          width: Get.width,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 0.1,
-                              repeat: ImageRepeat.repeat,
-                              image: AssetImage('assets/images/bg.png'),
-                            ),
-                          ),
-                        ).animate().blur(
-                          delay: 50.ms,
-                          begin: const Offset(20, 20),
-                          duration: 1500.ms,
-                        ),
-                        Column(
-                          children: [
-                            AppBarComponent(
-                              openDrawer: () {
-                                Scaffold.of(context).openDrawer();
-                              },
-                              title: "السلة",
-                            ),
-                            Obx(() =>
-                            (Get
-                                .find<MainController>()
-                                .cart
-                                .isNotEmpty) ?
-                            BlurryContainer(
+      builder: (controller) => Scaffold(
+        drawerEnableOpenDragGesture: false,
+        drawer: const DrawerComponent(),
+        body: Builder(
+          builder: (context) => Container(
+            height: Get.height,
+            color: Theme.of(context).colorScheme.background,
+            child: Stack(
+              children: [
+                Container(
+                  height: Get.height,
+                  width: Get.width,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      opacity: 0.1,
+                      repeat: ImageRepeat.repeat,
+                      image: AssetImage('assets/images/bg.png'),
+                    ),
+                  ),
+                ).animate().blur(
+                      delay: 50.ms,
+                      begin: const Offset(20, 20),
+                      duration: 1500.ms,
+                    ),
+                Column(
+                  children: [
+                    AppBarComponent(
+                      openDrawer: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      title: "السلة",
+                    ),
+                    Obx(
+                      () => (Get.find<MainController>().cart.isNotEmpty)
+                          ? BlurryContainer(
                               child: Container(
                                 padding: EdgeInsets.all(10.sp),
                                 // height: 50.h,
@@ -84,9 +76,7 @@ class _CartScreenState extends State<CartScreen> {
                                         Text(
                                           "اجمالي الطلبات",
                                           style: TextStyle(
-                                              color:
-                                              Theme
-                                                  .of(context)
+                                              color: Theme.of(context)
                                                   .colorScheme
                                                   .primary,
                                               fontSize: 17.sp,
@@ -94,11 +84,9 @@ class _CartScreenState extends State<CartScreen> {
                                         ),
                                         const Spacer(),
                                         Text(
-                                          "${controller.cartService
-                                              .getTotal()}",
+                                          "${controller.cartService.getTotal()}",
                                           style: TextStyle(
-                                              color: Theme
-                                                  .of(context)
+                                              color: Theme.of(context)
                                                   .colorScheme
                                                   .secondary,
                                               fontSize: 20.sp,
@@ -112,9 +100,7 @@ class _CartScreenState extends State<CartScreen> {
                                         Text(
                                           "اجور توصيل",
                                           style: TextStyle(
-                                              color:
-                                              Theme
-                                                  .of(context)
+                                              color: Theme.of(context)
                                                   .colorScheme
                                                   .primary,
                                               fontSize: 17.sp,
@@ -122,14 +108,9 @@ class _CartScreenState extends State<CartScreen> {
                                         ),
                                         const Spacer(),
                                         Text(
-                                          "${Get
-                                              .find<MainController>()
-                                              .setting
-                                              .value
-                                              ?.deliveryPrice ?? 0}",
+                                          "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}",
                                           style: TextStyle(
-                                              color: Theme
-                                                  .of(context)
+                                              color: Theme.of(context)
                                                   .colorScheme
                                                   .secondary,
                                               fontSize: 20.sp,
@@ -143,9 +124,7 @@ class _CartScreenState extends State<CartScreen> {
                                         Text(
                                           "اجمالي الفاتورة",
                                           style: TextStyle(
-                                              color:
-                                              Theme
-                                                  .of(context)
+                                              color: Theme.of(context)
                                                   .colorScheme
                                                   .primary,
                                               fontSize: 17.sp,
@@ -153,17 +132,16 @@ class _CartScreenState extends State<CartScreen> {
                                         ),
                                         const Spacer(),
                                         Text(
-                                          ((Get
-                                              .find<MainController>()
-                                              .setting
-                                              .value
-                                              ?.deliveryPrice ??
-                                              0) +
-                                              controller.cartService.getTotal())
+                                          ((Get.find<MainController>()
+                                                          .setting
+                                                          .value
+                                                          ?.deliveryPrice ??
+                                                      0) +
+                                                  controller.cartService
+                                                      .getTotal())
                                               .toStringAsFixed(1),
                                           style: TextStyle(
-                                              color: Theme
-                                                  .of(context)
+                                              color: Theme.of(context)
                                                   .colorScheme
                                                   .secondary,
                                               fontSize: 20.sp,
@@ -174,164 +152,137 @@ class _CartScreenState extends State<CartScreen> {
                                   ],
                                 ),
                               ),
-                            ):Container(),),
-                            Expanded(
-                              child: Obx(
-                                    () =>
-                                (Get
-                                    .find<MainController>()
-                                    .cart
-                                    .isEmpty)
-                                    ? const CartEmptyComponent()
-                                    : ListView(
-                                  padding: const EdgeInsets.all(0),
-                                  physics: const BouncingScrollPhysics(),
-                                  children: Get
-                                      .find<MainController>()
-                                      .cart
-                                      .map(
-                                        (cartItem) =>
-                                        buildCartItemCard(
-                                            controller: controller,
-                                            cartItem: cartItem,
-                                            context: context)
-                                            .animate()
-                                            .slideY(begin: 1),
-                                  )
-                                      .toList(),
-                                ),
-                              ),
-                            ),
-                            if (Get
-                                .find<MainController>()
-                                .cart
-                                .isNotEmpty)
-                              buildSubmeitCard(controller: controller)
-                          ],
-                        ),
-                      ],
+                            )
+                          : Container(),
                     ),
-                  ),
+                    Expanded(
+                      child: Obx(
+                        () => (Get.find<MainController>().cart.isEmpty)
+                            ? const CartEmptyComponent()
+                            : ListView(
+                                padding: const EdgeInsets.all(0),
+                                physics: const BouncingScrollPhysics(),
+                                children: Get.find<MainController>()
+                                    .cart
+                                    .map(
+                                      (cartItem) => buildCartItemCard(
+                                              controller: controller,
+                                              cartItem: cartItem,
+                                              context: context)
+                                          .animate()
+                                          .slideY(begin: 1),
+                                    )
+                                    .toList(),
+                              ),
+                      ),
+                    ),
+                    if (Get.find<MainController>().cart.isNotEmpty &&
+                        Get.find<MainController>().setting.value!.isClose!)
+                      buildSubmeitCard(controller: controller),
+                  ],
+                ),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 
   Widget buildSubmeitCard({required CartScreenController controller}) {
     return Obx(
-          () =>
-      (Get
-          .find<MainController>()
-          .selectedAddress
-          .value == null)
+      () => (Get.find<MainController>().selectedAddress.value == null)
           ? GestureDetector(
-        onTap: () => showAddressesBottomSheet(context: context),
-        child: SizedBox(
-          height: 70.h,
-          width: Get.width,
-          child: Card(
-            color: Theme
-                .of(context)
-                .colorScheme
-                .primary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.sp),
-            ),
-            margin:
-            EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-            child: const Center(
-              child: Text("أختيار موقع الطلب"),
-            ),
-          ),
-        ),
-      )
+              onTap: () => showAddressesBottomSheet(context: context),
+              child: SizedBox(
+                height: 70.h,
+                width: Get.width,
+                child: Card(
+                  color: Theme.of(context).colorScheme.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.sp),
+                  ),
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                  child: const Center(
+                    child: Text("أختيار موقع الطلب"),
+                  ),
+                ),
+              ),
+            )
           : Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: GestureDetector(
-              onTap: () =>
-                  showConfirmCartDialog(context, () {
-                    Get.back();
-                    controller.createOrder(context);
-                  }, controller),
-              child: SizedBox(
-                height: 70.h,
-                width: Get.width,
-                child: Card(
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .secondary
-                      .withOpacity(0.8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.sp),
-                  ),
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 10.w, vertical: 10.h),
-                  child: Center(
-                    child: Text(
-                      " إطلب الى ${Get
-                          .find<MainController>()
-                          .selectedAddress
-                          .value!
-                          .name}",
-                      style: TextStyle(
-                          color: Theme
-                              .of(context)
-                              .colorScheme
-                              .background,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp),
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: GestureDetector(
+                    onTap: () => showConfirmCartDialog(context, () {
+                      Get.back();
+                      controller.createOrder(context);
+                    }, controller),
+                    child: SizedBox(
+                      height: 70.h,
+                      width: Get.width,
+                      child: Card(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary
+                            .withOpacity(0.8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.sp),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 10.h),
+                        child: Center(
+                          child: Text(
+                            " إطلب الى ${Get.find<MainController>().selectedAddress.value!.name}",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.background,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () async {
-                await showAddressesBottomSheet(context: context);
-                setState(() {});
-              },
-              child: SizedBox(
-                height: 70.h,
-                width: Get.width,
-                child: Card(
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.sp),
-                  ),
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 10.w, vertical: 10.h),
-                  child: Center(
-                    child: Text(
-                      "تبديل الموقع",
-                      style: TextStyle(
-                          color: Theme
-                              .of(context)
-                              .colorScheme
-                              .background,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      await showAddressesBottomSheet(context: context);
+                      setState(() {});
+                    },
+                    child: SizedBox(
+                      height: 70.h,
+                      width: Get.width,
+                      child: Card(
+                        color: Theme.of(context).colorScheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.sp),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 10.h),
+                        child: Center(
+                          child: Text(
+                            "تبديل الموقع",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.background,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
-  Widget buildCartItemCard({required CartItemModel cartItem,
-    required BuildContext context,
-    required CartScreenController controller}) {
+  Widget buildCartItemCard(
+      {required CartItemModel cartItem,
+      required BuildContext context,
+      required CartScreenController controller}) {
     return SizedBox(
       height: 160.h,
       child: Padding(
@@ -394,8 +345,7 @@ class _CartScreenState extends State<CartScreen> {
                                     maxLines: 2,
                                     style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
-                                      color: Theme
-                                          .of(context)
+                                      color: Theme.of(context)
                                           .colorScheme
                                           .primaryContainer,
                                     ),
@@ -416,10 +366,7 @@ class _CartScreenState extends State<CartScreen> {
                             Text(
                               "${cartItem.product!.name}",
                               style: TextStyle(
-                                color: Theme
-                                    .of(context)
-                                    .colorScheme
-                                    .primary,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -439,10 +386,7 @@ class _CartScreenState extends State<CartScreen> {
                         Text(
                           "الإجمالي",
                           style: TextStyle(
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .secondary,
+                              color: Theme.of(context).colorScheme.secondary,
                               fontWeight: FontWeight.bold,
                               fontSize: 10.sp),
                         ),
@@ -488,10 +432,7 @@ class _CartScreenState extends State<CartScreen> {
                                       Icons.delete,
                                       size: 20.sp,
                                       color:
-                                      Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .primary,
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
