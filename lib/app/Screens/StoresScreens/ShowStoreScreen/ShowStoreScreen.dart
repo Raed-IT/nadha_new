@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:delevary/app/Components/GridCardComponent.dart';
@@ -23,6 +23,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:helper/data/enums/api_call_status.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../Components/AppBarComponents/AppBarComponent.dart';
@@ -128,9 +129,12 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                         duration: const Duration(seconds: 2),
                       ),
                   Obx(
-                    () => (controller.isLodData.value['getStore']?.value ??
-                            true)
-                        ? (controller.store.value != null)
+                    () => (controller.isLoad.value)
+                        ? Center(
+                            child: Lottie.asset('assets/json/loader.json',
+                                width: 200.w, height: 200.h),
+                          )
+                        : (controller.store.value != null)
                             ? Column(
                                 children: [
                                   AppBarComponent(
@@ -257,13 +261,9 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                                         ),
                                       ),
                                     )
-                                    ],
+                                  ],
                                 ),
-                              )
-                        : Center(
-                            child: Lottie.asset('assets/json/loader.json',
-                                width: 200.w, height: 200.h),
-                          ),
+                              ),
                   ),
                 ],
               ),

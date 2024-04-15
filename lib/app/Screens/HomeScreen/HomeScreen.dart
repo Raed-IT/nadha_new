@@ -3,7 +3,7 @@ import 'package:delevary/app/Components/GridCardComponent.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Components/TitleSectionComponent.dart';
- import 'package:delevary/app/Data/Models/CategoryModel.dart';
+import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
@@ -24,7 +24,9 @@ class HomeScreen extends GetView<HomeScreenController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.test();
+    // if (!controller.isLoad.value) {
+    //   controller.isLoad.value = true;
+    // }
     ScrollController scrollController = ScrollController();
     return Scaffold(
       drawerEnableOpenDragGesture: false,
@@ -70,12 +72,18 @@ class HomeScreen extends GetView<HomeScreenController> {
                           controller: PageController(),
                           isLoad: controller.isLoad,
                         ),
-                        10.verticalSpace,
-                        BuildTitleSectionComponent(
-                          title: "الفئات الرئيسية",
-                          isLoad: controller.isLoad,
+                        Obx(
+                          () => Column(
+                            children: [
+                              if (!controller.isLoad.value) 10.verticalSpace,
+                              BuildTitleSectionComponent(
+                                title: "الفئات الرئيسية",
+                                isLoad: controller.isLoad,
+                              ),
+                              if (!controller.isLoad.value) 20.verticalSpace,
+                            ],
+                          ),
                         ),
-                        20.verticalSpace,
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 5.sp),
                           child: GridListComponent<CategoryModel>(

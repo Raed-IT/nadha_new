@@ -19,6 +19,7 @@ class BuildTitleSectionComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CardLoadingComponent(
+                  cardMargin: EdgeInsets.zero,
                   borderRadius: BorderRadius.circular(10.sp),
                   width: 200.w,
                   height: 35.h,

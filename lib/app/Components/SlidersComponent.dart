@@ -30,8 +30,12 @@ class SliderComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => (isLoad.value)
-          ? CardLoadingComponent(
-              height: height,
+          ? Padding(
+              padding: EdgeInsets.all(10.sp),
+              child: CardLoadingComponent(
+                borderRadius: BorderRadius.circular(10.sp),
+                height: height ?? 180.h,
+              ),
             )
           : Container(
               margin: margin ?? EdgeInsets.symmetric(horizontal: 5.sp),
@@ -46,7 +50,7 @@ class SliderComponent extends StatelessWidget {
                             .map(
                               (e) => GestureDetector(
                                 onTap: () {
-                                  if(onTapItem!=null){
+                                  if (onTapItem != null) {
                                     onTapItem!(e);
                                   }
                                   if (e.url != null) {

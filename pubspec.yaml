@@ -77,6 +77,8 @@ dependencies:
   #  add address screen
   sliding_up_panel2: ^3.3.0+1
   #  add address screen
+#  package_info_plus_tizen: ^1.0.3
+  package_info_plus: ^7.0.0
 
   helper:
     git:

@@ -1,6 +1,7 @@
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class HorizontalListLoading extends StatelessWidget {
   final double? height;
@@ -12,17 +13,22 @@ class HorizontalListLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
-      crossAxisCount: 4,
-      childAspectRatio: 1 / 1.15,
-      children: List.generate(
-          20,
-          (index) => CardLoadingComponent(
-                height: height,
-                borderRadius: BorderRadius.circular(10.sp),
-              )).toList(),
+    return SizedBox(
+      width: Get.width,
+      height: 140.h,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: List.generate(
+            20,
+            (index) => SizedBox(
+                  width: 100.w,
+                  height: 130.h,
+                  child: CardLoadingComponent(
+                    cardMargin: EdgeInsets.all(5.sp),
+                    borderRadius: BorderRadius.circular(10.sp),
+                  ),
+                )).toList(),
+      ),
     );
   }
 }
