@@ -183,32 +183,29 @@ class ShowProductScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               20.verticalSpace,
-                                              Row(
-                                                children: [
-                                                  10.horizontalSpace,
-                                                  AddToCardComponent(
-                                                    product: controller
-                                                        .product.value!,
-                                                    onAddProduct: (prod) {
-                                                      controller
-                                                          .addToCartAnimation(
-                                                              cartKey: cartKey,
-                                                              widgetKey:
-                                                                  productKey);
-                                                    },
-                                                    // onAddProduct: onAddProduct,
-                                                    // onSetState: () {
-                                                    //   if (widget.cartKey.currentState != null) {
-                                                    //     widget.cartKey.currentState!.runCartAnimation(
-                                                    //         "${Get.find<MainController>().cart.length}");
-                                                    //   }
-                                                    //   setState(() {});
-                                                    // },
-                                                  ),
-                                                  Expanded(
-                                                      flex: 2,
-                                                      child: SizedBox()),
-                                                ],
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.sp,
+                                                ),
+                                                child: AddToCardComponent(
+                                                  product:
+                                                      controller.product.value!,
+                                                  onAddProduct: (prod) {
+                                                    controller
+                                                        .addToCartAnimation(
+                                                            cartKey: cartKey,
+                                                            widgetKey:
+                                                                productKey);
+                                                  },
+                                                  // onAddProduct: onAddProduct,
+                                                  // onSetState: () {
+                                                  //   if (widget.cartKey.currentState != null) {
+                                                  //     widget.cartKey.currentState!.runCartAnimation(
+                                                  //         "${Get.find<MainController>().cart.length}");
+                                                  //   }
+                                                  //   setState(() {});
+                                                  // },
+                                                ),
                                               ),
                                               Container(
                                                 margin: EdgeInsets.all(10.sp),
