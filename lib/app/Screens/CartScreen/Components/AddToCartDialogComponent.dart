@@ -10,21 +10,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:toastification/toastification.dart';
 
 Future<bool> showAddToCartBottomSheet(
   ProductModel product, {
   required BuildContext context,
-  required Function(double qty , GlobalKey kye) onAdd,
+  required Function(double qty, GlobalKey kye, ProductUnitTypeEnum unit) onAdd,
   ProductUnitTypeEnum? unit,
-  String? qty,
+  double? qty,
 }) async {
   Rxn<ProductUnitTypeEnum> type = Rxn();
   final GlobalKey productKey = GlobalKey();
 
   ///[status] for get status if don add product to service or not
   bool status = false;
-  TextEditingController qtyController = TextEditingController();
+
+  TextEditingController qtyController =
+      TextEditingController(text: qty != null ? qty.toStringAsFixed(1) : '');
+  type.value = unit;
   await Get.bottomSheet(
     SizedBox(
       width: Get.width,
@@ -69,7 +73,7 @@ Future<bool> showAddToCartBottomSheet(
                             ),
                             10.verticalSpace,
                             AutoSizeText(
-                              "${product.info} lkdsjf lkdsj fldsl kfdslfjlkdsjf lkdsjflk dsjlkf jdslk fjlkdslf dsjlf kds",
+                              "${product.info}",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             )
@@ -158,7 +162,8 @@ Future<bool> showAddToCartBottomSheet(
                       return;
                     }
                     status = true;
-                    onAdd(double.parse(qtyController.text),productKey);
+                    onAdd(double.parse(qtyController.text), productKey,
+                        type.value!);
                     Get.back();
                   },
                   child: const Text("إضافة الى السلة"),

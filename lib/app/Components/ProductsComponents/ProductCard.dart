@@ -42,7 +42,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
   @override
   Widget build(BuildContext context) {
     Get.find<MainController>().cart.listen((p0) {
-      // if (mounted) setState(() {});
+      if (mounted) setState(() {});
     });
     final GlobalKey productCardKye = GlobalKey();
     return GestureDetector(

@@ -65,6 +65,7 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
   addToCart(ProductModel product, GlobalKey key,
       {required BuildContext context, Function? onSetState}) async {
     await cartService.addToCard(
+
         product: product,
         context: context,
         onAddAnimation: (k, onAddAnimation) {

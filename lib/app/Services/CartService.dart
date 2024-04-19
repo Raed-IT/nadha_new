@@ -32,6 +32,15 @@ class CartService with ApiHelperMixin {
     return inCart;
   }
 
+  replaceProduct(CartItemModel newCartItem) {
+    //replace product from bottom sheet add product
+    int cartItemIndex = Get.find<MainController>().cart.indexWhere(
+        (cartItem) => cartItem.product?.id == newCartItem.product?.id);
+    if (cartItemIndex != -1) {
+      Get.find<MainController>().cart[cartItemIndex] = newCartItem;
+    }
+  }
+
 //mor
   double? increaseProductQty(
       {required ProductModel product, Function? onSetState}) {
@@ -81,26 +90,45 @@ class CartService with ApiHelperMixin {
   Future<bool> addToCard({
     required ProductModel product,
     Function? onSetState,
-    ProductUnitTypeEnum? unit,
     required BuildContext context,
     Function(GlobalKey key, bool addFromOnAddAnimation)? onAddAnimation,
   }) async {
     if (product.unit != ProductUnitTypeEnum.piece) {
+      ProductUnitTypeEnum? unitType;
+      double? qty;
+      if (inCart(product: product)) {
+        CartItemModel item = Get.find<MainController>()
+            .cart
+            .firstWhere((cartItem) => cartItem.product?.id == product.id);
+        unitType = item.unit;
+        qty = item.qty?.value;
+        Logger().w(unitType!.name);
+        Logger().w(qty);
+      }
       bool status = await showAddToCartBottomSheet(
+        unit: unitType,
+        qty: qty,
         product,
         context: context,
-        onAdd: (qty, kye) {
+        onAdd: (qty, kye, unit) {
           if (!inCart(product: product)) {
             Get.find<MainController>().cart.add(
                   CartItemModel(
-                    unit: unit ?? product.unit,
+                    unit: unit,
                     product: product,
                     qty: RxDouble(qty),
                     price: double.parse(product.getPrice!),
                   ),
                 );
           } else {
-            increaseProductQty(product: product);
+            replaceProduct(
+              CartItemModel(
+                unit: unit,
+                product: product,
+                qty: RxDouble(qty),
+                price: double.parse(product.getPrice!),
+              ),
+            );
           }
           if (onAddAnimation != null) {
             onAddAnimation(kye, true);
@@ -115,7 +143,7 @@ class CartService with ApiHelperMixin {
       if (!inCart(product: product)) {
         Get.find<MainController>().cart.add(
               CartItemModel(
-                unit: unit ?? product.unit,
+                unit: product.unit,
                 product: product,
                 qty: RxDouble(product.minQty ?? 1),
                 price: double.parse(product.getPrice!),
