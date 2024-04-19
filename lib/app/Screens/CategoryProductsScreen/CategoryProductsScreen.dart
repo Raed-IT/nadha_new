@@ -89,7 +89,7 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                               (ProductModel product, GlobalKey key) {
                             controller.addToCartAnimation(
                                 widgetKey: key, cartKey: cartKey);
-                            controller.cartService.addToCard(product: product);
+                            controller.cartService.addToCard(product: product,context: context);
                           },
                         ),
                       ),

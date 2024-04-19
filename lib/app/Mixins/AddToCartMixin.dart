@@ -13,9 +13,12 @@ mixin AddToCartMixin {
       {required GlobalKey widgetKey,
       required GlobalKey<CartIconKey> cartKey}) async {
     try {
-      await _runAddToCartAnimation(widgetKey);
-      await cartKey.currentState!
-          .runCartAnimation("${Get.find<MainController>().cart.length}");
+      await _runAddToCartAnimation(
+        widgetKey,
+      );
+      await cartKey.currentState!.runCartAnimation(
+        "${Get.find<MainController>().cart.length}",
+      );
     } catch (e, s) {
       Logger().e("$e   \n  $s");
     }
@@ -25,17 +28,12 @@ mixin AddToCartMixin {
       {required Widget scaffold, required GlobalKey<CartIconKey> cartKey}) {
     return AddToCartAnimation(
       cartKey: cartKey,
-      dragAnimation:  DragToCartAnimationOptions(
-        rotation: false,
-        duration: 400.ms
-      ),
+      dragAnimation: DragToCartAnimationOptions(
+          rotation: false, duration: 400.ms, curve: Curves.elasticOut),
       height: 20.sp,
       width: 20.sp,
       opacity: 0.9,
-      jumpAnimation:  JumpAnimationOptions(
-          duration: 500.ms
-
-      ),
+      jumpAnimation: JumpAnimationOptions(duration: 500.ms),
       createAddToCartAnimation: (runAddToCartAnimation) {
         _runAddToCartAnimation = runAddToCartAnimation;
       },

@@ -1,12 +1,17 @@
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
+import 'package:logger/logger.dart';
+
+import '../Screens/CartScreen/Components/AddToCartDialogComponent.dart';
 
 class CartService with ApiHelperMixin {
   double getTotal() {
@@ -73,16 +78,58 @@ class CartService with ApiHelperMixin {
     return qty;
   }
 
-  void addToCard({required ProductModel product, Function? onSetState}) {
-    if (!inCart(product: product)) {
-      Get.find<MainController>().cart.add(CartItemModel(
-          product: product,
-          qty: RxDouble(product.minQty ?? 1),
-          price: double.parse(product.getPrice!)));
+  Future<bool> addToCard({
+    required ProductModel product,
+    Function? onSetState,
+    ProductUnitTypeEnum? unit,
+    required BuildContext context,
+    Function(GlobalKey key, bool addFromOnAddAnimation)? onAddAnimation,
+  }) async {
+    if (product.unit != ProductUnitTypeEnum.piece) {
+      bool status = await showAddToCartBottomSheet(
+        product,
+        context: context,
+        onAdd: (qty, kye) {
+          if (!inCart(product: product)) {
+            Get.find<MainController>().cart.add(
+                  CartItemModel(
+                    unit: unit ?? product.unit,
+                    product: product,
+                    qty: RxDouble(qty),
+                    price: double.parse(product.getPrice!),
+                  ),
+                );
+          } else {
+            increaseProductQty(product: product);
+          }
+          if (onAddAnimation != null) {
+            onAddAnimation(kye, true);
+          }
+        },
+      );
+      if (onSetState != null) {
+        onSetState();
+      }
+      return status;
     } else {
-      increaseProductQty(product: product);
+      if (!inCart(product: product)) {
+        Get.find<MainController>().cart.add(
+              CartItemModel(
+                unit: unit ?? product.unit,
+                product: product,
+                qty: RxDouble(product.minQty ?? 1),
+                price: double.parse(product.getPrice!),
+              ),
+            );
+      } else {
+        increaseProductQty(product: product);
+      }
+      if (onAddAnimation != null) {
+        onAddAnimation(GlobalKey(), false);
+      }
     }
-    onSetState?.call();
+
+    return true;
   }
 
   void removeFromCart(

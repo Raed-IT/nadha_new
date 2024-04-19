@@ -210,8 +210,9 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                                             controller.addToCartAnimation(
                                                 cartKey: cartKey,
                                                 widgetKey: productKey);
-                                            controller.cartService
-                                                .addToCard(product: product);
+                                            controller.cartService.addToCard(
+                                                product: product,
+                                                context: context);
                                           },
                                         ),
                                         LoadMoreComponent(

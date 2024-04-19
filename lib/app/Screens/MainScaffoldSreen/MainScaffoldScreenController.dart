@@ -1,4 +1,6 @@
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
+import 'package:add_to_cart_animation/globalkeyext.dart';
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Mixins/AddToCartMixin.dart';
@@ -9,9 +11,11 @@ import 'package:delevary/app/Screens/SaleScreen/SaleScreen.dart';
 import 'package:delevary/app/Screens/StoresScreens/StoresScreen/StoresScreen.dart';
 import 'package:delevary/app/Services/CartService.dart';
 import 'package:delevary/app/Services/deepLinkService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../../Services/PermissionService.dart';
 
@@ -58,8 +62,24 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
     activePage.value = index;
   }
 
-  addToCart(ProductModel product, GlobalKey key) {
-    cartService.addToCard(product: product);
-    addToCartAnimation(widgetKey: key, cartKey: cartKey);
+  addToCart(ProductModel product, GlobalKey key,
+      {required BuildContext context, Function? onSetState}) async {
+    await cartService.addToCard(
+        product: product,
+        context: context,
+        onAddAnimation: (k, onAddAnimation) {
+          if (onAddAnimation) {
+            //get product image key from bottom sheet
+            addToCartAnimation(widgetKey: k, cartKey: cartKey);
+          } else {
+            //get product image key from product card
+            addToCartAnimation(widgetKey: key, cartKey: cartKey);
+          }
+        },
+        onSetState: () {
+          if (onSetState != null) {
+            onSetState();
+          }
+        });
   }
 }

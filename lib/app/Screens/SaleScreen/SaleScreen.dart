@@ -81,9 +81,9 @@ class SaleScreen extends GetView<SaleScreenController> {
                                 tag: "show_product${product.id}");
                           },
                           isLoad: controller.isLoadPaginationData,
-                          onTapAddProduct:
+                          onTapAddProduct:(product,kye)=>
                               Get.find<MainScaffoldScreenController>()
-                                  .addToCart,
+                                  .addToCart(product,kye,context: context),
                         ),
                         LoadMoreComponent(
                           isFinished: controller.isFinish,

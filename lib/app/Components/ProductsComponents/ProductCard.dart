@@ -1,3 +1,4 @@
+import 'package:add_to_cart_animation/globalkeyext.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
@@ -41,7 +42,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
   @override
   Widget build(BuildContext context) {
     Get.find<MainController>().cart.listen((p0) {
-      if (mounted) setState(() {});
+      // if (mounted) setState(() {});
     });
     final GlobalKey productCardKye = GlobalKey();
     return GestureDetector(
@@ -149,23 +150,23 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                       alignment: Alignment.topLeft,
                       child: GestureDetector(
                         onTap: () async {
-                          setState(() {
-                            isTrregierFavorite = true;
-                          });
+                          // setState(() {
+                          //   isTrregierFavorite = true;
+                          // });
                           bool status = await favoriteService.favoriteTrigger(
                               product: widget.product, context: context);
-                          setState(() {
-                            if (status) {
-                              if (widget.product.isFavorite! &&
-                                  widget.onRemoveProductFromFavorite != null) {
-                                widget.onRemoveProductFromFavorite!(
-                                    widget.product);
-                              }
-                              widget.product.isFavorite =
-                                  !widget.product.isFavorite!;
-                            }
-                            isTrregierFavorite = false;
-                          });
+                          // setState(() {
+                          //   if (status) {
+                          //     if (widget.product.isFavorite! &&
+                          //         widget.onRemoveProductFromFavorite != null) {
+                          //       widget.onRemoveProductFromFavorite!(
+                          //           widget.product);
+                          //     }
+                          //     widget.product.isFavorite =
+                          //         !widget.product.isFavorite!;
+                          //   }
+                          //   isTrregierFavorite = false;
+                          // });
                         },
                         child: SizedBox(
                           height: 35.sp,

@@ -29,6 +29,7 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
         : GestureDetector(
             onTap: () {
               cartService.addToCard(
+                context: context,
                 product: widget.product,
               );
               if (widget.onAddProduct != null) {

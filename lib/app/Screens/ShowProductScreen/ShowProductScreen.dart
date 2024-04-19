@@ -286,7 +286,7 @@ class ShowProductScreen extends StatelessWidget {
                                   controller.addToCartAnimation(
                                       widgetKey: key, cartKey: cartKey);
                                   controller.cartService
-                                      .addToCard(product: product);
+                                      .addToCard(product: product,context: context);
                                 },
                               ),
                             ],
