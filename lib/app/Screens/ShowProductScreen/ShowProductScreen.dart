@@ -51,7 +51,7 @@ class ShowProductScreen extends StatelessWidget {
           return controller.buildScaffold(
             cartKey: cartKey,
             scaffold: Scaffold(
-              drawer: DrawerComponent(),
+              drawer: const DrawerComponent(),
               floatingActionButton: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -197,6 +197,9 @@ class ShowProductScreen extends StatelessWidget {
                                                                 cartKey:
                                                                     cartKey,
                                                                 widgetKey: k);
+                                                        cartKey.currentState!
+                                                            .runCartAnimation(
+                                                                '${Get.find<MainController>().cart.length}');
                                                       },
                                                       product: controller
                                                           .product.value!,
@@ -210,6 +213,9 @@ class ShowProductScreen extends StatelessWidget {
                                                                       cartKey,
                                                                   widgetKey:
                                                                       productKey);
+                                                          cartKey.currentState!
+                                                              .runCartAnimation(
+                                                                  '${Get.find<MainController>().cart.length}');
                                                         }
                                                       },
                                                       // onAddProduct: onAddProduct,
