@@ -3,17 +3,20 @@ import 'package:delevary/app/Services/CartService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:logger/logger.dart';
 
 class AddToCardComponent extends StatefulWidget {
   final ProductModel product;
   final Function(ProductModel product)? onAddProduct;
   final Function()? onSetState;
+  final Function(GlobalKey key)? onAddAnimation;
 
   const AddToCardComponent(
-      {super.key, required this.product, this.onAddProduct, this.onSetState});
+      {super.key,
+      required this.product,
+      this.onAddProduct,
+      this.onSetState,
+      this.onAddAnimation});
 
   @override
   State<AddToCardComponent> createState() => _AddToCardComponentState();
@@ -24,21 +27,25 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return (cartService.inCart(product: widget.product))
+    final bool inCart = cartService.inCart(product: widget.product);
+    return inCart
         ? buildUpdateQty(widget.product)
         : GestureDetector(
             onTap: () {
               cartService.addToCard(
-                context: context,
-                product: widget.product,
-              );
+                  context: context,
+                  product: widget.product,
+                  onAddAnimation: (key, status) {
+                    if (status && widget.onAddAnimation != null) {
+                      widget.onAddAnimation!(key);
+                    }
+                  });
               if (widget.onAddProduct != null) {
                 widget.onAddProduct!(widget.product);
               }
               if (widget.onSetState != null) {
                 widget.onSetState!();
               }
-
               setState(() {});
             },
             child: Card(
@@ -132,113 +139,16 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
         ],
       );
     }
-    TextEditingController textEditingController = TextEditingController(
-        text: "${cartService.getQty(product: widget.product)}");
-
-    double qty = 0;
     return Expanded(
       child: SizedBox(
         height: 30.h,
         child: Row(
           children: [
-            GestureDetector(
-              onTap: () {
-                double? qty =
-                    cartService.increaseProductQty(product: widget.product);
-                if (qty != null) {
-                  textEditingController.text = "$qty";
-                }
-                if (widget.onSetState != null) {
-                  widget.onSetState!();
-                }
-                setState(() {});
-              },
-              child: SizedBox(
-                width: 25.sp,
-                height: 20.sp,
-                child: Center(
-                  child: Icon(
-                    Icons.add,
-                    size: 20.sp,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ).animate().scale(),
+            Icon(
+              FontAwesomeIcons.penToSquare,
+              size: 15.sp,
             ),
-            Expanded(
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                onChanged: (data) {
-                  if (double.tryParse(data) == null) {
-                    Fluttertoast.cancel();
-                    Fluttertoast.showToast(
-                        msg: "الرجاء كتابة رقم صحيح",
-                        gravity: ToastGravity.TOP);
-                    return;
-                  }
-                  qty = double.parse(data);
-                },
-                onEditingComplete: () {
-                  if (qty > 0) {
-                    cartService.addCustomQty(product: product, qty: qty);
-                  } else {
-                    Fluttertoast.showToast(
-                        msg: "الرجاء اختيار قيمة اكبر من الصفر");
-                  }
-                  FocusScope.of(context).unfocus();
-                },
-                controller: textEditingController,
-                validator: (data) {
-                  Logger().w(double.tryParse("$data"));
-                  if (double.tryParse("$data") == null) {
-                    // Fluttertoast.cancel();
-                    Fluttertoast.showToast(msg: "الرجاء ادخال رقم صحيح");
-                  }
-                  return null;
-                },
-                style: TextStyle(fontSize: 10.sp),
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.sp),
-                      borderSide: BorderSide(
-                        color:
-                            Theme.of(context).colorScheme.primary.withOpacity(
-                                  0.2,
-                                ),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.sp),
-                      borderSide: BorderSide(
-                        color:
-                            Theme.of(context).colorScheme.secondary.withOpacity(
-                                  0.5,
-                                ),
-                      ),
-                    )),
-                // controller: TextEditingController(),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                cartService.decreaseProductQty(product: widget.product);
-                if (widget.onSetState != null) {
-                  widget.onSetState!();
-                }
-                setState(() {});
-              },
-              child: SizedBox(
-                width: 25.sp,
-                height: 20.sp,
-                child: Center(
-                  child: Icon(
-                    FontAwesomeIcons.minus,
-                    size: 15.sp,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ).animate().scale(),
-            ),
+            // Text("${widget.}")
           ],
         ),
       ),

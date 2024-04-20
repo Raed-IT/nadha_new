@@ -102,8 +102,6 @@ class CartService with ApiHelperMixin {
             .firstWhere((cartItem) => cartItem.product?.id == product.id);
         unitType = item.unit;
         qty = item.qty?.value;
-        Logger().w(unitType!.name);
-        Logger().w(qty);
       }
       bool status = await showAddToCartBottomSheet(
         unit: unitType,

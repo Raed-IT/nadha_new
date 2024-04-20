@@ -10,6 +10,7 @@ import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Components/SlidersComponent.dart';
 import 'package:delevary/app/Components/TitleSectionComponent.dart';
 import 'package:delevary/app/Data/ApiRoute.dart';
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Data/Models/SliderModel.dart';
@@ -190,15 +191,26 @@ class ShowProductScreen extends StatelessWidget {
                                                 child: Row(
                                                   children: [
                                                     AddToCardComponent(
-                                                      product: controller
-                                                          .product.value!,
-                                                      onAddProduct: (prod) {
+                                                      onAddAnimation: (k) {
                                                         controller
                                                             .addToCartAnimation(
                                                                 cartKey:
                                                                     cartKey,
-                                                                widgetKey:
-                                                                    productKey);
+                                                                widgetKey: k);
+                                                      },
+                                                      product: controller
+                                                          .product.value!,
+                                                      onAddProduct: (prod) {
+                                                        if (prod.unit ==
+                                                            ProductUnitTypeEnum
+                                                                .piece) {
+                                                          controller
+                                                              .addToCartAnimation(
+                                                                  cartKey:
+                                                                      cartKey,
+                                                                  widgetKey:
+                                                                      productKey);
+                                                        }
                                                       },
                                                       // onAddProduct: onAddProduct,
                                                       // onSetState: () {

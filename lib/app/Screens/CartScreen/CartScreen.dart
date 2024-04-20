@@ -386,38 +386,7 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Row(
-                          children: [
-                            AddToCardComponent(
-                              product: cartItem.product!,
-                              onSetState: () => setState(() {}),
-                            ),
-                            if (!cartItem.product!.isShowCounter)
-                              20.horizontalSpace,
-                            if (cartItem.product!.isShowCounter) Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                controller.cartService
-                                    .removeFromCart(product: cartItem.product!);
-                                setState(() {});
-                              },
-                              child: SizedBox(
-                                width: 40.sp,
-                                height: 40.sp,
-                                child: Card(
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.delete,
-                                      size: 20.sp,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                ),
-                              ).animate().scale(),
-                            ),
-                          ],
-                        ),
+                        child: Container(),
                       ),
                     ],
                   ),
