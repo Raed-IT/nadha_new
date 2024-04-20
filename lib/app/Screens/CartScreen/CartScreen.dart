@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
@@ -65,93 +67,24 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     Obx(
                       () => (Get.find<MainController>().cart.isNotEmpty)
-                          ? BlurryContainer(
-                              child: Container(
-                                padding: EdgeInsets.all(10.sp),
-                                // height: 50.h,
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "اجمالي الطلبات",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const Spacer(),
-                                        Text(
-                                          "${controller.cartService.getTotal()}",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                              fontSize: 20.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    10.verticalSpace,
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "اجور توصيل",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const Spacer(),
-                                        Text(
-                                          "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                              fontSize: 20.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    10.verticalSpace,
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "اجمالي الفاتورة",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const Spacer(),
-                                        Text(
-                                          ((Get.find<MainController>()
-                                                          .setting
-                                                          .value
-                                                          ?.deliveryPrice ??
-                                                      0) +
-                                                  controller.cartService
-                                                      .getTotal())
-                                              .toStringAsFixed(1),
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                              fontSize: 20.sp,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                          ? Row(
+                              children: [
+                                buildCardStatistic(
+                                  context,
+                                  title: "اجمالي الطلب",
+                                  isMainCard: true,
+                                  content:
+                                      "${(Get.find<MainController>().setting.value?.deliveryPrice ?? 0) + controller.cartService.getTotal()}",
                                 ),
-                              ),
+                                buildCardStatistic(context,
+                                    title: "اجور توصيل",
+                                    content:
+                                        "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}"),
+                                buildCardStatistic(context,
+                                    title: "اجمالي المنتجات ",
+                                    content:
+                                        "${controller.cartService.getTotal()}"),
+                              ],
                             )
                           : Container(),
                     ),
@@ -186,6 +119,53 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildCardStatistic(
+    BuildContext context, {
+    required String title,
+    required String content,
+    bool isMainCard = false,
+  }) {
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.all(10.sp),
+        height: 100.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.sp),
+          border: Border.all(
+              color: isMainCard
+                  ? Theme.of(context).colorScheme.secondary
+                  : Theme.of(context).colorScheme.primary),
+        ),
+        child: BlurryContainer(
+          borderRadius: BorderRadius.circular(10.sp),
+          blur: 7,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AutoSizeText(
+                maxLines: 1,
+                title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: isMainCard
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.primary),
+              ),
+              10.verticalSpace,
+              AutoSizeText(
+                content,
+                maxLines: 1,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ).animate().slideY(begin: 1, duration: (Random().nextInt(500) + 200).ms),
     );
   }
 
@@ -332,12 +312,10 @@ class _CartScreenState extends State<CartScreen> {
                                     bottomLeft: Radius.circular(10.sp),
                                   ),
                                   gradient: const LinearGradient(
-                                      end: Alignment.topCenter,
-                                      begin: Alignment.bottomCenter,
-                                      colors: [
-                                        Colors.black,
-                                        Colors.transparent
-                                      ]),
+                                    end: Alignment.topCenter,
+                                    begin: Alignment.bottomCenter,
+                                    colors: [Colors.black, Colors.transparent],
+                                  ),
                                 ),
                                 child: Center(
                                   child: AutoSizeText(

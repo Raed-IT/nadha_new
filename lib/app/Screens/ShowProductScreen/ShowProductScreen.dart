@@ -187,24 +187,29 @@ class ShowProductScreen extends StatelessWidget {
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal: 10.sp,
                                                 ),
-                                                child: AddToCardComponent(
-                                                  product:
-                                                      controller.product.value!,
-                                                  onAddProduct: (prod) {
-                                                    controller
-                                                        .addToCartAnimation(
-                                                            cartKey: cartKey,
-                                                            widgetKey:
-                                                                productKey);
-                                                  },
-                                                  // onAddProduct: onAddProduct,
-                                                  // onSetState: () {
-                                                  //   if (widget.cartKey.currentState != null) {
-                                                  //     widget.cartKey.currentState!.runCartAnimation(
-                                                  //         "${Get.find<MainController>().cart.length}");
-                                                  //   }
-                                                  //   setState(() {});
-                                                  // },
+                                                child: Row(
+                                                  children: [
+                                                    AddToCardComponent(
+                                                      product: controller
+                                                          .product.value!,
+                                                      onAddProduct: (prod) {
+                                                        controller
+                                                            .addToCartAnimation(
+                                                                cartKey:
+                                                                    cartKey,
+                                                                widgetKey:
+                                                                    productKey);
+                                                      },
+                                                      // onAddProduct: onAddProduct,
+                                                      // onSetState: () {
+                                                      //   if (widget.cartKey.currentState != null) {
+                                                      //     widget.cartKey.currentState!.runCartAnimation(
+                                                      //         "${Get.find<MainController>().cart.length}");
+                                                      //   }
+                                                      //   setState(() {});
+                                                      // },
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                               Container(
@@ -285,8 +290,8 @@ class ShowProductScreen extends StatelessWidget {
                                     (ProductModel product, GlobalKey key) {
                                   controller.addToCartAnimation(
                                       widgetKey: key, cartKey: cartKey);
-                                  controller.cartService
-                                      .addToCard(product: product,context: context);
+                                  controller.cartService.addToCard(
+                                      product: product, context: context);
                                 },
                               ),
                             ],

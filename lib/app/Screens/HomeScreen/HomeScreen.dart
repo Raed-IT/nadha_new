@@ -31,9 +31,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-     // if (!controller.isLoad.value) {
+    // if (!controller.isLoad.value) {
     //   controller.isLoad.value = true;
     // }
+    if (!Get.isRegistered<HomeScreenController>()) {
+      Get.put(HomeScreenController());
+    }
     ScrollController scrollController = ScrollController();
     return GetBuilder<HomeScreenController>(
       builder: (controller) => Scaffold(

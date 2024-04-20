@@ -1,24 +1,27 @@
 import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class CartItemModel {
   ProductModel? product;
   RxDouble? qty;
   double? price;
-   ProductUnitTypeEnum? unit ;
+  ProductUnitTypeEnum? unit;
+
   String get total {
     double total = 0.0;
-    if (product?.unit == ProductUnitTypeEnum.kg ||
-        product?.unit == ProductUnitTypeEnum.piece) {
+
+    if (unit == ProductUnitTypeEnum.piece) {
       total = double.parse(product!.getPrice!) * qty!.value;
-    } else if (product?.unit == ProductUnitTypeEnum.amount) {
-      total = (double.parse(product!.getPrice!) * qty!.value) / 1000;
     } else {
-      total = qty!.value;
+      if (unit == ProductUnitTypeEnum.amount) {
+        total = (double.parse(product!.getPrice!) * qty!.value) / 1000;
+      } else if (unit == ProductUnitTypeEnum.amount_price) {
+        total = qty!.value;
+      }
     }
-    //(double.parse(product!.getPrice!) * qty!.value).toStringAsFixed(1)
-    return total.toStringAsFixed(2);
+    return total.toStringAsFixed(1);
   }
 
   String get quantity {
@@ -36,9 +39,6 @@ class CartItemModel {
     required this.price,
   });
 
-
-
-
 /*
  E/flutter ( 4845): [ERROR:flutter/runtime/dart_isolate.cc(144)] Could not prepare isolate.
   E/flutter ( 4845): [ERROR:flutter/runtime/runtime_controller.cc(462)] Could not create root isolate.
@@ -52,6 +52,5 @@ class CartItemModel {
     unit = "${json['unit']}".toProductUnitTyp();
     qty = RxDouble(double.tryParse("${json['quantity']}") ?? 0);
     price = double.tryParse("${json['price']}");
-
   }
 }
