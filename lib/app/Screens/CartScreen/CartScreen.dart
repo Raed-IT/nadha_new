@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
@@ -12,6 +13,7 @@ import 'package:delevary/app/Screens/CartScreen/Components/CartEmptyComponent.da
 import 'package:delevary/app/Screens/CartScreen/Components/ShowConfiermCartDialog.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:delevary/app/Thems/AppColots.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -386,7 +388,42 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Container(),
+                        child: Row(
+                          children: [
+                            // build cart Card Counter
+                            // if (cartItem.unit == ProductUnitTypeEnum.piece)
+                            AddToCardComponent(
+                              showEditIcon: false,
+                              product: cartItem.product!,
+                              onSetState: () => setState(() {}),
+                            ),
+                            // End build cart Card Counter
+
+                            //build cart Card addButton
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                controller.cartService
+                                    .removeFromCart(product: cartItem.product!);
+                                setState(() {});
+                              },
+                              child: SizedBox(
+                                width: 40.sp,
+                                height: 40.sp,
+                                child: Card(
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.delete,
+                                      size: 20.sp,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ),
+                              ).animate().scale(),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

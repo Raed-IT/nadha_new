@@ -1,10 +1,13 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Services/CartService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,11 +18,13 @@ class AddToCardComponent extends StatefulWidget {
   final Function(ProductModel product)? onAddProduct;
   final Function()? onSetState;
   final Function(GlobalKey key)? onAddAnimation;
+  final bool showEditIcon;
 
   const AddToCardComponent(
       {super.key,
       required this.product,
       this.onAddProduct,
+      this.showEditIcon = true,
       this.onSetState,
       this.onAddAnimation});
 
@@ -162,18 +167,21 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
                       Border.all(color: Theme.of(context).colorScheme.primary),
                 ),
                 child: BlurryContainer(
-                  borderRadius: BorderRadius.circular(15.sp),
+                  borderRadius: BorderRadius.circular(9.sp),
                   blur: 7,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        FontAwesomeIcons.penToSquare,
-                        size: 15.sp,
-                      ),
-                      10.horizontalSpace,
-                      Text("${item.qty} / ${item.unit!.toProductUnit()}")
+                      if (widget.showEditIcon)
+                        Icon(
+                          FontAwesomeIcons.penToSquare,
+                          size: 15.sp,
+                        ),
+                      if (widget.showEditIcon) 10.horizontalSpace,
+                      AutoSizeText(
+                          maxLines: 1,
+                          "${item.qty} / ${item.unit!.toProductUnit()}"),
                     ],
                   ),
                 ),

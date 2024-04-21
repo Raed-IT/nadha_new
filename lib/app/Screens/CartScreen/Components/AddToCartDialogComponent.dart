@@ -177,7 +177,8 @@ Future<bool> showAddToCartBottomSheet(
                           type.value!);
                       Get.back();
                     },
-                    child: const Text("إضافة الى السلة"),
+                    child:
+                        Text(unit == null ? "إضافة الى السلة" : 'تعديل'),
                   ),
                 )
               ],

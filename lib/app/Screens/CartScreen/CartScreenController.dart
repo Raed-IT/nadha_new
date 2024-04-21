@@ -14,6 +14,8 @@ import 'package:helper/mixin/api_mixing.dart';
 class CartScreenController extends GetxController with ApiHelperMixin {
   CartService cartService = CartService();
   TextEditingController noteTextController = TextEditingController();
+  TextEditingController phoneTextController = TextEditingController(
+      text: Get.find<MainController>().user.value?.phone ?? '');
 
   void createOrder(BuildContext context) async {
     List<CartItemModel> cart = Get.find<MainController>().cart;

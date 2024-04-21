@@ -26,6 +26,11 @@ showConfirmCartDialog(BuildContext context, Function onConfirm,
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFieldComponent(
+                controller: cartScreenController.phoneTextController,
+                hint: 'رقم الهاتف',
+              ),
+              20.verticalSpace,
+              TextFieldComponent(
                 isMultiple: true,
                 controller: cartScreenController.noteTextController,
                 hint: 'ملاحظات الطلب',

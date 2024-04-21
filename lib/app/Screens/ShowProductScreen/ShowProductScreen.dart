@@ -30,14 +30,19 @@ import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ShowProductScreen extends StatelessWidget {
+class ShowProductScreen extends StatefulWidget {
   const ShowProductScreen({super.key});
 
+  @override
+  State<ShowProductScreen> createState() => _ShowProductScreenState();
+}
+
+class _ShowProductScreenState extends State<ShowProductScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ShowProductScreenController>(
       tag:
-          "show_product${Get.arguments.containsKey('product') ? Get.arguments['product']?.id : ''}",
+          "show_product${(Get.arguments?.containsKey('product')??false) ? Get.arguments['product']?.id : ''}",
       builder: (controller) => Builder(
         builder: (context) {
           GlobalKey productKey = GlobalKey();
@@ -191,23 +196,21 @@ class ShowProductScreen extends StatelessWidget {
                                                   onAddAnimation: (k) {
                                                     controller
                                                         .addToCartAnimation(
-                                                            cartKey:
-                                                                cartKey,
+                                                            cartKey: cartKey,
                                                             widgetKey: k);
                                                     cartKey.currentState!
                                                         .runCartAnimation(
                                                             '${Get.find<MainController>().cart.length}');
                                                   },
-                                                  product: controller
-                                                      .product.value!,
+                                                  product:
+                                                      controller.product.value!,
                                                   onAddProduct: (prod) {
                                                     if (prod.unit ==
                                                         ProductUnitTypeEnum
                                                             .piece) {
                                                       controller
                                                           .addToCartAnimation(
-                                                              cartKey:
-                                                                  cartKey,
+                                                              cartKey: cartKey,
                                                               widgetKey:
                                                                   productKey);
                                                       cartKey.currentState!
@@ -312,5 +315,15 @@ class ShowProductScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<MainController>().cart.listen((p0) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 }
