@@ -38,7 +38,6 @@ class ShowProductScreen extends StatelessWidget {
     return GetBuilder<ShowProductScreenController>(
       tag:
           "show_product${Get.arguments.containsKey('product') ? Get.arguments['product']?.id : ''}",
-      //       tag: "",
       builder: (controller) => Builder(
         builder: (context) {
           GlobalKey productKey = GlobalKey();
@@ -188,46 +187,34 @@ class ShowProductScreen extends StatelessWidget {
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal: 10.sp,
                                                 ),
-                                                child: Row(
-                                                  children: [
-                                                    AddToCardComponent(
-                                                      onAddAnimation: (k) {
-                                                        controller
-                                                            .addToCartAnimation(
-                                                                cartKey:
-                                                                    cartKey,
-                                                                widgetKey: k);
-                                                        cartKey.currentState!
-                                                            .runCartAnimation(
-                                                                '${Get.find<MainController>().cart.length}');
-                                                      },
-                                                      product: controller
-                                                          .product.value!,
-                                                      onAddProduct: (prod) {
-                                                        if (prod.unit ==
-                                                            ProductUnitTypeEnum
-                                                                .piece) {
-                                                          controller
-                                                              .addToCartAnimation(
-                                                                  cartKey:
-                                                                      cartKey,
-                                                                  widgetKey:
-                                                                      productKey);
-                                                          cartKey.currentState!
-                                                              .runCartAnimation(
-                                                                  '${Get.find<MainController>().cart.length}');
-                                                        }
-                                                      },
-                                                      // onAddProduct: onAddProduct,
-                                                      // onSetState: () {
-                                                      //   if (widget.cartKey.currentState != null) {
-                                                      //     widget.cartKey.currentState!.runCartAnimation(
-                                                      //         "${Get.find<MainController>().cart.length}");
-                                                      //   }
-                                                      //   setState(() {});
-                                                      // },
-                                                    ),
-                                                  ],
+                                                child: AddToCardComponent(
+                                                  onAddAnimation: (k) {
+                                                    controller
+                                                        .addToCartAnimation(
+                                                            cartKey:
+                                                                cartKey,
+                                                            widgetKey: k);
+                                                    cartKey.currentState!
+                                                        .runCartAnimation(
+                                                            '${Get.find<MainController>().cart.length}');
+                                                  },
+                                                  product: controller
+                                                      .product.value!,
+                                                  onAddProduct: (prod) {
+                                                    if (prod.unit ==
+                                                        ProductUnitTypeEnum
+                                                            .piece) {
+                                                      controller
+                                                          .addToCartAnimation(
+                                                              cartKey:
+                                                                  cartKey,
+                                                              widgetKey:
+                                                                  productKey);
+                                                      cartKey.currentState!
+                                                          .runCartAnimation(
+                                                              '${Get.find<MainController>().cart.length}');
+                                                    }
+                                                  },
                                                 ),
                                               ),
                                               Container(

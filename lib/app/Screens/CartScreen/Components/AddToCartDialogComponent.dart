@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:toastification/toastification.dart';
 
 Future<bool> showAddToCartBottomSheet(
@@ -165,6 +164,12 @@ Future<bool> showAddToCartBottomSheet(
                       if (double.tryParse(qtyController.text) == null) {
                         ToastService.showErrorToast(
                             context: context, title: "الرجاء كتابة رقم صحيح");
+                        return;
+                      }
+                      if (double.parse(qtyController.text) == 0) {
+                        ToastService.showErrorToast(
+                            context: context,
+                            title: "الرجاء كتابة رقم اكبر من الصفر ");
                         return;
                       }
                       status = true;

@@ -1,9 +1,14 @@
+import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
+import 'package:delevary/app/Data/MainController.dart';
+import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Services/CartService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class AddToCardComponent extends StatefulWidget {
   final ProductModel product;
@@ -29,7 +34,7 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
   Widget build(BuildContext context) {
     final bool inCart = cartService.inCart(product: widget.product);
     return inCart
-        ? buildUpdateQty(widget.product)
+        ? buildUpdateQty(widget.product, inCart, context)
         : GestureDetector(
             onTap: () {
               cartService.addToCard(
@@ -48,35 +53,27 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
               }
               setState(() {});
             },
-            child: Card(
-              elevation: 5,
-              color: Theme.of(context).colorScheme.secondary,
-              shape: RoundedRectangleBorder(
+            child: Container(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.sp),
+                border:
+                    Border.all(color: Theme.of(context).colorScheme.primary),
               ),
-              child: SizedBox(
-                height: 40.h,
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 5.h),
-                  child: Center(
-                    child: Text(
-                      "اضافة الى السلة",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.background,
-                          fontSize: 14.sp),
-                    ),
-                  ),
+              width: Get.width,
+              height: 40.h,
+              child: BlurryContainer(
+                height: 50.h,
+                borderRadius: BorderRadius.circular(10.sp),
+                child: const Center(
+                  child: Text("إضافة الى السلة "),
                 ),
               ),
-            ).animate().scale(
-                  begin: const Offset(0, 0),
-                ),
+            ),
           );
   }
 
-  Widget buildUpdateQty(ProductModel product) {
+  Widget buildUpdateQty(
+      ProductModel product, bool inCart, BuildContext context) {
     if (product.isShowCounter) {
       return Row(
         children: [
@@ -139,19 +136,50 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
         ],
       );
     }
-    return Expanded(
-      child: SizedBox(
-        height: 30.h,
-        child: Row(
-          children: [
-            Icon(
-              FontAwesomeIcons.penToSquare,
-              size: 15.sp,
-            ),
-            // Text("${widget.}")
-          ],
-        ),
-      ),
+    CartItemModel item = Get.find<MainController>()
+        .cart
+        .firstWhere((cartItem) => cartItem.product?.id == product.id);
+    return SizedBox(
+      height: 40.h,
+      child: inCart
+          ? GestureDetector(
+              onTap: () {
+                cartService.addToCard(
+                  product: product,
+                  context: context,
+                  onAddAnimation: (k, addFromOnAddAnimation) {
+                    if (addFromOnAddAnimation &&
+                        widget.onAddAnimation != null) {
+                      widget.onAddAnimation!(k);
+                    }
+                  },
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.sp),
+                  border:
+                      Border.all(color: Theme.of(context).colorScheme.primary),
+                ),
+                child: BlurryContainer(
+                  borderRadius: BorderRadius.circular(15.sp),
+                  blur: 7,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.penToSquare,
+                        size: 15.sp,
+                      ),
+                      10.horizontalSpace,
+                      Text("${item.qty} / ${item.unit!.toProductUnit()}")
+                    ],
+                  ),
+                ),
+              ),
+            )
+          : Container(),
     );
   }
 }
