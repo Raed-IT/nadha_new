@@ -6,8 +6,7 @@ class LocationService {
   PermissionStatus? _permissionGranted;
 
   Future<LocationData?> getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
-    _serviceEnabled = await location.serviceEnabled();
+     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
