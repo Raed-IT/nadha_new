@@ -75,17 +75,25 @@ class _CartScreenState extends State<CartScreen> {
                                   context,
                                   title: "اجمالي الطلب",
                                   isMainCard: true,
-                                  content:
-                                      "${(Get.find<MainController>().setting.value?.deliveryPrice ?? 0) + controller.cartService.getTotal()}",
+                                  content: ((Get.find<MainController>()
+                                                  .setting
+                                                  .value
+                                                  ?.deliveryPrice ??
+                                              0) +
+                                          controller.cartService.getTotal())
+                                      .toStringAsFixed(2),
                                 ),
                                 buildCardStatistic(context,
                                     title: "اجور توصيل",
                                     content:
                                         "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}"),
-                                buildCardStatistic(context,
-                                    title: "اجمالي المنتجات ",
-                                    content:
-                                        "${controller.cartService.getTotal()}"),
+                                buildCardStatistic(
+                                  context,
+                                  title: "اجمالي المنتجات ",
+                                  content: controller.cartService
+                                      .getTotal()
+                                      .toStringAsFixed(2),
+                                ),
                               ],
                             )
                           : Container(),

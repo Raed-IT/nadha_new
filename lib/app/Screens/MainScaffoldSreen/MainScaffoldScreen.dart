@@ -3,6 +3,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
+import 'package:delevary/app/Services/PermissionService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -17,6 +18,7 @@ class MainScaffoldScreen extends GetView<MainScaffoldScreenController> {
 
   @override
   Widget build(BuildContext context) {
+    // PermissionService.postStoragePermission();
     var ctime;
     return WillPopScope(
       onWillPop: () {

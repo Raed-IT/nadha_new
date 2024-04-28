@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:add_to_cart_animation/globalkeyext.dart';
 import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
 import 'package:delevary/app/Components/GridCardComponent.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Components/TitleSectionComponent.dart';
+import 'package:delevary/app/Components/version_dialog.dart';
+import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
@@ -12,14 +16,17 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreenController.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
 import '../CategoriesScreen/CategoriesScreenController.dart';
+
+bool isShowVersion = false;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,12 +38,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    // if (!controller.isLoad.value) {
-    //   controller.isLoad.value = true;
-    // }
+    if (!isShowVersion &&
+        Get.find<MainController>().packageInfo.version !=
+            Get.find<MainController>().setting.value!.currentVersion) {
+      isShowVersion = true;
+      showVersionDialog(context);
+    }
     if (!Get.isRegistered<HomeScreenController>()) {
       Get.put(HomeScreenController());
     }
+
     ScrollController scrollController = ScrollController();
     return GetBuilder<HomeScreenController>(
       builder: (controller) => Scaffold(

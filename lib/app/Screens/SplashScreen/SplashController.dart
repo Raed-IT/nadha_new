@@ -5,10 +5,14 @@ import 'package:delevary/app/data/ApiRoute.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
 import 'package:delevary/app/data/Models/SettingModel.dart';
 import 'package:delevary/app/route/Routs.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:logger/logger.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../Data/MainController.dart';
 
@@ -37,7 +41,7 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
   }
 
   @override
-  getDataFromJson({required Map<String, dynamic> json, String? type}) {
+  getDataFromJson({required Map<String, dynamic> json, String? type}) async {
     Get.find<MainController>().setting.value =
         SettingModel.fromJson(json['data']['setting']);
     List<CityModel> cities = [];

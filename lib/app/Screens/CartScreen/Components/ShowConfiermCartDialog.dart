@@ -26,6 +26,7 @@ showConfirmCartDialog(BuildContext context, Function onConfirm,
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFieldComponent(
+                keyboardType: TextInputType.phone,
                 controller: cartScreenController.phoneTextController,
                 hint: 'رقم الهاتف',
               ),

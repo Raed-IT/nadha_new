@@ -8,9 +8,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:helper/data/models/dio_config_model.dart';
 import 'package:helper/helper.dart';
+import 'package:logger/logger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'app/Data/MainController.dart';
+import 'app/Services/LocalNotificationService.dart';
 import 'app/route/routs.dart';
 import 'app/thems/LightThem.dart';
 
@@ -28,7 +31,9 @@ void main() async {
   Get.put(MainController(), permanent: true);
   await LocaleStorageService.getUserData();
   await OneSignal.shared.setAppId("0c4508b7-d21e-4c75-8dad-e4e6d543981a");
-
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  Get.find<MainController>().packageInfo = packageInfo;
+  LocalNotificationService.initial();
   runApp(const MyApp());
 }
 

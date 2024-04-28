@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/constant.dart';
 import 'package:logger/logger.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'Models/CartItemModel.dart';
 
 class MainController extends GetxController {
@@ -17,7 +18,7 @@ class MainController extends GetxController {
   // }
 
   Rxn<AddressModel> selectedAddress = Rxn();
-
+  late PackageInfo packageInfo;
   bool isSelectedAddress({required AddressModel address}) {
     return selectedAddress.value?.id == address.id;
   }

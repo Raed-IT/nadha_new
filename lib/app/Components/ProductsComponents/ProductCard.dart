@@ -150,23 +150,23 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                       alignment: Alignment.topLeft,
                       child: GestureDetector(
                         onTap: () async {
-                          // setState(() {
-                          //   isTrregierFavorite = true;
-                          // });
+                          setState(() {
+                            isTrregierFavorite = true;
+                          });
                           bool status = await favoriteService.favoriteTrigger(
                               product: widget.product, context: context);
-                          // setState(() {
-                          //   if (status) {
-                          //     if (widget.product.isFavorite! &&
-                          //         widget.onRemoveProductFromFavorite != null) {
-                          //       widget.onRemoveProductFromFavorite!(
-                          //           widget.product);
-                          //     }
-                          //     widget.product.isFavorite =
-                          //         !widget.product.isFavorite!;
-                          //   }
-                          //   isTrregierFavorite = false;
-                          // });
+                          setState(() {
+                            if (status) {
+                              if (widget.product.isFavorite! &&
+                                  widget.onRemoveProductFromFavorite != null) {
+                                widget.onRemoveProductFromFavorite!(
+                                    widget.product);
+                              }
+                              widget.product.isFavorite =
+                                  !widget.product.isFavorite!;
+                            }
+                            isTrregierFavorite = false;
+                          });
                         },
                         child: SizedBox(
                           height: 35.sp,
