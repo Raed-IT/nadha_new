@@ -6,6 +6,7 @@ import 'package:delevary/app/Data/Models/StoreModel.dart';
 import 'package:get_storage/get_storage.dart';
 
 class UserModel {
+  bool? isDelivery;
   int? id;
   String? name;
   String? image;
@@ -25,6 +26,7 @@ class UserModel {
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    isDelivery= json['is_delivery'];
     if (json.containsKey("addresses")) {
       addresses = [];
       for (var address in json['addresses']) {

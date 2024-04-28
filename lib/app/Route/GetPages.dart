@@ -15,6 +15,8 @@ import '../Screens/AddressesScreens/AddAddressScreen/AddAddressPage.dart';
 import '../Screens/AddressesScreens/AddressesScreen/AddressesPage.dart';
 import '../Screens/CategoriesScreen/CategoriesPage.dart';
 import '../Screens/CategoryProductsScreen/CategoryProductsPage.dart';
+ import '../Screens/Delivery/DeliveryOrdersScreen/DeliveryOrdersPage.dart';
+import '../Screens/Delivery/MapScreen/MapPage.dart';
 import '../Screens/NotificationScreen/NotificationPage.dart';
 import '../Screens/OrdersSecreens/OrdersSecreen/OrdersPage.dart';
 import '../Screens/SearchScreen/SearchScreenPage.dart';
@@ -45,5 +47,7 @@ class GetPagesProvider {
     OrdersPage(),
     StoresPage(),
     ShowStorePage(),
+    DeliveryOrdersPage(),
+    MapPage()
   ];
 }

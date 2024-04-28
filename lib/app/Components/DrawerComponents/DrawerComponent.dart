@@ -99,6 +99,13 @@ class DrawerComponent extends StatelessWidget {
                       : Container(),
                 ),
                 buildItem(
+                  rout: AppRoutes.deliveryOrders,
+                  context: context,
+                  title: "طلبات قيد التوصيل",
+                  icon: FontAwesomeIcons.motorcycle,
+                  onTap: () => Get.toNamed(AppRoutes.deliveryOrders),
+                ),
+                buildItem(
                   rout: AppRoutes.favorites,
                   context: context,
                   title: "المفضلة",
