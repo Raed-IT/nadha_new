@@ -16,7 +16,9 @@ import 'package:dio/dio.dart' as dio;
 
 class ProfileScreenController extends GetxController with ApiHelperMixin {
   RxList<bool> selectedButton = RxList([true, false]);
-  RxInt selectedIndex = RxInt(0);
+  int selected = Get.arguments?['index'] ?? 0;
+  late RxInt selectedIndex;
+
   HLPickerItem? storeImage;
   HLPickerItem? userImage;
 
@@ -35,7 +37,9 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
   @override
   void onInit() {
     super.onInit();
+    selectedIndex = RxInt(selected);
     //user
+
     UserModel user = Get.find<MainController>().user.value!;
     nameTextController.text = "${user.name}";
     phoneTextController.text = user.phone ?? '';

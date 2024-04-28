@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
- import '../../../Components/DropDwon.dart';
+import '../../../Components/DropDwon.dart';
 import '../../../Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
 
@@ -33,7 +33,6 @@ class StoreProfileFieldsComponent extends GetView<ProfileScreenController> {
                 } else {
                   controller.storeImage = null;
                 }
-
               },
               image: Get.find<MainController>().user.value?.store?.image,
               title: Text(
@@ -60,7 +59,7 @@ class StoreProfileFieldsComponent extends GetView<ProfileScreenController> {
               isMultiple: true,
             ),
             20.verticalSpace,
-            Text(
+            const Text(
               "اخترا المدينة",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),

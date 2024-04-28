@@ -8,6 +8,7 @@ import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldPage.dart';
 import 'package:delevary/app/Screens/ProfileScreen/ProfilePage.dart';
 import 'package:delevary/app/Screens/SaleScreen/SalePage.dart';
 import 'package:delevary/app/Screens/SettingScreen/SettingPage.dart';
+import 'package:delevary/app/Screens/Store/StoreScreen/StorePage.dart';
 import 'package:delevary/app/Screens/StoresScreens/ShowStoreScreen/ShowStorePage.dart';
 import 'package:get/get.dart';
 
@@ -15,13 +16,14 @@ import '../Screens/AddressesScreens/AddAddressScreen/AddAddressPage.dart';
 import '../Screens/AddressesScreens/AddressesScreen/AddressesPage.dart';
 import '../Screens/CategoriesScreen/CategoriesPage.dart';
 import '../Screens/CategoryProductsScreen/CategoryProductsPage.dart';
- import '../Screens/Delivery/DeliveryOrdersScreen/DeliveryOrdersPage.dart';
+import '../Screens/Delivery/DeliveryOrdersScreen/DeliveryOrdersPage.dart';
 import '../Screens/Delivery/MapScreen/MapPage.dart';
 import '../Screens/NotificationScreen/NotificationPage.dart';
 import '../Screens/OrdersSecreens/OrdersSecreen/OrdersPage.dart';
 import '../Screens/SearchScreen/SearchScreenPage.dart';
 import '../Screens/ShowProductScreen/ShowProductPage.dart';
 import '../Screens/SplashScreen/SplashPage.dart';
+import '../Screens/Store/Products/ProductsPage.dart';
 import '../Screens/StoresScreens/StoresScreen/StoresPage.dart';
 
 class GetPagesProvider {
@@ -48,6 +50,8 @@ class GetPagesProvider {
     StoresPage(),
     ShowStorePage(),
     DeliveryOrdersPage(),
-    MapPage()
+    MapPage(),
+    StorePage(),
+    StoreProductsPage(),
   ];
 }

@@ -58,97 +58,96 @@ class DrawerComponent extends StatelessWidget {
           40.verticalSpace,
           Divider(indent: 10.w, endIndent: 10.w),
           Expanded(
-            child: Column(
-              children: [
-                20.verticalSpace,
-                Container(
-                  margin: EdgeInsets.all(10.sp),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.sp),
-                    border: Border.all(),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  20.verticalSpace,
+                  Container(
+                    margin: EdgeInsets.all(10.sp),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.sp),
+                      border: Border.all(),
+                    ),
+                    child: buildItem(
+                      rout: "",
+                      context: context,
+                      title: "نسخ رابط متجري ",
+                      icon: FontAwesomeIcons.copy,
+                      onTap: () {
+                        Clipboard.setData(
+                          ClipboardData(
+                              text:
+                                  "${ApiRoute.domin}/stores/${Get.find<MainController>().user.value?.store?.uniqName}"),
+                        );
+                        ToastService.showSuccessToast(
+                            context: context, title: "تم نسرابط المتجر");
+                      },
+                    ),
                   ),
-                  child: buildItem(
-                    rout: "",
-                    context: context,
-                    title: "نسخ رابط متجري ",
-                    icon: FontAwesomeIcons.copy,
-                    onTap: () {
-                      Clipboard.setData(
-                        ClipboardData(
-                            text:
-                                "${ApiRoute.domin}/stores/${Get.find<MainController>().user.value?.store?.uniqName}"),
-                      );
-                      ToastService.showSuccessToast(
-                          context: context, title: "تم نسرابط المتجر");
-                    },
+                  Obx(
+                    () => Get.find<MainController>().user.value?.store != null
+                        ? buildItem(
+                            rout: AppRoutes.showStore,
+                            context: context,
+                            title: "متجري ",
+                            icon: FontAwesomeIcons.store,
+                            onTap: () => Get.toNamed(AppRoutes.store),
+                          )
+                        : Container(),
                   ),
-                ),
-                Obx(
-                  () => Get.find<MainController>().user.value?.store != null
-                      ? buildItem(
-                          rout: AppRoutes.showStore,
-                          context: context,
-                          title: "عرض متجري",
-                          icon: FontAwesomeIcons.store,
-                          onTap: () => Get.toNamed(AppRoutes.showStore,
-                              arguments: {
-                                "store":
-                                    Get.find<MainController>().user.value?.store
-                              }),
-                        )
-                      : Container(),
-                ),
-                if (Get.find<MainController>().user.value!.isDelivery!)
+                  if (Get.find<MainController>().user.value!.isDelivery!)
+                    buildItem(
+                      rout: AppRoutes.deliveryOrders,
+                      context: context,
+                      title: "طلبات قيد التوصيل",
+                      icon: FontAwesomeIcons.motorcycle,
+                      onTap: () => Get.toNamed(AppRoutes.deliveryOrders),
+                    ),
                   buildItem(
-                    rout: AppRoutes.deliveryOrders,
+                    rout: AppRoutes.favorites,
                     context: context,
-                    title: "طلبات قيد التوصيل",
-                    icon: FontAwesomeIcons.motorcycle,
-                    onTap: () => Get.toNamed(AppRoutes.deliveryOrders),
+                    title: "المفضلة",
+                    icon: FontAwesomeIcons.heart,
+                    onTap: () => Get.toNamed(AppRoutes.favorites),
                   ),
-                buildItem(
-                  rout: AppRoutes.favorites,
-                  context: context,
-                  title: "المفضلة",
-                  icon: FontAwesomeIcons.heart,
-                  onTap: () => Get.toNamed(AppRoutes.favorites),
-                ),
-                buildItem(
-                  rout: AppRoutes.addresses,
-                  context: context,
-                  title: "عناويني ",
-                  icon: FontAwesomeIcons.mapLocationDot,
-                  onTap: () => Get.toNamed(AppRoutes.addresses),
-                ),
-                buildItem(
-                  rout: AppRoutes.notifications,
-                  context: context,
-                  title: "الإشعارات",
-                  icon: Icons.notifications_active_outlined,
-                  onTap: () => Get.toNamed(AppRoutes.notifications),
-                ),
-                buildItem(
-                  rout: AppRoutes.orders,
-                  context: context,
-                  title: "طلباتي",
-                  icon: FontAwesomeIcons.firstOrderAlt,
-                  onTap: () => Get.toNamed(AppRoutes.orders),
-                ),
-                buildItem(
-                  rout: AppRoutes.stores,
-                  context: context,
-                  title: "المتاجر",
-                  icon: Icons.storefront_outlined,
-                  onTap: () => Get.toNamed(AppRoutes.stores),
-                ),
-                buildItem(
-                  rout: AppRoutes.setting,
-                  context: context,
-                  title: "الإعدادات",
-                  icon: Icons.settings,
-                  onTap: () => Get.toNamed(AppRoutes.setting),
-                ),
-              ],
+                  buildItem(
+                    rout: AppRoutes.addresses,
+                    context: context,
+                    title: "عناويني ",
+                    icon: FontAwesomeIcons.mapLocationDot,
+                    onTap: () => Get.toNamed(AppRoutes.addresses),
+                  ),
+                  buildItem(
+                    rout: AppRoutes.notifications,
+                    context: context,
+                    title: "الإشعارات",
+                    icon: Icons.notifications_active_outlined,
+                    onTap: () => Get.toNamed(AppRoutes.notifications),
+                  ),
+                  buildItem(
+                    rout: AppRoutes.orders,
+                    context: context,
+                    title: "طلباتي",
+                    icon: FontAwesomeIcons.firstOrderAlt,
+                    onTap: () => Get.toNamed(AppRoutes.orders),
+                  ),
+                  buildItem(
+                    rout: AppRoutes.stores,
+                    context: context,
+                    title: "المتاجر",
+                    icon: Icons.storefront_outlined,
+                    onTap: () => Get.toNamed(AppRoutes.stores),
+                  ),
+                  buildItem(
+                    rout: AppRoutes.setting,
+                    context: context,
+                    title: "الإعدادات",
+                    icon: Icons.settings,
+                    onTap: () => Get.toNamed(AppRoutes.setting),
+                  ),
+                ],
+              ),
             ),
           )
         ],

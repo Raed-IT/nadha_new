@@ -22,6 +22,11 @@ class AppRoutes {
   static const String stores = "/stores";
   static const String showStore = "/showStore";
 
+  // store
+  static const String store = "/store";
+
+
+
   //for delivery user
   static const String deliveryOrders = "/deliversOrders";
   static const String map = "/map";
