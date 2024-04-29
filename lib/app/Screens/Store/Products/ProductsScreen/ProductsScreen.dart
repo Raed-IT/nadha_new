@@ -78,6 +78,9 @@ class StoreProductsScreen extends GetView<StoreProductsScreenController> {
                             return await controller.changeProductStatus(
                                 product, status);
                           },
+                          onDeleteProduct: (ProductModel product) async {
+                            await controller.deleteProduct(context, product);
+                          },
                         ),
                         LoadMoreComponent(
                           isFinished: controller.isFinish,

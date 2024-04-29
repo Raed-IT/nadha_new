@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
+import 'package:delevary/app/Services/UI/ToastService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
@@ -17,6 +22,21 @@ class StoreProductsScreenController extends GetxController
     };
     paginationUrl = ApiRoute.MyStores;
     getDataFromApi();
+  }
+
+  Future<void> deleteProduct(BuildContext context, ProductModel product) async {
+    Get.back();
+    OverlayLoaderService.show(context);
+    await postData(
+        url: "${ApiRoute.products}/${product.id}",
+        data: {"_method": "DELETE"},
+        onSuccess: (res, t) {
+          ToastService.showSuccessToast(
+              context: context, title: "تم حذف المنتج");
+          paginationData.remove(product);
+        },
+        onError: (ex, t) {});
+    OverlayLoaderService.hide();
   }
 
   Future getDataFromApi() async {

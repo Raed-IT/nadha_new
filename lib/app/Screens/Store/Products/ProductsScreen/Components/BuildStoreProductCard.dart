@@ -4,6 +4,7 @@ import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Data/Enums/AcceptedProductEnum.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
+import 'package:delevary/app/Screens/Store/Products/Components/DeleteDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,13 +14,16 @@ import 'package:lottie/lottie.dart';
 class BuildStoreProductCardComponent extends StatelessWidget {
   final ProductModel product;
   final Future<bool> Function(ProductModel product, bool status) onChangeStatus;
-  final   Function(ProductModel product) onUpdateProduct;
+  final Function(ProductModel product) onUpdateProduct;
+  final Function(ProductModel product) onDeleteProduct;
 
-  const BuildStoreProductCardComponent(
-      {super.key,
-      required this.product,
-      required this.onChangeStatus,
-      required this.onUpdateProduct});
+  const BuildStoreProductCardComponent({
+    super.key,
+    required this.product,
+    required this.onChangeStatus,
+    required this.onUpdateProduct,
+    required this.onDeleteProduct,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +169,10 @@ class BuildStoreProductCardComponent extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
+                            onTap: () => showDeleteProductDialog(
+                                onDelete: onDeleteProduct,
+                                context: context,
+                                product: product),
                             child: SizedBox(
                               height: 40.h,
                               width: 40.w,

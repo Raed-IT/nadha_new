@@ -10,6 +10,8 @@ import 'package:delevary/app/Screens/SaleScreen/SalePage.dart';
 import 'package:delevary/app/Screens/SettingScreen/SettingPage.dart';
 import 'package:delevary/app/Screens/Store/Products/AddProductScreen/AddProductPage.dart';
 import 'package:delevary/app/Screens/Store/Products/UpdateProductScreen/UpdateProductPage.dart';
+import 'package:delevary/app/Screens/Store/Sliders/AddSliderScreen/AddSliderPage.dart';
+import 'package:delevary/app/Screens/Store/Sliders/UpdateSliderScreen/UpdateSliderPage.dart';
 import 'package:delevary/app/Screens/Store/StoreScreen/StorePage.dart';
 import 'package:delevary/app/Screens/StoresScreens/ShowStoreScreen/ShowStorePage.dart';
 import 'package:get/get.dart';
@@ -60,6 +62,8 @@ class GetPagesProvider {
     SlidersStorePage(),
     CategoriesStorePage(),
     AddProductPage(),
-    UpdateProductPage()
+    UpdateProductPage(),
+    AddSliderPage(),
+    UpdateSliderPage()
   ];
 }

@@ -10,9 +10,10 @@ import 'BuildStoreProductCard.dart';
 class BuildProductsListStoreComponent
     extends GetView<StoreProductsScreenController> {
   final Future<bool> Function(ProductModel product, bool status) onChangeStatus;
+  final Function(ProductModel product) onDeleteProduct;
 
   const BuildProductsListStoreComponent(
-      {super.key, required this.onChangeStatus});
+      {super.key, required this.onChangeStatus, required this.onDeleteProduct });
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +65,7 @@ class BuildProductsListStoreComponent
                               controller.paginationData.insert(0, product);
                             }
                           },
+                          onDeleteProduct: onDeleteProduct,
                         ),
                       )
                       .toList(),
