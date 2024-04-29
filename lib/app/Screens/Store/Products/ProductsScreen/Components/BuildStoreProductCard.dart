@@ -3,23 +3,27 @@ import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Data/Enums/AcceptedProductEnum.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 
 class BuildStoreProductCardComponent extends StatelessWidget {
   final ProductModel product;
   final Future<bool> Function(ProductModel product, bool status) onChangeStatus;
+  final   Function(ProductModel product) onUpdateProduct;
 
   const BuildStoreProductCardComponent(
-      {super.key, required this.product, required this.onChangeStatus});
+      {super.key,
+      required this.product,
+      required this.onChangeStatus,
+      required this.onUpdateProduct});
 
   @override
   Widget build(BuildContext context) {
-    RxBool status = RxBool(product.status!);
+    RxBool status = RxBool(product.status ?? false);
     RxBool isUpdate = RxBool(false);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.h),
@@ -129,6 +133,56 @@ class BuildStoreProductCardComponent extends StatelessWidget {
                         status.value ? 'مفعل' : 'غير مفعل ',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 12.sp),
+                      ),
+                      Spacer(),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              var updatedProduct = await Get.toNamed(
+                                  AppRoutes.updateProduct,
+                                  arguments: {"product": product});
+                              if (updatedProduct != null) {
+                                onUpdateProduct(updatedProduct);
+                              }
+                            },
+                            child: SizedBox(
+                              height: 40.h,
+                              width: 40.w,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.sp),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    FontAwesomeIcons.pen,
+                                    size: 12.sp,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            child: SizedBox(
+                              height: 40.h,
+                              width: 40.w,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.sp),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.delete_outline_outlined,
+                                    size: 20.sp,
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       )
                     ],
                   ),

@@ -9,9 +9,10 @@ import 'BuildStoreProductCard.dart';
 
 class BuildProductsListStoreComponent
     extends GetView<StoreProductsScreenController> {
-  final Future<bool>Function(ProductModel product, bool status) onChangeStatus;
+  final Future<bool> Function(ProductModel product, bool status) onChangeStatus;
 
-  const BuildProductsListStoreComponent(  {super.key,required this.onChangeStatus});
+  const BuildProductsListStoreComponent(
+      {super.key, required this.onChangeStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +52,20 @@ class BuildProductsListStoreComponent
                 )
               : Column(
                   children: controller.paginationData
-                      .map((product) => BuildStoreProductCardComponent(
-                            product: product,
-                            onChangeStatus: onChangeStatus,
-                          ))
+                      .map(
+                        (product) => BuildStoreProductCardComponent(
+                          product: product,
+                          onChangeStatus: onChangeStatus,
+                          onUpdateProduct: (ProductModel product) {
+                            int index = controller.paginationData.indexWhere(
+                                (element) => element.id == product.id);
+                            if (index != -1) {
+                              controller.paginationData.removeAt(index);
+                              controller.paginationData.insert(0, product);
+                            }
+                          },
+                        ),
+                      )
                       .toList(),
                 ),
     );
