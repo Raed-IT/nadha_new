@@ -1,4 +1,5 @@
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
+import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Screens/Store/Products/ProductsScreen/ProductsScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,9 @@ import 'BuildStoreProductCard.dart';
 
 class BuildProductsListStoreComponent
     extends GetView<StoreProductsScreenController> {
-  const BuildProductsListStoreComponent({super.key});
+  final Future<bool>Function(ProductModel product, bool status) onChangeStatus;
+
+  const BuildProductsListStoreComponent(  {super.key,required this.onChangeStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +51,10 @@ class BuildProductsListStoreComponent
                 )
               : Column(
                   children: controller.paginationData
-                      .map((product) =>
-                          BuildStoreProductCardComponent(product: product))
+                      .map((product) => BuildStoreProductCardComponent(
+                            product: product,
+                            onChangeStatus: onChangeStatus,
+                          ))
                       .toList(),
                 ),
     );

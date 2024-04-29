@@ -22,6 +22,7 @@ class ProductModel {
   StoreModel? store;
   List<MediaModel>? images;
   bool? isFavorite;
+  bool? status;
 
   String? get getPrice {
     double? pr = 0;
@@ -68,6 +69,7 @@ class ProductModel {
     }
     id = json['id'];
     image = json['image'];
+    status = json['status'];
     isAccepted = json['is_accepted'];
     slug = json['slug'];
     name = json['name'];

@@ -5,14 +5,22 @@ import 'package:delevary/app/Data/Enums/AcceptedProductEnum.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:logger/logger.dart';
+import 'package:lottie/lottie.dart';
 
 class BuildStoreProductCardComponent extends StatelessWidget {
   final ProductModel product;
+  final Future<bool> Function(ProductModel product, bool status) onChangeStatus;
 
-  const BuildStoreProductCardComponent({super.key, required this.product});
+  const BuildStoreProductCardComponent(
+      {super.key, required this.product, required this.onChangeStatus});
 
   @override
   Widget build(BuildContext context) {
+    RxBool status = RxBool(product.status!);
+    RxBool isUpdate = RxBool(false);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Container(
@@ -50,29 +58,7 @@ class BuildStoreProductCardComponent extends StatelessWidget {
                               gradient: LinearGradient(
                                 end: Alignment.topCenter,
                                 begin: Alignment.bottomCenter,
-                                colors: [
-                                  if (product.isAccepted ==
-                                      AcceptedProductEnum.pending.name) ...[
-                                    Theme.of(context).colorScheme.secondary,
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .secondary
-                                        .withOpacity(0.1)
-                                  ],
-                                  if (product.isAccepted ==
-                                      AcceptedProductEnum.accepted.name) ...[
-                                    Theme.of(context).colorScheme.primary,
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.1)
-                                  ],
-                                  if (product.isAccepted ==
-                                      AcceptedProductEnum.rejected.name) ...[
-                                    Colors.red,
-                                    Colors.red.withOpacity(0.1)
-                                  ]
-                                ],
+                                colors: getColor(context),
                               ),
                             ),
                             width: 120.sp,
@@ -112,11 +98,63 @@ class BuildStoreProductCardComponent extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 40.h,
+                child: Obx(
+                  () => Row(
+                    children: [
+                      (!isUpdate.value)
+                          ? SizedBox(
+                              width: 55.w,
+                              child: FittedBox(
+                                child: Switch(
+                                  value: status.value,
+                                  onChanged: (state) async {
+                                    isUpdate.value = true;
+                                    bool isUpdaated =
+                                        await onChangeStatus(product, state);
+                                    if (isUpdaated) {
+                                      status.value = !status.value;
+                                      product.status = status.value;
+                                    }
+                                    isUpdate.value = false;
+                                  },
+                                ),
+                              ),
+                            )
+                          : Lottie.asset("assets/json/loader.json"),
+                      5.horizontalSpace,
+                      Text(
+                        status.value ? 'مفعل' : 'غير مفعل ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 12.sp),
+                      )
+                    ],
+                  ),
+                ),
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  List<Color> getColor(BuildContext context) {
+    return [
+      if (product.isAccepted == AcceptedProductEnum.pending.name) ...[
+        Theme.of(context).colorScheme.secondary,
+        Theme.of(context).colorScheme.secondary.withOpacity(0.1)
+      ],
+      if (product.isAccepted == AcceptedProductEnum.accepted.name) ...[
+        Theme.of(context).colorScheme.primary,
+        Theme.of(context).colorScheme.primary.withOpacity(0.1)
+      ],
+      if (product.isAccepted == AcceptedProductEnum.rejected.name) ...[
+        Colors.red,
+        Colors.red.withOpacity(0.1)
+      ]
+    ];
   }
 }

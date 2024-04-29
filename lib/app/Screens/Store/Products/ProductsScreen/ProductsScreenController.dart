@@ -1,12 +1,13 @@
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:helper/mixin/api_mixing.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
-import 'package:logger/logger.dart';
 
 class StoreProductsScreenController extends GetxController
-    with PaginationMixin<ProductModel> {
+    with PaginationMixin<ProductModel>, ApiHelperMixin {
   @override
   void onInit() {
     super.onInit();
@@ -34,6 +35,20 @@ class StoreProductsScreenController extends GetxController
       products.add(ProductModel.fromJson(product));
     }
     return products;
+  }
+
+  Future<bool> changeProductStatus(ProductModel product, bool status) async {
+    bool status = false;
+    await postData(
+        url: "${ApiRoute.products}/${product.id}",
+        data: {},
+        onSuccess: (data, t) {
+          if (data.data['status'] == "SUCCESS") {
+            status = true;
+          }
+        },
+        onError: (e, t) {});
+    return status;
   }
 
   @override

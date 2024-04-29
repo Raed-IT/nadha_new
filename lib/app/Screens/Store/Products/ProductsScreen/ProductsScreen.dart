@@ -1,4 +1,5 @@
 import 'package:delevary/app/Components/LoadMore.dart';
+import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Route/Routs.dart';
@@ -71,7 +72,13 @@ class StoreProductsScreen extends GetView<StoreProductsScreenController> {
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
-                        BuildProductsListStoreComponent(),
+                        BuildProductsListStoreComponent(
+                          onChangeStatus:
+                              (ProductModel product, bool status) async {
+                            return await controller.changeProductStatus(
+                                product, status);
+                          },
+                        ),
                         LoadMoreComponent(
                           isFinished: controller.isFinish,
                           isLoad: controller.isLoadMore,
