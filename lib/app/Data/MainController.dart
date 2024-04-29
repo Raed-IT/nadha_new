@@ -1,4 +1,5 @@
 import 'package:delevary/app/Data/Models/AddressModel.dart';
+import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/UserModel.dart';
 import 'package:delevary/app/Services/LocaleStorageService.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
@@ -16,9 +17,10 @@ class MainController extends GetxController {
   //   LocaleStorageService.logOut();
   //   super.onReady();
   // }
-
+  List<CategoryModel> storeCategories = [];
   Rxn<AddressModel> selectedAddress = Rxn();
   late PackageInfo packageInfo;
+
   bool isSelectedAddress({required AddressModel address}) {
     return selectedAddress.value?.id == address.id;
   }

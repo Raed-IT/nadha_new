@@ -39,11 +39,21 @@ class _ImagePickerComponentState extends State<ImagePickerComponent> {
           (widget.image != null && listFiles.isEmpty)
               ? Stack(
                   children: [
-                    ImageCacheComponent(
-                        fit: BoxFit.contain,
-                        height: 200.h,
-                        width: Get.width,
-                        image: widget.image!),
+                    (widget.image != null && widget.image!.isNotEmpty)
+                        ? ImageCacheComponent(
+                            fit: BoxFit.contain,
+                            height: 200.h,
+                            width: Get.width,
+                            image: widget.image!)
+                        : Container(
+                            height: 200.h,
+                            child: Center(
+                              child: Text(
+                                "اضغط لإختيار صورة",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
                     Container(
                       height: 200.h,
                       width: Get.width,

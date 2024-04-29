@@ -95,9 +95,9 @@ class TextFieldComponent extends StatelessWidget {
                       borderSide: BorderSide(
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black12),
+                      borderRadius: BorderRadius.circular(15.sp),
                     ),
                   ),
             ),

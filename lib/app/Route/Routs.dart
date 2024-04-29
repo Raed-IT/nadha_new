@@ -25,9 +25,13 @@ class AppRoutes {
   // store
   static const String store = "/store";
 
-
-
   //for delivery user
   static const String deliveryOrders = "/deliversOrders";
   static const String map = "/map";
+
+//   store
+  static const String storeProducts = "/storeProducts";
+  static const String storeSliders = "/storeSliders";
+  static const String storeCategories = "/storeCategories";
+  static const String addProduct = "/addProduct";
 }

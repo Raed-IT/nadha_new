@@ -25,8 +25,10 @@ class DropDownComponent<T extends BaseModel> extends StatelessWidget {
     late SearchableDropdownController<T> controller;
 
     return Container(
+      height: 60.h,
       margin: EdgeInsets.symmetric(vertical: 10.sp),
       decoration: BoxDecoration(
+          border: Border.all(color: Colors.black12),
           borderRadius: borderRadius ?? BorderRadius.circular(15.sp),
           color: Theme.of(context).colorScheme.onPrimary),
       child: SearchableDropdown<T>(

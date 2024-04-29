@@ -17,6 +17,7 @@ class ProductModel {
   double? discount;
   String? currency;
   String? image;
+  String? isAccepted;
   CategoryModel? category;
   StoreModel? store;
   List<MediaModel>? images;
@@ -67,6 +68,7 @@ class ProductModel {
     }
     id = json['id'];
     image = json['image'];
+    isAccepted = json['is_accepted'];
     slug = json['slug'];
     name = json['name'];
     info = json['info'];
