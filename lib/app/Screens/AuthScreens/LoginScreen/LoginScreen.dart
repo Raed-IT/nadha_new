@@ -43,15 +43,21 @@ class LoginScreen extends GetView<LoginScreenController> {
                         ),
                       if (!controller.keyboardVisible.value)
                         Text(
-                          "تسجيل الدخول ",
+                          "يرجى تسجيل الدخول للمتابعة ",
                           style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 25.sp),
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20.sp,
+                            color: Theme.of(context).colorScheme.background,
+                          ),
                         ).animate().slideY(begin: 1),
                       if (!controller.keyboardVisible.value) 10.verticalSpace,
                       if (!controller.keyboardVisible.value)
                         Text(
                           "مرحبًا بك في منصة تسوقي ! يُرجى تسجيل الدخول باستخدام بيانات حسابك للوصول إلى خدماتنا الرائعة وتجربة تسوق فريدة.",
-                          style: TextStyle(fontSize: 15.sp),
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: Theme.of(context).colorScheme.background,
+                          ),
                           textAlign: TextAlign.justify,
                         ).animate().slideY(begin: 1),
                     ],
@@ -123,7 +129,14 @@ class LoginScreen extends GetView<LoginScreenController> {
                               ),
                               onPressed: () =>
                                   controller.login(context: context),
-                              child: Text("تسجيل الدخول"),
+                              child: Text(
+                                "تسجيل الدخول",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background),
+                              ),
                             ),
                           ),
                           if (!controller.keyboardVisible.value)
@@ -144,14 +157,28 @@ class LoginScreen extends GetView<LoginScreenController> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () => controller.loginWithGoogle(context),
-                                child: const Row(
+                                onPressed: () =>
+                                    controller.loginWithGoogle(context),
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(FontAwesomeIcons.google),
-                                    Text(" تسجيل الدخول باستخدام غوغل")
+                                    Icon(
+                                      FontAwesomeIcons.google,
+                                      size: 20.sp,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                    ),
+                                    10.horizontalSpace,
+                                    Text(
+                                      " تسجيل الدخول باستخدام غوغل",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background),
+                                    )
                                   ],
                                 ),
                               ),

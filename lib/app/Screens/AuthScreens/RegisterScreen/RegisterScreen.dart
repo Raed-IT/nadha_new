@@ -40,15 +40,21 @@ class RegisterScreen extends GetView<RegisterScreenController> {
                         ),
                       if (!controller.keyboardVisible.value)
                         Text(
-                          "إنشاء حساب جديد ",
+                          "ليس لديك حساب ؟!  \n قم بإنشاء حساب جديد",
                           style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 25.sp),
+                              fontWeight: FontWeight.w900, fontSize: 25.sp,
+                            color: Theme.of(context).colorScheme.background,
+
+                          ),
                         ).animate().slideY(begin: 1),
                       if (!controller.keyboardVisible.value) 10.verticalSpace,
                       if (!controller.keyboardVisible.value)
                         Text(
                           "مرحبًا بك في منصة تسوقي ! يُرجى انشائ حساب باستخدام بيانات حسابك للوصول إلى خدماتنا الرائعة وتجربة تسوق فريدة.",
-                          style: TextStyle(fontSize: 15.sp),
+                          style: TextStyle(fontSize: 15.sp,
+                            color: Theme.of(context).colorScheme.background,
+
+                          ),
                           textAlign: TextAlign.justify,
                         ).animate().slideY(begin: 1),
                     ],

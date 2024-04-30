@@ -7,10 +7,8 @@ import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenControl
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:helper/helper.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:hl_image_picker/hl_image_picker.dart';
-import 'package:logger/logger.dart';
 import '../../Services/UI/ToastService.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -89,7 +87,11 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
                 context: context, title: 'تم تعديل بيانات المتجر ');
             Get.find<MainController>().user.value =
                 UserModel.fromJson(res.data['data']['user']);
-            Get.find<MainScaffoldScreenController>().activePage.value = 0;
+            if (Get.currentRoute == AppRoutes.mainScaffoldScreen) {
+              Get.find<MainScaffoldScreenController>().activePage.value = 0;
+            } else {
+              Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+            }
           } else {
             ToastService.showErrorToast(
                 context: context,
@@ -135,8 +137,11 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
                 context: context, title: 'تم تعديل بيانات المستخدم ');
             Get.find<MainController>().user.value =
                 UserModel.fromJson(res.data['data']['user']);
-            Get.find<MainScaffoldScreenController>().activePage.value = 0;
-          } else {
+            if (Get.currentRoute == AppRoutes.mainScaffoldScreen) {
+              Get.find<MainScaffoldScreenController>().activePage.value = 0;
+            } else {
+              Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+            }          } else {
             ToastService.showErrorToast(
                 context: context,
                 title: 'خطأ في تعديل بيانات المستخدم ',

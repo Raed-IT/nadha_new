@@ -15,6 +15,8 @@ import '../../Components/AppBarComponents/AppBarComponent.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 
 class ProfileScreen extends GetView<ProfileScreenController> {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();

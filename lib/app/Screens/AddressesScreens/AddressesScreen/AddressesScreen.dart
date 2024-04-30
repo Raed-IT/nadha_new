@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
@@ -149,8 +150,10 @@ class _AddressesScreenState extends State<AddressesScreen> {
                               '${address.name}',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text(
+                            AutoSizeText(
                               '${address.info}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary),
                             ),

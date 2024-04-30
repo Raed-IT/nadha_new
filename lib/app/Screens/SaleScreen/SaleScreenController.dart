@@ -10,7 +10,7 @@ class SaleScreenController extends GetxController
     with PaginationMixin<ProductModel> {
   @override
   void onInit() {
-    paginationUrl = "${ApiRoute.products}/sale";
+    paginationUrl = "${ApiRoute.products}-sale";
     getDataFromApi();
     super.onInit();
   }

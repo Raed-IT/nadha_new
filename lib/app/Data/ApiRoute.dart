@@ -19,4 +19,5 @@ class ApiRoute {
   static String users = "$host/users";
   static String search = "$host/search";
   static String logout = "$host/logout";
+  static String sliders = "$host/sliders";
 }
