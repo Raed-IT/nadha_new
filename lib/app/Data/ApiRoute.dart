@@ -2,6 +2,7 @@ class ApiRoute {
   // static String host = "http://192.168.1.105:8000/api/v1";
   static String domin = "https://tasawoqe.com";
   static String host = "$domin/api/v1";
+
   // static String host = "http://demo.tasawoqe.com/api/v1";
   static String settings = "$host/settings";
   static String login = "$host/login";
@@ -20,4 +21,5 @@ class ApiRoute {
   static String search = "$host/search";
   static String logout = "$host/logout";
   static String sliders = "$host/sliders";
+  static String transforms = "$host/transforms";
 }

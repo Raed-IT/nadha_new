@@ -1,4 +1,5 @@
 import 'package:animated_number/animated_number.dart';
+import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/Store/StoreScreen/StoreScreenController.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,13 @@ class StatisticStoreComponent extends GetView<StoreScreenController> {
                 context: context,
                 content: controller.statistics.value!.sliders!,
                 title: "الاعلانات الرئيسية"),
+            buildCard(
+                onTap: () {
+                  Get.toNamed(AppRoutes.balances);
+                },
+                context: context,
+                content: -1*(Get.find<MainController>().user.value?.balance ?? 0),
+                title: "رصيدي"),
           ],
         )
       ],

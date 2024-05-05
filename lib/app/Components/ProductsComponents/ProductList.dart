@@ -37,7 +37,7 @@ class ProductListComponent extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     crossAxisCount: 2,
-                    childAspectRatio: 1 / 1.25,
+                    childAspectRatio: 1 / 1.45,
                     crossAxisSpacing: 10.sp,
                     mainAxisSpacing: 10.h,
                     children: products

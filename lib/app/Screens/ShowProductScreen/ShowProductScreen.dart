@@ -175,7 +175,7 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                                         ),
                                                       );
                                                     },
-                                                    height: Get.width - 100.h,
+                                                    height:400.h,
                                                     sliders: controller
                                                         .product.value!.images!
                                                         .map((e) => SliderModel(

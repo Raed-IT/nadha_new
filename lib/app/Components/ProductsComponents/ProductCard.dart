@@ -65,7 +65,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 130.h,
+                height: 160.h,
                 child: Stack(
                   children: [
                     Row(
@@ -84,7 +84,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                               child: Container(
                                 key: productCardKye,
                                 child: ImageCacheComponent(
-                                  height: 130.h,
+                                  height: 160.h,
                                   borderRadius: widget.imageRadius ??
                                       BorderRadius.circular(10.sp),
                                   image: "${widget.product.image}",
