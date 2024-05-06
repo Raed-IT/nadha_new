@@ -145,8 +145,13 @@ Future<bool> showAddToCartBottomSheet(
                 ),
                 20.verticalSpace,
                 SizedBox(
+                  height: 40.h,
                   width: Get.width,
-                  child: OutlinedButton(
+                  child: MaterialButton(
+                    color: Theme.of(context).colorScheme.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.sp),
+                    ),
                     onPressed: () {
                       if (type.value == null) {
                         ToastService.showErrorToast(
@@ -177,10 +182,15 @@ Future<bool> showAddToCartBottomSheet(
                           type.value!);
                       Get.back();
                     },
-                    child:
-                        Text(unit == null ? "إضافة الى السلة" : 'تعديل'),
+                    child: Text(
+                      unit == null ? "إضافة الى السلة " : 'تعديل',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.background,
+                          fontSize: 15.sp),
+                    ),
                   ),
-                )
+                ),
+                10.verticalSpace,
               ],
             ),
           ),

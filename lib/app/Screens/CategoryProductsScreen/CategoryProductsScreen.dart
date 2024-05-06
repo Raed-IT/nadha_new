@@ -42,10 +42,9 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
           height: 50.sp,
           child: AddToCartIcon(
             key: cartKey,
-            badgeOptions:
-                BadgeOptions(active: Get.find<MainController>().cart.isNotEmpty),
+            badgeOptions: BadgeOptions(
+                active: Get.find<MainController>().cart.isNotEmpty),
             icon: FloatingActionButton(
-
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(1000.sp),
               ),
@@ -87,9 +86,15 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                           isLoad: controller.isLoadPaginationData,
                           onTapAddProduct:
                               (ProductModel product, GlobalKey key) {
-                            controller.addToCartAnimation(
-                                widgetKey: key, cartKey: cartKey);
-                            controller.cartService.addToCard(product: product,context: context);
+                            controller.cartService.addToCard(
+                                product: product,
+                                context: context,
+                                onAddAnimation: (k, isAdd) {
+                                  if(isAdd) {
+                                    controller.addToCartAnimation(
+                                      widgetKey: k, cartKey: cartKey);
+                                  }
+                                });
                           },
                         ),
                       ),

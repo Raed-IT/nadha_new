@@ -18,6 +18,11 @@ class CartScreenController extends GetxController with ApiHelperMixin {
       text: Get.find<MainController>().user.value?.phone ?? '');
 
   void createOrder(BuildContext context) async {
+    if (phoneTextController.text.isEmpty) {
+      ToastService.showErrorToast(
+          context: context, title: "الرجاء ادخال رقم هاتف");
+      return;
+    }
     List<CartItemModel> cart = Get.find<MainController>().cart;
     dio.FormData data = dio.FormData.fromMap({});
     for (int i = 0; i < cart.length; i++) {
@@ -31,6 +36,7 @@ class CartScreenController extends GetxController with ApiHelperMixin {
     data.fields.add(MapEntry("address_id",
         "${Get.find<MainController>().selectedAddress.value?.id}"));
     data.fields.add(MapEntry("note", noteTextController.text));
+    data.fields.add(MapEntry("phone", phoneTextController.text));
 
     OverlayLoaderService.show(context);
 

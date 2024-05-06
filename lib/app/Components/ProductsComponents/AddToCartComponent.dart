@@ -61,16 +61,18 @@ class _AddToCardComponentState extends State<AddToCardComponent> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.sp),
-                border:
-                    Border.all(color: Theme.of(context).colorScheme.primary),
+                color: Theme.of(context).colorScheme.primary,
               ),
               width: Get.width,
               height: 40.h,
-              child: BlurryContainer(
-                height: 50.h,
-                borderRadius: BorderRadius.circular(10.sp),
-                child: const Center(
-                  child: Text("إضافة الى السلة "),
+              child: Center(
+                child: Text(
+                  "إضافة الى السلة ",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.background,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.sp,
+                  ),
                 ),
               ),
             ),

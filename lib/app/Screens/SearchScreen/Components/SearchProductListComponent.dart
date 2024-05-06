@@ -7,7 +7,9 @@ import '../../../Components/ProductsComponents/ProductList.dart';
 import '../../ShowProductScreen/ShowProductScreenController.dart';
 
 class SearchProductListComponent extends GetView<SearchScreenController> {
-  const SearchProductListComponent({super.key});
+  final Function(GlobalKey key, ProductModel product) onAddProduct;
+
+  const SearchProductListComponent(this.onAddProduct, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,9 @@ class SearchProductListComponent extends GetView<SearchScreenController> {
                   tag: "show_product${product.id}");
             },
             isLoad: RxBool(false),
-            onTapAddProduct: (product, key) {},
+            onTapAddProduct: (product, key) {
+              onAddProduct(key,product);
+            },
           )
         : Container());
   }

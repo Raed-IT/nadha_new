@@ -10,7 +10,9 @@ import 'package:delevary/app/Screens/OrdersSecreens/OrdersSecreen/OrdersSecreenC
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../route/routs.dart';
 
@@ -83,13 +85,37 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                         ),
                       )
                       .toList(),
+                  if (order.driver != null)
+                    Row(
+                      children: [
+                        10.horizontalSpace,
+                        Icon(
+                          FontAwesomeIcons.whatsapp,
+                          size: 20.sp,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            launchUrl(Uri.parse(
+                                "https://wa.me/${order.driver?.phone?.replaceAll('+', "")}"));
+                          },
+                          child: Text(
+                            "انقر للتواصل مع السائق ${order.driver?.name}",
+                            style: TextStyle(
+                                fontSize: 12.sp, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                   Row(
                     children: [
-                      Text("العنوان : ${order.address?.name}",style: TextStyle(
-                        fontSize: 12.sp,fontWeight: FontWeight.bold
-                      ),),
+                      Text(
+                        "العنوان : ${order.address?.name}",
+                        style: TextStyle(
+                            fontSize: 12.sp, fontWeight: FontWeight.bold),
+                      ),
                       Spacer(),
-                      OutlinedButton(onPressed: (){}, child: Text("طلب مرة أخرى"))
+                      OutlinedButton(
+                          onPressed: () {}, child: Text("طلب مرة أخرى"))
                     ],
                   )
                 ],
@@ -189,14 +215,15 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                   10.verticalSpace,
                   Row(
                     children: [
-                      (cartItem.product!=null)?
-                      BuildPriceProductComponent(
-                          product: Rx(cartItem.product!), size: 10.sp):SizedBox(),
+                      (cartItem.product != null)
+                          ? BuildPriceProductComponent(
+                              product: Rx(cartItem.product!), size: 10.sp)
+                          : SizedBox(),
                       Spacer(),
                       Row(
                         children: [
                           Text(
-                            "${cartItem.quantity??''} / ",
+                            "${cartItem.quantity ?? ''} / ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.sp,

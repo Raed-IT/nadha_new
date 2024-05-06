@@ -2,9 +2,11 @@ import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
 import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
+import 'package:delevary/app/Data/Models/UserModel.dart';
 
 class OrderModel {
   int? id;
+  UserModel? driver;
   double? totalAmount;
   AddressModel? address;
   OrderStatusEnum? status;
@@ -18,7 +20,10 @@ class OrderModel {
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    totalAmount = double.tryParse("${ json['total_amount']}");
+    if (json['delivery'] != null) {
+      driver = UserModel.fromJson(json['delivery']);
+    }
+    totalAmount = double.tryParse("${json['total_amount']}");
     if (json['address'] != null) {
       address = AddressModel.fromJson(json['address']);
     }

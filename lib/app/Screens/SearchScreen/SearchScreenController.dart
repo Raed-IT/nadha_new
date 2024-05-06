@@ -1,16 +1,19 @@
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Data/Models/StoreModel.dart';
+import 'package:delevary/app/Mixins/AddToCartMixin.dart';
+import 'package:delevary/app/Services/CartService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
 
-class SearchScreenController extends GetxController with PaginationMixin {
+class SearchScreenController extends GetxController with PaginationMixin,AddToCartMixin {
   TextEditingController searchTextController = TextEditingController();
   Rx<String> searchText = Rx("");
   RxInt searchCount = RxInt(0);
   RxInt indexTaps = RxInt(1);
+  CartService cartService = CartService();
 
   Future loadMore() async {
     await getPaginationData(isRefresh: false);

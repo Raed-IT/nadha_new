@@ -42,7 +42,7 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<ShowProductScreenController>(
       tag:
-          "show_product${(Get.arguments?.containsKey('product')??false) ? Get.arguments['product']?.id : ''}",
+          "show_product${(Get.arguments?.containsKey('product') ?? false) ? Get.arguments['product']?.id : ''}",
       builder: (controller) => Builder(
         builder: (context) {
           GlobalKey productKey = GlobalKey();
@@ -63,8 +63,12 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(1000.sp),
                     ),
-                    child: const Center(
-                      child: Icon(FontAwesomeIcons.shareNodes),
+                    child: Center(
+                      child: Icon(
+                        FontAwesomeIcons.shareFromSquare,
+                        size: 20.sp,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
                     ),
                     onPressed: () {
                       Share.share(
@@ -175,7 +179,7 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                                         ),
                                                       );
                                                     },
-                                                    height:400.h,
+                                                    height: 400.h,
                                                     sliders: controller
                                                         .product.value!.images!
                                                         .map((e) => SliderModel(
@@ -290,7 +294,8 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                               "show${controller.product.value?.id}Products",
                                         });
                                     Get.put(ShowProductScreenController(),
-                                        tag: "show_product${product.id}",permanent: true);
+                                        tag: "show_product${product.id}",
+                                        permanent: true);
                                   }
                                 },
                                 isLoad: controller.isLoad,
