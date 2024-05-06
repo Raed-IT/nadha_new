@@ -146,7 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "hero": "homeProducts"
                                   });
                               Get.put(ShowProductScreenController(),
-                                  tag: "show_product${product.id}");
+                                  tag: "show_product${product.id}",
+                                  permanent: true);
                             },
                             isLoad: controller.isLoadPaginationData,
                             onTapAddProduct: (product, productKy) {
@@ -171,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                           .refreshAbel(
                         onRefresh: () async {
-                          await controller.getFreshData();
+                           await controller.getFreshData();
                         },
                       ),
                     ),

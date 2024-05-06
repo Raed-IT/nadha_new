@@ -61,7 +61,7 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
       Get.offAllNamed(AppRoutes.mainScaffoldScreen);
     } else {
       Future.delayed(
-        3.seconds - now.difference(startTime),
+        2.seconds - now.difference(startTime),
         () {
           Get.find<MainController>().cities.value = cities;
           Get.offAllNamed(AppRoutes.mainScaffoldScreen);
