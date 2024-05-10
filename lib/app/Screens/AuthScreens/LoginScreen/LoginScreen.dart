@@ -43,28 +43,49 @@ class LoginScreen extends GetView<LoginScreenController> {
                         ),
                       if (!controller.keyboardVisible.value)
                         Text(
-                          "يرجى تسجيل الدخول للمتابعة ",
+                          "تسجيل الدخول  ",
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
-                            fontSize: 20.sp,
+                            fontSize: 35.sp,
                             color: Theme.of(context).colorScheme.background,
                           ),
                         ).animate().slideY(begin: 1),
                       if (!controller.keyboardVisible.value) 10.verticalSpace,
                       if (!controller.keyboardVisible.value)
                         Text(
-                          "مرحبًا بك في منصة تسوقي ! يُرجى تسجيل الدخول باستخدام بيانات حسابك للوصول إلى خدماتنا الرائعة وتجربة تسوق فريدة.",
+                          "مرحبًا بك في منصة تسوقي \n يُرجى تسجيل الدخول للمتابعة \n اذا لم يكن لديك حساب قم بالتسجيل .",
                           style: TextStyle(
-                            fontSize: 13.sp,
+                            fontSize: 14.sp,
                             color: Theme.of(context).colorScheme.background,
                           ),
                           textAlign: TextAlign.justify,
                         ).animate().slideY(begin: 1),
+                      20.verticalSpace,
+                      SizedBox(
+                        width: Get.width,
+                        height: 50.h,
+                        child: MaterialButton(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.sp)),
+                          color: Theme.of(context).colorScheme.background,
+                          onPressed: () =>
+                              Get.offNamed(AppRoutes.registerScreen),
+                          child: Text(
+                            " تسجيل مستخدم جديد",
+                            style: TextStyle(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                      ).animate().slideY(begin: 1, duration: 500.ms),
                     ],
                   ),
                 ),
               ),
-              50.verticalSpace,
+              20.verticalSpace,
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(

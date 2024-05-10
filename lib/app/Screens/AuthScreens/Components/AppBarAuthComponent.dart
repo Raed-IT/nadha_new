@@ -22,23 +22,24 @@ class AppBarAuthComponent extends StatelessWidget {
             onPressed: () => Get.back(),
             icon: Icon(
               FontAwesomeIcons.arrowRight,
+              color: Theme.of(context).colorScheme.background,
               size: 20.sp,
             ),
           ).animate().slideX(begin: 1, duration: Duration(milliseconds: 300)),
           const Spacer(),
-          IconButton.outlined(
-            onPressed: onAnotherTap,
-            icon: Text(
-              title,
-              style: TextStyle(fontSize: 12.sp),
-            ),
-          )
-              .animate()
-              .scale(
-                begin: const Offset(0, 0),
-                duration: const Duration(milliseconds: 200),
-              )
-              .slideY(begin: -1),
+          // IconButton.outlined(
+          //   onPressed: onAnotherTap,
+          //   icon: Text(
+          //     title,
+          //     style: TextStyle(fontSize: 12.sp),
+          //   ),
+          // )
+          //     .animate()
+          //     .scale(
+          //       begin: const Offset(0, 0),
+          //       duration: const Duration(milliseconds: 200),
+          //     )
+          //     .slideY(begin: -1),
         ],
       ),
     );

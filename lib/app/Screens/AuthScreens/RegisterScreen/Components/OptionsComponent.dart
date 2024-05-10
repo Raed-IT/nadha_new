@@ -31,7 +31,7 @@ class RegisterOptionsComponent extends GetView<RegisterScreenController> {
                   )
                 ],
               ),
-              80.verticalSpace,
+              40.verticalSpace,
               Row(
                 children: GenderTypeEnum.values
                     .map(
@@ -164,9 +164,12 @@ class RegisterOptionsComponent extends GetView<RegisterScreenController> {
                     ),
                   ),
                   onPressed: () => controller.register(context),
-                  child: const Text(
-                    "تـسـجـيـل ",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Text(
+                    "التسجيل ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                        color: Theme.of(context).colorScheme.background),
                   ),
                 ),
               ).animate().slideY(

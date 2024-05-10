@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:delevary/app/Screens/AuthScreens/RegisterScreen/Components/OptionsComponent.dart';
 import 'package:delevary/app/Screens/AuthScreens/RegisterScreen/Components/UserInfoComponent.dart';
 import 'package:delevary/app/Screens/AuthScreens/RegisterScreen/RegisterScreenController.dart';
@@ -39,21 +40,25 @@ class RegisterScreen extends GetView<RegisterScreenController> {
                           title: 'تسجيل الدخول ',
                         ),
                       if (!controller.keyboardVisible.value)
-                        Text(
-                          "ليس لديك حساب ؟!  \n قم بإنشاء حساب جديد",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 25.sp,
-                            color: Theme.of(context).colorScheme.background,
-
-                          ),
-                        ).animate().slideY(begin: 1),
+                        SizedBox(
+                          width: Get.width,
+                          child: AutoSizeText(
+                            "تسجيل مستخدم جديد ",
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 35.sp,
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                          ).animate().slideY(begin: 1),
+                        ),
                       if (!controller.keyboardVisible.value) 10.verticalSpace,
                       if (!controller.keyboardVisible.value)
                         Text(
-                          "مرحبًا بك في منصة تسوقي ! يُرجى انشائ حساب باستخدام بيانات حسابك للوصول إلى خدماتنا الرائعة وتجربة تسوق فريدة.",
-                          style: TextStyle(fontSize: 15.sp,
+                          "مرحبًا بك في منصة تسوقي \n قم بتسجيل حساب مستخدم جديد واستمتع بخدماتنا  اذا كان لديك حساب بافعل فقم بتسجيل الدخول \n",
+                          style: TextStyle(
+                            fontSize: 17.sp,
                             color: Theme.of(context).colorScheme.background,
-
                           ),
                           textAlign: TextAlign.justify,
                         ).animate().slideY(begin: 1),
@@ -61,7 +66,29 @@ class RegisterScreen extends GetView<RegisterScreenController> {
                   ),
                 ),
               ),
-              50.verticalSpace,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.sp),
+                child: SizedBox(
+                  width: Get.width,
+                  height: 50.h,
+                  child: MaterialButton(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.sp)),
+                    color: Theme.of(context).colorScheme.background,
+                    onPressed: () => Get.offNamed(AppRoutes.loginScreen),
+                    child: Text(
+                      " تسجيل الدخول",
+                      style: TextStyle(
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ).animate().slideY(begin: 1, duration: 500.ms),
+              ),
+              10.verticalSpace,
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(

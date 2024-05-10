@@ -133,7 +133,7 @@ class MainAuthScreen extends GetView<MainAuthScreenController> {
                               ),
                               20.horizontalSpace,
                               Text(
-                                "تسجيل الدخول ",
+                                "التسجيل باستخدام Google   ",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.sp),

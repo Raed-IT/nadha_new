@@ -1,4 +1,4 @@
-package raed.swan.tasawoqe.delevary
+package com.tasawoqi.android
 
 import io.flutter.embedding.android.FlutterActivity
 

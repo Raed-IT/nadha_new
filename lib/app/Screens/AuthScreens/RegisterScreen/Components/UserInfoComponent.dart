@@ -92,9 +92,13 @@ class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
                   Fluttertoast.showToast(msg: "الرجاء ملء جميع الحقول ");
                 }
               },
-              child: const Text(
+              child: Text(
                 "الــتــالــي ",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17.sp,
+                  color: Theme.of(context).colorScheme.background,
+                ),
               ),
             ),
           ),
@@ -116,19 +120,24 @@ class RegisterUserInfoComponent extends GetView<RegisterScreenController> {
                   ),
                 ),
                 onPressed: () => controller.loginWithGoogle(context),
-                child: const Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(FontAwesomeIcons.google),
-                    Text(" انشاء حساب باستخدام غوغل")
+                    Icon(
+                      FontAwesomeIcons.google,
+                      size: 20.sp,
+                      color: Theme.of(context).colorScheme.background,
+                    ),
+                    10.horizontalSpace,
+                    Text(
+                      " التسجيل باستخدام Google",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.background),
+                    )
                   ],
                 ),
-              ).animate().elevation(
-                    delay: const Duration(milliseconds: 500),
-                    borderRadius: BorderRadius.all(Radius.circular(15.sp)),
-                    duration: const Duration(milliseconds: 500),
-                  ),
+              ).animate(),
             ),
         ],
       ),
