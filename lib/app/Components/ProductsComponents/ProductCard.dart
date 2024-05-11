@@ -6,9 +6,14 @@ import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Services/Api/FavoretService.dart';
 import 'package:delevary/app/Services/CartService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../../data/ApiRoute.dart';
 
 class ProductCardComponent extends StatefulWidget {
   final ProductModel product;
@@ -137,16 +142,17 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                             ),
                             child: Center(
                               child: Icon(
-                                Icons.add,
-                                size: 20.sp,
+                                color: Theme.of(context).colorScheme.primary,
+                                FontAwesomeIcons.plus,
+                                size: 16.sp,
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
+                    Positioned(
+                      top: 30.h,
                       child: GestureDetector(
                         onTap: () async {
                           setState(() {
@@ -171,16 +177,16 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                           height: 35.sp,
                           width: 35.sp,
                           child: Card(
-                            color: Colors.transparent,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.sp),
                             ),
                             child: !isTrregierFavorite
                                 ? Center(
                                     child: Icon(
+                                      size: 16.sp,
                                       (widget.product.isFavorite!)
                                           ? Icons.favorite
-                                          : Icons.favorite_border,
+                                          : FontAwesomeIcons.heart,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     ),
@@ -194,6 +200,29 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                                         strokeWidth: 03.sp,
                                       ),
                                     )),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 60.h,
+                      child: GestureDetector(
+                        onTap: () {
+                          Share.share(
+                              '${widget.product.name}\n\n\n${ApiRoute.domin}/products/${widget.product.slug}');
+                        },
+                        child: SizedBox(
+                          height: 35.sp,
+                          width: 35.sp,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.sp),
+                            ),
+                            child: Icon(
+                              FontAwesomeIcons.shareNodes,
+                              size: 15.sp,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ),
                       ),

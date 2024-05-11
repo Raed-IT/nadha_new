@@ -93,7 +93,7 @@ class DrawerComponent extends StatelessWidget {
                             context: context,
                             title: ""
                                 "لوحة التحكم ",
-                            icon: FontAwesomeIcons.store,
+                            icon: FontAwesomeIcons.chartSimple,
                             onTap: () => Get.toNamed(AppRoutes.store),
                           )
                         : Container(),
