@@ -1,4 +1,3 @@
-import 'package:add_to_cart_animation/globalkeyext.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';

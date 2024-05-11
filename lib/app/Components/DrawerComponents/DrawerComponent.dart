@@ -90,7 +90,8 @@ class DrawerComponent extends StatelessWidget {
                         ? buildItem(
                             rout: AppRoutes.showStore,
                             context: context,
-                            title: "متجري ",
+                            title: ""
+                                "لوحة التحكم ",
                             icon: FontAwesomeIcons.store,
                             onTap: () => Get.toNamed(AppRoutes.store),
                           )

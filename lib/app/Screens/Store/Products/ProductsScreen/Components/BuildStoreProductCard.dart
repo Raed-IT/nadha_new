@@ -207,15 +207,15 @@ class BuildStoreProductCardComponent extends StatelessWidget {
     return [
       if (product.isAccepted == AcceptedProductEnum.pending.name) ...[
         Theme.of(context).colorScheme.secondary,
-        Theme.of(context).colorScheme.secondary.withOpacity(0.1)
+        Theme.of(context).colorScheme.secondary.withOpacity(0.5)
       ],
       if (product.isAccepted == AcceptedProductEnum.accepted.name) ...[
         Theme.of(context).colorScheme.primary,
-        Theme.of(context).colorScheme.primary.withOpacity(0.1)
+        Theme.of(context).colorScheme.primary.withOpacity(0.5)
       ],
       if (product.isAccepted == AcceptedProductEnum.rejected.name) ...[
         Colors.red,
-        Colors.red.withOpacity(0.1)
+        Colors.red.withOpacity(0.5)
       ]
     ];
   }

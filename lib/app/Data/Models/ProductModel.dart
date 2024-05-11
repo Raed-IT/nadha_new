@@ -4,6 +4,7 @@ import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/MediaModel.dart';
 import 'package:delevary/app/Data/Models/StoreModel.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class ProductModel {
   int? id;
@@ -23,6 +24,16 @@ class ProductModel {
   List<MediaModel>? images;
   bool? isFavorite;
   bool? status;
+
+  String get getPriceWithOutDiscount {
+    double pr = price!;
+    if (currency == "USD") {
+      pr = price! *
+          double.tryParse(
+              "${Get.find<MainController>().setting.value!.exchange}")!;
+    }
+    return pr.toStringAsFixed(1);
+  }
 
   String? get getPrice {
     double? pr = 0;

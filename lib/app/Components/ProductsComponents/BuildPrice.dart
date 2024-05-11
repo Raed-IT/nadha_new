@@ -19,7 +19,7 @@ class BuildPriceProductComponent extends StatelessWidget {
           CustomPaint(
             painter: DiscountPainter(context),
             child: Text(
-              "${product.value.price}",
+              product.value.getPriceWithOutDiscount,
               style: TextStyle(
                 fontSize: size ?? 13.sp,
                 color: Theme.of(context).colorScheme.error,
