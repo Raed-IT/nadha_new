@@ -27,7 +27,7 @@ class StatisticStoreComponent extends GetView<StoreScreenController> {
                 },
                 context: context,
                 content: controller.statistics.value!.categories!,
-                title: "عدد الاقسام "),
+                title: "طلباتي"),
           ],
         ),
         Row(

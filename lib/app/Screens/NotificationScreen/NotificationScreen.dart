@@ -4,6 +4,7 @@ import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Screens/NotificationScreen/Components/NotificationsListComponent.dart';
+import 'package:delevary/app/Screens/NotificationScreen/Components/deleteNotificationsDialog.dart';
 import 'package:delevary/app/Screens/NotificationScreen/NotificationScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -51,11 +52,27 @@ class NotificationScreen extends GetView<NotificationScreenController> {
                             child: SizedBox(
                               height: 40.h,
                               child: MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.sp),
+                                ),
                                 minWidth: Get.width,
                                 color: Theme.of(context).colorScheme.primary,
-                                onPressed: () =>
-                                    controller.deleteNotifications(context),
-                                child: Text("مسح جميع الإشعارات"),
+                                onPressed: () => showDeleteNotificationsDialog(
+                                    context: context,
+                                    onDelete: () {
+                                      Get.back();
+                                      controller.deleteNotifications(context);
+                                    }),
+                                child: Text(
+                                  "مسح جميع الإشعارات",
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
                           )

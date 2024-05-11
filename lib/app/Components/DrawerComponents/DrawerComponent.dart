@@ -63,28 +63,29 @@ class DrawerComponent extends StatelessWidget {
               child: Column(
                 children: [
                   20.verticalSpace,
-                  Container(
-                    margin: EdgeInsets.all(10.sp),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.sp),
-                      border: Border.all(),
+                  if (Get.find<MainController>().user.value?.store != null)
+                    Container(
+                      margin: EdgeInsets.all(10.sp),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.sp),
+                        border: Border.all(),
+                      ),
+                      child: buildItem(
+                        rout: "",
+                        context: context,
+                        title: "نسخ رابط متجري ",
+                        icon: FontAwesomeIcons.copy,
+                        onTap: () {
+                          Clipboard.setData(
+                            ClipboardData(
+                                text:
+                                    "${ApiRoute.domin}/stores/${Get.find<MainController>().user.value?.store?.uniqName}"),
+                          );
+                          ToastService.showSuccessToast(
+                              context: context, title: "تم نسرابط المتجر");
+                        },
+                      ),
                     ),
-                    child: buildItem(
-                      rout: "",
-                      context: context,
-                      title: "نسخ رابط متجري ",
-                      icon: FontAwesomeIcons.copy,
-                      onTap: () {
-                        Clipboard.setData(
-                          ClipboardData(
-                              text:
-                                  "${ApiRoute.domin}/stores/${Get.find<MainController>().user.value?.store?.uniqName}"),
-                        );
-                        ToastService.showSuccessToast(
-                            context: context, title: "تم نسرابط المتجر");
-                      },
-                    ),
-                  ),
                   Obx(
                     () => Get.find<MainController>().user.value?.store != null
                         ? buildItem(

@@ -4,7 +4,6 @@ import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Screens/NotificationScreen/NotificationScreenController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -15,7 +14,6 @@ class NotificationsListComponent extends GetView<NotificationScreenController> {
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
-
     return Expanded(
       child: Obx(
         () => Padding(
@@ -87,8 +85,8 @@ class NotificationsListComponent extends GetView<NotificationScreenController> {
               .loadMoreAble(
             scrollController: scrollController,
             onLoadMore: () async {
-             await controller.loadMore();
-             },
+              await controller.loadMore();
+            },
           )
               .refreshAbel(
             onRefresh: () async {
