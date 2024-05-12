@@ -8,6 +8,7 @@ import 'package:delevary/app/Data/Models/OrderModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Screens/OrdersSecreens/OrdersSecreen/OrdersSecreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
+import 'package:delevary/app/Screens/Store/Orders/OrderStoreScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,8 +17,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../route/routs.dart';
 
-class OrdersListComponent extends GetView<OrdersScreenController> {
-  const OrdersListComponent({super.key});
+class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
+  const OrdersStoreListComponent({super.key});
 
   @override
   Widget build(BuildContext context) {

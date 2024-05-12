@@ -119,9 +119,10 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                       ),
                     ),
-                    if (Get.find<MainController>().cart.isNotEmpty &&
-                        Get.find<MainController>().setting.value!.isClose!)
-                      buildSubmeitCard(controller: controller),
+                    Obx(() => (Get.find<MainController>().cart.isNotEmpty &&
+                            Get.find<MainController>().setting.value!.isClose!)
+                        ? buildSubmeitCard(controller: controller)
+                        : Container()),
                   ],
                 ),
               ],
@@ -180,92 +181,104 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget buildSubmeitCard({required CartScreenController controller}) {
-    return Obx(
-      () => (Get.find<MainController>().selectedAddress.value == null)
-          ? GestureDetector(
-              onTap: () => showAddressesBottomSheet(context: context),
-              child: SizedBox(
-                height: 70.h,
-                width: Get.width,
-                child: Card(
-                  color: Theme.of(context).colorScheme.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.sp),
-                  ),
-                  margin:
-                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                  child: const Center(
-                    child: Text("أختيار موقع الطلب"),
-                  ),
-                ),
-              ),
-            )
-          : Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: GestureDetector(
-                    onTap: () => showConfirmCartDialog(context, () {
-                      Get.back();
-                      controller.createOrder(context);
-                    }, controller),
-                    child: SizedBox(
-                      height: 70.h,
-                      width: Get.width,
-                      child: Card(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.sp),
-                        ),
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 10.h),
-                        child: Center(
-                          child: Text(
-                            " إطلب الى ${Get.find<MainController>().selectedAddress.value!.name}",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.background,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.sp),
-                          ),
+    return Column(
+      children: [
+        Obx(
+          () => (Get.find<MainController>().selectedAddress.value == null)
+              ? GestureDetector(
+                  onTap: () => showAddressesBottomSheet(context: context),
+                  child: SizedBox(
+                    height: 70.h,
+                    width: Get.width,
+                    child: Card(
+                      color: Theme.of(context).colorScheme.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.sp),
+                      ),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
+                      child: Center(
+                        child: Text(
+                          "أختيار موقع الطلب",
+                          style:
+                              TextStyle(color: Theme.of(context).colorScheme.background),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () async {
-                      await showAddressesBottomSheet(context: context);
-                      setState(() {});
-                    },
-                    child: SizedBox(
-                      height: 70.h,
-                      width: Get.width,
-                      child: Card(
-                        color: Theme.of(context).colorScheme.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.sp),
-                        ),
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 10.h),
-                        child: Center(
-                          child: Text(
-                            "تبديل الموقع",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.background,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.sp),
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: () => showConfirmCartDialog(context, () {
+                          Get.back();
+                          controller.createOrder(context);
+                        }, controller),
+                        child: SizedBox(
+                          height: 70.h,
+                          width: Get.width,
+                          child: Card(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withOpacity(0.8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.sp),
+                            ),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 10.h),
+                            child: Center(
+                              child: Text(
+                                " إطلب الى ${Get.find<MainController>().selectedAddress.value!.name}",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.sp),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          await showAddressesBottomSheet(context: context);
+                          setState(() {});
+                        },
+                        child: SizedBox(
+                          height: 70.h,
+                          width: Get.width,
+                          child: Card(
+                            color: Theme.of(context).colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.sp),
+                            ),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 10.h),
+                            child: Center(
+                              child: Text(
+                                "تبديل الموقع",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.sp),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+        )
+      ],
     );
   }
 

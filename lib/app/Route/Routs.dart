@@ -38,4 +38,5 @@ class AppRoutes {
   static const String addSlider = "/addSlider";
   static const String updateSlider = "/updateSlider";
   static const String balances = "/balances";
+  static const String storeOrders = "/store_orders";
 }

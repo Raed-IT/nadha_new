@@ -27,7 +27,7 @@ import '../Screens/OrdersSecreens/OrdersSecreen/OrdersPage.dart';
 import '../Screens/SearchScreen/SearchScreenPage.dart';
 import '../Screens/ShowProductScreen/ShowProductPage.dart';
 import '../Screens/SplashScreen/SplashPage.dart';
-import '../Screens/Store/Categories/CategoriesScreen/CategoriesPage.dart';
+import '../Screens/Store/Orders/OrderStorePage.dart';
 import '../Screens/Store/Products/ProductsScreen/ProductsPage.dart';
 import '../Screens/Store/Sliders/SlidersScreen/SlidersPage.dart';
 import '../Screens/StoresScreens/StoresScreen/StoresPage.dart';
@@ -60,7 +60,7 @@ class GetPagesProvider {
     StorePage(),
     StoreProductsPage(),
     SlidersStorePage(),
-    CategoriesStorePage(),
+    OrderStorePage(),
     AddProductPage(),
     UpdateProductPage(),
     AddSliderPage(),

@@ -23,10 +23,10 @@ class StatisticStoreComponent extends GetView<StoreScreenController> {
                 title: "عدد المنتجات "),
             buildCard(
                 onTap: () {
-                  Get.toNamed(AppRoutes.storeCategories);
+                  Get.toNamed(AppRoutes.storeOrders);
                 },
                 context: context,
-                content: controller.statistics.value!.categories!,
+                content: controller.statistics.value!.ordersCount!,
                 title: "طلباتي"),
           ],
         ),

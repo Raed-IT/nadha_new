@@ -17,9 +17,12 @@ import 'package:delevary/app/Data/Models/SliderModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/Components/BottomSheet.dart';
+import 'package:delevary/app/Screens/ShowProductScreen/Components/ImageShowProductComonent.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -56,46 +59,24 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
             cartKey: cartKey,
             scaffold: Scaffold(
               drawer: const DrawerComponent(),
-              floatingActionButton: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  FloatingActionButton(
+              floatingActionButton: AddToCartIcon(
+                key: cartKey,
+                badgeOptions: BadgeOptions(
+                    active: Get.find<MainController>().cart.isNotEmpty),
+                icon: SizedBox(
+                  height: 50.sp,
+                  width: 50.sp,
+                  child: FloatingActionButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(1000.sp),
                     ),
                     child: Center(
-                      child: Icon(
-                        FontAwesomeIcons.shareFromSquare,
-                        size: 20.sp,
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                    ),
-                    onPressed: () {
-                      Share.share(
-                          '${controller.product.value?.name}\n\n\n${ApiRoute.domin}/products/${controller.product.value?.slug}');
-                    },
+                        child: Lottie.asset("assets/json/cart.json",
+                            width: 30.w, repeat: false)),
+                    onPressed: () => Get.toNamed(AppRoutes.cartScreen),
+                    //params
                   ),
-                  10.verticalSpace,
-                  AddToCartIcon(
-                    key: cartKey,
-                    badgeOptions: BadgeOptions(
-                        active: Get.find<MainController>().cart.isNotEmpty),
-                    icon: SizedBox(
-                      height: 50.sp,
-                      width: 50.sp,
-                      child: FloatingActionButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(1000.sp),
-                        ),
-                        child: Center(
-                            child: Lottie.asset("assets/json/cart.json",
-                                width: 30.w, repeat: false)),
-                        onPressed: () => Get.toNamed(AppRoutes.cartScreen),
-                        //params
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.endFloat,
@@ -153,43 +134,8 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                           )
                                         : Column(
                                             children: [
-                                              Hero(
-                                                tag:
-                                                    "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
-                                                child: Container(
-                                                  key: productKey,
-                                                  child: SliderComponent(
-                                                    onTapItem: (item) {
-                                                      openImagesPage(
-                                                        Navigator.of(context),
-                                                        imgUrls: controller
-                                                            .product
-                                                            .value!
-                                                            .images!
-                                                            .map((e) => e.url!)
-                                                            .toList(),
-                                                        heroTags: List.generate(
-                                                          controller
-                                                              .product
-                                                              .value!
-                                                              .images!
-                                                              .length,
-                                                          (index) =>
-                                                              "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
-                                                        ),
-                                                      );
-                                                    },
-                                                    height: 400.h,
-                                                    sliders: controller
-                                                        .product.value!.images!
-                                                        .map((e) => SliderModel(
-                                                            e.id, e.url, ""))
-                                                        .toList(),
-                                                    controller:
-                                                        PageController(),
-                                                    isLoad: RxBool(false),
-                                                  ),
-                                                ),
+                                              ImageShowProductComponent(
+                                                productKey: productKey,
                                               ),
                                               20.verticalSpace,
                                               Padding(

@@ -43,13 +43,22 @@ class AddAddressScreenController extends GetxController with ApiHelperMixin {
             "long": marker.first.position.longitude,
           },
           onSuccess: (res, ty) {
-            AddressModel addedAddress =
-                AddressModel.fromJson(res.data['data']['address']);
-            ToastService.showSuccessToast(
-                context: context, title: 'تم اضافة العنوان');
-            Get.find<MainController>().user.value!.addresses!.add(addedAddress);
-            Get.find<MainController>().selectedAddress.value = addedAddress;
-            Get.offNamed(AppRoutes.addresses);
+            if (res.data['status'] == "SUCCESS") {
+              AddressModel addedAddress =
+                  AddressModel.fromJson(res.data['data']['address']);
+              ToastService.showSuccessToast(
+                  context: context, title: 'تم اضافة العنوان');
+              Get.find<MainController>()
+                  .user
+                  .value!
+                  .addresses!
+                  .add(addedAddress);
+              Get.find<MainController>().selectedAddress.value = addedAddress;
+              Get.offNamed(AppRoutes.addresses);
+            } else {
+              ToastService.showErrorToast(
+                  context: context, title: res.data['data']['message']);
+            }
           },
           onError: (ex, ty) {
             ToastService.showSuccessToast(
