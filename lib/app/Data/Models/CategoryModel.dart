@@ -8,6 +8,7 @@ class CategoryModel extends BaseModel {
   bool? status;
   String? createdAt;
   bool? hasChildren;
+  bool? isShowTime;
   String? image;
   List<MediaModel>? images;
 
@@ -32,6 +33,7 @@ class CategoryModel extends BaseModel {
 
     id = json['id'];
     name = json['name'];
+    isShowTime = json['is_show_time'];
     image = json['image'];
     order = json['order'];
     parentId = json['parent_id'];

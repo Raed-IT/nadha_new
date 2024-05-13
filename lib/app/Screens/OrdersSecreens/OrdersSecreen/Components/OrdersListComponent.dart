@@ -64,27 +64,35 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
             children: [
               Row(
                 children: [
+                  const Text(
+                    "رقم الطلب :  ",
+                  ),
                   Text(
-                    "رقم الطلب : ${order.id}",
+                    "${order.id}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
                   Text("الإجمالي  :  ${order.totalAmount?.toStringAsFixed(1)}"),
                   Spacer(),
-                  Text("الحالة  :  ${order.status!.toOrderStatus()}"),
+                  Text("الحالة  :  "),
+                  Text(
+                    order.status!.toOrderStatus(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  )
                 ],
               ),
               30.verticalSpace,
               Column(
                 children: [
-                  ...order.orderItems!
-                      .map(
-                        (cartItem) => buildProductCard(
-                          cartItem: cartItem,
-                          context: context,
-                        ),
-                      )
-                      .toList(),
+                  ...order.orderItems!.map(
+                    (cartItem) {
+
+                      return buildProductCard(
+                        cartItem: cartItem,
+                        context: context,
+                      );
+                    },
+                  ).toList(),
                   if (order.driver != null)
                     Row(
                       children: [

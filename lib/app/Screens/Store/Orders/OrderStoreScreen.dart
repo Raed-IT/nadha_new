@@ -1,7 +1,7 @@
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
-  import 'package:delevary/app/Screens/Store/Orders/OrderStoreScreenController.dart';
+import 'package:delevary/app/Screens/Store/Orders/OrderStoreScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -35,10 +35,10 @@ class OrderStoreScreen extends GetView<OrderStoreScreenController> {
                   ),
                 ),
               ).animate().blur(
-                delay: const Duration(milliseconds: 100),
-                begin: const Offset(20, 20),
-                duration: const Duration(seconds: 1),
-              ),
+                    delay: const Duration(milliseconds: 100),
+                    begin: const Offset(20, 20),
+                    duration: const Duration(seconds: 1),
+                  ),
               Column(
                 children: [
                   AppBarComponent(
@@ -53,7 +53,7 @@ class OrderStoreScreen extends GetView<OrderStoreScreenController> {
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
-                        OrdersStoreListComponent(),
+                        const OrdersStoreListComponent(),
                         LoadMoreComponent(
                           isFinished: controller.isFinish,
                           isLoad: controller.isLoadMore,

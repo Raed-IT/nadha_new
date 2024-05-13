@@ -14,6 +14,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Components/AppBarComponents/AppBarComponent.dart';
 import '../../../Components/ChachImageComponent.dart';
@@ -26,6 +27,8 @@ import '../../ShowProductScreen/ShowProductScreenController.dart';
 import 'DeliveryOrdersScreenController.dart';
 
 class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
+  const DeliveryOrdersScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
@@ -153,18 +156,26 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
             children: [
               Row(
                 children: [
+                  const Text(
+                    "رقم الطلب :  ",
+                  ),
                   Text(
-                    "رقم الطلب : ${order.id}",
+                    "${order.id}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
                   Text("الإجمالي  :  ${order.totalAmount?.toStringAsFixed(1)}"),
                   Spacer(),
-                  Text("الحالة  :  ${order.status!.toOrderStatus()}"),
+                  Text("الحالة  :  "),
+                  Text(
+                    order.status!.toOrderStatus(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  )
                 ],
               ),
               30.verticalSpace,
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ...order.orderItems!
                       .map(
@@ -175,20 +186,20 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                       )
                       .toList(),
                   10.verticalSpace,
-                  GestureDetector(
-                    onTap: () => Get.toNamed(AppRoutes.map, arguments: {
-                      "latlong":
-                          LatLng(order.address!.lat!, order.address!.long!)
-                    }),
-                    child: Row(
-                      children: [
-                        Text(
-                          "العنوان : ${order.address?.name}",
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.bold),
-                        ),
-                        Spacer(),
-                        Row(children: [
+                  Row(
+                    children: [
+                      Text(
+                        "العنوان : ${order.address?.name}",
+                        style: TextStyle(
+                            fontSize: 12.sp, fontWeight: FontWeight.bold),
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(AppRoutes.map, arguments: {
+                          "latlong":
+                              LatLng(order.address!.lat!, order.address!.long!)
+                        }),
+                        child: Row(children: [
                           Icon(
                             FontAwesomeIcons.mapLocationDot,
                             size: 20.sp,
@@ -196,7 +207,29 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                           ),
                           10.horizontalSpace,
                           Text("عرض الخريطة"),
-                        ])
+                        ]),
+                      )
+                    ],
+                  ),
+                  10.verticalSpace,
+                  TextButton(
+                    onPressed: () {
+                      launchUrl(Uri.parse(
+                          "https://wa.me/${order.customer?.phone?.replaceAll('+', "")}"));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          size: 22.sp,
+                          FontAwesomeIcons.whatsapp,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        10.horizontalSpace,
+                        Text(
+                          "انقر للتواصل مع صاحب الطلب",
+                          style: TextStyle(
+                              fontSize: 12.sp, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ),

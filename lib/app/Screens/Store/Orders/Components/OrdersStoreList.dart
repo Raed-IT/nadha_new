@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
+import 'package:delevary/app/Components/TextFieldComponent.dart';
 import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/OrderModel.dart';
@@ -9,7 +10,9 @@ import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Screens/OrdersSecreens/OrdersSecreen/OrdersSecreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:delevary/app/Screens/Store/Orders/OrderStoreScreenController.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -55,6 +58,9 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
 
   Widget buildCardOrder(
       {required OrderModel order, required BuildContext context}) {
+    GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    bool showTime = false;
+
     return SizedBox(
       width: Get.width,
       child: Card(
@@ -65,27 +71,38 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
             children: [
               Row(
                 children: [
+                  const Text(
+                    "رقم الطلب :  ",
+                  ),
                   Text(
-                    "رقم الطلب : ${order.id}",
+                    "${order.id}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
                   Text("الإجمالي  :  ${order.totalAmount?.toStringAsFixed(1)}"),
                   Spacer(),
-                  Text("الحالة  :  ${order.status!.toOrderStatus()}"),
+                  Text("الحالة  :  "),
+                  Text(
+                    order.status!.toOrderStatus(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  )
                 ],
               ),
               30.verticalSpace,
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...order.orderItems!
-                      .map(
-                        (cartItem) => buildProductCard(
-                          cartItem: cartItem,
-                          context: context,
-                        ),
-                      )
-                      .toList(),
+                  ...order.orderItems!.map(
+                    (cartItem) {
+                      if (cartItem.product!.category!.isShowTime!) {
+                        showTime = true;
+                      }
+                      return buildProductCard(
+                        cartItem: cartItem,
+                        context: context,
+                      );
+                    },
+                  ).toList(),
                   if (order.driver != null)
                     Row(
                       children: [
@@ -107,16 +124,70 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                         ),
                       ],
                     ),
-                  Row(
-                    children: [
-                      Text(
-                        "العنوان : ${order.address?.name}",
-                        style: TextStyle(
-                            fontSize: 12.sp, fontWeight: FontWeight.bold),
+                  10.verticalSpace,
+                  Text(
+                    "العنوان : ${order.address?.name}",
+                    style:
+                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
+                  ),
+                  if (!order.isStarted! && showTime)
+                    Divider(
+                      height: 50.h,
+                    ),
+                  if (!order.isStarted! && showTime)
+                    Text(
+                      'املاء الوقت المتوقع لاستلام الطلب ',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Spacer(),
-                    ],
-                  )
+                    ),
+                  if (!order.isStarted! && showTime)
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          TextFieldComponent(
+                            autofocus: true,
+                            controller: controller.infoController,
+                            hint: "الوقت المتوقع",
+                            validator: (data) {
+                              if (data!.isEmpty) {
+                                return "الرجاء تزيدنا بالوقت المتوقع";
+                              }
+                              return null;
+                            },
+                          ),
+                          10.verticalSpace,
+                          GestureDetector(
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                controller.receiveOrder(order, context);
+                              }
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w, vertical: 10.h),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.sp),
+                                  color: Theme.of(context).colorScheme.primary),
+                              child: Center(
+                                child: Text(
+                                  "تم استلام الطلب",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                      fontSize: 12.sp),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                 ],
               )
             ],
