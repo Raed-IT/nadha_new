@@ -20,14 +20,14 @@ class StatisticStoreComponent extends GetView<StoreScreenController> {
                 onTap: () => Get.toNamed(AppRoutes.storeProducts),
                 context: context,
                 content: controller.statistics.value!.products!,
-                title: "عدد المنتجات "),
+                title: " المنتجات "),
             buildCard(
                 onTap: () {
                   Get.toNamed(AppRoutes.storeOrders);
                 },
                 context: context,
                 content: controller.statistics.value!.ordersCount!,
-                title: "طلباتي"),
+                title: "الطلبات"),
           ],
         ),
         Row(
@@ -38,14 +38,14 @@ class StatisticStoreComponent extends GetView<StoreScreenController> {
                 },
                 context: context,
                 content: controller.statistics.value!.sliders!,
-                title: "الاعلانات الرئيسية"),
+                title: "الاعلانات "),
             buildCard(
                 onTap: () {
                   Get.toNamed(AppRoutes.balances);
                 },
                 context: context,
                 content: -1*(Get.find<MainController>().user.value?.balance ?? 0),
-                title: "رصيدي"),
+                title: "الرصيد"),
           ],
         )
       ],

@@ -1,4 +1,3 @@
-import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
@@ -12,6 +11,8 @@ import 'package:get/get.dart';
 import '../../../Components/AppBarComponents/AppBarComponent.dart';
 
 class BalancesScreen extends GetView<BalancesScreenController> {
+  const BalancesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();

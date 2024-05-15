@@ -7,6 +7,8 @@ class CartItemModel {
   ProductModel? product;
   RxDouble? qty;
   double? price;
+  double? percent;
+  double? percentAmount;
   ProductUnitTypeEnum? unit;
 
   String get total {
@@ -52,5 +54,7 @@ class CartItemModel {
     unit = "${json['unit']}".toProductUnitTyp();
     qty = RxDouble(double.tryParse("${json['quantity']}") ?? 0);
     price = double.tryParse("${json['price']}");
+    percent = double.tryParse("${json['percent']}") ?? 0;
+    percentAmount = double.tryParse("${json['percent_amount']}") ?? 0;
   }
 }

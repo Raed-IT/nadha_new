@@ -11,6 +11,7 @@ class CategoryModel extends BaseModel {
   bool? isShowTime;
   String? image;
   List<MediaModel>? images;
+  double? percent;
 
   CategoryModel(
       {id,
@@ -30,7 +31,7 @@ class CategoryModel extends BaseModel {
         images!.add(MediaModel(id, image));
       });
     }
-
+    percent = double.tryParse("${json['percent']}");
     id = json['id'];
     name = json['name'];
     isShowTime = json['is_show_time'];

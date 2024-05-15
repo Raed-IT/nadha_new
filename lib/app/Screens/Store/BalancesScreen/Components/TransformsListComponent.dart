@@ -131,7 +131,7 @@ class TransformsListComponent extends GetView<BalancesScreenController> {
                           borderRadius: BorderRadius.circular(10.sp),
                           child: Center(
                             child:
-                                Text(transform.isSender ? 'تحويل' : "استلام"),
+                                Text(transform.isSender ? 'فاتورة بيع' : "امر قبض"),
                           ),
                         ),
                       ),
