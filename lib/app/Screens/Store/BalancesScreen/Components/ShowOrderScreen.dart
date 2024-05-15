@@ -1,0 +1,306 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
+import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
+import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
+import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
+import 'package:delevary/app/Data/Models/CartItemModel.dart';
+import 'package:delevary/app/Data/Models/OrderModel.dart';
+import 'package:delevary/app/Route/Routs.dart';
+import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../Components/ChachImageComponent.dart';
+
+class ShowOrderBalanceScreen extends StatelessWidget {
+  final OrderModel order;
+
+  const ShowOrderBalanceScreen({super.key, required this.order});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: DrawerComponent(),
+      body: Builder(
+        builder: (context) {
+          return Column(
+            children: [
+              AppBarComponent(
+                openDrawer: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                title: "عرض طلب القيد",
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    width: Get.width,
+                    child: Card(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.sp),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  "رقم الطلب :  ",
+                                ),
+                                Text(
+                                  "${order.id}",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Spacer(),
+                                Text("الحالة  :  "),
+                                Text(
+                                  order.status!.toOrderStatus(),
+                                  style:
+                                      const TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            30.verticalSpace,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ...order.orderItems!.map(
+                                  (cartItem) {
+                                    return buildProductCard(
+                                      cartItem: cartItem,
+                                      context: context,
+                                    );
+                                  },
+                                ).toList(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.sp),
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withOpacity(0.5),
+                                    ),
+                                  ),
+                                  child: BlurryContainer(
+                                    padding: EdgeInsets.all(10.sp),
+                                    width: Get.width,
+                                    height: 90.h,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text("الإجمالي :  ${order.totalAmount}"),
+                                        Text("العمولة :  ${order.percentAmount}"),
+                                        Divider(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                              .withOpacity(0.2),
+                                        ),
+                                        Text("الصافي  :  ${order.orderAmount}"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                if (order.driver != null)
+                                  Row(
+                                    children: [
+                                      10.horizontalSpace,
+                                      Icon(
+                                        FontAwesomeIcons.whatsapp,
+                                        size: 20.sp,
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          launchUrl(Uri.parse(
+                                              "https://wa.me/${order.driver?.phone?.replaceAll('+', "")}"));
+                                        },
+                                        child: Text(
+                                          "انقر للتواصل مع السائق ${order.driver?.name}",
+                                          style: TextStyle(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                10.verticalSpace,
+                                Text(
+                                  "العنوان : ${order.address?.name}",
+                                  style: TextStyle(
+                                      fontSize: 12.sp, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+      ),
+    );
+  }
+
+  Widget buildProductCard(
+      {required CartItemModel cartItem, required BuildContext context}) {
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 8.sp),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.sp),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+            ),
+          ),
+          width: Get.width,
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(AppRoutes.showProduct,
+                      preventDuplicates: false,
+                      arguments: {
+                        "product": cartItem.product,
+                        "hero": "order_"
+                      });
+                  Get.put(ShowProductScreenController(),
+                      tag: "show_product${cartItem.product!.id}");
+                },
+                child: SizedBox(
+                  height: 100.h,
+                  child: Stack(
+                    children: [
+                      Hero(
+                        tag: "order_${cartItem.product?.id}",
+                        child: ImageCacheComponent(
+                          borderRadius: BorderRadius.circular(10.sp),
+                          image: "${cartItem.product?.image}",
+                          height: 100.sp,
+                          width: 100.sp,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: 30.h,
+                          width: 100.sp,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.sp),
+                              bottomLeft: Radius.circular(10.sp),
+                            ),
+                            gradient: const LinearGradient(
+                                end: Alignment.topCenter,
+                                begin: Alignment.bottomCenter,
+                                colors: [Colors.black, Colors.transparent]),
+                          ),
+                          child: Center(
+                            child: AutoSizeText(
+                              "${cartItem.product?.store?.name}",
+                              maxLines: 2,
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(8.sp),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AutoSizeText(
+                        "${cartItem.product?.name}",
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                      5.verticalSpace,
+                      AutoSizeText(
+                        "${cartItem.product?.info}",
+                        maxLines: 1,
+                        style: const TextStyle(overflow: TextOverflow.ellipsis),
+                      ),
+                      10.verticalSpace,
+                      Row(
+                        children: [
+                          (cartItem.product != null)
+                              ? BuildPriceProductComponent(
+                                  product: Rx(cartItem.product!), size: 10.sp)
+                              : SizedBox(),
+                          Spacer(),
+                          Row(
+                            children: [
+                              Text(
+                                "${cartItem.quantity ?? ''} / ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10.sp,
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
+                              Text(
+                                "${double.parse(cartItem.total)}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10.sp,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        Positioned(
+          left: 20.w,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(12.sp)),
+              border: Border.all(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+              ),
+            ),
+            child: BlurryContainer(
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.sp),
+              ),
+              child: Center(
+                  child: Text('%${cartItem.product?.category?.percent ?? 0}')),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}

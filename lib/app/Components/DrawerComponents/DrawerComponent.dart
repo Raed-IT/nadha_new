@@ -98,7 +98,8 @@ class DrawerComponent extends StatelessWidget {
                           )
                         : Container(),
                   ),
-                  if (Get.find<MainController>().user.value!.isDelivery!)
+                  if (Get.find<MainController>().user.value!.isDelivery ??
+                      false)
                     buildItem(
                       rout: AppRoutes.deliveryOrders,
                       context: context,

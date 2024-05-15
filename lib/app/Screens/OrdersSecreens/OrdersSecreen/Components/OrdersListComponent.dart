@@ -73,8 +73,6 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
-                  Text("الإجمالي  :  ${order.totalAmount?.toStringAsFixed(1)}"),
-                  Spacer(),
                   Text("الحالة  :  "),
                   Text(
                     order.status!.toOrderStatus(),
