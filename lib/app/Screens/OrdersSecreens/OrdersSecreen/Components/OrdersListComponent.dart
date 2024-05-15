@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
@@ -86,13 +87,44 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                 children: [
                   ...order.orderItems!.map(
                     (cartItem) {
-
                       return buildProductCard(
                         cartItem: cartItem,
                         context: context,
                       );
                     },
                   ).toList(),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.sp),
+                      border: Border.all(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.5),
+                      ),
+                    ),
+                    child: BlurryContainer(
+                      padding: EdgeInsets.all(10.sp),
+                      width: Get.width,
+                      height: 90.h,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("إجمالي الطلب :  ${order.totalAmount}"),
+                          Text("الــتــوصــيـــل :  ${order.deliveryPrice}"),
+                          Divider(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.2),
+                          ),
+                          Text(
+                              "الإجــمــالــي  :  ${order.totalAmount! + order.deliveryPrice!}"),
+                        ],
+                      ),
+                    ),
+                  ),
                   if (order.driver != null)
                     Row(
                       children: [
