@@ -120,15 +120,51 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text("الإجمالي :  ${order.totalAmount}"),
-                          Text("العمولة :  ${order.percentAmount}"),
+                          Row(
+                            children: [
+                              Text("الإجمالي :  ${order.totalAmount}"),
+                              Text(
+                                "₺",
+                                style: TextStyle(
+                                    fontFamily: "",
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 12.sp),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text("العمولة :  ${order.percentAmount}"),
+                              Text(
+                                "₺",
+                                style: TextStyle(
+                                    fontFamily: "",
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 12.sp),
+                              )
+                            ],
+                          ),
                           Divider(
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
                                 .withOpacity(0.2),
                           ),
-                          Text("الصافي  :  ${order.orderAmount}"),
+                          Row(
+                            children: [
+                              Text("الصافي  :  ${order.orderAmount}"),
+                              Text(
+                                "₺",
+                                style: TextStyle(
+                                    fontFamily: "",
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 12.sp),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -344,6 +380,14 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .secondary),
+                              ),
+                              Text(
+                                "₺",
+                                style: TextStyle(
+                                    fontFamily: "",
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 12.sp),
                               )
                             ],
                           )

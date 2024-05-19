@@ -109,16 +109,53 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text("إجمالي الطلب :  ${order.totalAmount}"),
-                          Text("الــتــوصــيـــل :  ${order.deliveryPrice}"),
+                          Row(
+                            children: [
+                              Text("إجمالي الطلب :  ${order.totalAmount}"),
+                              Text(
+                                "₺",
+                                style: TextStyle(
+                                    fontFamily: "",
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 12.sp),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                  "الــتــوصــيـــل :  ${order.deliveryPrice}"),
+                              Text(
+                                "₺",
+                                style: TextStyle(
+                                    fontFamily: "",
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 12.sp),
+                              )
+                            ],
+                          ),
                           Divider(
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
                                 .withOpacity(0.2),
                           ),
-                          Text(
-                              "الإجــمــالــي  :  ${order.totalAmount! + order.deliveryPrice!}"),
+                          Row(
+                            children: [
+                              Text(
+                                  "الإجــمــالــي  :  ${order.totalAmount! + order.deliveryPrice!}"),
+                              Text(
+                                "₺",
+                                style: TextStyle(
+                                    fontFamily: "",
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 12.sp),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -271,6 +308,13 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.sp,
                                 color: Theme.of(context).colorScheme.secondary),
+                          ),
+                          Text(
+                            "₺",
+                            style: TextStyle(
+                                fontFamily: "",
+                                color: Theme.of(context).colorScheme.primary,
+                                fontSize: 10.sp),
                           )
                         ],
                       )

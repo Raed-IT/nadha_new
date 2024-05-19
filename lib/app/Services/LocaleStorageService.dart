@@ -12,6 +12,17 @@ class LocaleStorageService {
     StorageController.setData(key: "token", value: token);
   }
 
+  static void setOnSignalId({required String id}) async {
+    await StorageController.setData(key: "onSignal", value: id);
+  }
+
+  static Future<String?> getOnSignalId() async {
+    if (StorageController.hasData(key: "onSignal")) {
+      return await StorageController.getData(key: "onSignal");
+    }
+    return Future(() => null);
+  }
+
   static void deleteUserData() {
     Get.find<MainController>().token.value = null;
     Get.find<MainController>().user.value = null;

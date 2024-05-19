@@ -35,7 +35,15 @@ class BuildPriceProductComponent extends StatelessWidget {
           ),
         ),
         Text(
-          "${product.value.getUnitName}",
+          "₺",
+          style: TextStyle(
+            fontFamily: "",
+            fontSize: size ?? 13.sp,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        Text(
+          "${product.value.getUnitName} ",
           style: TextStyle(
             fontSize: size != null ? size! - 3 : 10.sp,
           ),

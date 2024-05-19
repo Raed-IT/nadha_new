@@ -10,6 +10,7 @@ class StoreModel {
   double? lat;
   double? long;
   CityModel? city;
+  bool? isOpen;
 
   StoreModel(this.id, this.name, this.address, this.info, this.lat, this.long,
       this.city);
@@ -18,6 +19,7 @@ class StoreModel {
     id = json['id'];
     uniqName = json['uniq_name'];
     name = json['name'];
+    isOpen = json['is_open'];
     address = json['address'];
     info = json['info'] ?? '';
     lat = double.tryParse("${json['lat']}");

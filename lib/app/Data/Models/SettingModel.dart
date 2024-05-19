@@ -1,8 +1,10 @@
+import 'package:delevary/app/Services/LocaleStorageService.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class SettingModel {
   int? id;
   String? address;
+  String? onSignalId;
   String? appUrl;
   String? currentVersion;
   bool? isClose;
@@ -25,39 +27,33 @@ class SettingModel {
   String? updatedAt;
   bool? forcedUpdate;
 
-  Future<bool> get isForcedUpdate async {
-    final deviceInfoPlugin = DeviceInfoPlugin();
-    final deviceInfo = await deviceInfoPlugin.deviceInfo;
-    final allInfo = deviceInfo.data;
-
-    if (appUrl == "" ) {
-      return false;
-    }
-    return false;
-  }
-
-  SettingModel({this.id,
-    this.address,
-    this.exchange,
-    this.isClose,
-    this.longitude,
-    this.latitude,
-    this.email,
-    this.img,
-    this.subEmail,
-    this.phone,
-    this.subPhone,
-    this.twitter,
-    this.face,
-    this.instagram,
-    this.youtube,
-    this.linkedin,
-    this.privacy,
-    this.createdAt,
-    this.updatedAt});
+  SettingModel(
+      {this.id,
+      this.address,
+      this.exchange,
+      this.isClose,
+      this.longitude,
+      this.latitude,
+      this.email,
+      this.img,
+      this.subEmail,
+      this.phone,
+      this.subPhone,
+      this.twitter,
+      this.face,
+      this.instagram,
+      this.youtube,
+      this.linkedin,
+      this.privacy,
+      this.createdAt,
+      this.updatedAt});
 
   SettingModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    onSignalId = json['on_signal_id'];
+    if (onSignalId != null) {
+      LocaleStorageService.setOnSignalId(id: onSignalId!);
+    }
     address = json['address'];
     isClose = json['is_close'];
     longitude = json['longitude'];
