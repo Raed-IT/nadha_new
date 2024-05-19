@@ -51,7 +51,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="tasawoqe.com"
+                    android:host="tasawoqi.net"
                     android:scheme="https" />
             </intent-filter>
 
