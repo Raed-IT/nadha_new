@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import '../../../Components/AppBarComponents/AppBarComponent.dart';
@@ -59,10 +60,33 @@ class StoreScreen extends GetView<StoreScreenController> {
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
-                        GestureDetector(
-                          onTap: () => Get.toNamed(AppRoutes.profileScreen,
-                              arguments: {'index': 1}),
-                          child: const StoreCardComponent(),
+                        SizedBox(
+                          height: 280.h,
+                          child: Stack(
+                            children: [
+                              GestureDetector(
+                                onTap: () => Get.toNamed(
+                                    AppRoutes.profileScreen,
+                                    arguments: {'index': 1}),
+                                child: const StoreCardComponent(),
+                              ),
+                              Positioned(
+                                top: 30.sp,
+                                left: 30.sp,
+                                child: GestureDetector(
+                                  onTap: () => controller.getFreshData(),
+                                  child: Center(
+                                    child: Icon(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      size: 30.sp,
+                                      FontAwesomeIcons.refresh,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                         Obx(
                           () => (controller.isLoad.value)

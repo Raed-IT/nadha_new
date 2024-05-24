@@ -91,7 +91,9 @@ class ProductModel {
     price = double.tryParse("${json['price']}");
     discount = double.tryParse("${json['discount']}");
     currency = json['currency'];
-    category = CategoryModel.fromJson(json['category']);
+    if (json['category'] != null) {
+      category = CategoryModel.fromJson(json['category']);
+    }
     store = StoreModel.fronJson(json['store']);
   }
 

@@ -13,16 +13,18 @@ class CartItemModel {
 
   String get total {
     double total = 0.0;
-
-    if (unit == ProductUnitTypeEnum.piece) {
-      total = double.parse(product!.getPrice!) * qty!.value;
-    } else {
-      if (unit == ProductUnitTypeEnum.amount) {
-        total = (double.parse(product!.getPrice!) * qty!.value) / 1000;
-      } else if (unit == ProductUnitTypeEnum.amount_price) {
-        total = qty!.value;
+    if (product != null) {
+      if (unit == ProductUnitTypeEnum.piece) {
+        total = double.parse(product!.getPrice!) * qty!.value;
+      } else {
+        if (unit == ProductUnitTypeEnum.amount) {
+          total = (double.parse(product!.getPrice!) * qty!.value) / 1000;
+        } else if (unit == ProductUnitTypeEnum.amount_price) {
+          total = qty!.value;
+        }
       }
     }
+
     return total.toStringAsFixed(1);
   }
 

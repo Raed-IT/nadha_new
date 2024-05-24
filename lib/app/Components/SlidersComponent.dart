@@ -61,6 +61,7 @@ class SliderComponent extends StatelessWidget {
                                   margin:
                                       margin != null ? EdgeInsets.zero : null,
                                   child: ImageCacheComponent(
+                                    fit: BoxFit.cover,
                                       borderRadius:
                                           BorderRadius.circular(10.sp),
                                       height: height,

@@ -54,8 +54,8 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                                   .toList(),
                               heroTags: List.generate(
                                 controller.product.value!.images!.length,
-                                (index) =>
-                                    "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
+                                    (index) =>
+                                "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
                               ),
                             );
                           },
@@ -68,6 +68,7 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                         ),
                       ),
                     ),
+
                     Positioned(
                       right: 10.w,
                       top: 10.h,
@@ -86,9 +87,8 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                                   child: Icon(
                                     FontAwesomeIcons.shareNodes,
                                     size: 20.sp,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ),
@@ -118,24 +118,26 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                                 child: Center(
                                   child: !isTrregierFavorite
                                       ? Center(
-                                    child: Icon(
-                                      size: 16.sp,
-                                      (controller.product.value!.isFavorite!)
-                                          ? Icons.favorite
-                                          : FontAwesomeIcons.heart,
-                                      color:
-                                      Theme.of(context).colorScheme.primary,
-                                    ),
-                                  )
+                                          child: Icon(
+                                            size: 16.sp,
+                                            (controller
+                                                    .product.value!.isFavorite!)
+                                                ? Icons.favorite
+                                                : FontAwesomeIcons.heart,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                        )
                                       : SizedBox(
-                                      height: 25.sp,
-                                      width: 25.sp,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(5.sp),
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 03.sp,
-                                        ),
-                                      )),
+                                          height: 25.sp,
+                                          width: 25.sp,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(5.sp),
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 03.sp,
+                                            ),
+                                          )),
                                 ),
                               ),
                             ),

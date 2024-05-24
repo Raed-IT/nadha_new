@@ -241,7 +241,7 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                         });
                                     Get.put(ShowProductScreenController(),
                                         tag: "show_product${product.id}",
-                                        permanent: true);
+                                    );
                                   }
                                 },
                                 isLoad: controller.isLoad,

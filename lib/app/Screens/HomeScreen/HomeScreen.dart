@@ -90,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         physics: const BouncingScrollPhysics(),
                         children: [
                           SliderComponent(
+                            height: Get.width,
                             sliders: controller.sliders,
                             controller: PageController(),
                             isLoad: controller.isLoad,
@@ -147,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   });
                               Get.put(ShowProductScreenController(),
                                   tag: "show_product${product.id}",
-                                  permanent: true);
+                              );
                             },
                             isLoad: controller.isLoadPaginationData,
                             onTapAddProduct: (product, productKy) {

@@ -150,6 +150,7 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                                       physics: const BouncingScrollPhysics(),
                                       children: [
                                         SliderComponent(
+                                          height: Get.width,
                                           sliders: controller.sliders,
                                           controller: PageController(),
                                           isLoad: controller.isLoad,

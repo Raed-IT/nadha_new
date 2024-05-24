@@ -91,6 +91,7 @@ class GridListComponent<T extends BaseModel> extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.sp),
                       ),
                       child: ImageCacheComponent(
+                        fit: BoxFit.cover,
                           borderRadius: BorderRadius.circular(10.sp),
                           height: (Get.width / 3) - 50.w,
                           width: (Get.width / 3) - 20.w,
@@ -110,7 +111,7 @@ class GridListComponent<T extends BaseModel> extends StatelessWidget {
                     height: 30.h,
                     child: Center(
                       child: AutoSizeText(
-                        "${item.getTitle()}  ",
+                        "${item.getTitle()}",
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: TextStyle(

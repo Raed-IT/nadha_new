@@ -5,9 +5,12 @@ import 'package:delevary/app/Screens/ProfileScreen/ProfileScreenController.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import '../../../Components/DropDwon.dart';
+import '../../../Components/PhoneNumberComponent.dart';
 import '../../../Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
   const UserProfileFieldsComponent({super.key});
@@ -45,11 +48,14 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
               hint: "اسم المستخدم",
               label: "اسم المستخدم",
             ),
-            TextFieldComponent(
-              controller: controller.phoneTextController,
-              hint: "رقم الهاتف",
-              label: "رقم الهاتف",
+            PhoneNumberComponent(
+              textFieldController: controller.phoneTextController,
             ),
+            // TextFieldComponent(
+            //   controller: controller.phoneTextController,
+            //   hint: "رقم الهاتف",
+            //   label: "رقم الهاتف",
+            // ),
             TextFieldComponent(
               controller: controller.bioTextController,
               hint: "لمحة عنك",

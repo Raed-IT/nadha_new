@@ -1,6 +1,7 @@
 import 'package:delevary/app/Services/LocaleStorageService.dart';
 import 'package:delevary/app/route/GetPages.dart';
 import 'package:delevary/app/thems/DarckThem.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,9 +9,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:helper/data/models/dio_config_model.dart';
 import 'package:helper/helper.dart';
-import 'package:logger/logger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'app/Data/MainController.dart';
 import 'app/Services/LocalNotificationService.dart';
 import 'app/route/routs.dart';
@@ -22,10 +23,13 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  String storageLocation = (await getApplicationDocumentsDirectory()).path;
+  await FastCachedImageConfig.init(
+      subDir: storageLocation, clearCacheAfter: const Duration(days: 30));
 
   await GetStorage.init(AppRoutes.appName);
   Helper.initial(
-      appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.activeAll());
+      appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.offAll());
 
   Get.put(MainController(), permanent: true);
   await LocaleStorageService.getUserData();

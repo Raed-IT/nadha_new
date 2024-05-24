@@ -15,6 +15,10 @@ class StoreScreenController extends GetxController with ApiHelperMixin {
   @override
   void onInit() {
     super.onInit();
+    getFreshData();
+  }
+
+  void getFreshData() {
     getSingleData(
         url: UrlModel(
             url: "${ApiRoute.stores}/profile/${store.id}", type: "store"));

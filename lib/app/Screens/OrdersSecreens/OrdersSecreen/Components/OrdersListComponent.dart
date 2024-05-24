@@ -184,7 +184,7 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                   Row(
                     children: [
                       Text(
-                        "العنوان : ${order.address?.name}",
+                        "العنوان : ${order.address?.name ?? '_'}",
                         style: TextStyle(
                             fontSize: 12.sp, fontWeight: FontWeight.bold),
                       ),
@@ -215,11 +215,13 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(AppRoutes.showProduct,
-                  preventDuplicates: false,
-                  arguments: {"product": cartItem.product, "hero": "order_"});
-              Get.put(ShowProductScreenController(),
-                  tag: "show_product${cartItem.product!.id}");
+              if (cartItem.product != null) {
+                Get.toNamed(AppRoutes.showProduct,
+                    preventDuplicates: false,
+                    arguments: {"product": cartItem.product, "hero": "order_"});
+                Get.put(ShowProductScreenController(),
+                    tag: "show_product${cartItem.product!.id}");
+              }
             },
             child: SizedBox(
               height: 100.h,
@@ -251,7 +253,7 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                       ),
                       child: Center(
                         child: AutoSizeText(
-                          "${cartItem.product?.store?.name}",
+                          cartItem.product?.store?.name ?? '_',
                           maxLines: 2,
                           style: TextStyle(
                             overflow: TextOverflow.ellipsis,
@@ -273,7 +275,7 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AutoSizeText(
-                    "${cartItem.product?.name}",
+                    cartItem.product?.name ?? 'المنتج  غير متوفر',
                     maxLines: 1,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
@@ -281,7 +283,7 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                   ),
                   5.verticalSpace,
                   AutoSizeText(
-                    "${cartItem.product?.info}",
+                    cartItem.product?.info ?? 'ربما تم حذف المنتج',
                     maxLines: 1,
                     style: const TextStyle(overflow: TextOverflow.ellipsis),
                   ),
