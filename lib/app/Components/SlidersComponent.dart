@@ -16,7 +16,7 @@ class SliderComponent extends StatelessWidget {
   final double? height;
   final Function(SliderModel item)? onTapItem;
   final EdgeInsetsGeometry? margin;
-
+final double? radius ;
   const SliderComponent(
       {super.key,
       required this.sliders,
@@ -24,7 +24,7 @@ class SliderComponent extends StatelessWidget {
       required this.isLoad,
       this.margin,
       this.height,
-      this.onTapItem});
+      this.onTapItem, this.radius});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class SliderComponent extends StatelessWidget {
           ? Padding(
               padding: EdgeInsets.all(10.sp),
               child: CardLoadingComponent(
-                borderRadius: BorderRadius.circular(10.sp),
+                borderRadius: BorderRadius.circular(radius??10.sp),
                 height: height ?? 180.h,
               ),
             )
@@ -63,7 +63,7 @@ class SliderComponent extends StatelessWidget {
                                   child: ImageCacheComponent(
                                     fit: BoxFit.cover,
                                       borderRadius:
-                                          BorderRadius.circular(10.sp),
+                                          BorderRadius.circular(radius??10.sp),
                                       height: height,
                                       image: "${e.image}"),
                                 ),

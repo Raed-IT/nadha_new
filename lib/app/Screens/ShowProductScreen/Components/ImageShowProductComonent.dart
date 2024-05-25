@@ -46,6 +46,8 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                       child: Container(
                         key: widget.productKey,
                         child: SliderComponent(
+                          margin: EdgeInsets.zero,
+                          radius: 0,
                           onTapItem: (item) {
                             openImagesPage(
                               Navigator.of(context),
@@ -54,8 +56,8 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                                   .toList(),
                               heroTags: List.generate(
                                 controller.product.value!.images!.length,
-                                    (index) =>
-                                "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
+                                (index) =>
+                                    "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
                               ),
                             );
                           },
@@ -68,7 +70,6 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                         ),
                       ),
                     ),
-
                     Positioned(
                       right: 10.w,
                       top: 10.h,

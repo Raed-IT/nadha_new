@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
@@ -18,6 +19,7 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/Components/BottomSheet.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/Components/ImageShowProductComonent.dart';
+import 'package:delevary/app/Screens/ShowProductScreen/Components/StoreProductComponent.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:flutter/cupertino.dart';
@@ -137,7 +139,52 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                               ImageShowProductComponent(
                                                 productKey: productKey,
                                               ),
-                                              20.verticalSpace,
+                                              SizedBox(
+                                                  width: Get.width,
+                                                  height: 100,
+                                                  child:
+                                                      StoreProductComponent()),
+                                              Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10.sp),
+                                                child: BlurryContainer(
+                                                  blur: 7,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.sp),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "${controller.product.value?.name}",
+                                                        style: TextStyle(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .colorScheme
+                                                              .primary,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.sp,
+                                                        ),
+                                                        softWrap: true,
+                                                      ),
+                                                      Text(
+                                                        "${controller.product.value?.info}",
+                                                        softWrap: true,
+                                                      ),
+                                                      20.verticalSpace,
+                                                      BuildPriceProductComponent(
+                                                        size: 18.sp,
+                                                        product: Rx(controller
+                                                            .product.value!),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              10.verticalSpace,
                                               Padding(
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal: 10.sp,
@@ -170,51 +217,6 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                                   },
                                                 ),
                                               ),
-                                              Container(
-                                                margin: EdgeInsets.all(10.sp),
-                                                child: BlurryContainer(
-                                                  blur: 7,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.sp),
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 0,
-                                                            vertical: 10.sp),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "${controller.product.value?.name}",
-                                                          style: TextStyle(
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .primary,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 20.sp,
-                                                          ),
-                                                          softWrap: true,
-                                                        ),
-                                                        Text(
-                                                          "${controller.product.value?.info}",
-                                                          softWrap: true,
-                                                        ),
-                                                        20.verticalSpace,
-                                                        BuildPriceProductComponent(
-                                                          size: 18.sp,
-                                                          product: Rx(controller
-                                                              .product.value!),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
                                               40.verticalSpace,
                                               BuildTitleSectionComponent(
                                                 isLoad: RxBool(false),
@@ -239,8 +241,9 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                           "hero":
                                               "show${controller.product.value?.id}Products",
                                         });
-                                    Get.put(ShowProductScreenController(),
-                                        tag: "show_product${product.id}",
+                                    Get.put(
+                                      ShowProductScreenController(),
+                                      tag: "show_product${product.id}",
                                     );
                                   }
                                 },
