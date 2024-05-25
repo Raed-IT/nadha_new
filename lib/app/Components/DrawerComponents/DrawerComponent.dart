@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
+import 'package:delevary/app/Components/version_dialog.dart';
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Route/Routs.dart';
@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 

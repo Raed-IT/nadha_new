@@ -160,13 +160,13 @@ class _ShowProductScreenState extends State<ShowProductScreen> {
                                                       Text(
                                                         "${controller.product.value?.name}",
                                                         style: TextStyle(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .colorScheme
-                                                              .primary,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary,
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                          fontSize: 20.sp,
+                                                          fontSize: 15.sp,
                                                         ),
                                                         softWrap: true,
                                                       ),

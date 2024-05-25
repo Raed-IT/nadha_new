@@ -1,3 +1,4 @@
+import 'package:delevary/app/Screens/LunchUrlScreen/LunchUrlScreenController.dart';
 import 'package:delevary/app/Services/LocaleStorageService.dart';
 import 'package:delevary/app/route/GetPages.dart';
 import 'package:delevary/app/thems/DarckThem.dart';
@@ -25,7 +26,7 @@ void main() async {
 
   await GetStorage.init(AppRoutes.appName);
   Helper.initial(
-      appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.offAll());
+      appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.activeAll());
 
   Get.put(MainController(), permanent: true);
   await LocaleStorageService.getUserData();

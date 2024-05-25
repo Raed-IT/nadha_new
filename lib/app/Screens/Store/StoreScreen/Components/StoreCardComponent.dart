@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class StoreCardComponent extends GetView<StoreScreenController> {
   const StoreCardComponent({super.key});
@@ -15,7 +16,7 @@ class StoreCardComponent extends GetView<StoreScreenController> {
       children: [
         50.verticalSpace,
         SizedBox(
-          height: 200.h,
+          height: 230.h,
           width: Get.width,
           child: Card(
             shape: BeveledRectangleBorder(
@@ -27,15 +28,15 @@ class StoreCardComponent extends GetView<StoreScreenController> {
               ),
             ),
             margin: EdgeInsets.all(10.sp),
-            child: Transform.translate(
-              offset: Offset(0, -30.h),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.sp),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.sp),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Transform.translate(
+                      offset: Offset(0, -30.h),
                       child: ImageCacheComponent(
                         image: "${controller.store.image}",
                         height: 120.h,
@@ -51,23 +52,47 @@ class StoreCardComponent extends GetView<StoreScreenController> {
                           )
                           .slideY(begin: 1, duration: 300.ms),
                     ),
-                    15.verticalSpace,
-                    Text(
+                  ),
+                  10.verticalSpace,
+                  Transform.translate(
+                    offset: Offset(0, -20.h),
+                    child: Text(
                       "${controller.store.name}",
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Expanded(
-                      child: AutoSizeText(
-                        "${controller.store.info}",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                  ),
+                  Transform.translate(
+                    offset: Offset(0, -10.h),
+                    child: AutoSizeText(
+                      "${controller.store.info}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    children: [
+                      Obx(
+                        () => (controller.isPostData.value)
+                            ? Lottie.asset("assets/json/loader.json",
+                                height: 35.h)
+                            : Switch(
+                                value: controller.storeStatus.value,
+                                onChanged: (da) {
+                                  controller.storeStatus.value = da;
+                                },
+                              ),
+                      ),
+                      Text(
+                        "حاله المتجر  ${controller.storeStatus.value ? '( مفتوح )' : '( مغلق )'}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 12.sp),
+                      )
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

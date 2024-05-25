@@ -21,6 +21,7 @@ class AppRoutes {
   static const String orders = "/orders";
   static const String stores = "/stores";
   static const String showStore = "/showStore";
+  static const String lunchUrl = "/lunchUrl";
 
   // store
   static const String store = "/store";

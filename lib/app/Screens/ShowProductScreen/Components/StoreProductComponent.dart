@@ -39,7 +39,7 @@ class StoreProductComponent extends GetView<ShowProductScreenController> {
                       maxLines: 1,
                       "${controller.product.value?.store?.name}  ",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
                     ),
                   ],
                 ),

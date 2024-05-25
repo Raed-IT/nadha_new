@@ -16,14 +16,13 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreenController.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
+import '../../Data/ApiRoute.dart';
 import '../CategoriesScreen/CategoriesScreenController.dart';
 
 bool isShowVersion = false;
@@ -146,8 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "product": product,
                                     "hero": "homeProducts"
                                   });
-                              Get.put(ShowProductScreenController(),
-                                  tag: "show_product${product.id}",
+                              Get.put(
+                                ShowProductScreenController(),
+                                tag: "show_product${product.id}",
                               );
                             },
                             isLoad: controller.isLoadPaginationData,
@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                           .refreshAbel(
                         onRefresh: () async {
-                           await controller.getFreshData();
+                          await controller.getFreshData();
                         },
                       ),
                     ),
