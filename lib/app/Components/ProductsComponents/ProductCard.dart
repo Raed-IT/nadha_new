@@ -92,7 +92,9 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                                     borderRadius: widget.imageRadius ??
                                         BorderRadius.circular(10.sp),
                                   ),
-                                  child: ImageCacheComponent(image: "${widget.product.image}",),
+                                  child: Container(
+                                      key:productCardKye,
+                                      child: ImageCacheComponent(image: "${widget.product.image}",)),
                                   /*
 
                                    Container(
