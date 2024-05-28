@@ -9,6 +9,7 @@ import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenControl
 import 'package:delevary/app/Services/LocalNotificationService.dart';
 import 'package:delevary/app/Services/PermissionService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
+import 'package:delevary/app/data/Models/SettingModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -102,7 +103,10 @@ class HomeScreenController extends GetxController
     super.onInit();
   }
 
-  Future getFreshData() async {
+  Future getFreshData({bool refresh = false}) async {
+    if (refresh) {
+      getSingleData(url: UrlModel(url: ApiRoute.settings, type: "settings"));
+    }
     getPaginationData(isRefresh: true);
     await getSingleDataWithSync(
       url: UrlModel(url: ApiRoute.home, type: "home"),
@@ -116,6 +120,7 @@ class HomeScreenController extends GetxController
 
   @override
   getDataFromJson({required Map<String, dynamic> json, String? type}) {
+
     if (json['status'] == "SUCCESS") {
       if (type == "home") {
         categories.value = [];
@@ -126,6 +131,10 @@ class HomeScreenController extends GetxController
         for (var slid in json['data']['sliders']) {
           sliders.add(SliderModel.fromJson(slid));
         }
+      }
+      if (type == "settings") {
+        Get.find<MainController>().setting.value =
+            SettingModel.fromJson(json['data']['setting']);
       }
     } else {
       Fluttertoast.showToast(msg: json['data']?['message']);

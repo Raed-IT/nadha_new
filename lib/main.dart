@@ -26,7 +26,7 @@ void main() async {
 
   await GetStorage.init(AppRoutes.appName);
   Helper.initial(
-      appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.activeAll());
+      appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.offAll());
 
   Get.put(MainController(), permanent: true);
   await LocaleStorageService.getUserData();

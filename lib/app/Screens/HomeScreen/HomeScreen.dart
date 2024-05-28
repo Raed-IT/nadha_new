@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                           .refreshAbel(
                         onRefresh: () async {
-                          await controller.getFreshData();
+                          await controller.getFreshData(refresh: true);
                         },
                       ),
                     ),

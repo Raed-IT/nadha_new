@@ -32,7 +32,7 @@ class UpdateProductScreenController extends GetxController with ApiHelperMixin {
     slugController.text = "${product.slug}";
     priceController.text = "${product.price}";
     infoController.text = "${product.info}";
-    discountController.text = "${product.discount}";
+    discountController.text = "${product.discount ?? ''}";
     minQtyController.text = "${product.minQty}";
     isDiscount.value = product.isDiscount!;
     unitType = product.unit!.name;

@@ -137,24 +137,31 @@ class AppBarComponent extends StatelessWidget {
               ),
             ),
           ),
-          if (!Get.find<MainController>().setting.value!.isClose!) ...[
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(10.sp),
-              ),
-              margin: EdgeInsets.symmetric(horizontal: 10.w),
-              height: 50.h,
-              child: Center(
-                child: Text(
-                  "التطبيق مغلق حاليا ..",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
-                ),
-              ),
-            ),
-            10.verticalSpace
-          ],
+          Obx(() => (!Get.find<MainController>().setting.value!.isClose!)
+              ? Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .secondary
+                            .withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(10.sp),
+                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 10.w),
+                      height: 50.h,
+                      child: Center(
+                        child: Text(
+                          "التطبيق مغلق حاليا ..",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.sp),
+                        ),
+                      ),
+                    ),
+                    10.verticalSpace
+                  ],
+                )
+              : SizedBox())
         ],
       ),
     );
