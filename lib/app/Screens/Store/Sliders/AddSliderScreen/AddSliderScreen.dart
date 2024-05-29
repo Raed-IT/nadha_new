@@ -83,8 +83,6 @@ class AddSliderScreen extends GetView<AddSliderScreenController> {
                                   validator: (url) {
                                     if (url!.isEmpty) {
                                       return "الرجاء كتابة رابط";
-                                    } else if (!url.isURL) {
-                                      return "الرجاء ادخال رابط صحيح";
                                     }
                                     return null;
                                   },

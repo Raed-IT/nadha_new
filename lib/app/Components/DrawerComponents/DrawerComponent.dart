@@ -1,21 +1,23 @@
 import 'package:delevary/app/Components/ChachImageComponent.dart';
-import 'package:delevary/app/Components/version_dialog.dart';
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
+import 'package:delevary/app/data/Models/SettingModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrawerComponent extends StatelessWidget {
   const DrawerComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SettingModel setting = Get.find<MainController>().setting.value!;
     return Container(
       width: Get.width - (Get.width / 3),
       color: Theme.of(context).colorScheme.background,
@@ -151,8 +153,70 @@ class DrawerComponent extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                buildSosialItem(
+                    icon: FontAwesomeIcons.facebook,
+                    context: context,
+                    url: setting.face),
+                buildSosialItem(
+                    icon: FontAwesomeIcons.youtube,
+                    context: context,
+                    url: setting.youtube),
+                buildSosialItem(
+                    icon: FontAwesomeIcons.instagram,
+                    context: context,
+                    url: setting.instagram),
+                buildSosialItem(
+                    icon: FontAwesomeIcons.telegram,
+                    context: context,
+                    url: setting.linkedin),
+                buildSosialItem(
+                    icon: FontAwesomeIcons.whatsapp,
+                    context: context,
+                    url: setting.phone != null
+                        ? 'https://wa.me/${setting.phone}'
+                        : null),
+              ],
+            ),
+          ),
+          10.verticalSpace,
         ],
+      ),
+    );
+  }
+
+  Widget buildSosialItem(
+      {required IconData icon,
+      required String? url,
+      required BuildContext context}) {
+    if (url == null) {
+      return SizedBox();
+    }
+    return Container(
+      height: 30.sp,
+      width: 30.sp,
+      margin: EdgeInsets.symmetric(horizontal: 5.w),
+      padding: EdgeInsets.zero,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(1000),
+          border: Border.all(color: Theme.of(context).colorScheme.secondary)),
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        onPressed: () {
+          launchUrl(Uri.parse(url));
+        },
+        icon: Icon(
+          icon,
+          size: 18.sp,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }
@@ -169,27 +233,6 @@ class DrawerComponent extends StatelessWidget {
         Get.back();
         onTap();
       },
-      // child: SizedBox(
-      //   height: 60.h,
-      //   width: Get.width,
-      //   child: Card(
-      //     margin: EdgeInsets.symmetric(vertical: 7.sp, horizontal: 5.sp),
-      //     child: Padding(
-      //       padding: EdgeInsets.symmetric(horizontal: 10.sp),
-      //       child: Row(
-      //         children: [
-      //           Icon(icon,
-      //               size: 20.sp, color: Theme.of(context).colorScheme.primary),
-      //           10.horizontalSpace,
-      //           Text(
-      //             title,
-      //             style: TextStyle(fontSize: 15.sp),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
       child: ListTile(
         title: Text(title),
         leading: Icon(icon),

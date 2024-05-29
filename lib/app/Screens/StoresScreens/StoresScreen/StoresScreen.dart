@@ -1,3 +1,4 @@
+import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Components/StoresList.dart';
@@ -58,6 +59,10 @@ class StoresScreen extends GetView<StoresScreenController> {
                           stores: controller.paginationData,
                           isLoad: controller.isLoadPaginationData,
                         ),
+                        LoadMoreComponent(
+                          isFinished: controller.isFinish,
+                          isLoad: controller.isLoadMore,
+                        )
                       ],
                     )
                         .loadMoreAble(
