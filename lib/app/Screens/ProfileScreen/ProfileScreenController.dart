@@ -1,3 +1,5 @@
+ import 'dart:io';
+
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
@@ -5,13 +7,12 @@ import 'package:delevary/app/Data/Models/UserModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
-import 'package:hl_image_picker/hl_image_picker.dart';
-import 'package:logger/logger.dart';
-import '../../Services/UI/ToastService.dart';
+ import '../../Services/UI/ToastService.dart';
 import 'package:dio/dio.dart' as dio;
 
 class ProfileScreenController extends GetxController with ApiHelperMixin {
@@ -19,8 +20,8 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
   int selected = Get.arguments?['index'] ?? 0;
   late RxInt selectedIndex;
   GlobalKey<FormState> userFormKey = GlobalKey();
-  HLPickerItem? storeImage;
-  HLPickerItem? userImage;
+  PlatformFile? storeImage;
+  PlatformFile? userImage;
 
   // user
   TextEditingController nameTextController = TextEditingController();
@@ -67,7 +68,7 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
     OverlayLoaderService.show(context);
     dio.MultipartFile? storeImg;
     if (storeImage != null) {
-      storeImg = await dio.MultipartFile.fromFile(storeImage!.path,
+      storeImg = await dio.MultipartFile.fromFile(storeImage!.path!,
           filename: "${DateTime.now()}");
     }
     dio.FormData data = dio.FormData.fromMap({
@@ -118,7 +119,7 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
     dio.MultipartFile? userImg;
 
     if (userImage != null) {
-      userImg = await dio.MultipartFile.fromFile(userImage!.path,
+      userImg = await dio.MultipartFile.fromFile(userImage!.path!,
           filename: "${DateTime.now()}");
     }
 

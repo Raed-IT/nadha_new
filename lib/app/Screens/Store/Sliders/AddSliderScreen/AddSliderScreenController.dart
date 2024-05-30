@@ -3,14 +3,14 @@ import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/SliderModel.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
-import 'package:hl_image_picker/hl_image_picker.dart';
-import 'package:dio/dio.dart' as dio;
+ import 'package:dio/dio.dart' as dio;
 
 class AddSliderScreenController extends GetxController with ApiHelperMixin {
-  HLPickerItem? image;
+  PlatformFile? image;
   TextEditingController urlController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
 
@@ -23,7 +23,7 @@ class AddSliderScreenController extends GetxController with ApiHelperMixin {
       }
       OverlayLoaderService.show(context);
       dio.MultipartFile productImg;
-      productImg = await dio.MultipartFile.fromFile(image!.path,
+      productImg = await dio.MultipartFile.fromFile(image!.path!,
           filename: "${DateTime.now()}");
       dio.FormData data = dio.FormData.fromMap({
         "_method": "POST",

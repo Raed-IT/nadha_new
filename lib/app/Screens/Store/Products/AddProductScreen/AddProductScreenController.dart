@@ -4,12 +4,11 @@ import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:helper/mixin/api_mixing.dart';
-import 'package:hl_image_picker/hl_image_picker.dart';
-import 'package:dio/dio.dart' as dio;
+ import 'package:helper/mixin/api_mixing.dart';
+ import 'package:dio/dio.dart' as dio;
 
 class AddProductScreenController extends GetxController with ApiHelperMixin {
   TextEditingController nameController = TextEditingController();
@@ -21,7 +20,7 @@ class AddProductScreenController extends GetxController with ApiHelperMixin {
   RxBool isDiscount = RxBool(false);
   String unitType = "piece";
   String currencyType = "try";
-  HLPickerItem? productImage;
+  PlatformFile? productImage;
   CategoryModel? selectedCategory;
   GlobalKey<FormState> formKey = GlobalKey();
 
@@ -41,7 +40,7 @@ class AddProductScreenController extends GetxController with ApiHelperMixin {
       OverlayLoaderService.show(context);
 
       dio.MultipartFile? productImg;
-      productImg = await dio.MultipartFile.fromFile(productImage!.path,
+      productImg = await dio.MultipartFile.fromFile(productImage!.path!,
           filename: "${DateTime.now()}");
 
       dio.FormData data = dio.FormData.fromMap({

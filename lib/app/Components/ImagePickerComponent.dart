@@ -1,18 +1,19 @@
 import 'dart:io';
 
 import 'package:delevary/app/Components/ChachImageComponent.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hl_image_picker/hl_image_picker.dart';
+import 'package:logger/logger.dart';
 
 class ImagePickerComponent extends StatefulWidget {
   final String? image;
   final Widget title;
+  FilePickerResult? result;
+  final Function(List<PlatformFile> files) onPicked;
 
-  final Function(List<HLPickerItem> files) onPicked;
-
-  ImagePickerComponent(
+   ImagePickerComponent(
       {super.key, this.image, required this.title, required this.onPicked});
 
   @override
@@ -20,12 +21,22 @@ class ImagePickerComponent extends StatefulWidget {
 }
 
 class _ImagePickerComponentState extends State<ImagePickerComponent> {
-  late List<HLPickerItem> listFiles = [];
+
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
-      onTap: () => pickerFiles(context),
+      onTap: () async {
+        widget.result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: ['jpg', 'pdf', 'doc'],
+        );
+        if (        widget.result != null &&         widget.result!.files.isNotEmpty) {
+          widget.onPicked(        widget.result!.files);
+        }
+        setState(() {});
+      },
       child: Column(
         children: [
           Padding(
@@ -36,45 +47,14 @@ class _ImagePickerComponentState extends State<ImagePickerComponent> {
               ],
             ),
           ),
-          (widget.image != null && listFiles.isEmpty)
+          (        widget.result != null &&         widget.result!.files.isNotEmpty)
               ? Stack(
-                  children: [
-                    (widget.image != null && widget.image!.isNotEmpty)
-                        ? ImageCacheComponent(
-                            fit: BoxFit.contain,
-                            height: 200.h,
-                            width: Get.width,
-                            image: widget.image!)
-                        : Container(
-                            height: 200.h,
-                            child: Center(
-                              child: Text(
-                                "اضغط لإختيار صورة",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                    Container(
-                      height: 200.h,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.sp),
-                        gradient: const LinearGradient(
-                          end: Alignment.bottomCenter,
-                          begin: Alignment.topCenter,
-                          colors: [Colors.transparent, Colors.black54],
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              : Stack(
                   children: [
                     SizedBox(
                       height: 200.h,
                       width: Get.width,
                       child: Image.file(
-                        File(listFiles[0].path),
+                        File(        widget.result!.files.first.path!),
                       ),
                     ),
                     Container(
@@ -93,7 +73,7 @@ class _ImagePickerComponentState extends State<ImagePickerComponent> {
                       alignment: Alignment.topRight,
                       child: IconButton(
                         onPressed: () => setState(() {
-                          listFiles.clear();
+                          widget.result!.files.clear();
                           widget.onPicked([]);
                         }),
                         icon: Icon(
@@ -103,33 +83,76 @@ class _ImagePickerComponentState extends State<ImagePickerComponent> {
                       ),
                     )
                   ],
-                ),
+                )
+              :( widget.image != null && widget.image!.isNotEmpty)
+                  ? Stack(
+                      children: [
+                        SizedBox(
+                          height: 200.h,
+                          width: Get.width,
+                          child: Image.network("${widget.image}"),
+                        ),
+                        Container(
+                          height: 200.h,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.sp),
+                            gradient: const LinearGradient(
+                              end: Alignment.bottomCenter,
+                              begin: Alignment.topCenter,
+                              colors: [Colors.transparent, Colors.black54],
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            onPressed: () => setState(() {
+                              widget.result!.files.clear();
+                              widget.onPicked([]);
+                            }),
+                            icon: Icon(
+                              Icons.delete,
+                              size: 25.sp,
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  : Stack(
+                      children: [
+                        (widget.image != null && widget.image!.isNotEmpty)
+                            ? ImageCacheComponent(
+                                fit: BoxFit.contain,
+                                height: 200.h,
+                                width: Get.width,
+                                image: widget.image!)
+                            : Container(
+                                height: 200.h,
+                                child: Center(
+                                  child: Text(
+                                    "اضغط لإختيار صورة",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                        Container(
+                          height: 200.h,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.sp),
+                            gradient: const LinearGradient(
+                              end: Alignment.bottomCenter,
+                              begin: Alignment.topCenter,
+                              colors: [Colors.transparent, Colors.black54],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
         ],
       ),
     );
-  }
-
-  Future pickerFiles(BuildContext context) async {
-    final _picker = HLImagePicker();
-    final images = await _picker.openPicker(
-      pickerOptions: const HLPickerOptions(
-        maxSelectedAssets: 1,
-        compressFormat: CompressFormat.png,
-        enablePreview: true,
-        mediaType: MediaType.image,
-        usedCameraButton: true,
-      ),
-      localized: const LocalizedImagePicker(
-        doneText: "تم",
-        cancelText: "الغاء",
-        cropCancelText: "الغاء",
-        cropDoneText: "تم",
-        cropTitleText: "قص الصورة",
-        okText: "تم ",
-      ),
-    );
-    listFiles = [...images];
-    widget.onPicked(listFiles);
-    setState(() {});
   }
 }

@@ -72,7 +72,7 @@ dependencies:
   uni_links: ^0.5.1
   permission_handler: ^10.4.5
   device_info_plus: ^9.1.0
-  hl_image_picker: ^1.2.13
+#  hl_image_picker: ^1.2.13
   share_plus: ^7.2.2
   custom_refresh_indicator: ^3.1.0
   #  add address screen
@@ -90,6 +90,7 @@ dependencies:
   #  flutter_install_app: ^1.3.0
   open_file_safe_plus: ^0.0.4
   intl_phone_number_input: ^0.7.4
+  file_picker: ^8.0.3
 
   helper:
     git:
