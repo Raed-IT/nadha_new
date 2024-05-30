@@ -6,9 +6,11 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:hl_image_picker/hl_image_picker.dart';
+import 'package:logger/logger.dart';
 import '../../Services/UI/ToastService.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -16,7 +18,7 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
   RxList<bool> selectedButton = RxList([true, false]);
   int selected = Get.arguments?['index'] ?? 0;
   late RxInt selectedIndex;
-
+  GlobalKey<FormState> userFormKey = GlobalKey();
   HLPickerItem? storeImage;
   HLPickerItem? userImage;
 
@@ -119,6 +121,7 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
       userImg = await dio.MultipartFile.fromFile(userImage!.path,
           filename: "${DateTime.now()}");
     }
+
     dio.FormData data = dio.FormData.fromMap({
       "_method": "PUT",
       "name": nameTextController.text,
@@ -141,7 +144,8 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
               Get.find<MainScaffoldScreenController>().activePage.value = 0;
             } else {
               Get.offAllNamed(AppRoutes.mainScaffoldScreen);
-            }          } else {
+            }
+          } else {
             ToastService.showErrorToast(
                 context: context,
                 title: 'خطأ في تعديل بيانات المستخدم ',

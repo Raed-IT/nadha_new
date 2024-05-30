@@ -22,80 +22,111 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
       margin: EdgeInsets.all(10.sp),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.sp),
-        border: Border.all(color: Theme.of(context).colorScheme.primary),
+        border: Border.all(color: Theme
+            .of(context)
+            .colorScheme
+            .primary),
       ),
-      child: BlurryContainer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ImagePickerComponent(
-              onPicked: (files) {
-                if (files.isNotEmpty) {
-                  controller.userImage = files.first;
-                } else {
-                  controller.userImage = null;
-                }
-              },
-              image: Get.find<MainController>().user.value!.image!,
-              title: Text(
-                'صورة المستخدم',
-                textAlign: TextAlign.start,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
-              ),
-            ),
-            TextFieldComponent(
-              controller: controller.nameTextController,
-              hint: "اسم المستخدم",
-              label: "اسم المستخدم",
-            ),
-            PhoneNumberComponent(
-              textFieldController: controller.phoneTextController,
-            ),
-            // TextFieldComponent(
-            //   controller: controller.phoneTextController,
-            //   hint: "رقم الهاتف",
-            //   label: "رقم الهاتف",
-            // ),
-            TextFieldComponent(
-              controller: controller.bioTextController,
-              hint: "لمحة عنك",
-              label: "لمحة عنك",
-              isMultiple: true,
-            ),
-            20.verticalSpace,
-            Text(
-              "اخترا المدينة",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            DropDownComponent<CityModel>(
-              hintText: "اختر المدينة",
-              items: Get.find<MainController>().cities,
-              initVal: Get.find<MainController>().user.value?.city,
-              onSelected: (item) {
-                controller.city = item;
-              },
-            ),
-            GestureDetector(
-              onTap: () => controller.updateUserProfiled(context),
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 20.h),
-                height: 40.h,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(15.sp),
+      child: Form(
+        key: controller.userFormKey,
+        child: BlurryContainer(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ImagePickerComponent(
+                onPicked: (files) {
+                  if (files.isNotEmpty) {
+                    controller.userImage = files.first;
+                  } else {
+                    controller.userImage = null;
+                  }
+                },
+                image: Get
+                    .find<MainController>()
+                    .user
+                    .value!
+                    .image!,
+                title: Text(
+                  'صورة المستخدم',
+                  textAlign: TextAlign.start,
+                  style:
+                  TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
                 ),
-                child: Center(
-                  child: Text(
-                    "حفظ بيانات المستخدم",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.background,
-                      fontWeight: FontWeight.bold,
+              ),
+              TextFieldComponent(
+                controller: controller.nameTextController,
+                hint: "اسم المستخدم",
+                label: "اسم المستخدم",
+              ),
+              PhoneNumberComponent(
+                controller: controller.phoneTextController,
+                onChange: (data) {
+                  Logger().w(data);
+                  controller.phoneTextController.text = data.phoneNumber!;
+                },
+              ),
+              // TextFieldComponent(
+              //   controller: controller.phoneTextController,
+              //   hint: "رقم الهاتف",
+              //   label: "رقم الهاتف",
+              // ),
+              TextFieldComponent(
+                controller: controller.bioTextController,
+                hint: "لمحة عنك",
+                label: "لمحة عنك",
+                isMultiple: true,
+              ),
+              20.verticalSpace,
+              Text(
+                "اخترا المدينة",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              DropDownComponent<CityModel>(
+                hintText: "اختر المدينة",
+                items: Get
+                    .find<MainController>()
+                    .cities,
+                initVal: Get
+                    .find<MainController>()
+                    .user
+                    .value
+                    ?.city,
+                onSelected: (item) {
+                  controller.city = item;
+                },
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (controller.userFormKey.currentState!.validate()) {
+                    controller.updateUserProfiled(context);
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 20.h),
+                  height: 40.h,
+                  decoration: BoxDecoration(
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .primary,
+                    borderRadius: BorderRadius.circular(15.sp),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "حفظ بيانات المستخدم",
+                      style: TextStyle(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .background,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
