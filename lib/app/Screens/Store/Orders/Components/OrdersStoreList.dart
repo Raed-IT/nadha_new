@@ -124,7 +124,7 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                         children: [
                           Row(
                             children: [
-                              Text("الإجمالي :  ${order.totalAmount}"),
+                              Text("الإجمالي :  ${order.total}"),
                               Text(
                                 "₺",
                                 style: TextStyle(
@@ -156,7 +156,7 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                           ),
                           Row(
                             children: [
-                              Text("الصافي  :  ${order.orderAmount}"),
+                              Text("الصافي  :  ${order.total-double.parse(order.percentAmount)}"),
                               Text(
                                 "₺",
                                 style: TextStyle(

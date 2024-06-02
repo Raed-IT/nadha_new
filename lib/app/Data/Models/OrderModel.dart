@@ -19,11 +19,19 @@ class OrderModel {
   bool? isStarted;
   List<CartItemModel>? orderItems;
 
+  double get total {
+    double _total = 0;
+    orderItems!.forEach((element) {
+      _total += element.price!;
+    });
+    return _total;
+  }
+
   String get percentAmount {
     // العمولة
     double percent = 0;
     for (var item in orderItems!) {
-      percent += (item.price! * (item.product?.category?.percent??0)) / 100;
+      percent += (item.price! * (item.product?.category?.percent ?? 0)) / 100;
     }
     return percent.toStringAsFixed(2);
   }
