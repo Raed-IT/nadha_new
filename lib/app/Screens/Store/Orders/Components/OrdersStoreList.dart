@@ -5,6 +5,7 @@ import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.d
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Components/TextFieldComponent.dart';
 import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/OrderModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
@@ -93,7 +94,7 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                 children: [
                   ...order.orderItems!.map(
                     (cartItem) {
-                      if (cartItem.product!.category!.isShowTime!) {
+                      if (cartItem.product?.category?.isShowTime ?? false) {
                         showTime = true;
                       }
                       return buildProductCard(
@@ -365,7 +366,7 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                           Row(
                             children: [
                               Text(
-                                "${cartItem.quantity ?? ''} / ",
+                                "${cartItem.unit!.toProductUnitShort()}${cartItem.quantity ?? ''} / ",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 10.sp,

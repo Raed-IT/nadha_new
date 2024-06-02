@@ -154,7 +154,6 @@ class DrawerComponent extends StatelessWidget {
               ),
             ),
           ),
-          Spacer(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w),
             child: Row(

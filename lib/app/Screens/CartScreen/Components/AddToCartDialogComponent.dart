@@ -91,9 +91,8 @@ Future<bool> showAddToCartBottomSheet(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: ProductUnitTypeEnum.values
-                        .where((element) =>
-                            element != ProductUnitTypeEnum.piece &&
-                            element != ProductUnitTypeEnum.kg)
+                        .where(
+                            (element) => element != ProductUnitTypeEnum.piece)
                         .map(
                           (e) => GestureDetector(
                             onTap: () => type.value = e,

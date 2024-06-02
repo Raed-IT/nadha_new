@@ -23,7 +23,7 @@ class OrderModel {
     // العمولة
     double percent = 0;
     for (var item in orderItems!) {
-      percent += (item.price! * item.product!.category!.percent!) / 100;
+      percent += (item.price! * (item.product?.category?.percent??0)) / 100;
     }
     return percent.toStringAsFixed(2);
   }

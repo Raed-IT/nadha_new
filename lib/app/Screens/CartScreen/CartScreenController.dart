@@ -23,6 +23,7 @@ class CartScreenController extends GetxController with ApiHelperMixin {
           context: context, title: "الرجاء ادخال رقم هاتف");
       return;
     }
+    Get.back();
     List<CartItemModel> cart = Get.find<MainController>().cart;
     dio.FormData data = dio.FormData.fromMap({});
     for (int i = 0; i < cart.length; i++) {

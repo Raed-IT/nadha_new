@@ -14,7 +14,7 @@ class CartItemModel {
   String get total {
     double total = 0.0;
     if (product != null) {
-      if (unit == ProductUnitTypeEnum.piece) {
+      if (unit == ProductUnitTypeEnum.piece ||unit == ProductUnitTypeEnum.kg) {
         total = double.parse(product!.getPrice!) * qty!.value;
       } else {
         if (unit == ProductUnitTypeEnum.amount) {

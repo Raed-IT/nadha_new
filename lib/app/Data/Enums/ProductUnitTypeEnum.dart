@@ -31,4 +31,16 @@ extension FromProductType on ProductUnitTypeEnum {
       return "قطعة";
     }
   }
+  String toProductUnitShort() {
+    if (this == ProductUnitTypeEnum.amount) {
+      return "g";
+    } else if (this == ProductUnitTypeEnum.amount_price) {
+      return "tr";
+    } else if (this == ProductUnitTypeEnum.kg) {
+      return "kg";
+    } else {
+      return "pic";
+    }
+  }
 }
+

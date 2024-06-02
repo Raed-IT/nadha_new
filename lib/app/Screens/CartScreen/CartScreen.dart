@@ -213,7 +213,7 @@ class _CartScreenState extends State<CartScreen> {
                       flex: 2,
                       child: GestureDetector(
                         onTap: () => showConfirmCartDialog(context, () {
-                          Get.back();
+                          // Get.back();
                           controller.createOrder(context);
                         }, controller),
                         child: SizedBox(

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
 import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Screens/Delivery/DeliveryOrdersScreen/Components/ConfermOrderStatusDialog.dart';
@@ -341,11 +342,12 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                       Row(
                         children: [
                           Text(
-                            "${cartItem.quantity ?? ''} / ",
+                            "${cartItem.unit!.toProductUnitShort()}${cartItem.quantity ?? ''} / ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.sp,
-                                color: Theme.of(context).colorScheme.primary),
+                                color:
+                                Theme.of(context).colorScheme.primary),
                           ),
                           Text(
                             "${double.parse(cartItem.total)}",

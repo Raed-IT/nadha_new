@@ -4,6 +4,7 @@ import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
 import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/OrderModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
@@ -298,11 +299,12 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                       Row(
                         children: [
                           Text(
-                            "${cartItem.quantity ?? ''} / ",
+                            "${cartItem.unit!.toProductUnitShort()}${cartItem.quantity ?? ''} / ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.sp,
-                                color: Theme.of(context).colorScheme.primary),
+                                color:
+                                Theme.of(context).colorScheme.primary),
                           ),
                           Text(
                             "${double.parse(cartItem.total)}",

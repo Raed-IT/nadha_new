@@ -39,7 +39,7 @@ class StoreCardComponent extends GetView<StoreScreenController> {
                       offset: Offset(0, -30.h),
                       child: ImageCacheComponent(
                         image: "${controller.store.image}",
-                        height: 120.h,
+                        height: 110.h,
                         width: 200,
                         borderRadius: BorderRadius.circular(10.sp),
                         fit: BoxFit.cover,
