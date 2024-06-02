@@ -12,6 +12,7 @@ import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Screens/OrdersSecreens/OrdersSecreen/OrdersSecreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:delevary/app/Screens/Store/Orders/OrderStoreScreenController.dart';
+import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -60,8 +61,8 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
 
   Widget buildCardOrder(
       {required OrderModel order, required BuildContext context}) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
     bool showTime = false;
+    TextEditingController infoController = TextEditingController();
 
     return SizedBox(
       width: Get.width,
@@ -211,49 +212,52 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                       ),
                     ),
                   if (!order.isStarted! && showTime)
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          TextFieldComponent(
-                            autofocus: true,
-                            controller: controller.infoController,
-                            hint: "الوقت المتوقع",
-                            validator: (data) {
-                              if (data!.isEmpty) {
-                                return "الرجاء تزيدنا بالوقت المتوقع";
-                              }
-                              return null;
-                            },
-                          ),
-                          10.verticalSpace,
-                          GestureDetector(
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                controller.receiveOrder(order, context);
-                              }
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w, vertical: 10.h),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.sp),
-                                  color: Theme.of(context).colorScheme.primary),
-                              child: Center(
-                                child: Text(
-                                  "تم استلام الطلب",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background,
-                                      fontSize: 12.sp),
-                                ),
+                    Column(
+                      children: [
+                        TextFieldComponent(
+                          // autofocus: true,
+                          controller: infoController,
+                          hint: "الوقت المتوقع",
+                          validator: (data) {
+                            if (data!.isEmpty) {
+                              return "الرجاء تزيدنا بالوقت المتوقع";
+                            }
+                            return null;
+                          },
+                        ),
+                        10.verticalSpace,
+                        GestureDetector(
+                          onTap: () {
+                            if (infoController.text.isEmpty) {
+                              ToastService.showErrorToast(
+                                  context: context,
+                                  title:
+                                      "الرجاء كتابة الزمن اللازم لتجهير الطلب");
+                              return;
+                            }
+                            controller.receiveOrder(
+                                order, context, infoController);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 10.h),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.sp),
+                                color: Theme.of(context).colorScheme.primary),
+                            child: Center(
+                              child: Text(
+                                "تم استلام الطلب",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    fontSize: 12.sp),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     )
                 ],
               )

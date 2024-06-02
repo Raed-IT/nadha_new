@@ -53,7 +53,7 @@ class OrderStoreScreen extends GetView<OrderStoreScreenController> {
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
-                        const OrdersStoreListComponent(),
+                          OrdersStoreListComponent(),
                         LoadMoreComponent(
                           isFinished: controller.isFinish,
                           isLoad: controller.isLoadMore,

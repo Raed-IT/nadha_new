@@ -1,5 +1,6 @@
 import 'package:delevary/app/Data/Models/OrderModel.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
+import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:delevary/app/data/ApiRoute.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -9,8 +10,6 @@ import 'package:logger/logger.dart';
 
 class OrderStoreScreenController extends GetxController
     with PaginationMixin<OrderModel>, ApiHelperMixin {
-  TextEditingController infoController = TextEditingController();
-
   @override
   void onInit() {
     paginationUrl = ApiRoute.storeOrders;
@@ -26,7 +25,8 @@ class OrderStoreScreenController extends GetxController
     getPaginationData(isRefresh: true);
   }
 
-  receiveOrder(OrderModel order, BuildContext context) async {
+  receiveOrder(OrderModel order, BuildContext context,
+      TextEditingController infoController) async {
     OverlayLoaderService.show(context);
     await postData(
         url: "${ApiRoute.orders}-status",
@@ -39,6 +39,8 @@ class OrderStoreScreenController extends GetxController
           });
           Logger().w(index);
           paginationData[index] = orderModel;
+          ToastService.showSuccessToast(
+              context: context, title: "تم ارسال البيانات");
         },
         onError: (ex, ty) {});
     OverlayLoaderService.hide();
