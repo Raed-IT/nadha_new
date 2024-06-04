@@ -6,6 +6,7 @@ import 'package:delevary/app/Data/Models/StoreModel.dart';
 import 'package:delevary/app/Mixins/AddToCartMixin.dart';
 import 'package:delevary/app/Services/CartService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';

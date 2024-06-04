@@ -6,11 +6,13 @@ import 'package:logger/logger.dart';
 class PhoneNumberComponent extends StatelessWidget {
   final void Function(PhoneNumber)? onChange;
   final TextEditingController? controller;
+  final PhoneNumber? initialValuel;
 
   const PhoneNumberComponent({
     super.key,
     this.onChange,
     this.controller,
+    this.initialValuel,
   });
 
   @override
@@ -18,6 +20,8 @@ class PhoneNumberComponent extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 20.h),
       child: InternationalPhoneNumberInput(
+        locale: "ar",
+        initialValue: initialValuel,
         selectorConfig: const SelectorConfig(
             selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
         autoValidateMode: AutovalidateMode.onUserInteraction,

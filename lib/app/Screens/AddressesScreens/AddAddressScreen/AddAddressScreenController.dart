@@ -18,6 +18,17 @@ import '../../../Services/UI/OverlayLoaderService.dart';
 import '../../../Services/UI/ToastService.dart';
 
 class AddAddressScreenController extends GetxController with ApiHelperMixin {
+  bool fromCart = false;
+
+  @override
+  void onInit() {
+    if (Get.arguments != null && Get.arguments.containsKey('fromCart')) {
+      fromCart = Get.arguments['fromCart'];
+      Logger().w(fromCart);
+    }
+    super.onInit();
+  }
+
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController addressNameController = TextEditingController();
   TextEditingController addressInfoController = TextEditingController();
@@ -54,7 +65,11 @@ class AddAddressScreenController extends GetxController with ApiHelperMixin {
                   .addresses!
                   .add(addedAddress);
               Get.find<MainController>().selectedAddress.value = addedAddress;
-              Get.offNamed(AppRoutes.addresses);
+              if (fromCart) {
+                Get.offNamed(AppRoutes.cartScreen);
+              } else {
+                Get.offNamed(AppRoutes.addresses);
+              }
             } else {
               ToastService.showErrorToast(
                   context: context, title: res.data['data']['message']);

@@ -41,9 +41,9 @@ dependencies:
   lottie: ^2.6.0
   google_maps_flutter: ^2.5.0
   change_app_package_name: ^1.1.0
-  location: ^5.0.3
+  location: ^5.0.3 #
   logger:
-  onesignal_flutter: ^3.5.1
+  onesignal_flutter: ^3.5.1 #
   get:
   flutter_screenutil: ^5.8.4
   flutter_animate: ^4.2.0+1
@@ -69,7 +69,7 @@ dependencies:
   avatar_glow: ^3.0.1
   searchable_paginated_dropdown: ^1.3.0
   custom_sliding_segmented_control: ^1.8.1
-  uni_links: ^0.5.1
+  uni_links: ^0.5.1 #
   permission_handler: ^10.4.5
   device_info_plus: ^9.1.0
 #  hl_image_picker: ^1.2.13
@@ -79,7 +79,7 @@ dependencies:
   sliding_up_panel2: ^3.3.0+1
   #  add address screen
   #  package_info_plus_tizen: ^1.0.3
-  package_info_plus: ^7.0.0
+  package_info_plus: ^7.0.0 #
   #  path_provider: ^2.1.3
   flutter_local_notifications: ^17.1.0
   easy_url_launcher: ^0.0.6
@@ -88,7 +88,7 @@ dependencies:
 
   lecle_downloads_path_provider: ^0.0.2+8
   #  flutter_install_app: ^1.3.0
-  open_file_safe_plus: ^0.0.4
+  open_file_safe_plus: ^0.0.4 #
   intl_phone_number_input: ^0.7.4
   file_picker: ^8.0.3
 

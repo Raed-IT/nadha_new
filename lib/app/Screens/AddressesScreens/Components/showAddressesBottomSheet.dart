@@ -70,7 +70,8 @@ Future<void> showAddressesBottomSheet({required BuildContext context}) async {
                       ListTile(
                         onTap: () {
                           Get.back();
-                          Get.toNamed(AppRoutes.addAddress);
+                          Get.toNamed(AppRoutes.addAddress,
+                              arguments: {"fromCart": true});
                         },
                         leading: Icon(Icons.add),
                         title: Text("إضافة عنوان جديد "),

@@ -22,10 +22,7 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
       margin: EdgeInsets.all(10.sp),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.sp),
-        border: Border.all(color: Theme
-            .of(context)
-            .colorScheme
-            .primary),
+        border: Border.all(color: Theme.of(context).colorScheme.primary),
       ),
       child: Form(
         key: controller.userFormKey,
@@ -41,16 +38,12 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
                     controller.userImage = null;
                   }
                 },
-                image: Get
-                    .find<MainController>()
-                    .user
-                    .value!
-                    .image!,
+                image: Get.find<MainController>().user.value!.image!,
                 title: Text(
                   'صورة المستخدم',
                   textAlign: TextAlign.start,
                   style:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
                 ),
               ),
               TextFieldComponent(
@@ -59,9 +52,10 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
                 label: "اسم المستخدم",
               ),
               PhoneNumberComponent(
+                initialValuel: PhoneNumber(isoCode: 'LU'),
                 controller: controller.phoneTextController,
                 onChange: (data) {
-                  Logger().w(data);
+                  Logger().w(data.isoCode);
                   controller.phoneTextController.text = data.phoneNumber!;
                 },
               ),
@@ -83,14 +77,8 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
               ),
               DropDownComponent<CityModel>(
                 hintText: "اختر المدينة",
-                items: Get
-                    .find<MainController>()
-                    .cities,
-                initVal: Get
-                    .find<MainController>()
-                    .user
-                    .value
-                    ?.city,
+                items: Get.find<MainController>().cities,
+                initVal: Get.find<MainController>().user.value?.city,
                 onSelected: (item) {
                   controller.city = item;
                 },
@@ -105,20 +93,14 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
                   margin: EdgeInsets.symmetric(vertical: 20.h),
                   height: 40.h,
                   decoration: BoxDecoration(
-                    color: Theme
-                        .of(context)
-                        .colorScheme
-                        .primary,
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(15.sp),
                   ),
                   child: Center(
                     child: Text(
                       "حفظ بيانات المستخدم",
                       style: TextStyle(
-                        color: Theme
-                            .of(context)
-                            .colorScheme
-                            .background,
+                        color: Theme.of(context).colorScheme.background,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

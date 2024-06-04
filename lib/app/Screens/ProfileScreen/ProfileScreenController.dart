@@ -10,8 +10,10 @@ import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
+import 'package:logger/logger.dart';
  import '../../Services/UI/ToastService.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -40,7 +42,6 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
     super.onInit();
     selectedIndex = RxInt(selected);
     //user
-
     UserModel user = Get.find<MainController>().user.value!;
     nameTextController.text = "${user.name}";
     phoneTextController.text = user.phone ?? '';

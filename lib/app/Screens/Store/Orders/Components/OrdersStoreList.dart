@@ -324,7 +324,7 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                           ),
                           child: Center(
                             child: AutoSizeText(
-                              "${cartItem.product?.store?.name}",
+                              cartItem.product?.store?.name??'',
                               maxLines: 2,
                               style: TextStyle(
                                 overflow: TextOverflow.ellipsis,
@@ -347,7 +347,7 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AutoSizeText(
-                        "${cartItem.product?.name}",
+                        "${cartItem.product?.name??'منتج محذوف'}",
                         maxLines: 1,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
@@ -355,7 +355,7 @@ class OrdersStoreListComponent extends GetView<OrderStoreScreenController> {
                       ),
                       5.verticalSpace,
                       AutoSizeText(
-                        "${cartItem.product?.info}",
+                        "${cartItem.product?.info??'منتج محذوف'}",
                         maxLines: 1,
                         style: const TextStyle(overflow: TextOverflow.ellipsis),
                       ),

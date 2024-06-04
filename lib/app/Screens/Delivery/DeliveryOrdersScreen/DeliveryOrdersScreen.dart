@@ -299,7 +299,7 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                     ),
                     child: Center(
                       child: AutoSizeText(
-                        "${cartItem.product?.store?.name}",
+                        "${cartItem.product?.store?.name??'منتج محذوف'}",
                         maxLines: 2,
                         style: TextStyle(
                           overflow: TextOverflow.ellipsis,
@@ -319,7 +319,7 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AutoSizeText(
-                    "${cartItem.product?.name}",
+                    cartItem.product?.name??'منتج محذوف',
                     maxLines: 1,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
