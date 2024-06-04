@@ -22,7 +22,7 @@ showVersionDialog(BuildContext context) async {
               () => !Get.find<MainController>().setting.value!.forcedUpdate!);
         },
         child: SizedBox(
-          height: 320.h,
+          height: 250.h,
           width: Get.width,
           child: Card(
             child: Stack(
@@ -59,25 +59,25 @@ showVersionDialog(BuildContext context) async {
                         10.verticalSpace,
                         Text(
                             "منصة تسوقي توصي بتحديث التطبيق لتوفير تجربة أفضل وأكثر سلاسة. قم بتحديث التطبيق الآن للاستمتاع بالمزايا الجديدة والتحسينات"),
-                        10.verticalSpace,
-                        SizedBox(
-                          width: Get.width,
-                          height: 40.h,
-                          child: MaterialButton(
-                            color: Theme.of(context).colorScheme.primary,
-                            child: Text(
-                              "تحميل مباشر",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () async {
-                              Get.find<HomeScreenController>().getApp(context);
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.sp),
-                            ),
-                          ),
-                        ),
-                        10.verticalSpace,
+                        Spacer(),
+                        // SizedBox(
+                        //   width: Get.width,
+                        //   height: 40.h,
+                        //   child: MaterialButton(
+                        //     color: Theme.of(context).colorScheme.primary,
+                        //     child: Text(
+                        //       "تحميل مباشر",
+                        //       style: TextStyle(color: Colors.white),
+                        //     ),
+                        //     onPressed: () async {
+                        //       Get.find<HomeScreenController>().getApp(context);
+                        //     },
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(10.sp),
+                        //     ),
+                        //   ),
+                        // ),
+
                         SizedBox(
                           width: Get.width,
                           height: 40.h,

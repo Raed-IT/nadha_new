@@ -19,7 +19,8 @@ import 'package:helper/mixin/pagination_mixing.dart';
 import 'package:helper/utility/base_client.dart';
 import 'package:lecle_downloads_path_provider/lecle_downloads_path_provider.dart';
 import 'package:logger/logger.dart';
-import 'package:open_file_safe_plus/open_file_safe_plus.dart';
+
+// import 'package:open_file_safe_plus/open_file_safe_plus.dart';
 import '../../Services/CartService.dart';
 import 'package:lecle_downloads_path_provider/constants/downloads_directory_type.dart';
 // import 'package:open_file_safe_plus/open_file_safe_plus.dart';
@@ -34,67 +35,67 @@ class HomeScreenController extends GetxController
   final GlobalKey<CartIconKey> cartKey =
       Get.find<MainScaffoldScreenController>().cartKey;
 
-  Future getApp(BuildContext context) async {
-    if (!isDownload.value) {
-      await PermissionService.postStoragePermission();
-      await PermissionService.postInstallPackagesPermission();
-      cureentDownload.value = 0;
-      isDownload.value = true;
-      String? downloadsDirectoryPath = (await DownloadsPath.downloadsDirectory(
-              dirType: DownloadDirectoryTypes.downloads))
-          ?.path;
-      Logger().w("downloadsDirectoryPath=>$downloadsDirectoryPath");
-      String v = Get.find<MainController>()
-          .setting
-          .value!
-          .currentVersion!
-          .replaceFirst('.', "")
-          .replaceFirst('.', "");
-
-      String appName = 'tasawoqe$v';
-      String fullPath = "$downloadsDirectoryPath/$appName.apk";
-
-      if (await File(fullPath).exists()) {
-        appName += 'new';
-        fullPath = "$downloadsDirectoryPath/$appName.apk";
-        if (await File(fullPath).exists()) {
-          appName += 'new';
-          fullPath = "$downloadsDirectoryPath/$appName.apk";
-        }
-      }
-      await BaseClient.download(
-          url: "${Get.find<MainController>().setting.value!.appUrl}",
-          savePath: fullPath,
-          onReceiveProgress: (int1, int2) {
-            int val = (int1 * 100) ~/ int2;
-            cureentDownload.value = val.toDouble();
-            LocalNotificationService.showProgressNotification(
-                title: "تحديث التطبيق",
-                progress: val,
-                desc: "يتم تحميل احدث نسخة من تطبيق تسوقي");
-          },
-          onError: (error) {
-            Fluttertoast.showToast(msg: "خطأ في التحميل ");
-            isDownload.value = false;
-            LocalNotificationService.showProgressNotification(
-                title: "تحديث التطبيق",
-                progress: 100,
-                desc: "حدث خطاء اثناء التحميل ${error.message}");
-          },
-          onSuccess: () async {
-            Fluttertoast.showToast(msg: "تم التحميل ");
-            isDownload.value = false;
-            OpenFileSafePlus.open(
-              fullPath,
-            );
-            LocalNotificationService.showProgressNotification(
-                title: "تحديث التطبيق",
-                progress: 100,
-                desc: "تم تحميل احدث نسخة من تطبيق تسوقي");
-            OpenFileSafePlus.open(fullPath);
-          });
-    }
-  }
+  // Future getApp(BuildContext context) async {
+  //   if (!isDownload.value) {
+  //     await PermissionService.postStoragePermission();
+  //     await PermissionService.postInstallPackagesPermission();
+  //     cureentDownload.value = 0;
+  //     isDownload.value = true;
+  //     String? downloadsDirectoryPath = (await DownloadsPath.downloadsDirectory(
+  //             dirType: DownloadDirectoryTypes.downloads))
+  //         ?.path;
+  //     Logger().w("downloadsDirectoryPath=>$downloadsDirectoryPath");
+  //     String v = Get.find<MainController>()
+  //         .setting
+  //         .value!
+  //         .currentVersion!
+  //         .replaceFirst('.', "")
+  //         .replaceFirst('.', "");
+  //
+  //     String appName = 'tasawoqe$v';
+  //     String fullPath = "$downloadsDirectoryPath/$appName.apk";
+  //
+  //     if (await File(fullPath).exists()) {
+  //       appName += 'new';
+  //       fullPath = "$downloadsDirectoryPath/$appName.apk";
+  //       if (await File(fullPath).exists()) {
+  //         appName += 'new';
+  //         fullPath = "$downloadsDirectoryPath/$appName.apk";
+  //       }
+  //     }
+  //     await BaseClient.download(
+  //         url: "${Get.find<MainController>().setting.value!.appUrl}",
+  //         savePath: fullPath,
+  //         onReceiveProgress: (int1, int2) {
+  //           int val = (int1 * 100) ~/ int2;
+  //           cureentDownload.value = val.toDouble();
+  //           LocalNotificationService.showProgressNotification(
+  //               title: "تحديث التطبيق",
+  //               progress: val,
+  //               desc: "يتم تحميل احدث نسخة من تطبيق تسوقي");
+  //         },
+  //         onError: (error) {
+  //           Fluttertoast.showToast(msg: "خطأ في التحميل ");
+  //           isDownload.value = false;
+  //           LocalNotificationService.showProgressNotification(
+  //               title: "تحديث التطبيق",
+  //               progress: 100,
+  //               desc: "حدث خطاء اثناء التحميل ${error.message}");
+  //         },
+  //         onSuccess: () async {
+  //           Fluttertoast.showToast(msg: "تم التحميل ");
+  //           isDownload.value = false;
+  //           OpenFileSafePlus.open(
+  //             fullPath,
+  //           );
+  //           LocalNotificationService.showProgressNotification(
+  //               title: "تحديث التطبيق",
+  //               progress: 100,
+  //               desc: "تم تحميل احدث نسخة من تطبيق تسوقي");
+  //           OpenFileSafePlus.open(fullPath);
+  //         });
+  //   }
+  // }
 
   @override
   void onInit() {
@@ -120,7 +121,6 @@ class HomeScreenController extends GetxController
 
   @override
   getDataFromJson({required Map<String, dynamic> json, String? type}) {
-
     if (json['status'] == "SUCCESS") {
       if (type == "home") {
         categories.value = [];
