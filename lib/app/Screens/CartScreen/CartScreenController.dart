@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:get_storage/get_storage.dart';
 import 'package:helper/mixin/api_mixing.dart';
 
 class CartScreenController extends GetxController with ApiHelperMixin {
@@ -17,10 +18,19 @@ class CartScreenController extends GetxController with ApiHelperMixin {
   TextEditingController phoneTextController = TextEditingController(
       text: Get.find<MainController>().user.value?.phone ?? '');
 
+  TextEditingController reciverNameController = TextEditingController();
+
+  Rxn<String> floor = Rxn();
+
   void createOrder(BuildContext context) async {
     if (phoneTextController.text.isEmpty) {
       ToastService.showErrorToast(
           context: context, title: "الرجاء ادخال رقم هاتف");
+      return;
+    }
+    if (floor.value == null || floor.value!.isEmpty) {
+      ToastService.showErrorToast(
+          context: context, title: "الرجاء إختيار رقم الطابق");
       return;
     }
     Get.back();
@@ -38,7 +48,8 @@ class CartScreenController extends GetxController with ApiHelperMixin {
         "${Get.find<MainController>().selectedAddress.value?.id}"));
     data.fields.add(MapEntry("note", noteTextController.text));
     data.fields.add(MapEntry("phone", phoneTextController.text));
-
+    data.fields.add(MapEntry("receiver_name", reciverNameController.text));
+    data.fields.add(MapEntry("floor", floor.value!));
     OverlayLoaderService.show(context);
 
     await postData(
