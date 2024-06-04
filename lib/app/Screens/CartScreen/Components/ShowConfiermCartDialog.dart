@@ -37,56 +37,68 @@ showConfirmCartDialog(BuildContext context, Function onConfirm,
                       hint: 'رقم الهاتف',
                     ),
                   20.verticalSpace,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 11.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.sp),
-                          border: Border.all(color: Colors.black12),
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                        child: DropdownButton<String?>(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 5.w, vertical: 8.h),
-                          underline: Container(),
-                          hint: Text(
-                            "اختر رقم الطابق",
-                            style: TextStyle(fontSize: 10.sp),
-                          ),
-                          value: cartScreenController.floor.value,
-                          items: FloorEnum.values
-                              .map(
-                                (e) => DropdownMenuItem<String>(
-                                  onTap: () {
-                                    cartScreenController.floor.value = e.name;
-                                  },
-                                  value: e.name,
-                                  child: Text(e.toFloorName()),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (String? value) {},
-                        ),
+                  Container(
+                    width: Get.width,
+                    margin: EdgeInsets.only(top: 11.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.sp),
+                      border: Border.all(color: Colors.black12),
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    child: DropdownButton<String?>(
+                      isExpanded: true,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 5.w, vertical: 8.h),
+                      underline: Container(),
+                      hint: Text(
+                        "اختر رقم الطابق",
+                        style: TextStyle(fontSize: 9.sp),
                       ),
-                      10.horizontalSpace,
-                      Expanded(
-                        child: TextFieldComponent(
-                          validator: (data) {
-                            if (data!.isEmpty) {
-                              return "اسم المستلم مطلوب ";
-                            }
-                            return null;
-                          },
-                          controller:
-                              cartScreenController.reciverNameController,
-                          hint: 'اسم المستلم',
-                        ),
+                      value: cartScreenController.floor.value,
+                      items: FloorEnum.values
+                          .map(
+                            (e) => DropdownMenuItem<String>(
+                              onTap: () {
+                                cartScreenController.floor.value = e.name;
+                              },
+                              value: e.name,
+                              child: Text(e.toFloorName()),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (String? value) {},
+                    ),
+                  ),
+                  10.horizontalSpace,
+                  TextFieldComponent(
+                    inputDecoration: InputDecoration(
+                      filled: true,
+                      fillColor: Theme.of(context).colorScheme.onPrimary,
+                      hintText: "اسم المستلم",
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 10.sp, vertical: 20.sp),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onBackground),
                       ),
-                    ],
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black12),
+                        borderRadius: BorderRadius.circular(15.sp),
+                      ),
+                    ),
+                    textStyle: TextStyle(fontSize: 9.sp),
+                    validator: (data) {
+                      if (data!.isEmpty) {
+                        return "اسم المستلم مطلوب ";
+                      }
+                      return null;
+                    },
+                    controller:
+                        cartScreenController.reciverNameController,
+                    hint: '',
                   ),
                   TextFieldComponent(
                     isMultiple: true,
