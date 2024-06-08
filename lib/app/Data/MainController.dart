@@ -34,6 +34,7 @@ class MainController extends GetxController {
 
   @override
   void onInit() {
+
     token.listen((p0) {
       HelperConstant.token = p0;
     });

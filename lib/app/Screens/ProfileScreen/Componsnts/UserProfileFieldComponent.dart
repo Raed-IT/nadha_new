@@ -51,19 +51,11 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
                 hint: "اسم المستخدم",
                 label: "اسم المستخدم",
               ),
-              PhoneNumberComponent(
-                initialValuel: PhoneNumber(isoCode: 'LU'),
+              TextFieldComponent(
                 controller: controller.phoneTextController,
-                onChange: (data) {
-                  Logger().w(data.isoCode);
-                  controller.phoneTextController.text = data.phoneNumber!;
-                },
+                hint: "رقم الهاتف",
+                label: "رقم الهاتف",
               ),
-              // TextFieldComponent(
-              //   controller: controller.phoneTextController,
-              //   hint: "رقم الهاتف",
-              //   label: "رقم الهاتف",
-              // ),
               TextFieldComponent(
                 controller: controller.bioTextController,
                 hint: "لمحة عنك",

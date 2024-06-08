@@ -24,6 +24,7 @@ import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
 import '../../Data/ApiRoute.dart';
 import '../CategoriesScreen/CategoriesScreenController.dart';
+import 'Components/phoneDialog.dart';
 
 bool isShowVersion = false;
 
@@ -37,6 +38,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    showPhoneDialog(context);
     if (!isShowVersion &&
         Get.find<MainController>().packageInfo.version !=
             Get.find<MainController>().setting.value!.currentVersion) {
