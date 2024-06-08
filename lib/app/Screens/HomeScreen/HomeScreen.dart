@@ -91,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         physics: const BouncingScrollPhysics(),
                         children: [
                           SliderComponent(
+                            autoPlay: controller.sliders.length > 1,
                             height: Get.width,
                             sliders: controller.sliders,
                             controller: PageController(),

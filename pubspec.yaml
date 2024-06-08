@@ -55,7 +55,9 @@ dependencies:
   card_loading: ^0.3.2
   cached_network_image: ^3.2.3
   auto_size_text: ^3.0.0
-  nopsuite_carousel_slider: ^0.0.3
+#  nopsuite_carousel_slider: ^0.0.3
+  carousel_slider: ^4.2.1
+
   babstrap_settings_screen: ^0.1.6
   url_launcher: ^6.2.4
   blurrycontainer: ^1.0.2
