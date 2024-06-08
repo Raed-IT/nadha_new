@@ -1,9 +1,8 @@
+import 'package:delevary/app/Data/Enums/FloorEnum.dart';
 import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
 import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
-import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Data/Models/UserModel.dart';
-import 'package:logger/logger.dart';
 
 class OrderModel {
   int? id;
@@ -18,6 +17,8 @@ class OrderModel {
   bool? isFinished;
   bool? isStarted;
   List<CartItemModel>? orderItems;
+  FloorEnum? floor;
+  String? receiverName;
 
   double get total {
     double _total = 0;
@@ -46,6 +47,9 @@ class OrderModel {
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    if (json['floor'] != null) {
+      floor = "${json['floor']}".toFloorEnum();
+    }
     deliveryPrice = double.tryParse("${json['delivery_price']}");
     if (json['delivery'] != null) {
       driver = UserModel.fromJson(json['delivery']);
@@ -58,6 +62,7 @@ class OrderModel {
       customer = UserModel.fromJson(json['user']);
     }
     status = "${json['status']}".toOrderStatus();
+    receiverName = json['receiver_name'];
     createdAt = json['created_at'];
     note = json['note'];
     isFinished = json['is_finished'] as bool;

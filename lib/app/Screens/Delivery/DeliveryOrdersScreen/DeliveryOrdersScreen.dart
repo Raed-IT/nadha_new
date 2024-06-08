@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
+import 'package:delevary/app/Data/Enums/FloorEnum.dart';
 import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
 import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
@@ -213,6 +214,9 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                     ],
                   ),
                   10.verticalSpace,
+                  Text("الطابق :  ${order.floor!.toFloorName()}"),
+                  10.verticalSpace,
+                  Text("اسم المستلم : ${order.receiverName ?? ''}"),
                   TextButton(
                     onPressed: () {
                       launchUrl(Uri.parse(
@@ -227,7 +231,7 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                         ),
                         10.horizontalSpace,
                         Text(
-                          "انقر للتواصل مع صاحب الطلب",
+                          '${order.customer?.phone != null ? "انقر للتواصل مع صاحب الطلب" : " لم يتم تعين رقم هاتف"}',
                           style: TextStyle(
                               fontSize: 12.sp, fontWeight: FontWeight.bold),
                         ),
@@ -299,7 +303,7 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                     ),
                     child: Center(
                       child: AutoSizeText(
-                        "${cartItem.product?.store?.name??'منتج محذوف'}",
+                        "${cartItem.product?.store?.name ?? 'منتج محذوف'}",
                         maxLines: 2,
                         style: TextStyle(
                           overflow: TextOverflow.ellipsis,
@@ -319,7 +323,7 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AutoSizeText(
-                    cartItem.product?.name??'منتج محذوف',
+                    cartItem.product?.name ?? 'منتج محذوف',
                     maxLines: 1,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
@@ -346,8 +350,7 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.sp,
-                                color:
-                                Theme.of(context).colorScheme.primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           Text(
                             "${double.parse(cartItem.total)}",

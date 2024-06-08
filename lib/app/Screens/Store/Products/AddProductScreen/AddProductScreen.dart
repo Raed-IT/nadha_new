@@ -11,6 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import '../../../../Components/AppBarComponents/AppBarComponent.dart';
 import '../../../../Components/DrawerComponents/DrawerComponent.dart';
 import '../Components/OptionsAddProductComponents.dart';

@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 enum FloorEnum {
   ground,
   first,
@@ -10,6 +12,11 @@ enum FloorEnum {
   eighth,
   ninth,
   tenth
+}
+
+extension FloorEnumExtention on String {
+  FloorEnum toFloorEnum() =>
+      FloorEnum.values.firstWhere((e) => describeEnum(e) == toLowerCase());
 }
 
 extension FloorEnumStringExtention on FloorEnum {

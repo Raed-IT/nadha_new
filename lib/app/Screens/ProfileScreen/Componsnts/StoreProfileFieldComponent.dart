@@ -1,12 +1,11 @@
 import 'package:blurrycontainer/blurrycontainer.dart';
-import 'package:delevary/app/Components/ImagePickerComponent.dart';
 import 'package:delevary/app/Components/TextFieldComponent.dart';
 import 'package:delevary/app/Screens/ProfileScreen/ProfileScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import '../../../Components/DropDwon.dart';
+import '../../../Components/ImagePickerComponent.dart';
 import '../../../Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
 
