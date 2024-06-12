@@ -214,7 +214,7 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                     ],
                   ),
                   10.verticalSpace,
-                  Text("الطابق :  ${order.floor!.toFloorName()}"),
+                  Text("الطابق :  ${order.floor?.toFloorName()}"),
                   10.verticalSpace,
                   Text("اسم المستلم : ${order.receiverName ?? ''}"),
                   TextButton(
@@ -231,7 +231,7 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                         ),
                         10.horizontalSpace,
                         Text(
-                          '${order.customer?.phone != null ? "انقر للتواصل مع صاحب الطلب" : " لم يتم تعين رقم هاتف"}',
+                          order.customer?.phone != null ? "انقر للتواصل مع صاحب الطلب" : " لم يتم تعين رقم هاتف",
                           style: TextStyle(
                               fontSize: 12.sp, fontWeight: FontWeight.bold),
                         ),

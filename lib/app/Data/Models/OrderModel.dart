@@ -13,6 +13,7 @@ class OrderModel {
   AddressModel? address;
   OrderStatusEnum? status;
   String? createdAt;
+  String? timeToReady;
   String? note;
   bool? isFinished;
   bool? isStarted;
@@ -65,6 +66,7 @@ class OrderModel {
     receiverName = json['receiver_name'];
     createdAt = json['created_at'];
     note = json['note'];
+    timeToReady = json['time_to_ready'];
     isFinished = json['is_finished'] as bool;
     isStarted = json['is_started'] as bool;
     orderItems = [];

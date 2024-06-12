@@ -49,17 +49,17 @@ class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
               TextFieldComponent(
                 controller: controller.nameTextController,
                 hint: "اسم المستخدم",
-                label: "اسم المستخدم",
+                label: "اسم المستخدم (إجباري)",
               ),
               TextFieldComponent(
                 controller: controller.phoneTextController,
                 hint: "رقم الهاتف",
-                label: "رقم الهاتف",
+                label: "رقم الهاتف (إجباري)",
               ),
               TextFieldComponent(
                 controller: controller.bioTextController,
                 hint: "لمحة عنك",
-                label: "لمحة عنك",
+                label: "لمحة عنك (إختياري)",
                 isMultiple: true,
               ),
               20.verticalSpace,
