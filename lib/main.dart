@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:helper/data/models/dio_config_model.dart';
 import 'package:helper/helper.dart';
-import 'package:logger/logger.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'app/Data/MainController.dart';
@@ -23,6 +23,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await initializeDateFormatting('ar', null);
 
   await GetStorage.init(AppRoutes.appName);
   Helper.initial(

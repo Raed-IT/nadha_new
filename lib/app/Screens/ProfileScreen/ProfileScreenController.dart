@@ -1,4 +1,4 @@
- import 'dart:io';
+import 'dart:io';
 
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
@@ -10,16 +10,17 @@ import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:logger/logger.dart';
- import '../../Services/UI/ToastService.dart';
+import '../../Services/UI/ToastService.dart';
 import 'package:dio/dio.dart' as dio;
 
 class ProfileScreenController extends GetxController with ApiHelperMixin {
   RxList<bool> selectedButton = RxList([true, false]);
   int selected = Get.arguments?['index'] ?? 0;
+  RxString openAt = RxString(' ');
+  RxString closeAt = RxString('  ');
   late RxInt selectedIndex;
   GlobalKey<FormState> userFormKey = GlobalKey();
   PlatformFile? storeImage;
@@ -36,6 +37,7 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
   TextEditingController storeNameTextController = TextEditingController();
   TextEditingController storeAddressTextController = TextEditingController();
   TextEditingController storeInfoTextController = TextEditingController();
+  RxBool autoClose = RxBool(false);
 
   @override
   void onInit() {
@@ -49,9 +51,13 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
     city = user.city;
     //store
     storeCity = user.store?.city;
+    autoClose.value=user.store?.autoClose??false;
     storeNameTextController.text = user.store?.name ?? '';
     storeAddressTextController.text = user.store?.address ?? '';
     storeInfoTextController.text = user.store?.info ?? '';
+    openAt.value = user.store?.openAt ?? 'لم يتم التحديد';
+    Logger().w(user.store?.openAt);
+    closeAt.value = user.store?.closeAt ?? 'لم يتم التحديد';
   }
 
   void onSelectedButton(int index) {
@@ -78,6 +84,9 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
       "address": storeAddressTextController.text,
       "info": storeInfoTextController.text,
       "city_id": storeCity?.id,
+      "open_at": "${openAt.value}${openAt.value.length > 2 ? '' : ':00:00'}",
+      'close_at': "${closeAt.value}${closeAt.value.length > 2 ? '' : ':00:00'}",
+      'auto_close': autoClose.value ? 1 : 0,
       if (storeImg != null) "image": storeImg,
     });
     await postData(

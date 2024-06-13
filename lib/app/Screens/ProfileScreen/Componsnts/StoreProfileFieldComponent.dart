@@ -1,5 +1,6 @@
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/TextFieldComponent.dart';
+import 'package:delevary/app/Screens/ProfileScreen/Componsnts/TimeComponent.dart';
 import 'package:delevary/app/Screens/ProfileScreen/ProfileScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,6 +46,7 @@ class StoreProfileFieldsComponent extends GetView<ProfileScreenController> {
               hint: "اسم المتجر",
               label: "اسم المتجر",
             ),
+            TimeComponent(),
             TextFieldComponent(
               controller: controller.storeInfoTextController,
               hint: "اكتب عن متجرك",

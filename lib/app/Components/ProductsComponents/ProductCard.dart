@@ -94,7 +94,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                                   ),
                                   child: Container(
                                       key:productCardKye,
-                                      child: ImageCacheComponent(image: "${widget.product.image}",fit: BoxFit.contain,)),
+                                      child: ImageCacheComponent(image: "${widget.product.image}",fit: BoxFit.cover,)),
                                   /*
 
                                    Container(

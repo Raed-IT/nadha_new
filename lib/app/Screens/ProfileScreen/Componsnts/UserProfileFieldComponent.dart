@@ -10,7 +10,6 @@ import '../../../Components/DropDwon.dart';
 import '../../../Components/PhoneNumberComponent.dart';
 import '../../../Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class UserProfileFieldsComponent extends GetView<ProfileScreenController> {
   const UserProfileFieldsComponent({super.key});

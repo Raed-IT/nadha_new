@@ -231,7 +231,9 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                         ),
                         10.horizontalSpace,
                         Text(
-                          order.customer?.phone != null ? "انقر للتواصل مع صاحب الطلب" : " لم يتم تعين رقم هاتف",
+                          order.customer?.phone != null
+                              ? "انقر للتواصل مع صاحب الطلب"
+                              : " لم يتم تعين رقم هاتف",
                           style: TextStyle(
                               fontSize: 12.sp, fontWeight: FontWeight.bold),
                         ),
