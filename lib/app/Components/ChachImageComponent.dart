@@ -31,8 +31,8 @@ class ImageCacheComponent extends StatelessWidget {
         child: CachedNetworkImage(
           color: imageColor,
           fit: fit ?? BoxFit.cover,
-          memCacheHeight: 200.sp.toInt(),
-          memCacheWidth: 200.sp.toInt(),
+          memCacheHeight: 400.sp.toInt(),
+          memCacheWidth: 400.sp.toInt(),
           height: height,
           width: width,
           alignment: Alignment.center,
