@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../Components/CategoriesComponent.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
 import '../../Data/ApiRoute.dart';
@@ -105,39 +106,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           Obx(
                             () => Column(
                               children: [
-                                if (!controller.isLoad.value) 10.verticalSpace,
+                                if (!controller.isLoad.value) 20.verticalSpace,
                                 BuildTitleSectionComponent(
                                   title: "الفئات الرئيسية",
                                   isLoad: controller.isLoad,
                                 ),
-                                if (!controller.isLoad.value) 20.verticalSpace,
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.sp),
-                            child: GridListComponent<CategoryModel>(
-                              prifexHero: "categories",
-                              items: controller.categories,
-                              isLoad: controller.isLoad,
-                              onTap: (CategoryModel item) {
-                                if (item.hasChildren!) {
-                                  Get.toNamed(
-                                    AppRoutes.categories,
-                                    arguments: {
-                                      "category": item,
-                                    },
-                                  );
-                                  Get.put(CategoriesScreenController(),
-                                      tag: "category${item.id}");
-                                } else {
-                                  Get.toNamed(AppRoutes.categoryProducts,
-                                      arguments: {"category": item});
-                                }
-                              },
-                            ),
-                          ),
-                          10.verticalSpace,
+                          CategoriesComponent(
+                           categories: controller.categories,
+                           isLoading: controller.isLoad,
+                                                      ),
+                          20.verticalSpace,
                           BuildTitleSectionComponent(
                             title: "المنتجات الاكثر طلب",
                             isLoad: controller.isLoad,

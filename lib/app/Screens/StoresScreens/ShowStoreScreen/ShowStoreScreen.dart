@@ -1,6 +1,7 @@
 // import 'dart:ffi';
 
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
+import 'package:delevary/app/Components/CategoriesComponent.dart';
 import 'package:delevary/app/Components/GridCardComponent.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
@@ -164,20 +165,10 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                                         Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 5.sp),
-                                          child:
-                                              GridListComponent<CategoryModel>(
-                                            prifexHero: "categories",
-                                            items: controller.categories,
-                                            isLoad: controller.isLoad,
-                                            onTap: (CategoryModel item) {
-                                              Get.toNamed(
-                                                  AppRoutes.categoryProducts,
-                                                  arguments: {
-                                                    "category": item,
-                                                    "store_id": controller
-                                                        .store.value!.id
-                                                  });
-                                            },
+                                          child: CategoriesComponent(
+                                            categories: controller.categories,
+                                            isLoading: controller.isLoad,
+                                            storeId: controller.store.value?.id,
                                           ),
                                         ),
                                         10.verticalSpace,

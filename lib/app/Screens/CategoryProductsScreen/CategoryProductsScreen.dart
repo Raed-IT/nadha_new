@@ -63,115 +63,92 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         drawer: const DrawerComponent(),
         body: Builder(
-          builder: (context) => Stack(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  ListView(
-                    controller: scrollController,
-                    children: [
-                      220.verticalSpace,
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5.sp),
-                        child: ProductListComponent(
-                          onProductTap: (ProductModel product, k) {
-                            Get.toNamed(AppRoutes.showProduct,
-                                preventDuplicates: false,
-                                arguments: {"product": product});
-                            Get.put(ShowProductScreenController(),
-                                tag: "show_product${product.id}");
-                          },
-                          products: controller.paginationData,
-                          isLoad: controller.isLoadPaginationData,
-                          onTapAddProduct:
-                              (ProductModel product, GlobalKey key) {
-                            controller.cartService.addToCard(
-                                product: product,
-                                context: context,
-                                onAddAnimation: (k, isAdd) {
-                                  if(isAdd) {
-                                    controller.addToCartAnimation(
-                                      widgetKey: k, cartKey: cartKey);
-                                  }
-                                });
-                          },
-                        ),
-                      ),
-                      LoadMoreComponent(
-                        isFinished: controller.isFinish,
-                        isLoad: controller.isLoadMore,
-                      )
-                    ],
-                  ).loadMoreAble(
-                    scrollController: scrollController,
-                    onLoadMore: () async {
-                      await controller.loadMore();
-                    },
-                  ),
-                  Hero(
-                    tag: "categories${controller.category.id}",
-                    child: ImageCacheComponent(
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(15.sp),
-                        bottomLeft: Radius.circular(15.sp),
-                      ),
-                      width: Get.width,
-                      height: 200.h,
-                      image: "${controller.category.images?[1].url}",
+          builder: (context) => Container(
+            height: Get.height,
+            color: Theme.of(context).colorScheme.background,
+            child: Stack(
+              children: [
+                Container(
+                  height: Get.height,
+                  width: Get.width,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      opacity: 0.1,
+                      repeat: ImageRepeat.repeat,
+                      image: AssetImage('assets/images/bg.png'),
                     ),
                   ),
-                  Positioned(
-                    top: 160.h,
-                    child: SizedBox(
-                      width: Get.width,
-                      height: 70.h,
-                      child: Card(
-                        margin: EdgeInsets.symmetric(horizontal: 30.h),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  borderRadius: BorderRadius.circular(100.sp)),
-                              margin: EdgeInsets.symmetric(horizontal: 20.sp),
-                              height: 50.sp,
-                              width: 50.sp,
-                              child: Center(
-                                child: Icon(
-                                  FontAwesomeIcons.layerGroup,
-                                  size: 20.sp,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: AutoSizeText(
-                                "${controller.category.name}",
-                                style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                maxLines: 2,
-                              ),
-                            )
-                          ],
-                        ),
+                ).animate().blur(
+                      delay: const Duration(milliseconds: 500),
+                      begin: const Offset(20, 20),
+                      duration: const Duration(seconds: 2),
+                    ),
+                Column(
+                  children: [
+                    AppBarComponent(
+                      title: controller.category.name,
+                      openDrawer: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                    ),
+                    Expanded(
+                      child: ListView(
+                        controller: scrollController,
+                        padding: const EdgeInsets.all(0),
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          ProductListComponent(
+                            heroTagPrefix: "categories",
+                            products: controller.paginationData,
+                            onProductTap: (ProductModel product, k) {
+                              Get.toNamed(AppRoutes.showProduct,
+                                  preventDuplicates: false,
+                                  arguments: {
+                                    "product": product,
+                                    "hero": "categories"
+                                  });
+                              Get.put(
+                                ShowProductScreenController(),
+                                tag: "show_product${product.id}",
+                              );
+                            },
+                            isLoad: controller.isLoadPaginationData,
+                            onTapAddProduct:
+                                (ProductModel product, GlobalKey key) {
+                              controller.cartService.addToCard(
+                                  product: product,
+                                  context: context,
+                                  onAddAnimation: (k, isAdd) {
+                                    if(isAdd) {
+                                      controller.addToCartAnimation(
+                                          widgetKey: k, cartKey: cartKey);
+                                    }
+                                  });
+                            },
+                          ),
+                          LoadMoreComponent(
+                            isFinished: controller.isFinish,
+                            isLoad: controller.isLoadMore,
+                          )
+                        ],
+                      )
+                          .loadMoreAble(
+                        scrollController: scrollController,
+                        onLoadMore: () async {
+                          await controller.loadMore();
+                        },
+                      )
+                          .refreshAbel(
+                        onRefresh: () async {
+                          await controller.getFreshData(refresh: true);
+                        },
                       ),
-                    ).animate().show().slideY(
-                        begin: 1, duration: const Duration(milliseconds: 500)),
-                  )
-                ],
-              ),
-              AppBarComponent(
-                openDrawer: () => Scaffold.of(context).openDrawer(),
-              ),
-            ],
-          ).refreshAbel(onRefresh: () => controller.getFreshData()),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

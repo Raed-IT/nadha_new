@@ -15,8 +15,8 @@ class CategoryProductsScreenController extends GetxController
   int? storeId = Get.arguments['store_id'];
   CartService cartService = CartService();
 
-  Future getFreshData() async {
-    getPaginationData(isRefresh: true);
+  Future getFreshData({required bool refresh}) async {
+    getPaginationData(isRefresh: refresh);
   }
 
   Future loadMore() async {
@@ -30,7 +30,7 @@ class CategoryProductsScreenController extends GetxController
     if (storeId != null) {
       paginationParameter['store_id'] = storeId;
     }
-    getFreshData();
+    getFreshData(refresh: true);
     super.onInit();
   }
 

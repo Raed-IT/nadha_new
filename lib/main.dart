@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
       ),
-      body: Column(
+      body: const Column(
         children: [SizedBox(height: 100, width: 300, child: Card())],
       ),
       appBar: AppBar(
