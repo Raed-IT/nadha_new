@@ -214,9 +214,11 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
                     ],
                   ),
                   10.verticalSpace,
-                  Text("الطابق :  ${order.floor?.toFloorName()}"),
+                  Text("الطابق :  ${order.floor?.toFloorName()??'_'}"),
                   10.verticalSpace,
-                  Text("اسم المستلم : ${order.receiverName ?? ''}"),
+                  Text("اسم المستلم : ${order.receiverName ?? '_'}"),
+                  10.verticalSpace,
+                  Text("ملاحظات الطلب : ${order.note ?? '_'}"),
                   TextButton(
                     onPressed: () {
                       launchUrl(Uri.parse(

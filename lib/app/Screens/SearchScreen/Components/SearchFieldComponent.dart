@@ -26,9 +26,11 @@ class SearchFieldComponent extends GetView<SearchScreenController> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            onPressed: ()=>controller.search(context),
-            icon: Lottie.asset("assets/json/search.json",
-                width: 30.w, repeat: false, reverse: true),
+            onPressed: () => controller.search(context),
+            icon: Icon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: Theme.of(context).primaryColor,
+            ),
           ),
           Expanded(
             child: TextField(

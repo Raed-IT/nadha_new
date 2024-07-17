@@ -86,7 +86,25 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                 Column(
                   children: [
                     AppBarComponent(
-                      title: controller.category.name,
+                      prifexImage: Row(
+                        children: [
+                          Hero(
+                            tag: "categories${controller.category.id}",
+                            child: ImageCacheComponent(
+                              image: "${controller.category.image}",
+                              height: 50.h,
+                            ),
+                          ),
+                          Hero(
+                            tag: "categories_text${controller.category.id}",
+                            child: Text(
+                              controller.category.name ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.sp),
+                            ),
+                          )
+                        ],
+                      ),
                       openDrawer: () {
                         Scaffold.of(context).openDrawer();
                       },
@@ -119,7 +137,7 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                                   product: product,
                                   context: context,
                                   onAddAnimation: (k, isAdd) {
-                                    if(isAdd) {
+                                    if (isAdd) {
                                       controller.addToCartAnimation(
                                           widgetKey: k, cartKey: cartKey);
                                     }

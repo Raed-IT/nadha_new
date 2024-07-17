@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../Data/Models/SliderModel.dart';
 
 class SliderComponent extends StatelessWidget {
@@ -44,50 +43,10 @@ class SliderComponent extends StatelessWidget {
               margin: margin ?? EdgeInsets.symmetric(horizontal: 5.sp),
               child: (sliders.isEmpty)
                   ? Container()
-                  : CarouselSlider(
-                      items: sliders
-                          .map(
-                            (e) => GestureDetector(
-                              onTap: () {
-                                if (onTapItem != null) {
-                                  onTapItem!(e);
-                                }
-                                if (e.url != null) {
-                                  launchUrl(Uri.parse("${e.url}"));
-                                }
-                              },
-                              child: Card(
-                                margin: margin != null ? EdgeInsets.zero : null,
-                                child: ImageCacheComponent(
-                                    fit: BoxFit.cover,
-                                    borderRadius:
-                                        BorderRadius.circular(radius ?? 10.sp),
-                                    height: height,
-                                    image: "${e.image}"),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                      options: CarouselOptions(
-                        height: Get.width-15.w,
-                        viewportFraction: 0.98,
-                        enableInfiniteScroll: true,
-                        reverse: false,
-                        autoPlay: autoPlay,
-                        autoPlayInterval: Duration(seconds: 5),
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
-                        enlargeFactor: 0.3,
-                        scrollDirection: Axis.horizontal,
-                      ),
-                    )
-              /*SingleChildScrollView(
-                      child: NopSuiteCarouselSlider(
-                        height: height ?? 180.h,
-                        controller: controller,
-                        count: sliders.length,
-                        itemBuilder: sliders
+                  : Directionality(
+                textDirection: TextDirection.ltr,
+                    child: CarouselSlider(
+                        items: sliders
                             .map(
                               (e) => GestureDetector(
                                 onTap: () {
@@ -98,33 +57,42 @@ class SliderComponent extends StatelessWidget {
                                     launchUrl(Uri.parse("${e.url}"));
                                   }
                                 },
-                                child: Card(
-                                  margin:
-                                      margin != null ? EdgeInsets.zero : null,
+                                child: Container(
+                                  margin: margin != null ? EdgeInsets.zero : null,
+                                  width: Get.width,
                                   child: ImageCacheComponent(
-                                    fit: BoxFit.cover,
-                                      borderRadius:
-                                          BorderRadius.circular(radius??10.sp),
+                                      fit: BoxFit.cover,
+                                      borderRadius: BorderRadius.circular(
+                                          radius ??0),
                                       height: height,
                                       image: "${e.image}"),
                                 ),
                               ),
                             )
                             .toList(),
-                        effect: WormEffect(
-                          dotHeight: 4.sp,
-                          dotWidth: 16.sp,
-                          radius: 4.sp,
-                          dotColor: Theme.of(context).colorScheme.onBackground,
-                          activeDotColor: Theme.of(context).colorScheme.primary,
-                          type: WormType.normal,
-                          paintStyle: PaintingStyle.stroke,
-                          strokeWidth: 5.sp,
+                        options: CarouselOptions(
+                          disableCenter: true,
+                          // aspectRatio: 3 / 4,
+                          height: Get.width * 0.6,
+                          viewportFraction: 1,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: autoPlay,
+                          autoPlayInterval: const Duration(seconds: 5),
+                          autoPlayAnimationDuration:
+                              const Duration(milliseconds: 1000),
+                          autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
+                          enlargeCenterPage: true,
+                          enlargeFactor: 0.8,
+                          animateToClosest: false,
+                          scrollDirection: Axis.horizontal,
                         ),
                       ),
-                    )*/
-              ,
+                  ),
             ),
     );
   }
 }
+
+//Curves.linearToEase
+// Curves.easeInOutQuint

@@ -16,6 +16,7 @@ class AppBarComponent extends StatelessWidget {
   final String? title;
   final bool? showSearch;
   final bool showLogo;
+  final Widget? prifexImage;
 
   const AppBarComponent(
       {super.key,
@@ -23,7 +24,8 @@ class AppBarComponent extends StatelessWidget {
       this.title,
       this.showSearch,
       this.onSearch,
-      this.showLogo = false});
+      this.showLogo = false,
+      this.prifexImage});
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +54,28 @@ class AppBarComponent extends StatelessWidget {
                                 height: 43.h,
                                 "assets/svg/logo.svg",
                               )
-                            : GestureDetector(
-                                onTap: () => Get.toNamed(
-                                  AppRoutes.profileScreen,
-                                ),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 5.sp),
-                                  child: ImageCacheComponent(
-                                    borderRadius: BorderRadius.circular(10.sp),
-                                    height: 40.sp,
-                                    width: 40.sp,
-                                    image:
-                                        "${Get.find<MainController>().user.value?.image}",
-                                  ),
-                                ),
-                              ).animate().slideX(
-                                begin: 1,
-                                duration: const Duration(milliseconds: 400)),
+                            : prifexImage != null
+                                ? prifexImage!
+                                : GestureDetector(
+                                    onTap: () => Get.toNamed(
+                                      AppRoutes.profileScreen,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 5.sp),
+                                      child: ImageCacheComponent(
+                                        borderRadius:
+                                            BorderRadius.circular(10.sp),
+                                        height: 40.sp,
+                                        width: 40.sp,
+                                        image:
+                                            "${Get.find<MainController>().user.value?.image}",
+                                      ),
+                                    ),
+                                  ).animate().slideX(
+                                    begin: 1,
+                                    duration:
+                                        const Duration(milliseconds: 400)),
                         const Spacer(),
                         if (title != null)
                           Text(
@@ -90,19 +96,17 @@ class AppBarComponent extends StatelessWidget {
                             child: SizedBox(
                               height: 50.sp,
                               width: 50.sp,
-                              child: Card(
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
-                                  // child: Lottie.asset("assets/json/search.json",
-                                  //     width: 40.w, repeat: false),
-                                  child: Icon(
-                                    FontAwesomeIcons.search,
-                                    size: 22.sp,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onBackground,
-                                  ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 8.w),
+                                // child: Lottie.asset("assets/json/search.json",
+                                //     width: 40.w, repeat: false),
+                                child: Icon(
+                                  FontAwesomeIcons.search,
+                                  size: 22.sp,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
                                 ),
                               ),
                             ),
@@ -114,16 +118,14 @@ class AppBarComponent extends StatelessWidget {
                           child: SizedBox(
                             height: 50.sp,
                             width: 50.sp,
-                            child: Card(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                                child: Icon(
-                                  FontAwesomeIcons.bars,
-                                  size: 22.sp,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground,
-                                ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.w),
+                              child: Icon(
+                                FontAwesomeIcons.bars,
+                                size: 22.sp,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onBackground,
                               ),
                             ),
                           ),

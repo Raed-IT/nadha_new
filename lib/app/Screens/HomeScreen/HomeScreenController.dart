@@ -101,6 +101,7 @@ class HomeScreenController extends GetxController
   void onInit() {
     paginationUrl = ApiRoute.products;
     getFreshData();
+
     super.onInit();
   }
 

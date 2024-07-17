@@ -23,6 +23,7 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
   final GlobalKey<CartIconKey> cartKey = GlobalKey();
   RxInt activePage = RxInt(Get.arguments?['index'] ?? 0);
   final CartService cartService = CartService();
+  final RxBool isScrollUp = RxBool(false);
 
   @override
   void onReady() {
@@ -65,7 +66,6 @@ class MainScaffoldScreenController extends GetxController with AddToCartMixin {
   addToCart(ProductModel product, GlobalKey key,
       {required BuildContext context, Function? onSetState}) async {
     await cartService.addToCard(
-
         product: product,
         context: context,
         onAddAnimation: (k, onAddAnimation) {
