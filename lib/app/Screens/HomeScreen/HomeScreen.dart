@@ -104,25 +104,25 @@ class _HomeScreenState extends State<HomeScreen> {
                         Obx(
                           () => Column(
                             children: [
-                              if (!controller.isLoad.value)
-                                20.verticalSpace,
+                              if (!controller.isLoad.value) 20.verticalSpace,
                               BuildTitleSectionComponent(
-                                title: "الفئات الرئيسية",
+                                // padding:
+                                // EdgeInsets.symmetric(horizontal: 10.sp),
+                                title: "الفئات ",
                                 isLoad: controller.isLoad,
                               ),
                             ],
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(8.sp),
+                          padding: EdgeInsets.symmetric(horizontal: 8.sp),
                           child: CategoriesComponent(
                             categories: controller.categories,
                             isLoading: controller.isLoad,
                           ),
                         ),
-                        20.verticalSpace,
                         BuildTitleSectionComponent(
-                          title: "المنتجات الاكثر طلب",
+                          title: "المنتجات الرائجة",
                           isLoad: controller.isLoad,
                         ),
                         5.verticalSpace,
@@ -144,8 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           isLoad: controller.isLoadPaginationData,
                           onTapAddProduct: (product, productKy) {
                             Get.find<MainScaffoldScreenController>()
-                                .addToCart(product, productKy,
-                                    onSetState: () {
+                                .addToCart(product, productKy, onSetState: () {
                               setState(() {});
                             }, context: context);
                           },

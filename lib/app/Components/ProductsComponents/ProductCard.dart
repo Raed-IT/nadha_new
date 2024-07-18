@@ -210,7 +210,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                   GestureDetector(
                     onTap: () {},
                     child: Container(
-                      height: 160.h,
+                      height: 175.h,
                       width: Get.width,
                       color: Theme.of(context)
                           .colorScheme

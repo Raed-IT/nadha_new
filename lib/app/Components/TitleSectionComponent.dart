@@ -6,9 +6,10 @@ import 'package:get/get.dart';
 class BuildTitleSectionComponent extends StatelessWidget {
   final RxBool isLoad;
   final String title;
+  final EdgeInsets? padding;
 
   const BuildTitleSectionComponent(
-      {super.key, required this.isLoad, required this.title});
+      {super.key, required this.isLoad, required this.title, this.padding});
 
   @override
   Widget build(BuildContext context) {

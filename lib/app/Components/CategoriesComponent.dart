@@ -30,7 +30,6 @@ class CategoriesComponent extends StatelessWidget {
       () => isLoading.value
           ? Card(
               color: Theme.of(context).colorScheme.background,
-              margin: EdgeInsets.only(top: 20.h),
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(3.sp),
@@ -173,7 +172,6 @@ class CategoriesComponent extends StatelessWidget {
                                       borderRadius:
                                           BorderRadius.circular(10.sp),
                                     ),
-                                    padding: EdgeInsets.all(5.sp),
                                     margin: EdgeInsets.only(
                                         top: 0,
                                         bottom: isExpanded.value ? 0 : 10.h),
