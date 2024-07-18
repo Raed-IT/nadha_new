@@ -21,7 +21,7 @@ class BuildPriceProductComponent extends StatelessWidget {
             child: Text(
               product.value.getPriceWithOutDiscount,
               style: TextStyle(
-                fontSize: size ?? 13.sp,
+                fontSize: size ?? 12.sp,
                 color: Theme.of(context).colorScheme.error,
               ),
             ),
@@ -30,7 +30,8 @@ class BuildPriceProductComponent extends StatelessWidget {
         Text(
           "${product.value.getPrice}",
           style: TextStyle(
-            fontSize: size ?? 13.sp,
+            fontSize: size ?? 12.sp,
+            fontWeight: FontWeight.bold,
             color: Theme.of(context).colorScheme.primary,
           ),
         ),
@@ -38,6 +39,7 @@ class BuildPriceProductComponent extends StatelessWidget {
           "₺",
           style: TextStyle(
             fontFamily: "",
+            fontWeight: FontWeight.bold,
             fontSize: size ?? 13.sp,
             color: Theme.of(context).colorScheme.primary,
           ),

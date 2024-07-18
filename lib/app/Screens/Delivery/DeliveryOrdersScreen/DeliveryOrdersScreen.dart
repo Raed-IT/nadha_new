@@ -42,102 +42,83 @@ class DeliveryOrdersScreen extends GetView<DeliveryOrdersScreenController> {
         builder: (context) => Container(
           height: Get.height,
           color: Theme.of(context).colorScheme.background,
-          child: Stack(
+          child: Column(
             children: [
-              Container(
-                height: Get.height,
-                width: Get.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    opacity: 0.1,
-                    repeat: ImageRepeat.repeat,
-                    image: AssetImage('assets/images/bg.png'),
-                  ),
-                ),
-              ).animate().blur(
-                    delay: const Duration(milliseconds: 500),
-                    begin: const Offset(20, 20),
-                    duration: const Duration(seconds: 2),
-                  ),
-              Column(
-                children: [
-                  AppBarComponent(
-                    title: "طلبات خاصة بي ",
-                    openDrawer: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                  Expanded(
-                    child: ListView(
-                      // controller: scrollController,
-                      padding: const EdgeInsets.all(0),
-                      physics: const BouncingScrollPhysics(),
-                      children: [
-                        Obx(
-                          () => !controller.isLoadPaginationData.value
-                              ? controller.paginationData.isNotEmpty
-                                  ? Column(
-                                      children: controller.paginationData
-                                          .map((order) => buildCardOrder(
-                                              order: order, context: context))
-                                          .toList(),
-                                    )
-                                  : GestureDetector(
-                                      onTap: () => controller.getDataFromApi(),
-                                      child: SizedBox(
-                                        height: Get.height - 200.h,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Opacity(
-                                              opacity: .8,
-                                              child: Lottie.asset(
-                                                  "assets/json/delevary_motor.json",
-                                                  height: 150.h),
-                                            ),
-                                            20.verticalSpace,
-                                            const Text(
-                                                "لايوجد طلبات انقر للتحديث .. "),
-                                          ],
+              AppBarComponent(
+                title: "طلبات خاصة بي ",
+                openDrawer: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+              Expanded(
+                child: ListView(
+                  // controller: scrollController,
+                  padding: const EdgeInsets.all(0),
+                  physics: const BouncingScrollPhysics(),
+                  children: [
+                    Obx(
+                      () => !controller.isLoadPaginationData.value
+                          ? controller.paginationData.isNotEmpty
+                              ? Column(
+                                  children: controller.paginationData
+                                      .map((order) => buildCardOrder(
+                                          order: order, context: context))
+                                      .toList(),
+                                )
+                              : GestureDetector(
+                                  onTap: () => controller.getDataFromApi(),
+                                  child: SizedBox(
+                                    height: Get.height - 200.h,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Opacity(
+                                          opacity: .8,
+                                          child: Lottie.asset(
+                                              "assets/json/delevary_motor.json",
+                                              height: 150.h),
                                         ),
-                                      ),
-                                    )
-                              : Padding(
-                                  padding: EdgeInsets.all(10.sp),
-                                  child: Column(
-                                    children:
-                                        List.generate(20, (index) => index)
-                                            .map(
-                                              (e) => CardLoadingComponent(
-                                                cardMargin:
-                                                    EdgeInsets.symmetric(
-                                                        vertical: 10.sp),
-                                                borderRadius:
-                                                    BorderRadius.circular(5.sp),
-                                                height: 100.h,
-                                              ),
-                                            )
-                                            .toList(),
+                                        20.verticalSpace,
+                                        const Text(
+                                            "لايوجد طلبات انقر للتحديث .. "),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                        ),
-                        LoadMoreComponent(
-                          isFinished: controller.isFinish,
-                          isLoad: controller.isLoadMore,
-                        )
-                      ],
-                    ).refreshAbel(onRefresh: () async {
-                      await controller.getDataFromApi();
-                    }).loadMoreAble(
-                        scrollController: scrollController,
-                        onLoadMore: () async {
-                          await controller.loadMore();
-                        }),
-                  ),
-                ],
+                                )
+                          : Padding(
+                              padding: EdgeInsets.all(10.sp),
+                              child: Column(
+                                children:
+                                    List.generate(20, (index) => index)
+                                        .map(
+                                          (e) => CardLoadingComponent(
+                                            cardMargin:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 10.sp),
+                                            borderRadius:
+                                                BorderRadius.circular(5.sp),
+                                            height: 100.h,
+                                          ),
+                                        )
+                                        .toList(),
+                              ),
+                            ),
+                    ),
+                    LoadMoreComponent(
+                      isFinished: controller.isFinish,
+                      isLoad: controller.isLoadMore,
+                    )
+                  ],
+                ).refreshAbel(onRefresh: () async {
+                  await controller.getDataFromApi();
+                }).loadMoreAble(
+                    scrollController: scrollController,
+                    onLoadMore: () async {
+                      await controller.loadMore();
+                    }),
               ),
             ],
           ),

@@ -53,7 +53,8 @@ class MyApp extends StatelessWidget {
       context,
     );
     return ScreenUtilInit(
-      designSize: const Size(382.65, 824.57),
+      // designSize: const Size(382.65, 824.57),
+      designSize: const Size(360, 800),
       builder: (BuildContext context, Widget? child) {
         return Obx(
           () => GetMaterialApp(

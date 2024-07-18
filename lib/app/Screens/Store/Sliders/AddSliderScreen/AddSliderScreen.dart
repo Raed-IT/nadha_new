@@ -23,95 +23,76 @@ class AddSliderScreen extends GetView<AddSliderScreenController> {
         builder: (context) => Container(
           height: Get.height,
           color: Theme.of(context).colorScheme.background,
-          child: Stack(
+          child: Column(
             children: [
-              Container(
-                height: Get.height,
-                width: Get.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    opacity: 0.1,
-                    repeat: ImageRepeat.repeat,
-                    image: AssetImage('assets/images/bg.png'),
-                  ),
-                ),
-              ).animate().blur(
-                    delay: const Duration(milliseconds: 500),
-                    begin: const Offset(20, 20),
-                    duration: const Duration(seconds: 2),
-                  ),
-              Column(
-                children: [
-                  AppBarComponent(
-                    title: "إضافة إعلان",
-                    openDrawer: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                  Expanded(
-                    child:Form(
-                      key: controller.formKey,
-                      child: Padding(
-                        padding: EdgeInsets.all(10.sp),
-                        child: BlurryContainer(
-                          blur: 7,
-                          child: ListView(
-                            controller: scrollController,
-                            padding: const EdgeInsets.all(0),
-                            physics: const BouncingScrollPhysics(),
-                            children: [
-                              20.verticalSpace,
-                              ImagePickerComponent(
-                                onPicked: (files) {
-                                  if (files.isNotEmpty) {
-                                    controller.image = files.first;
-                                  } else {
-                                    controller.image = null;
-                                  }
-                                },
-                                image: "",
-                                title: Text(
-                                  'صورة الإعلان',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.sp),
-                                ),
-                              ),
-                              20.verticalSpace,
-                              TextFieldComponent(
-                                  validator: (url) {
-                                    if (url!.isEmpty) {
-                                      return "الرجاء كتابة رابط";
-                                    }
-                                    return null;
-                                  },
-                                  controller: controller.urlController,
-                                  hint: "رابط الإعلان"),
-                              20.verticalSpace,
-                              SizedBox(
-                                height: 50.h,
-                                child: MaterialButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.sp)),
-                                  color: Theme.of(context).colorScheme.primary,
-                                  onPressed: () => controller.addSlider(context),
-                                  child: Text(
-                                    "إضافة الإعلان",
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .background),
-                                  ),
-                                ),
-                              )
-                            ],
+              AppBarComponent(
+                title: "إضافة إعلان",
+                openDrawer: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+              Expanded(
+                child:Form(
+                  key: controller.formKey,
+                  child: Padding(
+                    padding: EdgeInsets.all(10.sp),
+                    child: BlurryContainer(
+                      blur: 7,
+                      child: ListView(
+                        controller: scrollController,
+                        padding: const EdgeInsets.all(0),
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          20.verticalSpace,
+                          ImagePickerComponent(
+                            onPicked: (files) {
+                              if (files.isNotEmpty) {
+                                controller.image = files.first;
+                              } else {
+                                controller.image = null;
+                              }
+                            },
+                            image: "",
+                            title: Text(
+                              'صورة الإعلان',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.sp),
+                            ),
                           ),
-                        ),
+                          20.verticalSpace,
+                          TextFieldComponent(
+                              validator: (url) {
+                                if (url!.isEmpty) {
+                                  return "الرجاء كتابة رابط";
+                                }
+                                return null;
+                              },
+                              controller: controller.urlController,
+                              hint: "رابط الإعلان"),
+                          20.verticalSpace,
+                          SizedBox(
+                            height: 50.h,
+                            child: MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.sp)),
+                              color: Theme.of(context).colorScheme.primary,
+                              onPressed: () => controller.addSlider(context),
+                              child: Text(
+                                "إضافة الإعلان",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),

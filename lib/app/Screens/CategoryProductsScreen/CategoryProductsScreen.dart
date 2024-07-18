@@ -66,103 +66,84 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
           builder: (context) => Container(
             height: Get.height,
             color: Theme.of(context).colorScheme.background,
-            child: Stack(
+            child: Column(
               children: [
-                Container(
-                  height: Get.height,
-                  width: Get.width,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      opacity: 0.1,
-                      repeat: ImageRepeat.repeat,
-                      image: AssetImage('assets/images/bg.png'),
-                    ),
+                AppBarComponent(
+                  prifexImage: Row(
+                    children: [
+                      Hero(
+                        tag: "categories${controller.category.id}",
+                        child: ImageCacheComponent(
+                          image: "${controller.category.image}",
+                          height: 50.h,
+                        ),
+                      ),
+                      Hero(
+                        tag: "categories_text${controller.category.id}",
+                        child: Text(
+                          controller.category.name ?? '',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.sp),
+                        ),
+                      )
+                    ],
                   ),
-                ).animate().blur(
-                      delay: const Duration(milliseconds: 500),
-                      begin: const Offset(20, 20),
-                      duration: const Duration(seconds: 2),
-                    ),
-                Column(
-                  children: [
-                    AppBarComponent(
-                      prifexImage: Row(
-                        children: [
-                          Hero(
-                            tag: "categories${controller.category.id}",
-                            child: ImageCacheComponent(
-                              image: "${controller.category.image}",
-                              height: 50.h,
-                            ),
-                          ),
-                          Hero(
-                            tag: "categories_text${controller.category.id}",
-                            child: Text(
-                              controller.category.name ?? '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15.sp),
-                            ),
-                          )
-                        ],
-                      ),
-                      openDrawer: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    ),
-                    Expanded(
-                      child: ListView(
-                        controller: scrollController,
-                        padding: const EdgeInsets.all(0),
-                        physics: const BouncingScrollPhysics(),
-                        children: [
-                          ProductListComponent(
-                            heroTagPrefix: "categories",
-                            products: controller.paginationData,
-                            onProductTap: (ProductModel product, k) {
-                              Get.toNamed(AppRoutes.showProduct,
-                                  preventDuplicates: false,
-                                  arguments: {
-                                    "product": product,
-                                    "hero": "categories"
-                                  });
-                              Get.put(
-                                ShowProductScreenController(),
-                                tag: "show_product${product.id}",
-                              );
-                            },
-                            isLoad: controller.isLoadPaginationData,
-                            onTapAddProduct:
-                                (ProductModel product, GlobalKey key) {
-                              controller.cartService.addToCard(
-                                  product: product,
-                                  context: context,
-                                  onAddAnimation: (k, isAdd) {
-                                    if (isAdd) {
-                                      controller.addToCartAnimation(
-                                          widgetKey: k, cartKey: cartKey);
-                                    }
-                                  });
-                            },
-                          ),
-                          LoadMoreComponent(
-                            isFinished: controller.isFinish,
-                            isLoad: controller.isLoadMore,
-                          )
-                        ],
-                      )
-                          .loadMoreAble(
-                        scrollController: scrollController,
-                        onLoadMore: () async {
-                          await controller.loadMore();
+                  openDrawer: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
+                Expanded(
+                  child: ListView(
+                    controller: scrollController,
+                    padding: const EdgeInsets.all(0),
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      ProductListComponent(
+                        heroTagPrefix: "categories",
+                        products: controller.paginationData,
+                        onProductTap: (ProductModel product, k) {
+                          Get.toNamed(AppRoutes.showProduct,
+                              preventDuplicates: false,
+                              arguments: {
+                                "product": product,
+                                "hero": "categories"
+                              });
+                          Get.put(
+                            ShowProductScreenController(),
+                            tag: "show_product${product.id}",
+                          );
                         },
-                      )
-                          .refreshAbel(
-                        onRefresh: () async {
-                          await controller.getFreshData(refresh: true);
+                        isLoad: controller.isLoadPaginationData,
+                        onTapAddProduct:
+                            (ProductModel product, GlobalKey key) {
+                          controller.cartService.addToCard(
+                              product: product,
+                              context: context,
+                              onAddAnimation: (k, isAdd) {
+                                if (isAdd) {
+                                  controller.addToCartAnimation(
+                                      widgetKey: k, cartKey: cartKey);
+                                }
+                              });
                         },
                       ),
-                    ),
-                  ],
+                      LoadMoreComponent(
+                        isFinished: controller.isFinish,
+                        isLoad: controller.isLoadMore,
+                      )
+                    ],
+                  )
+                      .loadMoreAble(
+                    scrollController: scrollController,
+                    onLoadMore: () async {
+                      await controller.loadMore();
+                    },
+                  )
+                      .refreshAbel(
+                    onRefresh: () async {
+                      await controller.getFreshData(refresh: true);
+                    },
+                  ),
                 ),
               ],
             ),

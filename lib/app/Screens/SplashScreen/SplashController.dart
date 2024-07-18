@@ -42,6 +42,7 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
 
   @override
   getDataFromJson({required Map<String, dynamic> json, String? type}) async {
+    Logger().w(json);
     Get.find<MainController>().setting.value =
         SettingModel.fromJson(json['data']['setting']);
     List<CityModel> cities = [];

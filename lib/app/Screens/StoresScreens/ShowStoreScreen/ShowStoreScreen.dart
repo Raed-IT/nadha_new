@@ -112,153 +112,134 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
             builder: (context) => Container(
               height: Get.height,
               color: Theme.of(context).colorScheme.background,
-              child: Stack(
-                children: [
-                  Container(
-                    height: Get.height,
-                    width: Get.width,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        opacity: 0.1,
-                        repeat: ImageRepeat.repeat,
-                        image: AssetImage('assets/images/bg.png'),
-                      ),
-                    ),
-                  ).animate().blur(
-                        delay: const Duration(milliseconds: 500),
-                        begin: const Offset(20, 20),
-                        duration: const Duration(seconds: 2),
-                      ),
-                  Obx(
-                    () => (controller.isLoad.value)
-                        ? Center(
-                            child: Lottie.asset('assets/json/loader.json',
-                                width: 200.w, height: 200.h),
-                          )
-                        : (controller.store.value != null)
-                            ? Column(
-                                children: [
-                                  AppBarComponent(
-                                    title: "${controller.store.value!.name}",
-                                    openDrawer: () {
-                                      Scaffold.of(context).openDrawer();
-                                    },
-                                  ),
-                                  Expanded(
-                                    child: ListView(
-                                      controller: scrollController,
-                                      padding: const EdgeInsets.all(0),
-                                      physics: const BouncingScrollPhysics(),
-                                      children: [
-                                        SliderComponent(
-                                          height: Get.width,
-                                          sliders: controller.sliders,
-                                          controller: PageController(),
-                                          isLoad: controller.isLoad,
-                                        ),
-                                        10.verticalSpace,
-                                        BuildTitleSectionComponent(
-                                          title: "الفئات الرئيسية",
-                                          isLoad: controller.isLoad,
-                                        ),
-                                        20.verticalSpace,
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5.sp),
-                                          child: CategoriesComponent(
-                                            categories: controller.categories,
-                                            isLoading: controller.isLoad,
-                                            storeId: controller.store.value?.id,
-                                          ),
-                                        ),
-                                        10.verticalSpace,
-                                        BuildTitleSectionComponent(
-                                          title: "المنتجات الاكثر طلب",
-                                          isLoad: controller.isLoad,
-                                        ),
-                                        5.verticalSpace,
-                                        ProductListComponent(
-                                          heroTagPrefix: "homeProducts",
-                                          products: controller.paginationData,
-                                          onProductTap:
-                                              (ProductModel product, k) {
-                                            Get.toNamed(AppRoutes.showProduct,
-                                                preventDuplicates: false,
-                                                arguments: {
-                                                  "store":
-                                                      controller.store.value,
-                                                  "product": product,
-                                                  "hero": "homeProducts"
-                                                });
-                                            Get.put(
-                                                ShowProductScreenController(),
-                                                tag:
-                                                    "show_product${product.id}");
-                                          },
-                                          isLoad:
-                                              controller.isLoadPaginationData,
-                                          onTapAddProduct:
-                                              (product, productKey) {
-                                            controller.addToCartAnimation(
-                                                cartKey: cartKey,
-                                                widgetKey: productKey);
-                                            controller.cartService.addToCard(
-                                                product: product,
-                                                context: context);
-                                          },
-                                        ),
-                                        LoadMoreComponent(
-                                          isFinished: controller.isFinish,
-                                          isLoad: controller.isLoadMore,
-                                        )
-                                      ],
-                                    )
-                                        .loadMoreAble(
-                                      scrollController: scrollController,
-                                      onLoadMore: () async {
-                                        await controller.loadMore();
+              child: Obx(
+                () => (controller.isLoad.value)
+                    ? Center(
+                        child: Lottie.asset('assets/json/loader.json',
+                            width: 200.w, height: 200.h),
+                      )
+                    : (controller.store.value != null)
+                        ? Column(
+                            children: [
+                              AppBarComponent(
+                                title: "${controller.store.value!.name}",
+                                openDrawer: () {
+                                  Scaffold.of(context).openDrawer();
+                                },
+                              ),
+                              Expanded(
+                                child: ListView(
+                                  controller: scrollController,
+                                  padding: const EdgeInsets.all(0),
+                                  physics: const BouncingScrollPhysics(),
+                                  children: [
+                                    SliderComponent(
+                                      height: Get.width,
+                                      sliders: controller.sliders,
+                                      controller: PageController(),
+                                      isLoad: controller.isLoad,
+                                    ),
+                                    10.verticalSpace,
+                                    BuildTitleSectionComponent(
+                                      title: "الفئات الرئيسية",
+                                      isLoad: controller.isLoad,
+                                    ),
+                                    20.verticalSpace,
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 5.sp),
+                                      child: CategoriesComponent(
+                                        categories: controller.categories,
+                                        isLoading: controller.isLoad,
+                                        storeId: controller.store.value?.id,
+                                      ),
+                                    ),
+                                    10.verticalSpace,
+                                    BuildTitleSectionComponent(
+                                      title: "المنتجات الاكثر طلب",
+                                      isLoad: controller.isLoad,
+                                    ),
+                                    5.verticalSpace,
+                                    ProductListComponent(
+                                      heroTagPrefix: "homeProducts",
+                                      products: controller.paginationData,
+                                      onProductTap:
+                                          (ProductModel product, k) {
+                                        Get.toNamed(AppRoutes.showProduct,
+                                            preventDuplicates: false,
+                                            arguments: {
+                                              "store":
+                                                  controller.store.value,
+                                              "product": product,
+                                              "hero": "homeProducts"
+                                            });
+                                        Get.put(
+                                            ShowProductScreenController(),
+                                            tag:
+                                                "show_product${product.id}");
                                       },
-                                    )
-                                        .refreshAbel(
-                                      onRefresh: () async {
-                                        await controller.getFreshData();
+                                      isLoad:
+                                          controller.isLoadPaginationData,
+                                      onTapAddProduct:
+                                          (product, productKey) {
+                                        controller.addToCartAnimation(
+                                            cartKey: cartKey,
+                                            widgetKey: productKey);
+                                        controller.cartService.addToCard(
+                                            product: product,
+                                            context: context);
                                       },
                                     ),
-                                  ),
-                                ],
-                              )
-                            : SizedBox(
-                                height: Get.height,
-                                width: Get.width,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Lottie.asset("assets/json/stores.json",
-                                        width: 500.sp,
-                                        height: 400.sp,
-                                        alignment: Alignment.center,
-                                        fit: BoxFit.fill),
-                                    Transform.translate(
-                                      offset: Offset(0, -80.h),
-                                      child: GestureDetector(
-                                        onTap: () => Get.back(),
-                                        child: Text(
-                                          ' لم يتم العثور على المتجر\n انقر للعودة الى الصفحة الرئيسية',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
+                                    LoadMoreComponent(
+                                      isFinished: controller.isFinish,
+                                      isLoad: controller.isLoadMore,
                                     )
                                   ],
+                                )
+                                    .loadMoreAble(
+                                  scrollController: scrollController,
+                                  onLoadMore: () async {
+                                    await controller.loadMore();
+                                  },
+                                )
+                                    .refreshAbel(
+                                  onRefresh: () async {
+                                    await controller.getFreshData();
+                                  },
                                 ),
                               ),
-                  ),
-                ],
+                            ],
+                          )
+                        : SizedBox(
+                            height: Get.height,
+                            width: Get.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Lottie.asset("assets/json/stores.json",
+                                    width: 500.sp,
+                                    height: 400.sp,
+                                    alignment: Alignment.center,
+                                    fit: BoxFit.fill),
+                                Transform.translate(
+                                  offset: Offset(0, -80.h),
+                                  child: GestureDetector(
+                                    onTap: () => Get.back(),
+                                    child: Text(
+                                      ' لم يتم العثور على المتجر\n انقر للعودة الى الصفحة الرئيسية',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
               ),
             ),
           ),

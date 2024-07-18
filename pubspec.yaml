@@ -98,7 +98,8 @@ dependencies:
   helper:
     git:
       url: https://github.com/Raed-IT/helper-package.git
-      ref: 6eedfd325abd3974bc04b73cc162f53b2f00e29a
+#      ref: 6eedfd325abd3974bc04b73cc162f53b2f00e29a
+      ref: 5cfe6ea928ea1ef9f7a867ec66768e535ca8f1e1
 
 dev_dependencies:
   flutter_test:

@@ -92,10 +92,6 @@ class RegisterScreen extends GetView<RegisterScreenController> {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    image: const DecorationImage(
-                        image: AssetImage("assets/images/bg.png"),
-                        repeat: ImageRepeat.repeat,
-                        opacity: 0.04),
                     color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20.sp),

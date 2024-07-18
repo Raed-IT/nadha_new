@@ -22,64 +22,45 @@ class NotificationScreen extends GetView<NotificationScreenController> {
           builder: (context) => Container(
             height: Get.height,
             color: Theme.of(context).colorScheme.background,
-            child: Stack(
+            child: Column(
               children: [
-                Container(
-                  height: Get.height,
-                  width: Get.width,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      opacity: 0.1,
-                      repeat: ImageRepeat.repeat,
-                      image: AssetImage('assets/images/bg.png'),
-                    ),
-                  ),
-                ).animate().blur(
-                      delay: const Duration(milliseconds: 500),
-                      begin: const Offset(20, 20),
-                      duration: const Duration(seconds: 2),
-                    ),
-                Column(
-                  children: [
-                    AppBarComponent(
-                      openDrawer: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    ),
-                    Obx(() => (controller.paginationData.isNotEmpty)
-                        ? Padding(
-                            padding: EdgeInsets.all(10.sp),
-                            child: SizedBox(
-                              height: 40.h,
-                              child: MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.sp),
-                                ),
-                                minWidth: Get.width,
-                                color: Theme.of(context).colorScheme.primary,
-                                onPressed: () => showDeleteNotificationsDialog(
-                                    context: context,
-                                    onDelete: () {
-                                      Get.back();
-                                      controller.deleteNotifications(context);
-                                    }),
-                                child: Text(
-                                  "مسح جميع الإشعارات",
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                AppBarComponent(
+                  openDrawer: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
+                Obx(() => (controller.paginationData.isNotEmpty)
+                    ? Padding(
+                        padding: EdgeInsets.all(10.sp),
+                        child: SizedBox(
+                          height: 40.h,
+                          child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.sp),
+                            ),
+                            minWidth: Get.width,
+                            color: Theme.of(context).colorScheme.primary,
+                            onPressed: () => showDeleteNotificationsDialog(
+                                context: context,
+                                onDelete: () {
+                                  Get.back();
+                                  controller.deleteNotifications(context);
+                                }),
+                            child: Text(
+                              "مسح جميع الإشعارات",
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .background,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          )
-                        : SizedBox()),
-                    const NotificationsListComponent()
-                  ],
-                ),
+                          ),
+                        ),
+                      )
+                    : SizedBox()),
+                const NotificationsListComponent()
               ],
             ),
           ),

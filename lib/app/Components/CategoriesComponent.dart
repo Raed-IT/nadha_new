@@ -5,6 +5,7 @@ import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../Route/Routs.dart';
@@ -102,7 +103,9 @@ class CategoriesComponent extends StatelessWidget {
                                             flex: 2,
                                             child: Hero(
                                               tag: "categories${c.id}",
-                                              child: ImageCacheComponent(
+                                              child:
+                                                  // SvgPicture.network("${c.image}" ,width: 100,height: 100,)
+                                                  ImageCacheComponent(
                                                 width: 50.w,
                                                 height: 50.h,
                                                 image: "${c.image}",
@@ -132,8 +135,6 @@ class CategoriesComponent extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        0, 128, 128, 1),
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),

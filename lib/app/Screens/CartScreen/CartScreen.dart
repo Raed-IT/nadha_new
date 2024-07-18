@@ -42,89 +42,70 @@ class _CartScreenState extends State<CartScreen> {
           builder: (context) => Container(
             height: Get.height,
             color: Theme.of(context).colorScheme.background,
-            child: Stack(
+            child: Column(
               children: [
-                Container(
-                  height: Get.height,
-                  width: Get.width,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      opacity: 0.1,
-                      repeat: ImageRepeat.repeat,
-                      image: AssetImage('assets/images/bg.png'),
-                    ),
-                  ),
-                ).animate().blur(
-                      delay: 50.ms,
-                      begin: const Offset(20, 20),
-                      duration: 1500.ms,
-                    ),
-                Column(
-                  children: [
-                    AppBarComponent(
-                      openDrawer: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                      title: "السلة",
-                    ),
-                    Obx(
-                      () => (Get.find<MainController>().cart.isNotEmpty)
-                          ? Row(
-                              children: [
-                                buildCardStatistic(
-                                  context,
-                                  title: "اجمالي الطلب",
-                                  isMainCard: true,
-                                  content: ((Get.find<MainController>()
-                                                  .setting
-                                                  .value
-                                                  ?.deliveryPrice ??
-                                              0) +
-                                          controller.cartService.getTotal())
-                                      .toStringAsFixed(2),
-                                ),
-                                buildCardStatistic(context,
-                                    title: "اجور توصيل",
-                                    content:
-                                        "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}"),
-                                buildCardStatistic(
-                                  context,
-                                  title: "اجمالي المنتجات ",
-                                  content: controller.cartService
-                                      .getTotal()
-                                      .toStringAsFixed(2),
-                                ),
-                              ],
-                            )
-                          : Container(),
-                    ),
-                    Expanded(
-                      child: Obx(
-                        () => (Get.find<MainController>().cart.isEmpty)
-                            ? const CartEmptyComponent()
-                            : ListView(
-                                padding: const EdgeInsets.all(0),
-                                physics: const BouncingScrollPhysics(),
-                                children: Get.find<MainController>()
-                                    .cart
-                                    .map(
-                                      (cartItem) => buildCartItemCard(
-                                              controller: controller,
-                                              cartItem: cartItem,
-                                              context: context)
-                                          .animate()
-                                          .slideY(begin: 1),
-                                    )
-                                    .toList(),
-                              ),
-                      ),
-                    ),
-                    Obx(() => (Get.find<MainController>().cart.isNotEmpty &&
-                            Get.find<MainController>().setting.value!.isClose!)
-                        ? buildSubmeitCard(controller: controller)
-                        : Container()),
-                  ],
+                AppBarComponent(
+                  openDrawer: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  title: "السلة",
                 ),
+                Obx(
+                  () => (Get.find<MainController>().cart.isNotEmpty)
+                      ? Row(
+                          children: [
+                            buildCardStatistic(
+                              context,
+                              title: "اجمالي الطلب",
+                              isMainCard: true,
+                              content: ((Get.find<MainController>()
+                                              .setting
+                                              .value
+                                              ?.deliveryPrice ??
+                                          0) +
+                                      controller.cartService.getTotal())
+                                  .toStringAsFixed(2),
+                            ),
+                            buildCardStatistic(context,
+                                title: "اجور توصيل",
+                                content:
+                                    "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}"),
+                            buildCardStatistic(
+                              context,
+                              title: "اجمالي المنتجات ",
+                              content: controller.cartService
+                                  .getTotal()
+                                  .toStringAsFixed(2),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                ),
+                Expanded(
+                  child: Obx(
+                    () => (Get.find<MainController>().cart.isEmpty)
+                        ? const CartEmptyComponent()
+                        : ListView(
+                            padding: const EdgeInsets.all(0),
+                            physics: const BouncingScrollPhysics(),
+                            children: Get.find<MainController>()
+                                .cart
+                                .map(
+                                  (cartItem) => buildCartItemCard(
+                                          controller: controller,
+                                          cartItem: cartItem,
+                                          context: context)
+                                      .animate()
+                                      .slideY(begin: 1),
+                                )
+                                .toList(),
+                          ),
+                  ),
+                ),
+                Obx(() => (Get.find<MainController>().cart.isNotEmpty &&
+                        Get.find<MainController>().setting.value!.isClose!)
+                    ? buildSubmeitCard(controller: controller)
+                    : Container()),
               ],
             ),
           ),

@@ -37,46 +37,27 @@ class SlidersStoreScreen extends GetView<SlidersStoreScreenController> {
         builder: (context) => Container(
           height: Get.height,
           color: Theme.of(context).colorScheme.background,
-          child: Stack(
+          child: Column(
             children: [
-              Container(
-                height: Get.height,
-                width: Get.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    opacity: 0.1,
-                    repeat: ImageRepeat.repeat,
-                    image: AssetImage('assets/images/bg.png'),
-                  ),
-                ),
-              ).animate().blur(
-                    delay: const Duration(milliseconds: 500),
-                    begin: const Offset(20, 20),
-                    duration: const Duration(seconds: 2),
-                  ),
-              Column(
-                children: [
-                  AppBarComponent(
-                    title: "إعلانات متجري",
-                    openDrawer: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                  Expanded(
-                    child: ListView(
-                      controller: scrollController,
-                      padding: const EdgeInsets.all(0),
-                      physics: const BouncingScrollPhysics(),
-                      children: [StoreSliderListComponent()],
-                    ).refreshAbel(onRefresh: () async {
-                      await controller.getDataFromApi();
-                    }).loadMoreAble(
-                        scrollController: scrollController,
-                        onLoadMore: () async {
-                          await controller.loadMore();
-                        }),
-                  ),
-                ],
+              AppBarComponent(
+                title: "إعلانات متجري",
+                openDrawer: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.all(0),
+                  physics: const BouncingScrollPhysics(),
+                  children: [StoreSliderListComponent()],
+                ).refreshAbel(onRefresh: () async {
+                  await controller.getDataFromApi();
+                }).loadMoreAble(
+                    scrollController: scrollController,
+                    onLoadMore: () async {
+                      await controller.loadMore();
+                    }),
               ),
             ],
           ),

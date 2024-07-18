@@ -12,70 +12,51 @@ class SplashScreen extends GetView<SplashScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: Get.height,
-            width: Get.width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                opacity: 0.07,
-                filterQuality: FilterQuality.high,
-                image: AssetImage('assets/images/bg.png'),
-                repeat: ImageRepeat.repeat,
-              ),
-            ),
-          ).animate().blur(
-                begin: const Offset(20, 20),
-                duration: 750.ms,
-              ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              height: 500.h,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Lottie.asset("assets/json/delevary_motor.json",
-                        width: 200.w),
-                  )
-                      .animate()
-                      .slideX(duration: 2500.ms, curve: Curves.elasticOut),
-                  SvgPicture.asset(
-                    "assets/svg/logo.svg",
-                    height: 70.h,
-                  ).animate().slideY(duration: 500.ms, begin: 0.5),
-                  40.verticalSpace,
-                  Obx(
-                    () => (controller.isLoad.value)
-                        ? SizedBox(
-                            height: 30.sp,
-                            width: 30.sp,
-                            child: CircularProgressIndicator(),
+      body: Align(
+        alignment: Alignment.center,
+        child: Container(
+          height: 500.h,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Lottie.asset("assets/json/delevary_motor.json",
+                    width: 200.w),
+              )
+                  .animate()
+                  .slideX(duration: 2500.ms, curve: Curves.elasticOut),
+              SvgPicture.asset(
+                "assets/svg/logo.svg",
+                height: 70.h,
+              ).animate().slideY(duration: 500.ms, begin: 0.5),
+              40.verticalSpace,
+              Obx(
+                () => (controller.isLoad.value)
+                    ? SizedBox(
+                        height: 30.sp,
+                        width: 30.sp,
+                        child: CircularProgressIndicator(),
+                      )
+                    : (controller.hasError)
+                        ? GestureDetector(
+                            onTap: () => controller.getFreshData(),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.refresh),
+                                Text("اعادة المحاولة")
+                              ],
+                            ),
                           )
-                        : (controller.hasError)
-                            ? GestureDetector(
-                                onTap: () => controller.getFreshData(),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.refresh),
-                                    Text("اعادة المحاولة")
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                height: 30.sp,
-                              ),
-                  )
-                ],
-              ),
-            ),
+                        : Container(
+                            height: 30.sp,
+                          ),
+              )
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

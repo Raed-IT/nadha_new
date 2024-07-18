@@ -50,51 +50,33 @@ class _AddressesScreenState extends State<AddressesScreen> {
         builder: (context) => Container(
           height: Get.height,
           color: Theme.of(context).colorScheme.background,
-          child: Stack(
+          child: Column(
             children: [
-              Container(
-                height: Get.height,
-                width: Get.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    opacity: 0.1,
-                    repeat: ImageRepeat.repeat,
-                    image: AssetImage('assets/images/bg.png'),
-                  ),
-                ),
-              ).animate().blur(
-                    begin: const Offset(20, 20),
-                    duration: const Duration(seconds: 2),
-                  ),
-              Column(
-                children: [
-                  AppBarComponent(
-                    title: "العناوين الخاصة بي ",
-                    openDrawer: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                  Expanded(
-                    child: (Get.find<MainController>()
+              AppBarComponent(
+                title: "العناوين الخاصة بي ",
+                openDrawer: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+              Expanded(
+                child: (Get.find<MainController>()
+                        .user
+                        .value!
+                        .addresses!
+                        .isNotEmpty)
+                    ? ListView(
+                        padding: const EdgeInsets.all(0),
+                        physics: const BouncingScrollPhysics(),
+                        children: Get.find<MainController>()
                             .user
                             .value!
                             .addresses!
-                            .isNotEmpty)
-                        ? ListView(
-                            padding: const EdgeInsets.all(0),
-                            physics: const BouncingScrollPhysics(),
-                            children: Get.find<MainController>()
-                                .user
-                                .value!
-                                .addresses!
-                                .map((address) =>
-                                    buildCardAddress(address, context, () {
-                                      setState(() {});
-                                    }))
-                                .toList())
-                        : AddressesEmptyComponent(),
-                  ),
-                ],
+                            .map((address) =>
+                                buildCardAddress(address, context, () {
+                                  setState(() {});
+                                }))
+                            .toList())
+                    : AddressesEmptyComponent(),
               ),
             ],
           ),

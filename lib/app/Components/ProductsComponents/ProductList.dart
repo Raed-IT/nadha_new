@@ -48,14 +48,14 @@ class ProductListComponent extends StatelessWidget {
                             heroTagPrefix: heroTagPrefix,
                             product: product,
                             onTap: (kye) => onProductTap(product, kye),
-                            onTapAddProduct: (product,kye){
-                              onTapAddProduct(product,kye);
+                            onTapAddProduct: (product, kye) {
+                              onTapAddProduct(product, kye);
                             },
                           ),
                         )
                         .toList(),
                   )
-                : EmptyProductComponent()
+                : const EmptyProductComponent()
             : const ProductLoadingList(),
       ),
     );

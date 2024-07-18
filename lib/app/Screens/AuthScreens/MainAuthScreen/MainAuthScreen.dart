@@ -14,144 +14,125 @@ class MainAuthScreen extends GetView<MainAuthScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: Get.height,
-            width: Get.width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                opacity: 0.1,
-                filterQuality: FilterQuality.high,
-                image: AssetImage('assets/images/bg.png'),
-                repeat: ImageRepeat.repeat,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            10.verticalSpace,
+            50.verticalSpace,
+            SvgPicture.asset(
+              "assets/svg/logo.svg",
+              height: 80.sp,
+            ),
+            Spacer(),
+            Center(
+              child: Lottie.asset("assets/json/delevary_motor.json",
+                  height: 200.sp),
+            ).animate().slideX(duration: 2500.ms, curve: Curves.elasticOut),
+            Spacer(),
+            Center(
+              child: Text(
+                "الرجاء تسجيل الدخول للمتابعة",
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.sp),
               ),
             ),
-          ).animate().blur(
-                begin: const Offset(20, 20),
-                duration: const Duration(seconds: 2),
+            20.verticalSpace,
+            Padding(
+              padding: EdgeInsets.all(15.sp),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 50.h,
+                    width: Get.width,
+                    child: OutlinedButton(
+                      onPressed: () => Get.toNamed(AppRoutes.loginScreen),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          Icon(
+                            FontAwesomeIcons.rightToBracket,
+                            size: 25.sp,
+                          ),
+                          20.horizontalSpace,
+                          Text(
+                            "تسجيل الدخول ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.sp),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  20.verticalSpace,
+                  SizedBox(
+                    height: 50.h,
+                    width: Get.width,
+                    child: OutlinedButton(
+                      onPressed: () =>
+                          Get.toNamed(AppRoutes.registerScreen),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          Icon(
+                            FontAwesomeIcons.idCard,
+                            size: 25.sp,
+                          ),
+                          20.horizontalSpace,
+                          Text(
+                            " مستخدم جديد ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.sp),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  20.verticalSpace,
+                  SizedBox(
+                    height: 50.h,
+                    width: Get.width,
+                    child: OutlinedButton(
+                      onPressed: () => controller.loginWithGoogle(context),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          Icon(
+                            FontAwesomeIcons.google,
+                            size: 25.sp,
+                          ),
+                          20.horizontalSpace,
+                          Text(
+                            "التسجيل باستخدام Google   ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.sp),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  20.verticalSpace,
+                ],
               ),
-          SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                10.verticalSpace,
-                50.verticalSpace,
-                SvgPicture.asset(
-                  "assets/svg/logo.svg",
-                  height: 80.sp,
-                ),
-                Spacer(),
-                Center(
-                  child: Lottie.asset("assets/json/delevary_motor.json",
-                      height: 200.sp),
-                ).animate().slideX(duration: 2500.ms, curve: Curves.elasticOut),
-                Spacer(),
-                Center(
-                  child: Text(
-                    "الرجاء تسجيل الدخول للمتابعة",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.sp),
-                  ),
-                ),
-                20.verticalSpace,
-                Padding(
-                  padding: EdgeInsets.all(15.sp),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 50.h,
-                        width: Get.width,
-                        child: OutlinedButton(
-                          onPressed: () => Get.toNamed(AppRoutes.loginScreen),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Spacer(),
-                              Icon(
-                                FontAwesomeIcons.rightToBracket,
-                                size: 25.sp,
-                              ),
-                              20.horizontalSpace,
-                              Text(
-                                "تسجيل الدخول ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15.sp),
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      20.verticalSpace,
-                      SizedBox(
-                        height: 50.h,
-                        width: Get.width,
-                        child: OutlinedButton(
-                          onPressed: () =>
-                              Get.toNamed(AppRoutes.registerScreen),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Spacer(),
-                              Icon(
-                                FontAwesomeIcons.idCard,
-                                size: 25.sp,
-                              ),
-                              20.horizontalSpace,
-                              Text(
-                                " مستخدم جديد ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15.sp),
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      20.verticalSpace,
-                      SizedBox(
-                        height: 50.h,
-                        width: Get.width,
-                        child: OutlinedButton(
-                          onPressed: () => controller.loginWithGoogle(context),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Spacer(),
-                              Icon(
-                                FontAwesomeIcons.google,
-                                size: 25.sp,
-                              ),
-                              20.horizontalSpace,
-                              Text(
-                                "التسجيل باستخدام Google   ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15.sp),
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      20.verticalSpace,
-                    ],
-                  ),
-                ),
-                Spacer(),
-              ],
             ),
-          ),
-        ],
+            Spacer(),
+          ],
+        ),
       ),
     );
   }

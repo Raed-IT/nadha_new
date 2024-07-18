@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
@@ -51,7 +49,7 @@ class ProfileScreenController extends GetxController with ApiHelperMixin {
     city = user.city;
     //store
     storeCity = user.store?.city;
-    autoClose.value=user.store?.autoClose??false;
+    autoClose.value = user.store?.autoClose ?? false;
     storeNameTextController.text = user.store?.name ?? '';
     storeAddressTextController.text = user.store?.address ?? '';
     storeInfoTextController.text = user.store?.info ?? '';

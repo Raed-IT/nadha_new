@@ -79,113 +79,94 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context) => Container(
               height: Get.height,
               color: Theme.of(context).colorScheme.background,
-              child: Stack(
+              child: Column(
                 children: [
-                  // Container(
-                  //   height: Get.height,
-                  //   width: Get.width,
-                  //   decoration: const BoxDecoration(
-                  //     image: DecorationImage(
-                  //       opacity: 0.1,
-                  //       repeat: ImageRepeat.repeat,
-                  //       image: AssetImage('assets/images/bg.png'),
-                  //     ),
-                  //   ),
-                  // ).animate().blur(
-                  //       delay: const Duration(milliseconds: 500),
-                  //       begin: const Offset(20, 20),
-                  //       duration: const Duration(seconds: 2),
-                  //     ),
-                  Column(
-                    children: [
-                      AppBarComponent(
-                        showLogo: true,
-                        showSearch: true,
-                        openDrawer: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                      Expanded(
-                        child: ListView(
-                          controller: scrollController,
-                          padding: const EdgeInsets.all(0),
-                          physics: const BouncingScrollPhysics(),
-                          children: [
-                            SliderComponent(
-                              autoPlay: true,
-                              height: Get.width,
-                              sliders: controller.sliders,
-                              controller: PageController(),
-                              isLoad: controller.isLoad,
-                            ),
-                            Obx(
-                              () => Column(
-                                children: [
-                                  if (!controller.isLoad.value)
-                                    20.verticalSpace,
-                                  BuildTitleSectionComponent(
-                                    title: "الفئات الرئيسية",
-                                    isLoad: controller.isLoad,
-                                  ),
-                                ],
+                  AppBarComponent(
+                    showLogo: true,
+                    showSearch: true,
+                    openDrawer: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
+                  Expanded(
+                    child: ListView(
+                      controller: scrollController,
+                      padding: const EdgeInsets.all(0),
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        SliderComponent(
+                          autoPlay: true,
+                          height: Get.width,
+                          sliders: controller.sliders,
+                          controller: PageController(),
+                          isLoad: controller.isLoad,
+                        ),
+                        Obx(
+                          () => Column(
+                            children: [
+                              if (!controller.isLoad.value)
+                                20.verticalSpace,
+                              BuildTitleSectionComponent(
+                                title: "الفئات الرئيسية",
+                                isLoad: controller.isLoad,
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.sp),
-                              child: CategoriesComponent(
-                                categories: controller.categories,
-                                isLoading: controller.isLoad,
-                              ),
-                            ),
-                            20.verticalSpace,
-                            BuildTitleSectionComponent(
-                              title: "المنتجات الاكثر طلب",
-                              isLoad: controller.isLoad,
-                            ),
-                            5.verticalSpace,
-                            ProductListComponent(
-                              heroTagPrefix: "homeProducts",
-                              products: controller.paginationData,
-                              onProductTap: (ProductModel product, k) {
-                                Get.toNamed(AppRoutes.showProduct,
-                                    preventDuplicates: false,
-                                    arguments: {
-                                      "product": product,
-                                      "hero": "homeProducts"
-                                    });
-                                Get.put(
-                                  ShowProductScreenController(),
-                                  tag: "show_product${product.id}",
-                                );
-                              },
-                              isLoad: controller.isLoadPaginationData,
-                              onTapAddProduct: (product, productKy) {
-                                Get.find<MainScaffoldScreenController>()
-                                    .addToCart(product, productKy,
-                                        onSetState: () {
-                                  setState(() {});
-                                }, context: context);
-                              },
-                            ),
-                            LoadMoreComponent(
-                              isFinished: controller.isFinish,
-                              isLoad: controller.isLoadMore,
-                            )
-                          ],
-                        )
-                            .loadMoreAble(
-                          scrollController: scrollController,
-                          onLoadMore: () async {
-                            await controller.loadMore();
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.sp),
+                          child: CategoriesComponent(
+                            categories: controller.categories,
+                            isLoading: controller.isLoad,
+                          ),
+                        ),
+                        20.verticalSpace,
+                        BuildTitleSectionComponent(
+                          title: "المنتجات الاكثر طلب",
+                          isLoad: controller.isLoad,
+                        ),
+                        5.verticalSpace,
+                        ProductListComponent(
+                          heroTagPrefix: "homeProducts",
+                          products: controller.paginationData,
+                          onProductTap: (ProductModel product, k) {
+                            Get.toNamed(AppRoutes.showProduct,
+                                preventDuplicates: false,
+                                arguments: {
+                                  "product": product,
+                                  "hero": "homeProducts"
+                                });
+                            Get.put(
+                              ShowProductScreenController(),
+                              tag: "show_product${product.id}",
+                            );
                           },
-                        )
-                            .refreshAbel(
-                          onRefresh: () async {
-                            await controller.getFreshData(refresh: true);
+                          isLoad: controller.isLoadPaginationData,
+                          onTapAddProduct: (product, productKy) {
+                            Get.find<MainScaffoldScreenController>()
+                                .addToCart(product, productKy,
+                                    onSetState: () {
+                              setState(() {});
+                            }, context: context);
                           },
                         ),
-                      ),
-                    ],
+                        LoadMoreComponent(
+                          isFinished: controller.isFinish,
+                          isLoad: controller.isLoadMore,
+                        )
+                      ],
+                    )
+                        .loadMoreAble(
+                      scrollController: scrollController,
+                      onLoadMore: () async {
+                        await controller.loadMore();
+                      },
+                    )
+                        .refreshAbel(
+                      onRefresh: () async {
+                        await controller.getFreshData(refresh: true);
+                      },
+                    ),
                   ),
                 ],
               ),

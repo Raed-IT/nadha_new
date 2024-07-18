@@ -23,55 +23,36 @@ class BalancesScreen extends GetView<BalancesScreenController> {
         builder: (context) => Container(
           height: Get.height,
           color: Theme.of(context).colorScheme.background,
-          child: Stack(
+          child: Column(
             children: [
-              Container(
-                height: Get.height,
-                width: Get.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    opacity: 0.1,
-                    repeat: ImageRepeat.repeat,
-                    image: AssetImage('assets/images/bg.png'),
-                  ),
+              AppBarComponent(
+                title: "الرصيد",
+                openDrawer: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.all(0),
+                  physics: const BouncingScrollPhysics(),
+                  children: [
+                    TransformsListComponent(),
+                    LoadMoreComponent(
+                      isFinished: controller.isFinish,
+                      isLoad: controller.isLoadMore,
+                    )
+                  ],
+                ).refreshAbel(onRefresh: () async {
+                  return await controller.getPaginationData(
+                      isRefresh: true);
+                }).loadMoreAble(
+                  scrollController: scrollController,
+                  onLoadMore: () async {
+                    return await controller.getPaginationData(
+                        isRefresh: false);
+                  },
                 ),
-              ).animate().blur(
-                    delay: const Duration(milliseconds: 500),
-                    begin: const Offset(20, 20),
-                    duration: const Duration(milliseconds: 500),
-                  ),
-              Column(
-                children: [
-                  AppBarComponent(
-                    title: "الرصيد",
-                    openDrawer: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                  Expanded(
-                    child: ListView(
-                      controller: scrollController,
-                      padding: const EdgeInsets.all(0),
-                      physics: const BouncingScrollPhysics(),
-                      children: [
-                        TransformsListComponent(),
-                        LoadMoreComponent(
-                          isFinished: controller.isFinish,
-                          isLoad: controller.isLoadMore,
-                        )
-                      ],
-                    ).refreshAbel(onRefresh: () async {
-                      return await controller.getPaginationData(
-                          isRefresh: true);
-                    }).loadMoreAble(
-                      scrollController: scrollController,
-                      onLoadMore: () async {
-                        return await controller.getPaginationData(
-                            isRefresh: false);
-                      },
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
