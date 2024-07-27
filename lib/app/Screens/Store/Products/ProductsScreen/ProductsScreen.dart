@@ -1,9 +1,11 @@
 import 'package:delevary/app/Components/LoadMore.dart';
+import 'package:delevary/app/Components/TextFieldComponent.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/Store/Products/ProductsScreen/Components/BuildProductsListStoreCardComponent.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,6 +50,24 @@ class StoreProductsScreen extends GetView<StoreProductsScreenController> {
                 openDrawer: () {
                   Scaffold.of(context).openDrawer();
                 },
+              ),
+              Padding(
+                padding: EdgeInsets.all(10.sp),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        controller.search();
+                      },
+                      icon: Icon(FontAwesomeIcons.search),
+                    ),
+                    Expanded(
+                      child: TextFieldComponent(
+                          controller: controller.searchController,
+                          hint: "ابحث عن منتج"),
+                    ),
+                  ],
+                ),
               ),
               Expanded(
                 child: ListView(

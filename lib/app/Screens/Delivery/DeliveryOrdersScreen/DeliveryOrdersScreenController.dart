@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
+import 'package:logger/logger.dart';
 
 class DeliveryOrdersScreenController extends GetxController
     with PaginationMixin<OrderModel>, ApiHelperMixin {
@@ -19,9 +20,16 @@ class DeliveryOrdersScreenController extends GetxController
         url: "${ApiRoute.orders}/finished/${order.id}",
         data: {},
         onSuccess: (jso, t) {
-          ToastService.showSuccessToast(
-              context: context, title: "تم انهاء الطلب ");
-          orders.remove(order);
+          if (jso.data['status'] == "SUCCESS") {
+            ToastService.showSuccessToast(
+                context: context, title: "تم انهاء الطلب ");
+            orders.remove(order);
+          } else {
+            ToastService.showErrorToast(
+                context: context,
+                title: "خطاء ",
+                description: jso.data['data'].toString());
+          }
         },
         onError: (ex, t) {
           ToastService.showErrorToast(

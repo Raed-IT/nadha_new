@@ -102,13 +102,16 @@ class CategoriesComponent extends StatelessWidget {
                                             flex: 2,
                                             child: Hero(
                                               tag: "categories${c.id}",
-                                              child:
-                                                  // SvgPicture.network("${c.image}" ,width: 100,height: 100,)
-                                                  ImageCacheComponent(
+                                              child: SvgPicture.network(
+                                                "${c.image}",
                                                 width: 50.w,
                                                 height: 50.h,
-                                                image: "${c.image}",
                                               ),
+                                              //     ImageCacheComponent(
+                                              //   width: 50.w,
+                                              //   height: 50.h,
+                                              //   image: "${c.image}",
+                                              // ),
                                             ),
                                           ),
                                           Expanded(

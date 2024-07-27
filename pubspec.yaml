@@ -145,7 +145,8 @@ flutter:
   fonts:
     - family: app
       fonts:
-        - asset: assets/fonts/Cairo-VariableFont_slnt,wght.ttf
+#        - asset: assets/fonts/Cairo-VariableFont_slnt,wght.ttf
+        - asset: assets/fonts/Beiruti-VariableFont_wght.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

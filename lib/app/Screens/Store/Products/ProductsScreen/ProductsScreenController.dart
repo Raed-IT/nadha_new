@@ -7,18 +7,31 @@ import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
 
 class StoreProductsScreenController extends GetxController
     with PaginationMixin<ProductModel>, ApiHelperMixin {
+  final TextEditingController searchController = TextEditingController();
+
+  void search() {
+    paginationParameter = {
+      "type": 'products',
+      "store_id": Get.find<MainController>().user.value?.store?.id,
+      "search": searchController.text,
+    };
+    getPaginationData(isRefresh: true);
+  }
+
   @override
   void onInit() {
     super.onInit();
     paginationParameter = {
       "type": 'products',
-      "store_id": Get.find<MainController>().user.value?.store?.id
+      "store_id": Get.find<MainController>().user.value?.store?.id,
+      "search": searchController.text,
     };
     paginationUrl = ApiRoute.MyStores;
     getDataFromApi();
