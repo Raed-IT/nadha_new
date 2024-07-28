@@ -72,8 +72,7 @@ class SliderComponent extends StatelessWidget {
                             .toList(),
                         options: CarouselOptions(
                           disableCenter: true,
-                          // aspectRatio: 3 / 4,
-                          height: Get.width * 0.6,
+                           height: Get.width * 0.6,
                           viewportFraction: 1,
                           enableInfiniteScroll: true,
                           reverse: false,

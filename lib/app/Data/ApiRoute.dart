@@ -2,8 +2,8 @@ class ApiRoute {
   // static String host = "http://192.168.1.105:8000/api/v1";
   static String redirectDomin = "https://redirectapp.tasawoqi.net";
 
-  static String domin = "https://tasawoqi.net";
-  // static String domin = "http://192.168.1.106:8000";
+  // static String domin = "https://tasawoqi.net";
+  static String domin = "http://192.168.1.103:8000";
   static String host = "$domin/api/v1";
 
   // static String host = "http://demo.tasawoqe.com/api/v1";

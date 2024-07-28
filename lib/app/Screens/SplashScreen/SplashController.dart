@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:delevary/app/Data/Models/UserModel.dart';
 import 'package:delevary/app/Services/LocaleStorageService.dart';
 import 'package:delevary/app/Services/deepLinkService.dart';
@@ -27,13 +29,16 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
   }
 
   getFreshData() {
+    Logger().w(Get.find<MainController>().token.value);
     hasError = false;
     startTime = DateTime.now();
+    String token =
+        "${Get.find<MainController>().token.value}${generateRandomString(5)}";
+    Logger().w(token);
     getSingleData(
-      url: UrlModel(
-          url: ApiRoute.settings,
-          type: "settings",
-          parameter: {"token": Get.find<MainController>().token.value}),
+      url: UrlModel(url: ApiRoute.settings, type: "settings", parameter: {
+        if (Get.find<MainController>().token.value != null) "token": token
+      }),
       onError: () {
         hasError = true;
       },
@@ -42,7 +47,6 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
 
   @override
   getDataFromJson({required Map<String, dynamic> json, String? type}) async {
-    Logger().w(json);
     Get.find<MainController>().setting.value =
         SettingModel.fromJson(json['data']['setting']);
     List<CityModel> cities = [];
@@ -69,5 +73,13 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
         },
       );
     }
+  }
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
   }
 }
