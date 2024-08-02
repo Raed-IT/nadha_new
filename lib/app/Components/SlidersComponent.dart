@@ -32,20 +32,17 @@ class SliderComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => (isLoad.value)
-          ? Padding(
-              padding: EdgeInsets.all(10.sp),
-              child: CardLoadingComponent(
-                borderRadius: BorderRadius.circular(radius ?? 10.sp),
-                height: height ?? 180.h,
-              ),
-            )
+          ? CardLoadingComponent(
+            borderRadius: BorderRadius.circular(radius ?? 5.sp),
+            height: (Get.width * 0.6)-20,
+          )
           : Container(
               margin: margin ?? EdgeInsets.symmetric(horizontal: 5.sp),
               child: (sliders.isEmpty)
                   ? Container()
                   : Directionality(
-                textDirection: TextDirection.ltr,
-                    child: CarouselSlider(
+                      textDirection: TextDirection.ltr,
+                      child: CarouselSlider(
                         items: sliders
                             .map(
                               (e) => GestureDetector(
@@ -58,12 +55,13 @@ class SliderComponent extends StatelessWidget {
                                   }
                                 },
                                 child: Container(
-                                  margin: margin != null ? EdgeInsets.zero : null,
+                                  margin:
+                                      margin != null ? EdgeInsets.zero : null,
                                   width: Get.width,
                                   child: ImageCacheComponent(
                                       fit: BoxFit.cover,
-                                      borderRadius: BorderRadius.circular(
-                                          radius ??0),
+                                      borderRadius:
+                                          BorderRadius.circular(radius ??5.sp),
                                       height: height,
                                       image: "${e.image}"),
                                 ),
@@ -72,7 +70,7 @@ class SliderComponent extends StatelessWidget {
                             .toList(),
                         options: CarouselOptions(
                           disableCenter: true,
-                           height: Get.width * 0.6,
+                          height: Get.width * 0.6,
                           viewportFraction: 1,
                           enableInfiniteScroll: true,
                           reverse: false,
@@ -87,7 +85,7 @@ class SliderComponent extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                         ),
                       ),
-                  ),
+                    ),
             ),
     );
   }

@@ -44,7 +44,7 @@ class ImageCacheComponent extends StatelessWidget {
                 child: Stack(
                   children: [
                     Opacity(
-                      opacity: 0.3,
+                      opacity: 0.03,
                       child: CardLoading(
                         height: height ?? Get.height,
                         cardLoadingTheme: CardLoadingTheme(
