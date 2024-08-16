@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         SliderComponent(
                           autoPlay: true,
-                          height: Get.width,
+                          height: Get.width * 0.6,
                           sliders: controller.sliders,
                           controller: PageController(),
                           isLoad: controller.isLoad,

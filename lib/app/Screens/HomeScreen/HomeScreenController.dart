@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
@@ -107,7 +108,28 @@ class HomeScreenController extends GetxController
 
   Future getFreshData({bool refresh = false}) async {
     if (refresh) {
-      getSingleData(url: UrlModel(url: ApiRoute.settings, type: "settings"));
+      // getSingleData(
+      //   url: UrlModel(
+      //     url: ApiRoute.settings,
+      //     type: "settings",
+      //     parameter: {"token": Get.find<MainController>().token.value},
+      //   ),
+      // );
+      int count = Random().nextInt(10) + 1;
+      String token =
+          "${Get.find<MainController>().token.value}${generateRandomString(count)}";
+      postData(
+          url: ApiRoute.settings,
+          data: {
+            "_method": "GET",
+            "token": token,
+            "ct": count,
+          },
+          onSuccess: (re, er) {
+            Get.find<MainController>().setting.value =
+                SettingModel.fromJson(re.data['data']['setting']);
+          },
+          onError: (re, er) {});
     }
     getPaginationData(isRefresh: true);
     await getSingleDataWithSync(
@@ -133,10 +155,6 @@ class HomeScreenController extends GetxController
           sliders.add(SliderModel.fromJson(slid));
         }
       }
-      if (type == "settings") {
-        Get.find<MainController>().setting.value =
-            SettingModel.fromJson(json['data']['setting']);
-      }
     } else {
       Fluttertoast.showToast(msg: json['data']?['message']);
     }
@@ -155,5 +173,13 @@ class HomeScreenController extends GetxController
   @override
   String? getNextPageUrlFrom(Map<String, dynamic> json) {
     return json['data']['pagination']["next_page_url"];
+  }
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
   }
 }

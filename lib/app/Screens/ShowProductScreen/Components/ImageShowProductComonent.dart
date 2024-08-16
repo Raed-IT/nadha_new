@@ -48,6 +48,7 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                         child: SliderComponent(
                           margin: EdgeInsets.zero,
                           radius: 0,
+                          height: Get.width,
                           onTapItem: (item) {
                             openImagesPage(
                               Navigator.of(context),
@@ -61,8 +62,7 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                               ),
                             );
                           },
-                          height: 400.h,
-                          sliders: controller.product.value!.images!
+                           sliders: controller.product.value!.images!
                               .map((e) => SliderModel(e.id, e.url, ""))
                               .toList(),
                           controller: PageController(),

@@ -33,9 +33,9 @@ class SliderComponent extends StatelessWidget {
     return Obx(
       () => (isLoad.value)
           ? CardLoadingComponent(
-            borderRadius: BorderRadius.circular(radius ?? 5.sp),
-            height: (Get.width * 0.6)-20,
-          )
+              borderRadius: BorderRadius.circular(radius ?? 5.sp),
+              height: Get.width,
+            )
           : Container(
               margin: margin ?? EdgeInsets.symmetric(horizontal: 5.sp),
               child: (sliders.isEmpty)
@@ -58,10 +58,11 @@ class SliderComponent extends StatelessWidget {
                                   margin:
                                       margin != null ? EdgeInsets.zero : null,
                                   width: Get.width,
+                                  height: height,
                                   child: ImageCacheComponent(
                                       fit: BoxFit.cover,
                                       borderRadius:
-                                          BorderRadius.circular(radius ??5.sp),
+                                          BorderRadius.circular(radius ?? 5.sp),
                                       height: height,
                                       image: "${e.image}"),
                                 ),
@@ -70,7 +71,7 @@ class SliderComponent extends StatelessWidget {
                             .toList(),
                         options: CarouselOptions(
                           disableCenter: true,
-                          height: Get.width * 0.6,
+                          height: height ?? Get.width * 0.6,
                           viewportFraction: 1,
                           enableInfiniteScroll: true,
                           reverse: false,

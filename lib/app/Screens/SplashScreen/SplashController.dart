@@ -29,51 +29,52 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
   }
 
   getFreshData() {
-    Logger().w(Get.find<MainController>().token.value);
     hasError = false;
     startTime = DateTime.now();
+    int count = Random().nextInt(10) + 1;
     String token =
-        "${Get.find<MainController>().token.value}${generateRandomString(5)}";
-    Logger().w(token);
-    getSingleData(
-      url: UrlModel(url: ApiRoute.settings, type: "settings", parameter: {
-        if (Get.find<MainController>().token.value != null) "token": token
-      }),
-      onError: () {
-        hasError = true;
-      },
-    );
+        "${Get.find<MainController>().token.value}${generateRandomString(count)}";
+    postData(
+        url: ApiRoute.settings,
+        data: {
+          "_method": "GET",
+          "token": token,
+          "ct": count,
+        },
+        onSuccess: (re, er) {
+          var json = re.data;
+          Get.find<MainController>().setting.value =
+              SettingModel.fromJson(json['data']['setting']);
+          List<CityModel> cities = [];
+          for (var city in json['data']['cities']) {
+            cities.add(CityModel.fromJson(city));
+          }
+          if (json['data'].containsKey("user")) {
+            Get.find<MainController>().user.value =
+                UserModel.fromJson(json['data']['user']);
+          } else {
+            LocaleStorageService.deleteUserData();
+          }
+
+          DateTime now = DateTime.now();
+          if (now.difference(startTime) > 3.seconds) {
+            Get.find<MainController>().cities.value = cities;
+            Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+          } else {
+            Future.delayed(
+              2.seconds - now.difference(startTime),
+              () {
+                Get.find<MainController>().cities.value = cities;
+                Get.offAllNamed(AppRoutes.mainScaffoldScreen);
+              },
+            );
+          }
+        },
+        onError: (re, er) {});
   }
 
   @override
-  getDataFromJson({required Map<String, dynamic> json, String? type}) async {
-    Get.find<MainController>().setting.value =
-        SettingModel.fromJson(json['data']['setting']);
-    List<CityModel> cities = [];
-    for (var city in json['data']['cities']) {
-      cities.add(CityModel.fromJson(city));
-    }
-    if (json['data'].containsKey("user")) {
-      Get.find<MainController>().user.value =
-          UserModel.fromJson(json['data']['user']);
-    } else {
-      LocaleStorageService.deleteUserData();
-    }
-
-    DateTime now = DateTime.now();
-    if (now.difference(startTime) > 3.seconds) {
-      Get.find<MainController>().cities.value = cities;
-      Get.offAllNamed(AppRoutes.mainScaffoldScreen);
-    } else {
-      Future.delayed(
-        2.seconds - now.difference(startTime),
-        () {
-          Get.find<MainController>().cities.value = cities;
-          Get.offAllNamed(AppRoutes.mainScaffoldScreen);
-        },
-      );
-    }
-  }
+  getDataFromJson({required Map<String, dynamic> json, String? type}) async {}
 
   String generateRandomString(int len) {
     var r = Random();
