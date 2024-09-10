@@ -89,6 +89,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
                                       "assets/svg/logo.svg",
                                       color: AppColors.warning,
                                       fit: BoxFit.contain,
+                                      height: 30.h,
                                     ),
                                   ),
                           ).animate().slideX(
