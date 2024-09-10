@@ -13,14 +13,18 @@ import 'package:nadha/app/data/model/user_model.dart';
 import 'package:nadha/app/route/routs.dart';
 import 'package:nadha/app/services/auth_service.dart';
 import 'package:nadha/app/them/app_colors.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../components/text_field_component.dart';
 
 class AuthScreenController extends GetxController with ApiHelperMixin {
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
   GlobalKey<FormState> registerKey = GlobalKey<FormState>();
   Rxn<CityModel> selectedCity = Rxn();
   String googlePassword = "nadha-password";
+  TextEditingController phoneTextController = TextEditingController();
 
   /// login field
   TextEditingController loginUserName = TextEditingController();
@@ -37,6 +41,7 @@ class AuthScreenController extends GetxController with ApiHelperMixin {
     if (loginKey.currentState!.validate()) {
       EasyLoading.show();
       FormData data = FormData({
+        "whats": '',
         "username": loginUserName.text,
         "password": loginPassword.text,
         "device_token": await Helper.getDeviceNotificationToken(),
@@ -51,10 +56,10 @@ class AuthScreenController extends GetxController with ApiHelperMixin {
       bool isCheckCity = await showCityBottomSheet();
       if (isCheckCity) {
         showLoginGoogleDialog();
-      }else{
+      } else {
         Fluttertoast.showToast(msg: "الرجاء اختيار المدينة");
       }
-    }else{
+    } else {
       showLoginGoogleDialog();
     }
   }
@@ -72,12 +77,11 @@ class AuthScreenController extends GetxController with ApiHelperMixin {
 
   Future<void> loginWithGoogle({required GoogleSignInAccount account}) async {
     EasyLoading.show();
-
     FormData data = FormData({
       "email": account.email,
       "username": "nadha-${DateTime.now()}",
       "name": account.displayName,
-      "whats": "",
+      "whats": phoneTextController.text,
       "password": "nadha-password",
       "city_id": selectedCity.value!.id!,
       "device_token": await Helper.getDeviceNotificationToken(),
@@ -184,18 +188,25 @@ class AuthScreenController extends GetxController with ApiHelperMixin {
                 ),
               ),
               10.verticalSpace,
+              BuildTextFieldComponent(
+                keyboardType: TextInputType.phone,
+                controller: phoneTextController,
+                hint: 'رقم الهاتف',
+              ),
+              10.verticalSpace,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MaterialButton(
                     onPressed: () {
-                      if (selectedCity.value != null) {
+                      if (selectedCity.value != null &&
+                          phoneTextController.text != "") {
                         isCheckCity = true;
                         Get.back();
                       } else {
                         Fluttertoast.showToast(
-                            msg: "الرجاء اختيار مدينة للمتابعة");
+                            msg: "الرجاء اختيار مدينة وكتابة رقم الهاتف للمتابعة");
                       }
                     },
                     child: Text(

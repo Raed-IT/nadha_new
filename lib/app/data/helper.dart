@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:nadha/app/data/inital/main_controller.dart';
 import 'package:nadha/app/data/model/cart_item_model.dart';
 import 'package:nadha/app/data/model/user_model.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'local_storage_controller.dart';
 
@@ -28,19 +28,19 @@ class Helper {
   }
 
   static Future<String?> getDeviceNotificationToken() async {
-    String? osUserID;
+    String? osUserID="${DateTime.now()}";
     int count = 0;
-    while (osUserID == null) {
-      count++;
-      // await OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-      // final status = await OneSignal.shared.getDeviceState();
-      // osUserID = status?.userId;
-      await Future.delayed(const Duration(milliseconds: 200));
-      if (count == 5) {
-        break;
-      }
-    }
-    Logger().w(osUserID);
+    // while (osUserID == null) {
+    //   count++;
+    //   // await OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+    //   // final status = await OneSignal.shared.getDeviceState();
+    //   // osUserID = status?.userId;
+    //   await Future.delayed(const Duration(milliseconds: 200));
+    //   if (count == 5) {
+    //     break;
+    //   }
+    // }
+    // Logger().w(osUserID);
     return osUserID;
   }
 
