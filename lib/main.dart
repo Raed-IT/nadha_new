@@ -29,6 +29,7 @@ void main() async {
       appName: "tasawoqe", local: "ar", apiConfig: ApiConfig.activeAll());
 
   Get.put(MainController(), permanent: true);
+  await LocaleStorageService.getIsReadStarterPages();
   await LocaleStorageService.getUserData();
   String? onSignalId = await LocaleStorageService.getOnSignalId();
   if (onSignalId != null) {

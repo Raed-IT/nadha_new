@@ -26,6 +26,7 @@ class MainController extends GetxController {
   }
 
   Rxn<String> token = Rxn(null);
+  bool isReadStarterPages =false;
   Rxn<UserModel> user = Rxn(null);
   Rxn<SettingModel> setting = Rxn<SettingModel>();
   RxList<CityModel> cities = RxList<CityModel>([]);

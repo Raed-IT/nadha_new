@@ -15,7 +15,14 @@ class LocaleStorageService {
   static void setOnSignalId({required String id}) async {
     await StorageController.setData(key: "onSignal", value: id);
   }
-
+  static Future<bool?> getIsReadStarterPages() async{
+    bool status =false;
+    if (StorageController.hasData(key: "isReadStarterPages")) {
+       status = await StorageController.getData(key: "isReadStarterPages");
+    }
+    Get.find<MainController>().isReadStarterPages=status;
+    return  status ;
+  }
   static Future<String?> getOnSignalId() async {
     if (StorageController.hasData(key: "onSignal")) {
       return await StorageController.getData(key: "onSignal");
