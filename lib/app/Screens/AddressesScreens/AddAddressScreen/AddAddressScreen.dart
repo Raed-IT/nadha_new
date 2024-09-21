@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
-import '../../../components/TextFieldComponent.dart';
+import '../../../Components/TextFieldComponent.dart';
 
 class AddAddressScreen extends GetView<AddAddressScreenController> {
   const AddAddressScreen({super.key});

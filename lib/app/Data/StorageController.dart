@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 
-import '../route/Routs.dart';
+import '../Route/Routs.dart';
 
 class StorageController {
   static dynamic getData({required String key}) async {

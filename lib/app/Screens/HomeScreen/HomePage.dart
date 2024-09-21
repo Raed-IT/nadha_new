@@ -1,6 +1,6 @@
 import 'package:delevary/app/Screens/HomeScreen/HomeScreen.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreenBinding.dart';
-import 'package:delevary/app/route/Routs.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:get/get.dart';
 
 import '../../Middlewares/isLogin.dart';

@@ -11,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../data/ApiRoute.dart';
+import '../../Data/ApiRoute.dart';
 
 class ProductCardComponent extends StatefulWidget {
   final ProductModel product;

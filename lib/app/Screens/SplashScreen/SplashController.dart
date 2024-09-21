@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:delevary/app/Data/Models/UserModel.dart';
 import 'package:delevary/app/Services/LocaleStorageService.dart';
 import 'package:delevary/app/Services/deepLinkService.dart';
-import 'package:delevary/app/data/ApiRoute.dart';
+import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
-import 'package:delevary/app/data/Models/SettingModel.dart';
-import 'package:delevary/app/route/Routs.dart';
+import 'package:delevary/app/Data/Models/SettingModel.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,13 +32,13 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
     hasError = false;
     startTime = DateTime.now();
     int count = Random().nextInt(10) + 1;
-    String token =
-        "${Get.find<MainController>().token.value}${generateRandomString(count)}";
+    // String token =
+    //     "${Get.find<MainController>().token.value}${generateRandomString(count)}";
     postData(
         url: ApiRoute.settings,
         data: {
           "_method": "GET",
-          "token": token,
+          "token": "${Get.find<MainController>().token.value}",
           "ct": count,
         },
         onSuccess: (re, er) {

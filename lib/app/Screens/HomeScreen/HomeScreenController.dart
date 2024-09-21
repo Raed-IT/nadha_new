@@ -10,7 +10,7 @@ import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenControl
 import 'package:delevary/app/Services/LocalNotificationService.dart';
 import 'package:delevary/app/Services/PermissionService.dart';
 import 'package:delevary/app/Services/UI/ToastService.dart';
-import 'package:delevary/app/data/Models/SettingModel.dart';
+import 'package:delevary/app/Data/Models/SettingModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -116,13 +116,13 @@ class HomeScreenController extends GetxController
       //   ),
       // );
       int count = Random().nextInt(10) + 1;
-      String token =
-          "${Get.find<MainController>().token.value}${generateRandomString(count)}";
+      // String token =
+      //     "${Get.find<MainController>().token.value}${generateRandomString(count)}";
       postData(
           url: ApiRoute.settings,
           data: {
             "_method": "GET",
-            "token": token,
+            "token": "${Get.find<MainController>().token.value}",
             "ct": count,
           },
           onSuccess: (re, er) {

@@ -1,4 +1,4 @@
-import 'package:delevary/app/thems/ColorSchemes.dart';
+import 'package:delevary/app/Thems/ColorSchemes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

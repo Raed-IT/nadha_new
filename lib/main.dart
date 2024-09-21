@@ -1,6 +1,8 @@
+import 'package:delevary/app/Route/GetPages.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Services/LocaleStorageService.dart';
-import 'package:delevary/app/route/GetPages.dart';
-import 'package:delevary/app/thems/DarckThem.dart';
+import 'package:delevary/app/Thems/DarckThem.dart';
+import 'package:delevary/app/Thems/LightThem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,8 +15,6 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'app/Data/MainController.dart';
 import 'app/Services/LocalNotificationService.dart';
-import 'app/route/routs.dart';
-import 'app/thems/LightThem.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

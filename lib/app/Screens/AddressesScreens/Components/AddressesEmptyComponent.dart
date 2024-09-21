@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../route/Routs.dart';
+import '../../../Route/Routs.dart';
 
 class AddressesEmptyComponent extends StatelessWidget {
   const AddressesEmptyComponent({super.key});

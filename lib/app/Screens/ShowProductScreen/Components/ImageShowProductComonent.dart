@@ -7,7 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:image_preview/image_preview.dart';
+// import 'package:image_preview/image_preview.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../Data/Models/SliderModel.dart';
@@ -49,19 +49,19 @@ class _ImageShowProductComponentState extends State<ImageShowProductComponent> {
                           margin: EdgeInsets.zero,
                           radius: 0,
                           height: Get.width,
-                          onTapItem: (item) {
-                            openImagesPage(
-                              Navigator.of(context),
-                              imgUrls: controller.product.value!.images!
-                                  .map((e) => e.url!)
-                                  .toList(),
-                              heroTags: List.generate(
-                                controller.product.value!.images!.length,
-                                (index) =>
-                                    "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
-                              ),
-                            );
-                          },
+                          // onTapItem: (item) {
+                          //   openImagesPage(
+                          //     Navigator.of(context),
+                          //     imgUrls: controller.product.value!.images!
+                          //         .map((e) => e.url!)
+                          //         .toList(),
+                          //     heroTags: List.generate(
+                          //       controller.product.value!.images!.length,
+                          //       (index) =>
+                          //           "${controller.heroPrefix ?? 'product_image_'}${controller.product.value?.id}",
+                          //     ),
+                          //   );
+                          // },
                            sliders: controller.product.value!.images!
                               .map((e) => SliderModel(e.id, e.url, ""))
                               .toList(),

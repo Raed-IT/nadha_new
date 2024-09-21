@@ -1,9 +1,9 @@
 import 'package:delevary/app/Extiontions/isEmail.dart';
 import 'package:delevary/app/Screens/AuthScreens/LoginScreen/LoginScreenController.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
-import 'package:delevary/app/components/TextFieldComponent.dart';
-import 'package:delevary/app/components/SafeAreaComponent.dart';
-import 'package:delevary/app/route/Routs.dart';
+import 'package:delevary/app/Components/TextFieldComponent.dart';
+import 'package:delevary/app/Components/SafeAreaComponent.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

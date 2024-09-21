@@ -7,7 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import '../../../components/TextFieldComponent.dart';
+import '../../../Components/TextFieldComponent.dart';
 
 showConfirmCartDialog(BuildContext context, Function onConfirm,
     CartScreenController cartScreenController) {

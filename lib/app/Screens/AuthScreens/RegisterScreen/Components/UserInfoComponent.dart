@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 import '../../../../Components/DropDwon.dart';
 import '../../../../Data/MainController.dart';
-import '../../../../components/TextFieldComponent.dart';
+import '../../../../Components/TextFieldComponent.dart';
 import 'package:delevary/app/Data/Models/CityModel.dart';
 
 class RegisterUserInfoComponent extends GetView<RegisterScreenController> {

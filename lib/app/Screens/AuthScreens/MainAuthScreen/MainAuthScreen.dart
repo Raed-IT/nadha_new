@@ -1,5 +1,5 @@
 import 'package:delevary/app/Screens/AuthScreens/MainAuthScreen/MainAuthController.dart';
-import 'package:delevary/app/route/Routs.dart';
+import 'package:delevary/app/Route/Routs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

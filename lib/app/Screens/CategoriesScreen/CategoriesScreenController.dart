@@ -1,5 +1,5 @@
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
-import 'package:delevary/app/data/ApiRoute.dart';
+import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
