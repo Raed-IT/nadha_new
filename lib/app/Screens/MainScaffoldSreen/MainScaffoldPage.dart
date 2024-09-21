@@ -1,4 +1,5 @@
 import 'package:delevary/app/Middlewares/isLogin.dart';
+import 'package:delevary/app/Middlewares/is_read_starter_pages.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreen.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenBinding.dart';
@@ -11,6 +12,7 @@ class MainScaffoldPage extends GetPage {
           page: () => MainScaffoldScreen(),
           binding: MainScaffoldScreenBinding(),
           middlewares: [
+            IsReadStarterPagesMiddleware(),
             IsLoginMiddleware(),
           ],
         );

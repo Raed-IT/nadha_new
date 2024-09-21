@@ -4,6 +4,7 @@ import 'package:delevary/app/Data/StorageController.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class LocaleStorageService {
   static void setUserData({required UserModel user, required String token}) {
@@ -22,6 +23,11 @@ class LocaleStorageService {
     }
     Get.find<MainController>().isReadStarterPages=status;
     return  status ;
+  }
+
+  static Future<void> setIsReadStarterPages()async{
+    Get.find<MainController>().isReadStarterPages=true;
+    await StorageController.setData(key: "isReadStarterPages", value: true);
   }
   static Future<String?> getOnSignalId() async {
     if (StorageController.hasData(key: "onSignal")) {

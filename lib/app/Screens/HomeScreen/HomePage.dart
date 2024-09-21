@@ -1,5 +1,4 @@
-import 'package:delevary/app/Middlewares/is_read_starter_pages.dart';
-import 'package:delevary/app/Screens/HomeScreen/HomeScreen.dart';
+ import 'package:delevary/app/Screens/HomeScreen/HomeScreen.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreenBinding.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:get/get.dart';
@@ -12,6 +11,6 @@ class HomePage extends GetPage {
           name: AppRoutes.homeScreen,
           page: () => HomeScreen(),
           binding: HomeScreenBinding(),
-          middlewares: [IsReadStarterPagesMiddleware(), IsLoginMiddleware()],
+          middlewares: [ IsLoginMiddleware()],
         );
 }

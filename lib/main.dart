@@ -23,6 +23,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   await initializeDateFormatting('ar', null);
+  // await StorageController.setData(key: "isReadStarterPages", value: false);
 
   await GetStorage.init(AppRoutes.appName);
   Helper.initial(

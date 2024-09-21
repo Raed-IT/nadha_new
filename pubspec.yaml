@@ -94,6 +94,9 @@ dependencies:
 #  intl_phone_number_input: ^0.7.4
   file_picker: ^8.0.3
   from_to_time_picker: ^1.2.2
+#  v2
+  introduction_screen: ^3.1.14
+
 
   helper:
     git:
@@ -146,8 +149,15 @@ flutter:
   fonts:
     - family: app
       fonts:
+        - asset: assets/fonts/v2/Tajawal-Black.ttf
+        - asset: assets/fonts/v2/Tajawal-Bold.ttf
+        - asset: assets/fonts/v2/Tajawal-ExtraBold.ttf
+        - asset: assets/fonts/v2/Tajawal-ExtraLight.ttf
+        - asset: assets/fonts/v2/Tajawal-Light.ttf
+        - asset: assets/fonts/v2/Tajawal-Medium.ttf
+        - asset: assets/fonts/v2/Tajawal-Regular.ttf
 #        - asset: assets/fonts/Cairo-VariableFont_slnt,wght.ttf
-        - asset: assets/fonts/Beiruti-VariableFont_wght.ttf
+#        - asset: assets/fonts/Beiruti-VariableFont_wght.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

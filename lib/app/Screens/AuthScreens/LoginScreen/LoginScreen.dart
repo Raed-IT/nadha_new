@@ -1,221 +1,130 @@
+import 'package:delevary/app/Components/v2/app_bar_compionent/app_bar_with_logo.dart';
+import 'package:delevary/app/Components/v2/google_button_component.dart';
+import 'package:delevary/app/Components/v2/primary_button.dart';
+import 'package:delevary/app/Components/v2/text_field_component.dart';
 import 'package:delevary/app/Extiontions/isEmail.dart';
-import 'package:delevary/app/Screens/AuthScreens/LoginScreen/LoginScreenController.dart';
-import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
-import 'package:delevary/app/Components/TextFieldComponent.dart';
-import 'package:delevary/app/Components/SafeAreaComponent.dart';
 import 'package:delevary/app/Route/Routs.dart';
+import 'package:delevary/app/Screens/AuthScreens/LoginScreen/LoginScreenController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import '../Components/AppBarAuthComponent.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 class LoginScreen extends GetView<LoginScreenController> {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // OverlayLoaderService.hide();
+    RxBool check = RxBool(false);
     controller.keyboardVisible.value =
         MediaQuery.of(context).viewInsets.bottom != 0;
-    return ColoredSafeArea(
-      color: Theme.of(context).colorScheme.primary,
-      child: Scaffold(
-        body: Container(
-          color: Theme.of(context).colorScheme.primary,
-          height: Get.height,
-          width: Get.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Obx(
-                  () => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (!controller.keyboardVisible.value)
-                        AppBarAuthComponent(
-                          onAnotherTap: () =>
-                              Get.offNamed(AppRoutes.registerScreen),
-                          title: 'تسجيل جديد ',
-                        ),
-                      if (!controller.keyboardVisible.value)
-                        Text(
-                          "تسجيل الدخول  ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 35.sp,
-                            color: Theme.of(context).colorScheme.background,
-                          ),
-                        ).animate().slideY(begin: 1),
-                      if (!controller.keyboardVisible.value) 10.verticalSpace,
-                      if (!controller.keyboardVisible.value)
-                        Text(
-                          "مرحبًا بك في منصة تسوقي \n يُرجى تسجيل الدخول للمتابعة \n اذا لم يكن لديك حساب قم بالتسجيل .",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Theme.of(context).colorScheme.background,
-                          ),
-                          textAlign: TextAlign.justify,
-                        ).animate().slideY(begin: 1),
-                      20.verticalSpace,
-                      SizedBox(
-                        width: Get.width,
-                        height: 50.h,
-                        child: MaterialButton(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.sp)),
-                          color: Theme.of(context).colorScheme.background,
-                          onPressed: () =>
-                              Get.offNamed(AppRoutes.registerScreen),
-                          child: Text(
-                            " تسجيل مستخدم جديد",
-                            style: TextStyle(
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                        ),
-                      ).animate().slideY(begin: 1, duration: 500.ms),
-                    ],
-                  ),
+    return Scaffold(
+      body: Container(
+        height: Get.height,
+        width: Get.width,
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics( ),
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppBarWithLogoComponent(),
+                64.verticalSpace,
+                Text(
+                  "تسجيل الدخول",
+                  style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w800),
                 ),
-              ),
-              20.verticalSpace,
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20.sp),
-                      topLeft: Radius.circular(20.sp),
+                10.verticalSpace,
+                Text(
+                  "الرجاء إدخال بياناتك للمتابعة",
+                  style: TextStyle(fontSize: 17.sp),
+                ),
+                40.verticalSpace,
+                TextFieldComponentV2(
+                  isRequired: true,
+                  controller: controller.emailTextController,
+                  hint: "الإيميل",
+                  validator: (data) {
+                    if (data!.isEmpty || data.length < 3) {
+                      return "اكتب الاسم بشكل صحيح يجب ان يكون اكثر من 3 احرف";
+                    } else if (!data.isValidEmail()) {
+                      return "الرجاء ادخال إيميل ";
+                    }
+                    return null;
+                  },
+                ),
+                TextFieldComponentV2(
+                  isPassword: true,
+                  isRequired: true,
+                  controller: controller.passwordTextController,
+                  hint: "كلمة المرور",
+                  validator: (data) {
+                    if (data!.isEmpty || data.length < 3) {
+                      return "اقل عدد احرف لكلمة السر 8";
+                    }
+                    return null;
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Obx(
+                          () {
+                            return Checkbox(
+                              value: check.value,
+                              onChanged: (va) => check.value = va ?? false,
+                            );
+                          },
+                        ),
+                        Text(
+                          "تذكرني",
+                          style: TextStyle(color: Colors.black38),
+                        ),
+                      ],
                     ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(10.sp),
-                    child: Form(
-                      key: controller.formKey,
-                      child: Column(
-                        children: [
-                          TextFieldComponent(
-                            isRequired: true,
-                            controller: controller.emailTextController,
-                            hint: "الإيميل ",
-                            // label: "اسم المستخدم",
-                            validator: (data) {
-                              if (data!.isEmpty || data.length < 3) {
-                                return "اكتب الاسم بشكل صحيح يجب ان يكون اكثر من 3 احرف";
-                              } else if (!data.isValidEmail()) {
-                                return "الرجاء ادخال إيميل ";
-                              }
-                              return null;
-                            },
+                    Text(
+                      "نسيت كلمة المرور",
+                      style: TextStyle(color: Colors.black38),
+                    )
+                  ],
+                ),
+                45.verticalSpace,
+                PrimaryButtonComponent(
+                  label: "تسجيل الدخول",
+                  onTap: () {
+                    controller.login(context: context);
+                  },
+                ),
+                40.verticalSpace,
+                Stack(
+                  children: [
+                    Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 5.sp),
+                          color: Theme.of(context).colorScheme.background,
+                          child: const Center(
+                            child: Text("أو المتابعة باستخدام"),
                           ),
-                          TextFieldComponent(
-                            isPassword: true,
-                            isRequired: true,
-                            controller: controller.passwordTextController,
-                            hint: "كلمة السر",
-                            // label: "كلمة السر ",
-                            validator: (data) {
-                              if (data!.isEmpty || data.length < 3) {
-                                return "اقل عدد احرف لكلمة السر 8";
-                              }
-                              return null;
-                            },
-                          ),
-                          15.verticalSpace,
-                          SizedBox(
-                            width: Get.width,
-                            height: 60.h,
-                            child: FilledButton.tonal(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Theme.of(context).colorScheme.primary),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(15.sp),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              onPressed: () =>
-                                  controller.login(context: context),
-                              child: Text(
-                                "تسجيل الدخول",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background),
-                              ),
-                            ),
-                          ),
-                          if (!controller.keyboardVisible.value)
-                            25.verticalSpace,
-                          if (!controller.keyboardVisible.value)
-                            SizedBox(
-                              width: Get.width,
-                              height: 60.h,
-                              child: FilledButton.tonal(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Theme.of(context).colorScheme.primary),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(15.sp),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () =>
-                                    controller.loginWithGoogle(context),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      FontAwesomeIcons.google,
-                                      size: 20.sp,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background,
-                                    ),
-                                    10.horizontalSpace,
-                                    Text(
-                                      " تسجيل الدخول باستخدام غوغل",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .background),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ).animate().elevation(
-                                  delay: Duration(milliseconds: 500),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15.sp)),
-                                  duration: Duration(milliseconds: 500),
-                                ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ).animate().slideY(
-                      begin: 1,
-                      duration: Duration(milliseconds: 500),
-                    ),
-              ),
-            ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                14.verticalSpace,
+                GoogleButtonComponent(
+                  onCompleted: () {
+                    Get.offAllNamed(AppRoutes.homeScreen);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
