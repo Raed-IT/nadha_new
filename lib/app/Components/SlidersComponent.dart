@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
+import 'package:delevary/app/Thems/AppColots.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Data/Models/SliderModel.dart';
 
@@ -30,35 +33,41 @@ class SliderComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RxInt activeIndex = RxInt(0);
+    final carouselController = CarouselSliderController();
     return Obx(
       () => (isLoad.value)
-          ? CardLoadingComponent(
-              borderRadius: BorderRadius.circular(radius ?? 5.sp),
-              height: Get.width,
+          ? AspectRatio(
+              aspectRatio: 78 / 35,
+              child: CardLoadingComponent(
+                cardMargin: EdgeInsets.zero,
+                borderRadius: BorderRadius.circular(radius ?? 5.sp),
+              ),
             )
-          : Container(
-              margin: margin ?? EdgeInsets.symmetric(horizontal: 5.sp),
-              child: (sliders.isEmpty)
-                  ? Container()
-                  : Directionality(
-                      textDirection: TextDirection.ltr,
-                      child: CarouselSlider(
-                        items: sliders
-                            .map(
-                              (e) => GestureDetector(
-                                onTap: () {
-                                  if (onTapItem != null) {
-                                    onTapItem!(e);
-                                  }
-                                  if (e.url != null) {
-                                    launchUrl(Uri.parse("${e.url}"));
-                                  }
-                                },
+          : Column(
+              children: [
+                AspectRatio(
+                  aspectRatio: 78 / 35,
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: CarouselSlider(
+                      carouselController: carouselController,
+                      items: sliders
+                          .map(
+                            (e) => GestureDetector(
+                              onTap: () {
+                                if (onTapItem != null) {
+                                  onTapItem!(e);
+                                }
+                                if (e.url != null) {
+                                  launchUrl(Uri.parse("${e.url}"));
+                                }
+                              },
+                              child: AspectRatio(
+                                aspectRatio: 78 / 35,
                                 child: Container(
                                   margin:
                                       margin != null ? EdgeInsets.zero : null,
-                                  width: Get.width,
-                                  height: height,
                                   child: ImageCacheComponent(
                                       fit: BoxFit.cover,
                                       borderRadius:
@@ -67,26 +76,56 @@ class SliderComponent extends StatelessWidget {
                                       image: "${e.image}"),
                                 ),
                               ),
-                            )
-                            .toList(),
-                        options: CarouselOptions(
-                          disableCenter: true,
-                          height: height ?? Get.width * 0.6,
-                          viewportFraction: 1,
-                          enableInfiniteScroll: true,
-                          reverse: false,
-                          autoPlay: autoPlay,
-                          autoPlayInterval: const Duration(seconds: 5),
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 1000),
-                          autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
-                          enlargeCenterPage: true,
-                          enlargeFactor: 0.8,
-                          animateToClosest: false,
-                          scrollDirection: Axis.horizontal,
-                        ),
+                            ),
+                          )
+                          .toList(),
+                      options: CarouselOptions(
+                        disableCenter: true,
+                        height: height ?? Get.width * 0.6,
+                        viewportFraction: 1,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: autoPlay,
+                        onPageChanged: (index, page) {
+                          activeIndex.value = index;
+                        },
+                        autoPlayInterval: const Duration(seconds: 5),
+                        autoPlayAnimationDuration:
+                            const Duration(milliseconds: 1000),
+                        autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0.8,
+                        animateToClosest: false,
+                        scrollDirection: Axis.horizontal,
                       ),
                     ),
+                  ),
+                ),
+                Obx(
+                  () => Padding(
+                    padding: EdgeInsets.all(10.sp),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: sliders.asMap().entries.map((entry) {
+                        return GestureDetector(
+                          onTap: () => carouselController.jumpToPage(entry.key),
+                          child: Container(
+                            width: 10.sp,
+                            height: 10.sp,
+                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: (AppColors.info).withOpacity(
+                                entry.key == activeIndex.value ? 0.9 : 0.2,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                )
+              ],
             ),
     );
   }

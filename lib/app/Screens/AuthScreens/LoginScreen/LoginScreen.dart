@@ -6,6 +6,7 @@ import 'package:delevary/app/Extiontions/isEmail.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/AuthScreens/LoginScreen/LoginScreenController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -16,9 +17,7 @@ class LoginScreen extends GetView<LoginScreenController> {
   @override
   Widget build(BuildContext context) {
     RxBool check = RxBool(false);
-    controller.keyboardVisible.value =
-        MediaQuery.of(context).viewInsets.bottom != 0;
-    return Scaffold(
+     return Scaffold(
       body: Container(
         height: Get.height,
         width: Get.width,
@@ -30,7 +29,7 @@ class LoginScreen extends GetView<LoginScreenController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AppBarWithLogoComponent(),
+                const AppBarWithLogoComponent(showArrow: true,),
                 64.verticalSpace,
                 Text(
                   "تسجيل الدخول",
@@ -125,7 +124,7 @@ class LoginScreen extends GetView<LoginScreenController> {
                 ),
               ],
             ),
-          ),
+          ).animate().fadeIn(),
         ),
       ),
     );

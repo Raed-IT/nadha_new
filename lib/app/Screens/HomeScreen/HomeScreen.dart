@@ -1,4 +1,4 @@
-import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
+import 'package:delevary/app/Components/AppBarComponents/v2/AppBarComponent.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
 import 'package:delevary/app/Components/TitleSectionComponent.dart';
@@ -11,6 +11,7 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreenController.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,25 +82,22 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Theme.of(context).colorScheme.background,
               child: Column(
                 children: [
-                  AppBarComponent(
-                    showLogo: true,
-                    showSearch: true,
-                    openDrawer: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
+                  const AppBarComponent(),
                   Expanded(
                     child: ListView(
                       controller: scrollController,
                       padding: const EdgeInsets.all(0),
                       physics: const BouncingScrollPhysics(),
                       children: [
-                        SliderComponent(
-                          autoPlay: true,
-                          height: Get.width * 0.6,
-                          sliders: controller.sliders,
-                          controller: PageController(),
-                          isLoad: controller.isLoad,
+                        Padding(
+                          padding: EdgeInsets.all(20.sp),
+                          child: SliderComponent(
+                            autoPlay: true,
+                            height: 160.h,
+                            sliders: controller.sliders,
+                            controller: PageController(),
+                            isLoad: controller.isLoad,
+                          ),
                         ),
                         Obx(
                           () => Column(

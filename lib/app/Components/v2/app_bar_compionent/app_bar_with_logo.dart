@@ -6,7 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class AppBarWithLogoComponent extends StatelessWidget {
-  const AppBarWithLogoComponent({super.key});
+  final bool? showArrow;
+  const AppBarWithLogoComponent({super.key, this.showArrow});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class AppBarWithLogoComponent extends StatelessWidget {
             ).animate().slideY(duration: 200.ms, begin: -0.2),
             IconButton(
               onPressed: () => Get.back(),
-              icon: const Icon(FontAwesomeIcons.arrowLeft),
+              icon: showArrow==true?const Icon(FontAwesomeIcons.arrowLeft):SizedBox(),
             )
           ],
         ),

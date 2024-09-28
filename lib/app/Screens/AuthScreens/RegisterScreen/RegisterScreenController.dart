@@ -24,6 +24,7 @@ class RegisterScreenController extends GetxController with ApiHelperMixin {
   TextEditingController passwordTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
   TextEditingController nameTextController = TextEditingController();
+  TextEditingController phoneTextController = TextEditingController();
   RxInt currentWidget = RxInt(0);
   RxBool keyboardVisible = RxBool(false);
   Rxn<GenderTypeEnum> gender = Rxn();
