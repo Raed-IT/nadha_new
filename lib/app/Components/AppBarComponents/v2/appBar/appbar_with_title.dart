@@ -13,7 +13,7 @@ class AppBarWithTitleComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.all(24.w),
+        padding: EdgeInsets.only(top: 24.w,right: 24.w,left: 24.w),
         child: Row(
           children: [
             Text(

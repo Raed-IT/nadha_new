@@ -1,5 +1,6 @@
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:delevary/app/Components/AppBarComponents/v2/appBar/appbar_with_title.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
@@ -10,13 +11,10 @@ import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/CategoryProductsScreen/CategoryProductsScreenController.dart';
-import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
@@ -68,30 +66,7 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
             color: Theme.of(context).colorScheme.background,
             child: Column(
               children: [
-                AppBarComponent(
-                  prifexImage: Row(
-                    children: [
-                      Hero(
-                        tag: "categories${controller.category.id}",
-                        child: ImageCacheComponent(
-                          image: "${controller.category.image}",
-                          height: 50.h,
-                        ),
-                      ),
-                      Hero(
-                        tag: "categories_text${controller.category.id}",
-                        child: Text(
-                          controller.category.name ?? '',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15.sp),
-                        ),
-                      )
-                    ],
-                  ),
-                  openDrawer: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
+                AppBarWithTitleComponent(title: "${controller.category.name}"),
                 Expanded(
                   child: ListView(
                     controller: scrollController,
@@ -114,8 +89,7 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                           );
                         },
                         isLoad: controller.isLoadPaginationData,
-                        onTapAddProduct:
-                            (ProductModel product, GlobalKey key) {
+                        onTapAddProduct: (ProductModel product, GlobalKey key) {
                           controller.cartService.addToCard(
                               product: product,
                               context: context,

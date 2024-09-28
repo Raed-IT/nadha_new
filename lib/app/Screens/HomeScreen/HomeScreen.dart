@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
 import 'Components/phoneDialog.dart';
@@ -34,6 +35,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+
     if (Get
         .find<MainController>()
         .user
@@ -62,7 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     ScrollController scrollController = ScrollController();
     return GetBuilder<HomeScreenController>(
+
       builder: (controller) {
+
         Get
             .find<MainScaffoldScreenController>()
             .isScrollUp
@@ -124,7 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             CategoriesComponent(
                               categories: controller.categories,
                               isLoading: controller.isLoad,
-
                             ),
 
                             BuildTitleSectionComponent(

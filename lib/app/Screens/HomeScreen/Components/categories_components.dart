@@ -3,8 +3,11 @@ import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:logger/logger.dart';
 
 class CategoriesComponent extends StatelessWidget {
   final RxBool isLoading;
@@ -16,7 +19,7 @@ class CategoriesComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 64.h,
+      height: 104.h,
       child: Column(
         children: [
           Padding(
@@ -31,7 +34,8 @@ class CategoriesComponent extends StatelessWidget {
                 Spacer(),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(AppRoutes.categoriesV2,   );
+                    Get.toNamed(AppRoutes.categoriesV2,
+                        arguments: {"categories": categories});
                   },
                   child: Row(
                     children: [
@@ -49,10 +53,44 @@ class CategoriesComponent extends StatelessWidget {
                       )
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
+          Obx(
+          ()=> SizedBox(
+              width: Get.width,
+              height: 42.h,
+              child: ListView.builder(
+                physics:const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: ()=>Get.toNamed(AppRoutes.categoryProducts,arguments: {"category":categories[index]}),
+                  child: SizedBox(
+                    height: 24.h,
+                    child: Card(
+                      elevation: 4,
+                      shadowColor: Colors.black38,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.black12.withOpacity(0.1)
+                        ),
+                        borderRadius: BorderRadius.circular(500)
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 0),
+                        child: Center(
+                          child: Text("${categories[index].name}"),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          )
         ],
       ),
     );
