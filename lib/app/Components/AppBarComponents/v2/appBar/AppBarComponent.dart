@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class AppBarComponent extends StatelessWidget {
-  const AppBarComponent({super.key});
+  final Function openDrawer;
+
+  const AppBarComponent({super.key, required this.openDrawer});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +27,18 @@ class AppBarComponent extends StatelessWidget {
                     width: 116.w,
                   ),
                   Spacer(),
-                  SvgPicture.asset(
-                    "assets/svg/drawer.svg",
-                    height: 16.sp,
-                    width: 20.w,
+                  GestureDetector(
+                    onTap: () {
+                      openDrawer();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10.sp),
+                      child: SvgPicture.asset(
+                        "assets/svg/drawer.svg",
+                        height: 16.sp,
+                        width: 20.w,
+                      ),
+                    ),
                   ),
                 ],
               ),

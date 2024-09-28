@@ -15,12 +15,13 @@ import 'package:delevary/app/Screens/Store/Products/UpdateProductScreen/UpdatePr
 import 'package:delevary/app/Screens/Store/Sliders/AddSliderScreen/AddSliderPage.dart';
 import 'package:delevary/app/Screens/Store/StoreScreen/StorePage.dart';
 import 'package:delevary/app/Screens/StoresScreens/ShowStoreScreen/ShowStorePage.dart';
+import 'package:delevary/app/Screens/v2/categories_screen/categories_screen_page.dart';
 import 'package:delevary/app/Screens/v2/starter_pages_screen/starter_pages_screen_page.dart';
 import 'package:get/get.dart';
 
 import '../Screens/AddressesScreens/AddAddressScreen/AddAddressPage.dart';
 import '../Screens/AddressesScreens/AddressesScreen/AddressesPage.dart';
-import '../Screens/CategoriesScreen/CategoriesPage.dart';
+
 import '../Screens/CategoryProductsScreen/CategoryProductsPage.dart';
 import '../Screens/Delivery/DeliveryOrdersScreen/DeliveryOrdersPage.dart';
 import '../Screens/Delivery/MapScreen/MapPage.dart';
@@ -43,7 +44,6 @@ class GetPagesProvider {
     HomePage(),
     ProfilePage(),
     SettingPage(),
-    CategoriesPage(),
     CategoryProductsPage(),
     SearchPage(),
     ShowProductPage(),
@@ -68,7 +68,8 @@ class GetPagesProvider {
     AddSliderPage(),
     BalancesPage(),
     LunchUrlPage(),
-  //   v2
-    StarterPage()
+    //   v2
+    StarterPage(),
+    CategoriesPage()
   ];
 }
