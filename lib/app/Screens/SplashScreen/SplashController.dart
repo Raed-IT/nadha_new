@@ -24,7 +24,6 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
 
   @override
   void onReady() {
-    Logger().w("sd");
     getFreshData();
     super.onReady();
   }

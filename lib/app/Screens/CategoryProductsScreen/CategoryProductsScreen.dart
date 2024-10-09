@@ -5,6 +5,7 @@ import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/DrawerComponents/DrawerComponent.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
+import 'package:delevary/app/Components/v2/search_filed_component.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
@@ -17,8 +18,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
-import '../../Components/AppBarComponents/AppBarComponent.dart';
 
 class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
   const CategoryProductsScreen({super.key});
@@ -73,6 +72,17 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                     padding: const EdgeInsets.all(0),
                     physics: const BouncingScrollPhysics(),
                     children: [
+                      Obx(() {
+                        return SearchFiledComponent(
+                          onChanged: controller.search,
+                          isLoad: RxBool(
+                              controller.isLoadPaginationData.value &&
+                                  controller.paginationData.isEmpty),
+                          onEditingComplete: () {
+                            controller.getPaginationData(isRefresh: true);
+                          },
+                        );
+                      }),
                       ProductListComponent(
                         title: "المنتجات الأكثر طلبا ",
                         heroTagPrefix: "categories",

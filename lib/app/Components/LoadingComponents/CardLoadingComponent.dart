@@ -6,17 +6,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardLoadingComponent extends StatelessWidget {
   final double? height;
+  final double? opacity;
   final double? width;
   final BorderRadius? borderRadius;
   final EdgeInsets? cardMargin;
 
   const CardLoadingComponent(
-      {super.key, this.height, this.width, this.borderRadius, this.cardMargin});
+      {super.key,
+      this.height,
+      this.width,
+      this.borderRadius,
+      this.cardMargin,
+      this.opacity});
 
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: 0.2,
+      opacity: opacity ?? 0.2,
       child: CardLoading(
         withChangeDuration: true,
         borderRadius: borderRadius,

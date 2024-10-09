@@ -3,9 +3,8 @@ import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Mixins/AddToCartMixin.dart';
 import 'package:get/get.dart';
-import 'package:helper/data/models/url_model.dart';
-import 'package:helper/mixin/api_mixing.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
+import 'package:logger/logger.dart';
 
 import '../../Services/CartService.dart';
 
@@ -18,6 +17,15 @@ class CategoryProductsScreenController extends GetxController
   Future getFreshData({required bool refresh}) async {
     getPaginationData(isRefresh: refresh);
   }
+
+  void search(var data) {
+    if (data.isNotEmpty){
+      paginationParameter={...paginationParameter,"q":data};
+    }
+    else{
+       paginationParameter.remove("q") ;
+    }
+   }
 
   Future loadMore() async {
     await getPaginationData(isRefresh: false);
