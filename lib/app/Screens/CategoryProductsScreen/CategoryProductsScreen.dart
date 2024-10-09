@@ -74,6 +74,7 @@ class CategoryProductsScreen extends GetView<CategoryProductsScreenController> {
                     physics: const BouncingScrollPhysics(),
                     children: [
                       ProductListComponent(
+                        title: "المنتجات الأكثر طلبا ",
                         heroTagPrefix: "categories",
                         products: controller.paginationData,
                         onProductTap: (ProductModel product, k) {

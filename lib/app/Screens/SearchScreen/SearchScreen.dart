@@ -3,7 +3,6 @@ import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/EmptyProductComponent.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
-import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Screens/SearchScreen/Components/LoaderSearchComponent.dart';
 import 'package:delevary/app/Screens/SearchScreen/Components/SearchFieldComponent.dart';
 import 'package:delevary/app/Screens/SearchScreen/Components/SearchProductListComponent.dart';
@@ -11,7 +10,6 @@ import 'package:delevary/app/Screens/SearchScreen/Components/SearchStoresListCom
 import 'package:delevary/app/Screens/SearchScreen/Components/TapsComponents.dart';
 import 'package:delevary/app/Screens/SearchScreen/SearchScreenController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';

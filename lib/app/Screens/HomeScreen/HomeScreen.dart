@@ -9,6 +9,7 @@ import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/HomeScreen/Components/categories_components.dart';
+import 'package:delevary/app/Screens/HomeScreen/Components/special_stores_component.dart';
 import 'package:delevary/app/Screens/HomeScreen/HomeScreenController.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
@@ -35,26 +36,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-
-    if (Get
-        .find<MainController>()
-        .user
-        .value
-        ?.phone == null &&
+    if (Get.find<MainController>().user.value?.phone == null &&
         !isShowPhoneDialog) {
       isShowPhoneDialog = true;
       showPhoneDialog(context);
     }
     if (!isShowVersion &&
-        Get
-            .find<MainController>()
-            .packageInfo
-            .version !=
-            Get
-                .find<MainController>()
-                .setting
-                .value!
-                .currentVersion) {
+        Get.find<MainController>().packageInfo.version !=
+            Get.find<MainController>().setting.value!.currentVersion) {
       isShowVersion = true;
       showVersionDialog(context);
     }
@@ -64,13 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     ScrollController scrollController = ScrollController();
     return GetBuilder<HomeScreenController>(
-
       builder: (controller) {
-
-        Get
-            .find<MainScaffoldScreenController>()
-            .isScrollUp
-            .listen((p0) {
+        Get.find<MainScaffoldScreenController>().isScrollUp.listen((p0) {
           if (scrollController.hasClients) {
             if (scrollController.position.pixels != 0) {
               scrollController.animateTo(
@@ -86,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
               Future.delayed(
                 800.ms,
-                    () => controller.getFreshData(refresh: true),
+                () => controller.getFreshData(refresh: true),
               );
             }
           }
@@ -95,91 +79,88 @@ class _HomeScreenState extends State<HomeScreen> {
           drawerEnableOpenDragGesture: false,
           drawer: const DrawerComponent(),
           body: Builder(
-            builder: (context) =>
-                Container(
-                  height: Get.height,
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .background,
-                  child: Column(
-                    children: [
-                      AppBarComponent(
-                        openDrawer: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                      Expanded(
-                        child: ListView(
-                          controller: scrollController,
-                          padding: const EdgeInsets.all(0),
-                          physics: const BouncingScrollPhysics(),
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(20.sp),
-                              child: SliderComponent(
-                                autoPlay: true,
-                                height: 160.h,
-                                sliders: controller.sliders,
-                                controller: PageController(),
-                                isLoad: controller.isLoad,
-                              ),
-                            ),
-                            CategoriesComponent(
-                              categories: controller.categories,
-                              isLoading: controller.isLoad,
-                            ),
-
-                            BuildTitleSectionComponent(
-                              title: "المنتجات الرائجة",
-                              isLoad: controller.isLoad,
-                            ),
-                            5.verticalSpace,
-                            // ProductListComponent(
-                            //   heroTagPrefix: "homeProducts",
-                            //   products: controller.paginationData,
-                            //   onProductTap: (ProductModel product, k) {
-                            //     Get.toNamed(AppRoutes.showProduct,
-                            //         preventDuplicates: false,
-                            //         arguments: {
-                            //           "product": product,
-                            //           "hero": "homeProducts"
-                            //         });
-                            //     Get.put(
-                            //       ShowProductScreenController(),
-                            //       tag: "show_product${product.id}",
-                            //     );
-                            //   },
-                            //   isLoad: controller.isLoadPaginationData,
-                            //   onTapAddProduct: (product, productKy) {
-                            //     Get.find<MainScaffoldScreenController>()
-                            //         .addToCart(
-                            //         product, productKy, onSetState: () {
-                            //       setState(() {});
-                            //     }, context: context);
-                            //   },
-                            // ),
-                            LoadMoreComponent(
-                              isFinished: controller.isFinish,
-                              isLoad: controller.isLoadMore,
-                            )
-                          ],
-                        )
-                            .loadMoreAble(
-                          scrollController: scrollController,
-                          onLoadMore: () async {
-                            await controller.loadMore();
+            builder: (context) => Container(
+              height: Get.height,
+              color: Theme.of(context).colorScheme.background,
+              child: Column(
+                children: [
+                  AppBarComponent(
+                    openDrawer: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
+                  Expanded(
+                    child: ListView(
+                      controller: scrollController,
+                      padding: const EdgeInsets.all(0),
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(20.sp),
+                          child: SliderComponent(
+                            autoPlay: true,
+                            height: 160.h,
+                            sliders: controller.sliders,
+                            controller: PageController(),
+                            isLoad: controller.isLoad,
+                          ),
+                        ),
+                        CategoriesComponent(
+                          categories: controller.categories,
+                          isLoading: controller.isLoad,
+                        ),
+                        15.verticalSpace,
+                        SpecialStoresComponent(
+                            isLoad: controller.isLoad,
+                            stores: controller.specialStore) ,
+24.verticalSpace,
+                        ProductListComponent(
+                          showTitle: true,
+                          title: "المنتجات الأكثرا طلبا",
+                          heroTagPrefix: "homeProducts",
+                          products: controller.paginationData,
+                          onProductTap: (ProductModel product, k) {
+                            Get.toNamed(AppRoutes.showProduct,
+                                preventDuplicates: false,
+                                arguments: {
+                                  "product": product,
+                                  "hero": "homeProducts"
+                                });
+                            Get.put(
+                              ShowProductScreenController(),
+                              tag: "show_product${product.id}",
+                            );
                           },
-                        )
-                            .refreshAbel(
-                          onRefresh: () async {
-                            await controller.getFreshData(refresh: true);
+                          isLoad: controller.isLoadPaginationData,
+                          onTapAddProduct: (product, productKy) {
+                            Get.find<MainScaffoldScreenController>()
+                                .addToCart(
+                                product, productKy, onSetState: () {
+                              setState(() {});
+                            }, context: context);
                           },
                         ),
-                      ),
-                    ],
+                        LoadMoreComponent(
+                          isFinished: controller.isFinish,
+                          isLoad: controller.isLoadMore,
+                        )
+                      ],
+                    )
+                        .loadMoreAble(
+                      scrollController: scrollController,
+                      onLoadMore: () async {
+                        await controller.loadMore();
+                      },
+                    )
+                        .refreshAbel(
+                      onRefresh: () async {
+                        await controller.getFreshData(refresh: true);
+                      },
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ),
           ),
         );
       },

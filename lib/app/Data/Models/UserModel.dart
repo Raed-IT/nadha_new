@@ -35,7 +35,7 @@ class UserModel {
       }
     }
     if (json.containsKey("store") && json['store'] != null) {
-      store = StoreModel.fronJson(json['store']);
+      store = StoreModel.fromJson(json['store']);
     }
     image = json['image'];
     email = json['email'];

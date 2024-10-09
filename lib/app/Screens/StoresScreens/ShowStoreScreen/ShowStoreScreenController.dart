@@ -73,7 +73,7 @@ class ShowStoreScreenController extends GetxController
         // Get.back();
         return;
       }
-      store.value = StoreModel.fronJson(json['data']['store']);
+      store.value = StoreModel.fromJson(json['data']['store']);
       initData();
     }
   }

@@ -24,6 +24,7 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
 
   @override
   void onReady() {
+    Logger().w("sd");
     getFreshData();
     super.onReady();
   }
@@ -42,6 +43,7 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
           "ct": count,
         },
         onSuccess: (re, er) {
+          Logger().w(re);
           var json = re.data;
           Get.find<MainController>().setting.value =
               SettingModel.fromJson(json['data']['setting']);
@@ -64,7 +66,7 @@ class SplashScreenController extends GetxController with ApiHelperMixin {
             Future.delayed(
               2.seconds - now.difference(startTime),
               () {
-                Get.find<MainController>().cities.value = cities;
+                 Get.find<MainController>().cities.value = cities;
                 Get.offAllNamed(AppRoutes.mainScaffoldScreen);
               },
             );

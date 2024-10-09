@@ -38,7 +38,7 @@ class DrawerComponent extends StatelessWidget {
                           borderRadius: BorderRadius.circular(150.sp),
                           height: 70.sp,
                           width: 70.sp,
-                          image: Get.find<MainController>().user.value!.image!)
+                          image: Get.find<MainController>().user.value?.image??'')
                       .animate()
                       .slideY(begin: 1)
                       .fadeIn(),
@@ -99,7 +99,7 @@ class DrawerComponent extends StatelessWidget {
                           )
                         : Container(),
                   ),
-                  if (Get.find<MainController>().user.value!.isDelivery ??
+                  if (Get.find<MainController>().user.value?.isDelivery ??
                       false)
                     buildItem(
                       rout: AppRoutes.deliveryOrders,

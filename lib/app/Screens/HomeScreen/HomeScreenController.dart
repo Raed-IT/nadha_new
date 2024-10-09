@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:delevary/app/Data/ApiRoute.dart';
@@ -6,10 +5,8 @@ import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Data/Models/SliderModel.dart';
+import 'package:delevary/app/Data/Models/StoreModel.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
-import 'package:delevary/app/Services/LocalNotificationService.dart';
-import 'package:delevary/app/Services/PermissionService.dart';
-import 'package:delevary/app/Services/UI/ToastService.dart';
 import 'package:delevary/app/Data/Models/SettingModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,18 +14,19 @@ import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
- import '../../Services/CartService.dart';
+import 'package:logger/logger.dart';
+import '../../Services/CartService.dart';
 
 class HomeScreenController extends GetxController
     with ApiHelperMixin, PaginationMixin<ProductModel> {
   RxDouble cureentDownload = RxDouble(0);
   RxList<CategoryModel> categories = RxList([]);
   RxList<SliderModel> sliders = RxList([]);
+  RxList<StoreModel> specialStore = RxList([]);
   RxBool isDownload = RxBool(false);
   final CartService cartService = CartService();
   final GlobalKey<CartIconKey> cartKey =
       Get.find<MainScaffoldScreenController>().cartKey;
-
 
   @override
   void onInit() {
@@ -85,6 +83,10 @@ class HomeScreenController extends GetxController
         sliders.value = [];
         for (var slid in json['data']['sliders']) {
           sliders.add(SliderModel.fromJson(slid));
+        }
+        specialStore.value=[];
+        for (var slid in json['data']['special_stores']) {
+          specialStore.add(StoreModel.fromJson(slid));
         }
       }
     } else {

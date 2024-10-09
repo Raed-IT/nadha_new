@@ -94,7 +94,7 @@ class ProductModel {
     if (json['category'] != null) {
       category = CategoryModel.fromJson(json['category']);
     }
-    store = StoreModel.fronJson(json['store']);
+    store = StoreModel.fromJson(json['store']);
   }
 
   Map<String, dynamic> toJson() {

@@ -31,4 +31,5 @@ class ApiRoute {
   static String logout = "$host/logout";
   static String sliders = "$host/sliders";
   static String transforms = "$host/transforms";
+  static String storeSpecial = "$stores/special";
 }

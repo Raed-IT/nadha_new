@@ -12,8 +12,8 @@ class MainScaffoldPage extends GetPage {
           page: () => MainScaffoldScreen(),
           binding: MainScaffoldScreenBinding(),
           middlewares: [
-            IsReadStarterPagesMiddleware(),
-            IsLoginMiddleware(),
+            // IsReadStarterPagesMiddleware(),
+            // IsLoginMiddleware(),
           ],
         );
 }

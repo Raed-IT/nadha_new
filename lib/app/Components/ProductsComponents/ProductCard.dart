@@ -5,7 +5,10 @@ import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
 import 'package:delevary/app/Services/Api/FavoretService.dart';
 import 'package:delevary/app/Services/CartService.dart';
+import 'package:delevary/app/Thems/AppColots.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -54,6 +57,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
         }
       },
       child: Container(
+        height: 240.h,
         padding: EdgeInsets.only(bottom: 5.h),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onSecondary,
@@ -71,7 +75,6 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
             Stack(
               children: [
                 SizedBox(
-                  height: 180.h,
                   child: Stack(
                     children: [
                       Row(
@@ -83,11 +86,15 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                               child: Container(
                                 key: productCardKye,
                                 child: ImageCacheComponent(
+                                  height: 150.h,
                                   borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(5.sp),
                                     topLeft: Radius.circular(5.sp),
                                   ),
-                                  image: "${widget.product.image}",
+
+                                  image:
+                                      "https://lh5.googleusercontent.com/p/AF1QipNIsMAddl_8R1wwyoubenfmrA1xDO1ugujIfMve=w408-h429-k-no",
+                                  // image: "${widget.product.image}",
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -95,33 +102,33 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                           ),
                         ],
                       ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: GestureDetector(
-                          onTap: () {
-                            widget.onTapAddProduct(
-                                widget.product, productCardKye);
-                          },
-                          child: SizedBox(
-                            height: 35.sp,
-                            width: 35.sp,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.sp),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  FontAwesomeIcons.plus,
-                                  size: 16.sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Align(
+                      //   alignment: Alignment.topRight,
+                      //   child: GestureDetector(
+                      //     onTap: () {
+                      //       widget.onTapAddProduct(
+                      //           widget.product, productCardKye);
+                      //     },
+                      //     child: SizedBox(
+                      //       height: 35.sp,
+                      //       width: 35.sp,
+                      //       child: Card(
+                      //         shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(5.sp),
+                      //         ),
+                      //         child: Center(
+                      //           child: Icon(
+                      //             color: Theme.of(context).colorScheme.primary,
+                      //             FontAwesomeIcons.plus,
+                      //             size: 16.sp,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       Positioned(
-                        top: 30.h,
+                        top: 0.h,
                         child: GestureDetector(
                           onTap: () async {
                             setState(() {
@@ -170,13 +177,13 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                                         child: CircularProgressIndicator(
                                           strokeWidth: 03.sp,
                                         ),
-                                      )),
+                                      ),),
                             ),
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 60.h,
+                        top: 33.h,
                         child: GestureDetector(
                           onTap: () {
                             Share.share(
@@ -203,9 +210,11 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                 ),
                 if (!(widget.product.store?.isOpen ?? false))
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+
+                    },
                     child: Container(
-                      height: 175.h,
+                      height: 150.h,
                       width: Get.width,
                       color: Theme.of(context)
                           .colorScheme
@@ -223,97 +232,48 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
               ],
             ),
             Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: SizedBox(
-                      width: Get.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 5.w),
-                                height: 15.sp,
-                                width: 15.sp,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(500.sp),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        "${widget.product.store?.image}"),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: AutoSizeText(
-                                  "${widget.product.store?.name ?? ''}  ",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 10.sp),
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: AutoSizeText(
-                                "${widget.product.name} ",
-                                maxLines: 1,
-                                minFontSize: 10.sp,
-                                stepGranularity: 10.sp,
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w100,
-                                    fontSize: 5.sp,
-                                    overflow: TextOverflow.ellipsis),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 10.sp),
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: AutoSizeText(
-                                "${widget.product.info} ",
-                                maxLines: 1,
-                                minFontSize: 10.sp,
-                                stepGranularity: 10.sp,
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground,
-                                  fontWeight: FontWeight.w100,
-                                  fontSize: 5.sp,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.sp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                   5.verticalSpace,
+                    Text(
+                      "${widget.product.name}",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: BuildPriceProductComponent(
+                    Text(
+                      "${widget.product.info}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    BuildPriceProductComponent(
                       product: Rx(widget.product),
                     ),
-                  ),
-                ],
+                    5.verticalSpace,
+                    SizedBox(
+                      height: 24.h,
+                      width: Get.width,
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6.sp),
+                        ),
+                        color: Theme.of(context).colorScheme.primary,
+                        onPressed: () {
+                          widget.onTapAddProduct(
+                              widget.product, productCardKye);
+                        },
+                        child: Icon(
+                          Icons.add,
+                          size: 18.sp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
           ],

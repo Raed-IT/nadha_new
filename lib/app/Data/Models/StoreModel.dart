@@ -18,7 +18,7 @@ class StoreModel {
   StoreModel(this.id, this.name, this.address, this.info, this.lat, this.long,
       this.city);
 
-  StoreModel.fronJson(Map<String, dynamic> json) {
+  StoreModel.fromJson(Map<String, dynamic> json) {
     autoClose = json['auto_close'];
     id = json['id'];
     uniqName = json['uniq_name'];

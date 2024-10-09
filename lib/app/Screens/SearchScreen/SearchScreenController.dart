@@ -8,7 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/pagination_mixing.dart';
 
-class SearchScreenController extends GetxController with PaginationMixin,AddToCartMixin {
+class SearchScreenController extends GetxController
+    with PaginationMixin,AddToCartMixin {
   TextEditingController searchTextController = TextEditingController();
   Rx<String> searchText = Rx("");
   RxInt searchCount = RxInt(0);
@@ -54,7 +55,7 @@ class SearchScreenController extends GetxController with PaginationMixin,AddToCa
         int.tryParse("${json['data']['pagination']['total']}") ?? 0;
     if (json['data']['type'] == 'stores') {
       for (var store in json['data']['data']) {
-        stores.add(StoreModel.fronJson(store));
+        stores.add(StoreModel.fromJson(store));
       }
       return stores;
     } else {

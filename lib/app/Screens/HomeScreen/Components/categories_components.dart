@@ -13,13 +13,13 @@ class CategoriesComponent extends StatelessWidget {
   final RxBool isLoading;
   final List<CategoryModel> categories;
 
-  const CategoriesComponent(
-      {super.key, required this.isLoading, required this.categories});
+  const  CategoriesComponent(
+      {super.key, required this.isLoading, required this.categories });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 104.h,
+      height: 70.h,
       child: Column(
         children: [
           Padding(
@@ -31,7 +31,7 @@ class CategoriesComponent extends StatelessWidget {
                   style:
                       TextStyle(fontWeight: FontWeight.w900, fontSize: 15.sp),
                 ),
-                Spacer(),
+                const Spacer(),
                 GestureDetector(
                   onTap: () {
                     Get.toNamed(AppRoutes.categoriesV2,
@@ -58,38 +58,41 @@ class CategoriesComponent extends StatelessWidget {
             ),
           ),
           Obx(
-          ()=> SizedBox(
-              width: Get.width,
-              height: 42.h,
-              child: ListView.builder(
-                physics:const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: ()=>Get.toNamed(AppRoutes.categoryProducts,arguments: {"category":categories[index]}),
-                  child: SizedBox(
-                    height: 24.h,
-                    child: Card(
-                      elevation: 4,
-                      shadowColor: Colors.black38,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Colors.black12.withOpacity(0.1)
+          ()=> Padding(
+            padding: EdgeInsets.only(right:  20.w),
+            child: SizedBox(
+                width: Get.width,
+                height: 42.h,
+                child: ListView.builder(
+                  physics:const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: ()=>Get.toNamed(AppRoutes.categoryProducts,arguments: {"category":categories[index]}),
+                    child: SizedBox(
+                      height: 24.h,
+                      child: Card(
+                        elevation: 4,
+                        shadowColor: Colors.black38,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.black12.withOpacity(0.1)
+                          ),
+                          borderRadius: BorderRadius.circular(500)
                         ),
-                        borderRadius: BorderRadius.circular(500)
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 0),
-                        child: Center(
-                          child: Text("${categories[index].name}"),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 0),
+                          child: Center(
+                            child: Text("${categories[index].name}"),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              }),
-            ),
+                  );
+                }),
+              ),
+          ),
           )
         ],
       ),

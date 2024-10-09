@@ -25,7 +25,7 @@ class StoresScreenController extends GetxController
   List<StoreModel> getModelFromPaginationJsonUsing(Map<String, dynamic> json) {
     List<StoreModel> stores = [];
     for (var store in json['data']['stores']) {
-      stores.add(StoreModel.fronJson(store));
+      stores.add(StoreModel.fromJson(store));
     }
     return stores;
   }

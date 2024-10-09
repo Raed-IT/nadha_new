@@ -2,15 +2,11 @@ import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
-import 'package:logger/logger.dart';
-
 import '../Screens/CartScreen/Components/AddToCartDialogComponent.dart';
 
 class CartService with ApiHelperMixin {
