@@ -5,12 +5,20 @@ import 'package:helper/mixin/pagination_mixing.dart';
 
 class StoresScreenController extends GetxController
     with PaginationMixin<StoreModel> {
-
   @override
   void onInit() {
     super.onInit();
     paginationUrl = ApiRoute.stores;
     getFreshData();
+  }
+
+  void search(data) {
+    if (data.isNotEmpty){
+      paginationParameter={...paginationParameter,"q":data};
+    }
+    else{
+      paginationParameter.remove("q") ;
+    }
   }
 
   Future getFreshData() async {

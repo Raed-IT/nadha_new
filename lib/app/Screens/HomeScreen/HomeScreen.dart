@@ -96,6 +96,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       physics: const BouncingScrollPhysics(),
                       children: [
                         Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.sp),
+                          child: SizedBox(
+                            height: 48.h,
+                            width: Get.width,
+                            child: const Card(
+                              margin: EdgeInsets.zero,
+                            ),
+                          ),
+                        ),
+                        Padding(
                           padding: EdgeInsets.all(20.sp),
                           child: SliderComponent(
                             autoPlay: true,
