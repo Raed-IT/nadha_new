@@ -1,7 +1,6 @@
 import 'package:delevary/app/Components/AppBarComponents/v2/appBar/AppBarComponent.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
-import 'package:delevary/app/Components/TitleSectionComponent.dart';
 import 'package:delevary/app/Components/version_dialog.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
@@ -13,12 +12,10 @@ import 'package:delevary/app/Screens/HomeScreen/Components/special_stores_compon
 import 'package:delevary/app/Screens/HomeScreen/HomeScreenController.dart';
 import 'package:delevary/app/Screens/MainScaffoldSreen/MainScaffoldScreenController.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
 import '../../Components/SlidersComponent.dart';
 import 'Components/phoneDialog.dart';
@@ -54,27 +51,29 @@ class _HomeScreenState extends State<HomeScreen> {
     ScrollController scrollController = ScrollController();
     return GetBuilder<HomeScreenController>(
       builder: (controller) {
-        Get.find<MainScaffoldScreenController>().isScrollUp.listen((p0) {
-          if (scrollController.hasClients) {
-            if (scrollController.position.pixels != 0) {
-              scrollController.animateTo(
-                0,
-                duration: 100.ms,
-                curve: Curves.decelerate,
-              );
-            } else {
-              scrollController.animateTo(
-                -800.h,
-                duration: 1000.ms,
-                curve: Curves.decelerate,
-              );
-              Future.delayed(
-                800.ms,
-                () => controller.getFreshData(refresh: true),
-              );
+        Get.find<MainScaffoldScreenController>().isScrollUp.listen(
+          (p0) {
+            if (scrollController.hasClients) {
+              if (scrollController.position.pixels != 0) {
+                scrollController.animateTo(
+                  0,
+                  duration: 100.ms,
+                  curve: Curves.decelerate,
+                );
+              } else {
+                scrollController.animateTo(
+                  -50.h,
+                  duration: 1000.ms,
+                  curve: Curves.decelerate,
+                );
+                Future.delayed(
+                  800.ms,
+                  () => controller.getFreshData(refresh: true),
+                );
+              }
             }
-          }
-        });
+          },
+        );
         return Scaffold(
           drawerEnableOpenDragGesture: false,
           drawer: const DrawerComponent(),
@@ -122,8 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         15.verticalSpace,
                         SpecialStoresComponent(
                             isLoad: controller.isLoad,
-                            stores: controller.specialStore) ,
-24.verticalSpace,
+                            stores: controller.specialStore),
+                        24.verticalSpace,
                         ProductListComponent(
                           showTitle: true,
                           title: "المنتجات الأكثرا طلبا",
@@ -144,8 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           isLoad: controller.isLoadPaginationData,
                           onTapAddProduct: (product, productKy) {
                             Get.find<MainScaffoldScreenController>()
-                                .addToCart(
-                                product, productKy, onSetState: () {
+                                .addToCart(product, productKy, onSetState: () {
                               setState(() {});
                             }, context: context);
                           },

@@ -5,6 +5,7 @@ import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.d
 import 'package:delevary/app/Data/Models/StoreModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/StoresScreens/StoresScreen/StoresScreenController.dart';
+import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,96 +40,62 @@ class StoresListComponent extends StatelessWidget {
           : (stores.isEmpty)
               ? noStoresWidget(context, getFreshData)
               : GridView.count(
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
                   crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.2,
+                  childAspectRatio: 1 / 1.3,
                   crossAxisSpacing: 0.sp,
                   mainAxisSpacing: 10.h,
                   children: stores
-                      .map((store) => buildStoreCard(store, context))
+                      .map(
+                        (store) => buildStoreCard(store),
+                      )
                       .toList(),
                 ),
     );
-    // return Obx(
-    //   () => Column(
-    //     children: (!isLoad.value)
-    //         ? (stores.isNotEmpty)
-    //             ? stores.map((store) => buildStoreCard(store, context)).toList()
-    //             : [noStoresWidget(context, getFreshData)]
-    //         : List.generate(20, (index) => index)
-    //             .map(
-    //               (e) => CardLoadingComponent(
-    //                 height: 100.h,
-    //                 borderRadius: BorderRadius.circular(10.sp),
-    //               ),
-    //             )
-    //             .toList(),
-    //   ),
-    // );
   }
 
-  Widget buildStoreCard(StoreModel store, BuildContext context) {
+  Widget buildStoreCard(StoreModel store) {
     return GestureDetector(
       onTap: () =>
           Get.toNamed(AppRoutes.showStore, arguments: {"store": store}),
-      child: Container(
-        padding: EdgeInsets.zero,
-        margin: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSecondary,
-          borderRadius: BorderRadius.circular(3.sp),
-        ),
-        child: Column(
-          children: [
-            Row(
+      child: SizedBox(
+        height: 200.h,
+        width: 150.w,
+        child: Card(
+          margin: EdgeInsets.symmetric(horizontal: 6.w),
+          elevation: 5,
+          shadowColor: Colors.black12,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 10.h),
+            child: Column(
               children: [
-                Expanded(
-                  child: ImageCacheComponent(
-                    fit: BoxFit.cover,
-                    image: "${store.image}",
-                    height: 130.sp,
-                    borderRadius: BorderRadius.circular(3.sp),
-                  ),
+                ImageCacheComponent(
+                  borderRadius: BorderRadius.circular(10.sp),
+                  image: "${store.image}",
+                  height: 135.h,
+                  width: 135.h,
+                ),
+                8.verticalSpace,
+                Text(
+                  "${store.name}",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style:
+                      TextStyle(fontWeight: FontWeight.w900, fontSize: 13.sp),
+                ),
+                8.verticalSpace,
+                Text(
+                  "${store.info}",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 12.sp, color: AppColors.highLightColor),
                 ),
               ],
             ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(5.sp),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: AutoSizeText(
-                        "${store.name}",
-                        maxLines: 1,
-                        style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    10.verticalSpace,
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: AutoSizeText(
-                        "${store.info}",
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontSize: 10.sp,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
