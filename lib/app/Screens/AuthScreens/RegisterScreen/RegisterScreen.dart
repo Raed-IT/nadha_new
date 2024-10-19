@@ -93,8 +93,8 @@ class RegisterScreen extends GetView<RegisterScreenController> {
                 15.verticalSpace,
                 PrimaryButtonComponent(
                   label: "متابعة",
-                  onTap: () {
-                    controller.register(context);
+                  onTap: ()async {
+                   await controller.register(context);
                   },
                 ),
                 30.verticalSpace,

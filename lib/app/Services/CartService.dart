@@ -156,52 +156,12 @@ class CartService with ApiHelperMixin {
 
   void removeFromCart(
       {required ProductModel product, Function? onSetState}) async {
-    await Get.bottomSheet(Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          20.verticalSpace,
-          Text(
-            "حذف عنصر ",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
-          ),
-          20.verticalSpace,
-          Text(
-            "سيتم حذف `${product.name}` من السلة ",
-            textAlign: TextAlign.center,
-          ),
-          20.verticalSpace,
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              OutlinedButton.icon(
-                style: ButtonStyle(
-                  surfaceTintColor: MaterialStateProperty.all(Colors.red),
-                ),
-                onPressed: () {
-                  int index = Get.find<MainController>().cart.indexWhere(
-                      (cartItem) => cartItem.product!.id == product.id);
-                  if (index != -1) {
-                    Get.find<MainController>().cart.removeAt(index);
-                    onSetState?.call();
-                  }
-                  Get.back();
-                },
-                icon: Icon(
-                  FontAwesomeIcons.remove,
-                ),
-                label: Text('حذف'),
-              ),
-              OutlinedButton(
-                onPressed: () => Get.back(),
-                child: Text("إالغاء"),
-              ),
-            ],
-          )
-        ],
-      ),
-    ));
+    int index = Get.find<MainController>().cart.indexWhere(
+            (cartItem) => cartItem.product!.id == product.id);
+    if (index != -1) {
+      Get.find<MainController>().cart.removeAt(index);
+      onSetState?.call();
+    }
   }
 
   addCustomQty(

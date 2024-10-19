@@ -3,26 +3,22 @@ import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
-import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
-import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
+import 'package:delevary/app/Components/v2/primary_button.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/CartScreen/CartScreenController.dart';
 import 'package:delevary/app/Screens/CartScreen/Components/CartEmptyComponent.dart';
 import 'package:delevary/app/Screens/CartScreen/Components/ShowConfiermCartDialog.dart';
-import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../Components/AppBarComponents/AppBarComponent.dart';
 import '../../Components/DrawerComponents/DrawerComponent.dart';
-import '../../Components/ProductsComponents/AddToCartComponent.dart';
 import '../AddressesScreens/Components/showAddressesBottomSheet.dart';
 
 class CartScreen extends StatefulWidget {
@@ -51,37 +47,7 @@ class _CartScreenState extends State<CartScreen> {
                   },
                   title: "السلة",
                 ),
-                // Obx(
-                //   () => (Get.find<MainController>().cart.isNotEmpty)
-                //       ? Row(
-                //           children: [
-                //             buildCardStatistic(
-                //               context,
-                //               title: "اجمالي الطلب",
-                //               isMainCard: true,
-                //               content: ((Get.find<MainController>()
-                //                               .setting
-                //                               .value
-                //                               ?.deliveryPrice ??
-                //                           0) +
-                //                       controller.cartService.getTotal())
-                //                   .toStringAsFixed(2),
-                //             ),
-                //             buildCardStatistic(context,
-                //                 title: "اجور توصيل",
-                //                 content:
-                //                     "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}"),
-                //             buildCardStatistic(
-                //               context,
-                //               title: "اجمالي المنتجات ",
-                //               content: controller.cartService
-                //                   .getTotal()
-                //                   .toStringAsFixed(2),
-                //             ),
-                //           ],
-                //         )
-                //       : Container(),
-                // ),
+           
                 Expanded(
                   child: Obx(
                     () => (Get.find<MainController>().cart.isEmpty)
@@ -89,28 +55,107 @@ class _CartScreenState extends State<CartScreen> {
                         : ListView(
                             padding: const EdgeInsets.all(0),
                             physics: const BouncingScrollPhysics(),
-                            children: Get.find<MainController>()
-                                .cart
-                                .map(
-                                  (cartItem) => buildCartItemCard(
-                                          controller: controller,
-                                          cartItem: cartItem,
-                                          context: context)
-                                      .animate()
-                                      .slideY(begin: 1),
-                                )
-                                .toList(),
+                            children: [
+                              ...Get.find<MainController>()
+                                  .cart
+                                  .map((item) => Dismissible(
+                                        background: Container(
+                                          margin: EdgeInsets.all(10.sp),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.secondary,
+                                            borderRadius:
+                                                BorderRadius.circular(10.sp),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.all(20.sp),
+                                                child: Text(
+                                                  "حذف ",
+                                                  style: TextStyle(
+                                                      fontSize: 15.sp,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .background),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        secondaryBackground: const SizedBox(),
+                                        confirmDismiss: (d) async {
+
+                                          controller.cartService.removeFromCart(
+                                              product: item.product!);
+                                          return Future(() => true);
+                                        },
+                                        direction: DismissDirection.startToEnd,
+                                        key: Key("${item.product?.id}"),
+                                        child: buildCartItemCard(
+                                                controller: controller,
+                                                cartItem: item,
+                                                context: context)
+                                            .animate()
+                                            .slideY(begin: 1),
+                                      ))
+                                  .toList(),
+                              24.verticalSpace,
+                              buildRowStatistic(
+                                  content:
+                                      "${controller.cartService.getTotal()}",
+                                  label: "قيمة المشتريات"),
+                              buildRowStatistic(
+                                  content:
+                                  "${Get.find<MainController>().setting.value?.deliveryPrice}",
+                                  label: "رسوم التوصيل"),
+                              buildRowStatistic(
+                                  content:
+                                  "${controller.cartService.getTotal()+(Get.find<MainController>().setting.value?.deliveryPrice??10)}",
+                                  label: "المبلغ الكلي"),
+                              Padding(
+                                padding: EdgeInsets.all(20.sp),
+                                child: PrimaryButtonComponent( label: " أطلب الأن",onTap: ()async =>Get.toNamed(AppRoutes.checkoutPage),),
+                              )
+                            ],
                           ),
                   ),
                 ),
-                Obx(() => (Get.find<MainController>().cart.isNotEmpty &&
-                        Get.find<MainController>().setting.value!.isClose!)
-                    ? buildSubmeitCard(controller: controller)
-                    : Container()),
+                Obx(
+                  () => (Get.find<MainController>().cart.isNotEmpty &&
+                          Get.find<MainController>().setting.value!.isClose!)
+                      ? buildSubmeitCard(controller: controller)
+                      : Container(),
+                ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildRowStatistic({required String label, required String content}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.sp),
+          ),
+          Spacer(),
+          Text(
+            content,
+            style: TextStyle(
+                color: AppColors.highLightColor, fontWeight: FontWeight.w800),
+          )
+        ],
       ),
     );
   }
@@ -282,18 +327,17 @@ class _CartScreenState extends State<CartScreen> {
           child: Row(
             children: [
               ImageCacheComponent(
-                  borderRadius: BorderRadius.circular(10.sp),
-                  image: "${cartItem.product!.image}",
+                borderRadius: BorderRadius.circular(10.sp),
+                image: "${cartItem.product!.image}",
                 width: 80.sp,
                 height: 80.sp,
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
                   child: Column(
-                    children: [
-                      buildCardProductName(cartItem)
-                    ],
+                    children: [buildCardProductName(cartItem)],
                   ),
                 ),
               )
@@ -303,36 +347,33 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-Widget buildCardProductName(CartItemModel cartItem){
-    return   Row(
+
+  Widget buildCardProductName(CartItemModel cartItem) {
+    return Row(
       children: [
         Text(
           "${cartItem.product!.name}",
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
           softWrap: false,
-
-          style: TextStyle(
-              fontSize: 13.sp, fontWeight: FontWeight.w800),
+          style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w800),
         ),
         Text(
           " / ",
-          style: TextStyle(
-              fontSize: 13.sp, color: AppColors.highLightColor),
+          style: TextStyle(fontSize: 13.sp, color: AppColors.highLightColor),
         ),
         Expanded(
           child: Text(
-           "${ cartItem.product!.store?.name }"?? '',
+            "${cartItem.product!.store?.name}" ?? '',
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             softWrap: false,
-            style: TextStyle(
-                fontSize: 13.sp, color: AppColors.highLightColor),
+            style: TextStyle(fontSize: 13.sp, color: AppColors.highLightColor),
           ),
         )
       ],
     );
-}
+  }
 // Widget buildCartItemCard(
 //     {required CartItemModel cartItem,
 //     required BuildContext context,

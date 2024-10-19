@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class PrimaryButtonComponent extends StatelessWidget {
   final String label;
 
-  final void Function()? onTap;
+  final Future<void> Function()? onTap;
 
   const PrimaryButtonComponent({super.key, required this.label, this.onTap});
 

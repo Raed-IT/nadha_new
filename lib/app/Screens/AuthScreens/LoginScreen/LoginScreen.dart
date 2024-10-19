@@ -94,8 +94,8 @@ class LoginScreen extends GetView<LoginScreenController> {
                 45.verticalSpace,
                 PrimaryButtonComponent(
                   label: "تسجيل الدخول",
-                  onTap: () {
-                    controller.login(context: context);
+                  onTap: () async{
+                   await controller.login(context: context);
                   },
                 ),
                 40.verticalSpace,

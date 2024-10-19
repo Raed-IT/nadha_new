@@ -44,4 +44,6 @@ class AppRoutes {
 
 //   v2
   static const String starterPages = "/starterPages";
+  static const String checkoutPage = "/checkout";
+
 }
