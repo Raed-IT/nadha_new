@@ -1,7 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_loading/card_loading.dart';
+import 'package:delevary/app/Thems/AppColots.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -86,10 +89,21 @@ class ImageCacheComponent extends StatelessWidget {
           },
           imageUrl: image,
           errorWidget: (context, s, r) {
-            return Center(
-              child: Icon(
-                Icons.error_outline,
-                size: 50.sp,
+            return Container(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Image.asset("assets/images/loader.png"),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Text(
+                        "تعذر تحميل الصوره",
+                        style: TextStyle(fontSize: 7.sp),
+                      ))
+                ],
               ),
             );
           },

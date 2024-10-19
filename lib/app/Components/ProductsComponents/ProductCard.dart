@@ -91,10 +91,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                                     topRight: Radius.circular(5.sp),
                                     topLeft: Radius.circular(5.sp),
                                   ),
-
-                                  image:
-                                      "https://lh5.googleusercontent.com/p/AF1QipNIsMAddl_8R1wwyoubenfmrA1xDO1ugujIfMve=w408-h429-k-no",
-                                  // image: "${widget.product.image}",
+                                  image: "${widget.product.image}",
                                   fit: BoxFit.cover,
                                 ),
                               ),

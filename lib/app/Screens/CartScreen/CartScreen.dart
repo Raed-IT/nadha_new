@@ -15,6 +15,7 @@ import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenControll
 import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -50,37 +51,37 @@ class _CartScreenState extends State<CartScreen> {
                   },
                   title: "السلة",
                 ),
-                Obx(
-                  () => (Get.find<MainController>().cart.isNotEmpty)
-                      ? Row(
-                          children: [
-                            buildCardStatistic(
-                              context,
-                              title: "اجمالي الطلب",
-                              isMainCard: true,
-                              content: ((Get.find<MainController>()
-                                              .setting
-                                              .value
-                                              ?.deliveryPrice ??
-                                          0) +
-                                      controller.cartService.getTotal())
-                                  .toStringAsFixed(2),
-                            ),
-                            buildCardStatistic(context,
-                                title: "اجور توصيل",
-                                content:
-                                    "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}"),
-                            buildCardStatistic(
-                              context,
-                              title: "اجمالي المنتجات ",
-                              content: controller.cartService
-                                  .getTotal()
-                                  .toStringAsFixed(2),
-                            ),
-                          ],
-                        )
-                      : Container(),
-                ),
+                // Obx(
+                //   () => (Get.find<MainController>().cart.isNotEmpty)
+                //       ? Row(
+                //           children: [
+                //             buildCardStatistic(
+                //               context,
+                //               title: "اجمالي الطلب",
+                //               isMainCard: true,
+                //               content: ((Get.find<MainController>()
+                //                               .setting
+                //                               .value
+                //                               ?.deliveryPrice ??
+                //                           0) +
+                //                       controller.cartService.getTotal())
+                //                   .toStringAsFixed(2),
+                //             ),
+                //             buildCardStatistic(context,
+                //                 title: "اجور توصيل",
+                //                 content:
+                //                     "${Get.find<MainController>().setting.value?.deliveryPrice ?? 0}"),
+                //             buildCardStatistic(
+                //               context,
+                //               title: "اجمالي المنتجات ",
+                //               content: controller.cartService
+                //                   .getTotal()
+                //                   .toStringAsFixed(2),
+                //             ),
+                //           ],
+                //         )
+                //       : Container(),
+                // ),
                 Expanded(
                   child: Obx(
                     () => (Get.find<MainController>().cart.isEmpty)
@@ -181,8 +182,8 @@ class _CartScreenState extends State<CartScreen> {
                       child: Center(
                         child: Text(
                           "أختيار موقع الطلب",
-                          style:
-                              TextStyle(color: Theme.of(context).colorScheme.background),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.background),
                         ),
                       ),
                     ),
@@ -267,174 +268,243 @@ class _CartScreenState extends State<CartScreen> {
       {required CartItemModel cartItem,
       required BuildContext context,
       required CartScreenController controller}) {
-    return SizedBox(
-      height: 160.h,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5.sp),
-        child: Card(
-          elevation: 5,
-          child: Column(
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: 8.h,
+      ),
+      height: 120.h,
+      child: Card(
+        margin: EdgeInsets.only(
+          right: 33.w,
+        ),
+        child: Transform.translate(
+          offset: Offset(30.w, 0),
+          child: Row(
             children: [
-              Padding(
-                padding: EdgeInsets.all(8.sp),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(
-                          AppRoutes.showProduct,
-                          arguments: {
-                            "product": cartItem.product,
-                            "hero": 'cart'
-                          },
-                        );
-                        Get.put(ShowProductScreenController(),
-                            tag: "show_product${cartItem.product!.id}");
-                      },
-                      child: SizedBox(
-                        width: 85.sp,
-                        height: 85.sp,
-                        child: Stack(
-                          children: [
-                            Hero(
-                              tag: "cart${cartItem.product!.id}",
-                              child: ImageCacheComponent(
-                                borderRadius: BorderRadius.circular(10.sp),
-                                image: "${cartItem.product!.image}",
-                                width: 85.sp,
-                                height: 85.sp,
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                width: 85.sp,
-                                height: 30.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(10.sp),
-                                    bottomLeft: Radius.circular(10.sp),
-                                  ),
-                                  gradient: const LinearGradient(
-                                    end: Alignment.topCenter,
-                                    begin: Alignment.bottomCenter,
-                                    colors: [Colors.black, Colors.transparent],
-                                  ),
-                                ),
-                                child: Center(
-                                  child: AutoSizeText(
-                                    "${cartItem.product?.store?.name}",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      overflow: TextOverflow.ellipsis,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.sp),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${cartItem.product!.name}",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            AutoSizeText(
-                              "${cartItem.product!.info}",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(),
-                              maxLines: 2,
-                              softWrap: true,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "الإجمالي",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10.sp),
-                        ),
-                        10.verticalSpace,
-                        Text(cartItem.total)
-                      ],
-                    )
-                  ],
-                ),
+              ImageCacheComponent(
+                  borderRadius: BorderRadius.circular(10.sp),
+                  image: "${cartItem.product!.image}",
+                width: 80.sp,
+                height: 80.sp,
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.sp),
-                  child: Row(
+                  padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: BuildPriceProductComponent(
-                          product: Rx(cartItem.product!),
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            // build cart Card Counter
-                            // if (cartItem.unit == ProductUnitTypeEnum.piece)
-                            AddToCardComponent(
-                              showEditIcon: false,
-                              product: cartItem.product!,
-                              onSetState: () => setState(() {}),
-                            ),
-                            // End build cart Card Counter
-
-                            //build cart Card addButton
-                            Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                controller.cartService
-                                    .removeFromCart(product: cartItem.product!);
-                                setState(() {});
-                              },
-                              child: SizedBox(
-                                width: 40.sp,
-                                height: 40.sp,
-                                child: Card(
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.delete,
-                                      size: 20.sp,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                ),
-                              ).animate().scale(),
-                            ),
-                          ],
-                        ),
-                      ),
+                      buildCardProductName(cartItem)
                     ],
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
       ),
     );
   }
+Widget buildCardProductName(CartItemModel cartItem){
+    return   Row(
+      children: [
+        Text(
+          "${cartItem.product!.name}",
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          softWrap: false,
+
+          style: TextStyle(
+              fontSize: 13.sp, fontWeight: FontWeight.w800),
+        ),
+        Text(
+          " / ",
+          style: TextStyle(
+              fontSize: 13.sp, color: AppColors.highLightColor),
+        ),
+        Expanded(
+          child: Text(
+           "${ cartItem.product!.store?.name }"?? '',
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            softWrap: false,
+            style: TextStyle(
+                fontSize: 13.sp, color: AppColors.highLightColor),
+          ),
+        )
+      ],
+    );
+}
+// Widget buildCartItemCard(
+//     {required CartItemModel cartItem,
+//     required BuildContext context,
+//     required CartScreenController controller}) {
+//   return SizedBox(
+//     height: 120.h,
+//     child: Padding(
+//       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5.sp),
+//       child: Card(
+//         elevation: 5,
+//         child: Column(
+//           children: [
+//             Padding(
+//               padding: EdgeInsets.all(8.sp),
+//               child: Row(
+//                 children: [
+//                   GestureDetector(
+//                     onTap: () {
+//                       Get.toNamed(
+//                         AppRoutes.showProduct,
+//                         arguments: {
+//                           "product": cartItem.product,
+//                           "hero": 'cart'
+//                         },
+//                       );
+//                       Get.put(ShowProductScreenController(),
+//                           tag: "show_product${cartItem.product!.id}");
+//                     },
+//                     child: SizedBox(
+//                       width: 85.sp,
+//                       height: 85.sp,
+//                       child: Stack(
+//                         children: [
+//                           Hero(
+//                             tag: "cart${cartItem.product!.id}",
+//                             child: ImageCacheComponent(
+//                               borderRadius: BorderRadius.circular(10.sp),
+//                               image: "${cartItem.product!.image}",
+//                               width: 85.sp,
+//                               height: 85.sp,
+//                             ),
+//                           ),
+//                           Align(
+//                             alignment: Alignment.bottomCenter,
+//                             child: Container(
+//                               width: 85.sp,
+//                               height: 30.h,
+//                               decoration: BoxDecoration(
+//                                 borderRadius: BorderRadius.only(
+//                                   bottomRight: Radius.circular(10.sp),
+//                                   bottomLeft: Radius.circular(10.sp),
+//                                 ),
+//                                 gradient: const LinearGradient(
+//                                   end: Alignment.topCenter,
+//                                   begin: Alignment.bottomCenter,
+//                                   colors: [Colors.black, Colors.transparent],
+//                                 ),
+//                               ),
+//                               child: Center(
+//                                 child: AutoSizeText(
+//                                   "${cartItem.product?.store?.name}",
+//                                   maxLines: 2,
+//                                   style: TextStyle(
+//                                     overflow: TextOverflow.ellipsis,
+//                                     color: Theme.of(context)
+//                                         .colorScheme
+//                                         .primaryContainer,
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                   Expanded(
+//                     child: Padding(
+//                       padding: EdgeInsets.all(8.sp),
+//                       child: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text(
+//                             "${cartItem.product!.name}",
+//                             style: TextStyle(
+//                               color: Theme.of(context).colorScheme.primary,
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                           AutoSizeText(
+//                             "${cartItem.product!.info}",
+//                             overflow: TextOverflow.ellipsis,
+//                             style: TextStyle(),
+//                             maxLines: 2,
+//                             softWrap: true,
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                   Column(
+//                     children: [
+//                       Text(
+//                         "الإجمالي",
+//                         style: TextStyle(
+//                             color: Theme.of(context).colorScheme.secondary,
+//                             fontWeight: FontWeight.bold,
+//                             fontSize: 10.sp),
+//                       ),
+//                       10.verticalSpace,
+//                       Text(cartItem.total)
+//                     ],
+//                   )
+//                 ],
+//               ),
+//             ),
+//             Expanded(
+//               child: Padding(
+//                 padding: EdgeInsets.symmetric(horizontal: 10.sp),
+//                 child: Row(
+//                   children: [
+//                     Expanded(
+//                       child: BuildPriceProductComponent(
+//                         product: Rx(cartItem.product!),
+//                       ),
+//                     ),
+//                     Expanded(
+//                       child: Row(
+//                         children: [
+//                           // build cart Card Counter
+//                           // if (cartItem.unit == ProductUnitTypeEnum.piece)
+//                           AddToCardComponent(
+//                             showEditIcon: false,
+//                             product: cartItem.product!,
+//                             onSetState: () => setState(() {}),
+//                           ),
+//                           // End build cart Card Counter
+//
+//                           //build cart Card addButton
+//                           Spacer(),
+//                           GestureDetector(
+//                             onTap: () {
+//                               controller.cartService
+//                                   .removeFromCart(product: cartItem.product!);
+//                               setState(() {});
+//                             },
+//                             child: SizedBox(
+//                               width: 40.sp,
+//                               height: 40.sp,
+//                               child: Card(
+//                                 child: Center(
+//                                   child: Icon(
+//                                     Icons.delete,
+//                                     size: 20.sp,
+//                                     color:
+//                                         Theme.of(context).colorScheme.primary,
+//                                   ),
+//                                 ),
+//                               ),
+//                             ).animate().scale(),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//   );
+// }
 }
