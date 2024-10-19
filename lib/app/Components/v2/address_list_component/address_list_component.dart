@@ -1,32 +1,64 @@
+import 'package:delevary/app/Components/v2/address_list_component/components/delete_dialog.dart';
 import 'package:delevary/app/Components/v2/address_list_component/controller.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Thems/AppColots.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class AddressListComponent extends GetView<AddressListController> {
-  const AddressListComponent({super.key});
+  final String? label;
+
+  const AddressListComponent({super.key, this.label});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: controller.addresses.length,
-      itemBuilder: (context, index) {
-        return buildCard(controller.addresses[index]);
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        label != null
+            ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Row(
+                  children: [
+                    Text(
+                      label!,
+                      style: TextStyle(
+                          fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () async {
+                        await Get.toNamed(AppRoutes.addAddress);
+                      },
+                      icon: Icon(
+                        FontAwesomeIcons.squarePlus,
+                        color: AppColors.highLightColor,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : const SizedBox(),
+        Obx(
+          () => ListView.builder(
+            padding: EdgeInsets.zero,
+            physics: const BouncingScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: controller.addresses.value.length,
+            itemBuilder: (context, index) {
+              return buildCard(controller.addresses.value[index], context);
+            },
+          ),
+        ),
+      ],
     );
   }
 
-  Widget buildCard(AddressModel address) {
+  Widget buildCard(AddressModel address, BuildContext context) {
     MainController mainController = Get.find();
     return Obx(
       () => GestureDetector(
@@ -42,7 +74,8 @@ class AddressListComponent extends GetView<AddressListController> {
           width: Get.width,
           child: Card(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.sp)),
+              borderRadius: BorderRadius.circular(8.sp),
+            ),
             margin: EdgeInsets.zero,
             elevation: 5,
             shadowColor: Colors.black12,
@@ -83,7 +116,15 @@ class AddressListComponent extends GetView<AddressListController> {
                             ),
                             Spacer(),
                             InkWell(
-                              onTap: () {},
+                              onTap: () => deleteAddressDialog(
+                                context: context,
+                                address: address,
+                                onDelete: (deletedAddress) =>
+                                    controller.deleteAddress(
+                                  address,
+                                  context,
+                                ),
+                              ),
                               child: Padding(
                                 padding: EdgeInsets.zero,
                                 child: Icon(

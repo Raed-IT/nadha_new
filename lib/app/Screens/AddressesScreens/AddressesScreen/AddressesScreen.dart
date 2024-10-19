@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:delevary/app/Components/v2/address_list_component/address_list_component.dart';
 import 'package:delevary/app/Data/Models/AddressModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/AddressesScreens/AddressesScreen/AddressesScreenController.dart';
@@ -64,18 +65,9 @@ class _AddressesScreenState extends State<AddressesScreen> {
                         .value!
                         .addresses!
                         .isNotEmpty)
-                    ? ListView(
-                        padding: const EdgeInsets.all(0),
-                        physics: const BouncingScrollPhysics(),
-                        children: Get.find<MainController>()
-                            .user
-                            .value!
-                            .addresses!
-                            .map((address) =>
-                                buildCardAddress(address, context, () {
-                                  setState(() {});
-                                }))
-                            .toList())
+                    ? SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: AddressListComponent())
                     : AddressesEmptyComponent(),
               ),
             ],

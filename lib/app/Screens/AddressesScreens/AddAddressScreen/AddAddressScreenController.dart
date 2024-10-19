@@ -65,11 +65,12 @@ class AddAddressScreenController extends GetxController with ApiHelperMixin {
                   .addresses!
                   .add(addedAddress);
               Get.find<MainController>().selectedAddress.value = addedAddress;
-              if (fromCart) {
-                Get.offNamed(AppRoutes.cartScreen);
-              } else {
-                Get.offNamed(AppRoutes.addresses);
-              }
+              Get.back();
+              // if (fromCart) {
+              //   Get.offNamed(AppRoutes.cartScreen);
+              // } else {
+              //   Get.offNamed(AppRoutes.addresses);
+              // }
             } else {
               ToastService.showErrorToast(
                   context: context, title: res.data['data']['message']);
