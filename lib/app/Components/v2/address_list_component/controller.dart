@@ -7,11 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 import 'package:helper/mixin/api_mixing.dart';
-import 'package:logger/logger.dart';
 
 class AddressListController extends GetxController with ApiHelperMixin {
-  Rx<List<AddressModel>> addresses =
-      Rx(Get.find<MainController>().user.value?.addresses ?? []);
+
 
   Future<void> deleteAddress(
     AddressModel address,
@@ -24,8 +22,8 @@ class AddressListController extends GetxController with ApiHelperMixin {
         data: {"_method": "DELETE", "address_id": address.id},
         onSuccess: (res, type) {
           Get.find<MainController>().user.value!.addresses!.remove(address);
-          addresses.value.remove(address);
-           ToastService.showSuccessToast(
+          Get.find<MainController>().user.refresh();
+          ToastService.showSuccessToast(
               context: context, title: 'تم حذف العنوان ${address.name}');
         },
         onError: (ex, type) {

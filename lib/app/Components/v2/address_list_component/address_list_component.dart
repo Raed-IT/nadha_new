@@ -44,16 +44,18 @@ class AddressListComponent extends GetView<AddressListController> {
               )
             : const SizedBox(),
         Obx(
-          () => ListView.builder(
+          () => ListView(
             padding: EdgeInsets.zero,
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
-            itemCount: controller.addresses.value.length,
-            itemBuilder: (context, index) {
-              return buildCard(controller.addresses.value[index], context);
-            },
+            children: Get.find<MainController>()
+                .user
+                .value!
+                .addresses!
+                .map((address) => buildCard(address, context))
+                .toList(),
           ),
-        ),
+        )
       ],
     );
   }
