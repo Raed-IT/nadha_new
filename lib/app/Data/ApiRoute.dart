@@ -4,9 +4,9 @@ class ApiRoute {
 
   static String redirectDomin = "https://redirectapp.tasawoqi.net";
 
-  // static String domin = "https://tasawoqi.com";
+  static String domin = "https://tasawoqi.net";
 
-  static String domin = "https://tasawoqi.com";
+  // static String domin = "https://tasawoqi.com";
   //
   // static String domin = "http://192.168.1.105:8000";
   static String host = "$domin/api/v1";
