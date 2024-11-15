@@ -146,7 +146,7 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
                           Row(
                             children: [
                               Text(
-                                  "الإجــمــالــي  :  ${order.totalAmount! + order.deliveryPrice!}"),
+                                  "الإجــمــالــي  :  ${(order.totalAmount! + order.deliveryPrice!).toStringAsFixed(1)}"),
                               Text(
                                 "₺",
                                 style: TextStyle(

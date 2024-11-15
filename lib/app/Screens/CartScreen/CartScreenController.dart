@@ -1,6 +1,7 @@
 import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
+import 'package:delevary/app/Mixins/AddToCartMixin.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Services/CartService.dart';
 import 'package:delevary/app/Services/UI/OverlayLoaderService.dart';
@@ -9,10 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:get_storage/get_storage.dart';
-import 'package:helper/mixin/api_mixing.dart';
+ import 'package:helper/mixin/api_mixing.dart';
 
-class CartScreenController extends GetxController with ApiHelperMixin {
+class CartScreenController extends GetxController with ApiHelperMixin ,AddToCartMixin{
   CartService cartService = CartService();
   TextEditingController noteTextController = TextEditingController();
   TextEditingController phoneTextController = TextEditingController(

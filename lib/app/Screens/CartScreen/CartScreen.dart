@@ -1,15 +1,20 @@
 import 'dart:math';
 
+import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:delevary/app/Components/ChachImageComponent.dart';
+import 'package:delevary/app/Components/ProductsComponents/AddToCartComponent.dart';
+import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Components/v2/primary_button.dart';
+import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
 import 'package:delevary/app/Data/MainController.dart';
 import 'package:delevary/app/Data/Models/CartItemModel.dart';
 import 'package:delevary/app/Route/Routs.dart';
 import 'package:delevary/app/Screens/CartScreen/CartScreenController.dart';
 import 'package:delevary/app/Screens/CartScreen/Components/CartEmptyComponent.dart';
 import 'package:delevary/app/Screens/CartScreen/Components/ShowConfiermCartDialog.dart';
+import 'package:delevary/app/Services/CartService.dart';
 import 'package:delevary/app/Thems/AppColots.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +126,7 @@ class _CartScreenState extends State<CartScreen> {
                               Padding(
                                 padding: EdgeInsets.all(20.sp),
                                 child: PrimaryButtonComponent( label: " أطلب الأن",onTap: ()async =>Get.offNamed(AppRoutes.checkoutPage),),
-                              )
+                              ),
                             ],
                           ),
                   ),
@@ -206,6 +211,9 @@ class _CartScreenState extends State<CartScreen> {
       {required CartItemModel cartItem,
       required BuildContext context,
       required CartScreenController controller}) {
+    GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
+    GlobalKey productKey = GlobalKey();
+
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: 8.h,
@@ -230,7 +238,37 @@ class _CartScreenState extends State<CartScreen> {
                   padding:
                       EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
                   child: Column(
-                    children: [buildCardProductName(cartItem)],
+                    children: [
+                      buildCardProductName(cartItem),
+
+                      BuildPriceProductComponent(
+                        product: Rx( cartItem.product!),
+                      ),
+                      8.verticalSpace,
+Expanded(child:                       AddToCardComponent(
+  onAddAnimation: (k) {
+    controller.addToCartAnimation(
+        cartKey: cartKey,
+        widgetKey: k);
+    cartKey.currentState!
+        .runCartAnimation(
+        '${Get.find<MainController>().cart.length}');
+  },
+  product:
+  cartItem.product!,
+  onAddProduct: (prod) {
+    if (prod.unit ==
+        ProductUnitTypeEnum.piece) {
+      controller.addToCartAnimation(
+          cartKey: cartKey,
+          widgetKey: productKey);
+      cartKey.currentState!
+          .runCartAnimation(
+          '${Get.find<MainController>().cart.length}');
+    }
+  },
+)
+)                    ],
                   ),
                 ),
               )
