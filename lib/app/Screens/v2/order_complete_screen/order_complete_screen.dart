@@ -39,7 +39,13 @@ class OrderCompleteScreen extends GetView<OrderCompleteScreenController> {
 
             Padding(
               padding: EdgeInsets.all(20.sp),
-              child: PrimaryButtonComponent(label: "العودة للصفحة الرئيسية",onTap: ()async=>Get.offAllNamed(AppRoutes.homeScreen),),
+              child: Column(
+                children: [
+                  PrimaryButtonComponent(label: "العودة للصفحة الرئيسية",onTap: ()async=>Get.offAllNamed(AppRoutes.mainScaffoldScreen),),
+                10.verticalSpace,
+                  PrimaryButtonComponent(label: "طلباتي",onTap: ()async=>Get. offNamed(AppRoutes.orders),),
+                ],
+              ),
             )
           ],
         ),
