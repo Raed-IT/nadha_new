@@ -1,30 +1,24 @@
-// import 'dart:ffi';
 
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
-import 'package:delevary/app/Components/CategoriesComponent.dart';
-import 'package:delevary/app/Components/GridCardComponent.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delevary/app/Components/LoadMore.dart';
 import 'package:delevary/app/Components/ProductsComponents/ProductList.dart';
-import 'package:delevary/app/Components/SlidersComponent.dart';
-import 'package:delevary/app/Data/ApiRoute.dart';
+ import 'package:delevary/app/Data/ApiRoute.dart';
 import 'package:delevary/app/Data/MainController.dart';
-import 'package:delevary/app/Data/Models/CategoryModel.dart';
 import 'package:delevary/app/Data/Models/ProductModel.dart';
-import 'package:delevary/app/Data/Models/StoreModel.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Route/Routs.dart';
-import 'package:delevary/app/Screens/SearchScreen/Components/LoaderSearchComponent.dart';
 import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:delevary/app/Screens/StoresScreens/ShowStoreScreen/ShowStoreScreenController.dart';
+import 'package:delevary/app/Thems/AppColots.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:helper/data/enums/api_call_status.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../Components/AppBarComponents/AppBarComponent.dart';
@@ -122,6 +116,7 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                         ? Column(
                             children: [
                               AppBarComponent(
+                                showLogo: false,
                                 title: "${controller.store.value!.name}",
                                 openDrawer: () {
                                   Scaffold.of(context).openDrawer();
@@ -133,61 +128,88 @@ class _ShowStoreScreenState extends State<ShowStoreScreen> {
                                   padding: const EdgeInsets.all(0),
                                   physics: const BouncingScrollPhysics(),
                                   children: [
-                                    SliderComponent(
-                                      height: Get.width,
-                                      sliders: controller.sliders,
-                                      controller: PageController(),
-                                      isLoad: controller.isLoad,
-                                    ),
-                                    10.verticalSpace,
-                                    BuildTitleSectionComponent(
-                                      title: "الفئات الرئيسية",
-                                      isLoad: controller.isLoad,
-                                    ),
-                                    20.verticalSpace,
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 5.sp),
-                                      child: CategoriesComponent(
-                                        categories: controller.categories,
-                                        isLoading: controller.isLoad,
-                                        storeId: controller.store.value?.id,
+                                        padding: EdgeInsets.all(20.sp),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.sp),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                controller.store.value?.image ??
+                                                    '',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )),
+                                    Padding(
+                                      padding: EdgeInsets.all(20.sp),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                FontAwesomeIcons.mapMarkerAlt,
+                                                size: 15.sp,
+                                                color: AppColors.highLightColor,
+                                              ),
+                                              10.horizontalSpace,
+                                              Expanded(
+                                                child: Text(
+                                                    controller.store.value?.address ?? '----'),
+                                              ),
+                                            ],
+                                          ),
+                                          10.verticalSpace,
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                FontAwesomeIcons.clock,
+                                                size: 15.sp,
+                                                color: AppColors.highLightColor,
+                                              ),
+                                              10.horizontalSpace,
+                                              Text(
+                                                "اوقات الدوام :  ${controller.store.value?.openAt} - ${controller.store.value?.closeAt}",
+                                                style: TextStyle(
+                                                    color: AppColors
+                                                        .highLightColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 11.sp),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                     ),
-                                    10.verticalSpace,
-                                    BuildTitleSectionComponent(
-                                      title: "المنتجات الاكثر طلب",
-                                      isLoad: controller.isLoad,
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                      child: Text("منتجات المتجر ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13.sp),),
                                     ),
-                                    5.verticalSpace,
+                                    10.verticalSpace,
                                     ProductListComponent(
                                       heroTagPrefix: "homeProducts",
                                       products: controller.paginationData,
-                                      onProductTap:
-                                          (ProductModel product, k) {
+                                      onProductTap: (ProductModel product, k) {
                                         Get.toNamed(AppRoutes.showProduct,
                                             preventDuplicates: false,
                                             arguments: {
-                                              "store":
-                                                  controller.store.value,
+                                              "store": controller.store.value,
                                               "product": product,
                                               "hero": "homeProducts"
                                             });
-                                        Get.put(
-                                            ShowProductScreenController(),
-                                            tag:
-                                                "show_product${product.id}");
+                                        Get.put(ShowProductScreenController(),
+                                            tag: "show_product${product.id}");
                                       },
-                                      isLoad:
-                                          controller.isLoadPaginationData,
-                                      onTapAddProduct:
-                                          (product, productKey) {
+                                      isLoad: controller.isLoadPaginationData,
+                                      onTapAddProduct: (product, productKey) {
                                         controller.addToCartAnimation(
                                             cartKey: cartKey,
                                             widgetKey: productKey);
                                         controller.cartService.addToCard(
-                                            product: product,
-                                            context: context);
+                                            product: product, context: context);
                                       },
                                     ),
                                     LoadMoreComponent(

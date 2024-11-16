@@ -16,7 +16,7 @@ mixin AddToCartMixin {
       await _runAddToCartAnimation(
         widgetKey,
       );
-      await cartKey.currentState!.runCartAnimation(
+      await cartKey.currentState?.runCartAnimation(
         "${Get.find<MainController>().cart.length}",
       );
     } catch (e, s) {

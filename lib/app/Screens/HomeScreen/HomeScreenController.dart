@@ -85,9 +85,13 @@ class HomeScreenController extends GetxController
           sliders.add(SliderModel.fromJson(slid));
         }
         specialStore.value=[];
-        for (var slid in json['data']['special_stores']) {
-          specialStore.add(StoreModel.fromJson(slid));
+
+        if ( json['data'].containsKey("special_stores")){
+          for (var slid in json['data']['special_stores']) {
+            specialStore.add(StoreModel.fromJson(slid));
+          }
         }
+
       }
     } else {
       Fluttertoast.showToast(msg: json['data']?['message']);
