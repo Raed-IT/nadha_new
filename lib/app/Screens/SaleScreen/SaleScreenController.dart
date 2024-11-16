@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:helper/data/models/url_model.dart';
 import 'package:helper/mixin/api_mixing.dart';
@@ -11,14 +13,22 @@ class SaleScreenController extends GetxController
   @override
   void onInit() {
     paginationUrl = "${ApiRoute.products}-sale";
-    getDataFromApi();
+    getFreshData();
     super.onInit();
   }
-
-  Future getDataFromApi() async {
-    await getPaginationData(isRefresh: true);
+Future<void> search(data)async{
+  if (data.isNotEmpty){
+    paginationParameter={...paginationParameter,"q":data};
   }
+  else{
+    paginationParameter.remove("q") ;
+  }
+}
 
+Future<void> getFreshData ()async{
+  await getPaginationData(isRefresh: true);
+
+}
   Future loadMore() async {
     await getPaginationData(isRefresh: false);
   }

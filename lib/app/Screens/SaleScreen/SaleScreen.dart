@@ -1,9 +1,11 @@
 import 'package:delevary/app/Components/AppBarComponents/AppBarComponent.dart';
+import 'package:delevary/app/Components/v2/search_filed_component.dart';
 import 'package:delevary/app/Extiontions/loadMoreExtention.dart';
 import 'package:delevary/app/Extiontions/refreshExtention.dart';
 import 'package:delevary/app/Screens/SaleScreen/SaleScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../Components/DrawerComponents/DrawerComponent.dart';
@@ -21,7 +23,7 @@ class SaleScreen extends GetView<SaleScreenController> {
   @override
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
-    controller.getDataFromApi();
+    controller.getFreshData();
     return Scaffold(
       drawerEnableOpenDragGesture: false,
       drawer: const DrawerComponent(),
@@ -33,50 +35,70 @@ class SaleScreen extends GetView<SaleScreenController> {
             children: [
               AppBarComponent(
                 showLogo: true,
-                showSearch: true,
                 openDrawer: () {
                   Scaffold.of(context).openDrawer();
                 },
               ),
+
               Expanded(
                 child: ListView(
                   controller: scrollController,
                   padding: const EdgeInsets.all(0),
                   physics: const BouncingScrollPhysics(),
                   children: [
-                    BuildTitleSectionComponent(
-                        isLoad: controller.isLoadPaginationData,
-                        title: "منتجات عليها حسومات"),
-                    ProductListComponent(
-                      onRemoveProductFromFavorite: (product) {
-                        controller.paginationData.remove(product);
-                      },
-                      heroTagPrefix: "sale",
-                      products: controller.paginationData,
-                      onProductTap: (ProductModel product, k) {
-                        Get.toNamed(AppRoutes.showProduct,
-                            preventDuplicates: false,
-                            arguments: {"product": product, "hero": "sale"});
-                        Get.put(ShowProductScreenController(),
-                            tag: "show_product${product.id}");
-                      },
-                      isLoad: controller.isLoadPaginationData,
-                      onTapAddProduct: (product, kye) =>
-                          Get.find<MainScaffoldScreenController>()
-                              .addToCart(product, kye, context: context),
+                    Center(
+                      child: Text(
+                        "العروض",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18.sp),
+                      ),
                     ),
+                    Obx(() {
+                      return SearchFiledComponent(
+                        onChanged: controller.search,
+                        isLoad: RxBool(
+                            controller.isLoadPaginationData.value &&
+                                controller.paginationData.isEmpty),
+                        onEditingComplete: () {
+                          controller.getPaginationData(isRefresh: true);
+                        },
+                      );
+                    }),
+          ProductListComponent(
+                    onRemoveProductFromFavorite: (product) {
+                      controller.paginationData.remove(product);
+                    },
+                    heroTagPrefix: "sale",
+                    products: controller.paginationData,
+                    onProductTap: (ProductModel product, k) {
+                      Get.toNamed(AppRoutes.showProduct,
+                          preventDuplicates: false,
+                          arguments: {"product": product, "hero": "sale"});
+                      Get.put(ShowProductScreenController(),
+                          tag: "show_product${product.id}");
+                    },
+                    isLoad: controller.isLoadPaginationData,
+                    onTapAddProduct: (product, kye) =>
+                        Get.find<MainScaffoldScreenController>()
+                            .addToCart(product, kye, context: context),
+                  ),
                     LoadMoreComponent(
                       isFinished: controller.isFinish,
                       isLoad: controller.isLoadMore,
                     )
                   ],
-                ).refreshAbel(onRefresh: () async {
-                  await controller.getDataFromApi();
-                }).loadMoreAble(
-                    scrollController: scrollController,
-                    onLoadMore: () async {
-                      await controller.loadMore();
-                    }),
+                )
+                    .loadMoreAble(
+                  scrollController: scrollController,
+                  onLoadMore: () async {
+                    await controller.loadMore();
+                  },
+                )
+                    .refreshAbel(
+                  onRefresh: () async {
+                    await controller.getFreshData();
+                  },
+                ),
               ),
             ],
           ),
