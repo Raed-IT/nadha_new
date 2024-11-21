@@ -246,6 +246,7 @@ class _ProductCardComponentState extends State<ProductCardComponent> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
+
                     BuildPriceProductComponent(
                       product: Rx(widget.product),
                     ),

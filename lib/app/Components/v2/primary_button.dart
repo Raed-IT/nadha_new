@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 class PrimaryButtonComponent extends StatelessWidget {
   final String label;
-
+final double? fontSize;
   final Future<void> Function()? onTap;
-
-  const PrimaryButtonComponent({super.key, required this.label, this.onTap});
+final double? radius;
+  const PrimaryButtonComponent({super.key, required this.label, this.onTap, this.fontSize, this.radius});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class PrimaryButtonComponent extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: colorScheme.primary,
-          borderRadius: BorderRadius.circular(15.sp),
+          borderRadius: BorderRadius.circular(radius??15.sp),
         ),
         height: 56.h,
         width: Get.width,
@@ -27,7 +27,7 @@ class PrimaryButtonComponent extends StatelessWidget {
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
-                fontSize: 17.sp),
+                fontSize: fontSize??17.sp),
           ),
         ),
       ),

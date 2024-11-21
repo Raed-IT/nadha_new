@@ -1,36 +1,96 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:blurrycontainer/blurrycontainer.dart';
-import 'package:delevary/app/Components/ChachImageComponent.dart';
 import 'package:delevary/app/Components/LoadingComponents/CardLoadingComponent.dart';
-import 'package:delevary/app/Components/ProductsComponents/BuildPrice.dart';
 import 'package:delevary/app/Data/Enums/OrderStatusEnum.dart';
-import 'package:delevary/app/Data/Enums/ProductUnitTypeEnum.dart';
-import 'package:delevary/app/Data/Models/CartItemModel.dart';
-import 'package:delevary/app/Data/Models/OrderModel.dart';
-import 'package:delevary/app/Data/Models/ProductModel.dart';
-import 'package:delevary/app/Route/Routs.dart';
+import 'package:delevary/app/Screens/OrdersSecreens/OrdersSecreen/Components/card_component.dart';
 import 'package:delevary/app/Screens/OrdersSecreens/OrdersSecreen/OrdersSecreenController.dart';
-import 'package:delevary/app/Screens/ShowProductScreen/ShowProductScreenController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 
 class OrdersListComponent extends GetView<OrdersScreenController> {
   const OrdersListComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    RxInt selectedTap = RxInt(1);
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Obx(
       () => !controller.isLoadPaginationData.value
           ? controller.paginationData.isNotEmpty
               ? Column(
-                  children: controller.paginationData
-                      .map((order) =>
-                          buildCardOrder(order: order, context: context))
-                      .toList(),
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10.sp),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => selectedTap.value = 0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: selectedTap.value == 0
+                                          ? colorScheme.primary
+                                          : colorScheme.onBackground,
+                                    ),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "الطلبات السابقة",
+                                    style: TextStyle(
+                                        color: selectedTap.value == 0
+                                            ? colorScheme.primary
+                                            : colorScheme.onBackground,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => selectedTap.value = 1,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: selectedTap.value == 1
+                                            ? colorScheme.primary
+                                            : colorScheme.onBackground),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "الطلبات الحالية",
+                                    style: TextStyle(
+                                        color: selectedTap.value == 1
+                                            ? colorScheme.primary
+                                            : colorScheme.onBackground,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ...controller.paginationData
+                        .where((p0) {
+                          if (selectedTap.value == 0) {
+                            return p0.status != OrderStatusEnum.onway &&  p0.status != OrderStatusEnum.pending  ;
+                          }
+                          return p0.status == OrderStatusEnum.onway || p0.status == OrderStatusEnum.pending;
+                        })
+                        .map((order) => CardOrderComponent(
+                              order: order,
+                              selectedTap: selectedTap,
+                            ))
+                        .toList()
+                  ],
                 )
               : noOrderWidget()
           : Padding(
@@ -52,284 +112,5 @@ class OrdersListComponent extends GetView<OrdersScreenController> {
 
   Widget noOrderWidget() {
     return Container();
-  }
-
-  Widget buildCardOrder(
-      {required OrderModel order, required BuildContext context}) {
-    return SizedBox(
-      width: Get.width,
-      child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
-        child: Padding(
-          padding: EdgeInsets.all(8.sp),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Text(
-                    "رقم الطلب :  ",
-                  ),
-                  Text(
-                    "${order.id}",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  Text("الحالة  :  "),
-                  Text(
-                    order.status!.toOrderStatus(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              30.verticalSpace,
-              Column(
-                children: [
-                  ...order.orderItems!.map(
-                    (cartItem) {
-                      return buildProductCard(
-                        cartItem: cartItem,
-                        context: context,
-                      );
-                    },
-                  ).toList(),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.sp),
-                      border: Border.all(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.5),
-                      ),
-                    ),
-                    child: BlurryContainer(
-                      padding: EdgeInsets.all(10.sp),
-                      width: Get.width,
-                      height: 90.h,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            children: [
-                              Text("إجمالي الطلب :  ${order.totalAmount}"),
-                              Text(
-                                "₺",
-                                style: TextStyle(
-                                    fontFamily: "",
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    fontSize: 12.sp),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                  "الــتــوصــيـــل :  ${order.deliveryPrice}"),
-                              Text(
-                                "₺",
-                                style: TextStyle(
-                                    fontFamily: "",
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    fontSize: 12.sp),
-                              )
-                            ],
-                          ),
-                          Divider(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.2),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                  "الإجــمــالــي  :  ${(order.totalAmount! + order.deliveryPrice!).toStringAsFixed(1)}"),
-                              Text(
-                                "₺",
-                                style: TextStyle(
-                                    fontFamily: "",
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    fontSize: 12.sp),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (order.driver != null)
-                    Row(
-                      children: [
-                        10.horizontalSpace,
-                        Icon(
-                          FontAwesomeIcons.whatsapp,
-                          size: 20.sp,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            launchUrl(Uri.parse(
-                                "https://wa.me/${order.driver?.phone?.replaceAll('+', "")}"));
-                          },
-                          child: Text(
-                            "انقر للتواصل مع السائق ${order.driver?.name}",
-                            style: TextStyle(
-                                fontSize: 12.sp, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                  Row(
-                    children: [
-                      Text(
-                        "العنوان : ${order.address?.name ?? '_'}",
-                        style: TextStyle(
-                            fontSize: 12.sp, fontWeight: FontWeight.bold),
-                      ),
-                      Spacer(),
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildProductCard(
-      {required CartItemModel cartItem, required BuildContext context}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5.sp),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.sp),
-        border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-        ),
-      ),
-      width: Get.width,
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              if (cartItem.product != null) {
-                Get.toNamed(AppRoutes.showProduct,
-                    preventDuplicates: false,
-                    arguments: {"product": cartItem.product, "hero": "order_"});
-                Get.put(ShowProductScreenController(),
-                    tag: "show_product${cartItem.product!.id}");
-              }
-            },
-            child: SizedBox(
-              height: 100.h,
-              child: Stack(
-                children: [
-                  Hero(
-                    tag: "order_${cartItem.product?.id}",
-                    child: ImageCacheComponent(
-                      borderRadius: BorderRadius.circular(10.sp),
-                      image: "${cartItem.product?.image}",
-                      height: 100.sp,
-                      width: 100.sp,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 30.h,
-                      width: 100.sp,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10.sp),
-                          bottomLeft: Radius.circular(10.sp),
-                        ),
-                        gradient: const LinearGradient(
-                            end: Alignment.topCenter,
-                            begin: Alignment.bottomCenter,
-                            colors: [Colors.black, Colors.transparent]),
-                      ),
-                      child: Center(
-                        child: AutoSizeText(
-                          cartItem.product?.store?.name ?? '_',
-                          maxLines: 2,
-                          style: TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(8.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AutoSizeText(
-                    cartItem.product?.name ?? 'المنتج  غير متوفر',
-                    maxLines: 1,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis),
-                  ),
-                  5.verticalSpace,
-                  AutoSizeText(
-                    cartItem.product?.info ?? 'ربما تم حذف المنتج',
-                    maxLines: 1,
-                    style: const TextStyle(overflow: TextOverflow.ellipsis),
-                  ),
-                  10.verticalSpace,
-                  Row(
-                    children: [
-                      (cartItem.product != null)
-                          ? BuildPriceProductComponent(
-                              product: Rx(cartItem.product!), size: 10.sp)
-                          : SizedBox(),
-                      Spacer(),
-                      Row(
-                        children: [
-                          Text(
-                            "${cartItem.unit!.toProductUnitShort()}${cartItem.quantity ?? ''} / ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10.sp,
-                                color:
-                                Theme.of(context).colorScheme.primary),
-                          ),
-                          Text(
-                            "${double.parse(cartItem.total)}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10.sp,
-                                color: Theme.of(context).colorScheme.secondary),
-                          ),
-                          Text(
-                            "₺",
-                            style: TextStyle(
-                                fontFamily: "",
-                                color: Theme.of(context).colorScheme.primary,
-                                fontSize: 10.sp),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
   }
 }

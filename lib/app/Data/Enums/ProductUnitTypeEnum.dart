@@ -33,13 +33,13 @@ extension FromProductType on ProductUnitTypeEnum {
   }
   String toProductUnitShort() {
     if (this == ProductUnitTypeEnum.amount) {
-      return "g";
+      return " غرام";
     } else if (this == ProductUnitTypeEnum.amount_price) {
-      return "tr";
+      return "ل.ت";
     } else if (this == ProductUnitTypeEnum.kg) {
-      return "kg";
+      return "كغ";
     } else {
-      return "pic";
+      return "قطعة";
     }
   }
 }
